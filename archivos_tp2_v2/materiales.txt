@@ -1,0 +1,3 @@
+madera 300
+metal 940
+piedra 1000

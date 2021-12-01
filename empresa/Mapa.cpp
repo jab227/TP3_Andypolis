@@ -3,10 +3,10 @@
 #include <iostream>
 #include <random>
 #include <ctime>
-#include "../casillero/CasilleroConstruible.h"
-#include "../casillero/CasilleroInaccesible.h"
-#include "../casillero/CasilleroTransitable.h"
-#include "../casillero/Casillero.h"
+#include "../Casillero/CasilleroConstruible.h"
+#include "../Casillero/CasilleroInaccesible.h"
+#include "../Casillero/CasilleroTransitable.h"
+#include "../Casillero/Casillero.h"
 #include "../utils/LecturaArchivos.h"
 
 const string UBICACION_VACIA = "X", TIPO_TERRENO_VACIO = "";
@@ -294,5 +294,7 @@ string Mapa::identificador_ocupados(string ocupador){
 		identificador = "S";
 	else if(ocupador == "metal")
 		identificador = "I";
+	else if(ocupador == "mina oro")
+		identificador = "G";
 	return identificador;
 }

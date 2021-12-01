@@ -1,21 +1,21 @@
-#ifndef EDIFICIOS_MINA_ORO_H_
-#define EDIFICIOS_MINA_ORO_H_
+#ifndef EDIFICIOS_MINAORO_H_
+#define EDIFICIOS_MINAORO_H_
 
-#include "../Productor.h"
+#include "./Productor.h"
 
-class MinaOro : public Productor{
+class Mina_Oro : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una mina vacio
-	MinaOro();
+	Mina_Oro();
 
 	//PRE: -
 	//POST: se construye una mina con los datos ingresados aserradero vacio
-	MinaOro(int piedra, int madera, int metal, int maximo_permitidos);
+	Mina_Oro(int piedra, int madera, int metal, int maximo_permitidos);
 
 	//PRE: -
 	//POST: imprime un mensaje por consola
 	void saludar();
 };
 
-#endif /* EDIFICIOS_MINA_ORO_H_ */
+#endif /* EDIFICIOS_MINAORO_H_ */

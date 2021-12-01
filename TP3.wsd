@@ -28,10 +28,10 @@ abstract class Casillero{
 }
 
 class Edificio{
-	# nombre: string
-    # materiales[CANT_MATERIALES_EDIFICIOS]: int
-	# maximo_permitidos: int
-	# construidos: int
+	- nombre: string
+    - materiales[CANT_MATERIALES_EDIFICIOS]: int
+	- maximo_permitidos: int
+	- construidos: int
 
  	+ Edificio(nombre: string, piedra: int, madera: int, metal: int, maximo_permitidos: int): Edificio
     + obtener_nombre(): string

@@ -14,7 +14,7 @@ enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA
 
 class Edificio {
 //Atrubitos
-protected:
+private:
 	string nombre;
 	int materiales[CANT_MATERIALES_EDIFICIOS];
 	int maximo_permitidos;

@@ -5,7 +5,7 @@
 #include "../utils/Lista.h"
 
 class Planos {
-public:
+private:
 	Lista<Edificio*> lista_edificios;
 public:
 

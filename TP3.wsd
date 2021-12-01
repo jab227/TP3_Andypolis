@@ -154,7 +154,7 @@ EmpresaConstructora *-- Planos: - planos
 EmpresaConstructora *-- Almacen: - almacen
 EmpresaConstructora *-- Mapa: - mapa
 Almacen *--"*" Material: - lista_material
-Planos *--"*" Edificio: + lista_edificios
+Planos *--"*" Edificio: - lista_edificios
 Mapa *--"*" Casillero: - terreno
 Programa *-- EmpresaConstructora: - empresa_constructora
 

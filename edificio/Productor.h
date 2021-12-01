@@ -4,7 +4,7 @@
 #include "../edificio/Edificio.h"
 
 class Productor : public Edificio{
-protected:
+private:
 	Material producto;
 public:
 	//PRE: -
@@ -23,4 +23,5 @@ public:
 	//POST: Retorna el nombre y la cantidad del producto en un string.
 	string info_producto() override;
 };
+
 #endif /* EDIFICIOS_PRODUCTOR_H_ */

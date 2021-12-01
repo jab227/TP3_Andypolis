@@ -131,15 +131,16 @@ template <typename Dato>
 int Lista<Dato>::buscar_indice(Dato d){
 	bool encontrado = false;
 	int indice = 1;
-	if(this -> cantidad > 0){
-		Nodo<Dato>* nodo = this -> primero;
-		if(nodo -> obtener_dato() == d){
+    //Es mejorable??
+	if(this->cantidad > 0){
+		Nodo<Dato>* nodo = this->primero;
+		if(nodo->obtener_dato() == d){
 			encontrado = true;
 		}
-		while(nodo -> obtener_siguiente() != nullptr && !encontrado){
-			nodo = nodo -> obtener_siguiente();
+		while(nodo->obtener_siguiente() != nullptr && !encontrado){
+			nodo = nodo->obtener_siguiente();
 			indice++;
-			if(nodo -> obtener_dato() == d)
+			if(nodo->obtener_dato() == d)
 				encontrado = true;
 		}
 	}

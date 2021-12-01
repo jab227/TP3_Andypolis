@@ -3,10 +3,10 @@
 #include <iostream>
 #include <random>
 #include <ctime>
-#include "../Casillero/CasilleroConstruible.h"
-#include "../Casillero/CasilleroInaccesible.h"
-#include "../Casillero/CasilleroTransitable.h"
-#include "../Casillero/Casillero.h"
+#include "../casillero/CasilleroConstruible.h"
+#include "../casillero/CasilleroInaccesible.h"
+#include "../casillero/CasilleroTransitable.h"
+#include "../casillero/Casillero.h"
 #include "../utils/LecturaArchivos.h"
 
 const string UBICACION_VACIA = "X", TIPO_TERRENO_VACIO = "";

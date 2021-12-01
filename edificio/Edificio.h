@@ -13,12 +13,13 @@ enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA
 
 
 class Edificio {
-//Atrubitos
+//Atributos
 private:
 	string nombre;
-	int materiales[CANT_MATERIALES_EDIFICIOS];
-	int maximo_permitidos;
-	int construidos;
+	//Cambiar a lista/vector de materiales
+	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
+	std::size_t maximo_permitidos;
+	std::size_t construidos;
 //Metodos:
 public:
 	//PRE: -
@@ -27,7 +28,7 @@ public:
 
 	//PRE: -
 	//POST: crea un edificio con los atributos inicializados.
-	Edificio(string nombre, int piedra, int madera, int metal, int maximo_permitidos);
+	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
 	//PRE: -
 	//POST: ejecuta el destructor
@@ -35,16 +36,16 @@ public:
 
 	//PRE: -
 	//POST: devuelve el nombre del edificio.
-	string obtener_nombre();
+	std::string obtener_nombre() const;
 
 	//PRE: -
 	//POST: devuelve la cantidad del material ingresado requerido para construirlo. En caso de que
 	//no se requiera ese material, deuelve 0.
-	int obtener_cant_material(string material);
+	std::size_t obtener_cant_material(string material);
 
 	//PRE: -
 	//PORT: devuleve la cantidad de edificios maximos construidos.
-	int obtener_max_permitidos();
+	std::size_t obtener_max_permitidos();
 
 	//PRE: -
 	//POST: imprime un mensaje por consola
@@ -63,14 +64,32 @@ public:
 	//POST: devuelve lo que produce en str.
 	virtual string info_producto() = 0;
 
-	//PRE: 0 <= n
+	//PRE: -
 	//POST: se modifica el valor de edificios construidos a n
-	void modificar_construidos(int n);
+	void modificar_construidos(std::size_t n);
+
+	//PRE: -
+	//POST: Aumenta en 1 el valor de edificios construidos.
+	void aumentar_construidos();
+	
+	//PRE: -
+	//POST: Disminuye en 1 el valor de edificios construidos.
+	void disminuir_construidos();
 
 	//PRE: -
 	//POST: devuelve la cantidad de edificios construidos
-	int obtener_construidos();
+	std::size_t obtener_construidos();
 
+/*
+	//PRE: -
+	//POST: Devuelve true si el nombre es el mimso.
+	bool operator==(string rhs);
+	
+	//PRE: -
+	//POST: Devuelve true si el nombre es el mimso.
+	bool operator!=(string rhs);
+
+*/
 };
 
 #endif /* EDIFICIO_H_ */

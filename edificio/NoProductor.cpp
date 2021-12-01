@@ -14,3 +14,8 @@ bool No_Productor::es_productor(){
 Material No_Productor::producir_material(){
 	return Material();
 }
+
+string No_Productor::info_producto(){
+	return "ninguno";
+}
+

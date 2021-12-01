@@ -20,6 +20,10 @@ public:
 	//PRE: -
 	//POST: dado que no es un productor devuelve un material vacio
 	Material producir_material();
+
+	//PRE: -
+	//POST: retorna "ninguno".
+	string info_producto() override;
 };
 
 #endif /* EDIFICIOS_NOPRODUCTOR_H_ */

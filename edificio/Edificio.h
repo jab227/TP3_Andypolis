@@ -63,6 +63,10 @@ public:
 	//material vacio en caso contratrio.
 	virtual Material producir_material() = 0;
 
+	//PRE -
+	//POST: devuelve lo que produce en str.
+	virtual string info_producto() = 0;
+
 	//PRE: 0 <= n
 	//POST: se modifica el valor de edificios construidos a n
 	void modificar_construidos(int n);

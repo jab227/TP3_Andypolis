@@ -5,7 +5,7 @@
 
 class Productor : public Edificio{
 protected:
-	Material producir;
+	Material producto;
 public:
 	//PRE: -
 	//POST: se construye un edificio productor vacio
@@ -13,7 +13,7 @@ public:
 
 	//PRE: -
 	//POST: se construye un edificio productor con los datos ingresados
-	Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos, Material producir);
+	Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos, Material producto);
 
 	//PRE: -
 	//POST: devuelve el material que produce este edificio
@@ -22,5 +22,9 @@ public:
 	//PRE: -
 	//POST: devuelve si el edificio es productor o no. en este caso devuelve siempre true.
 	bool es_productor();
+
+	//PRE: -
+	//POST: Retorna el nombre y la cantidad del producto en un string.
+	string info_producto() override;
 };
 #endif /* EDIFICIOS_PRODUCTOR_H_ */

@@ -163,11 +163,12 @@ Casillero <|-- CasilleroTransitable
 Casillero <|-- CasilleroInaccesible
 
 Productor <|-- Aserradero
-NoProductor <|-- Escuela
+Productor <|-- Escuela
 Productor <|-- Fabrica
 Productor <|-- Mina
+Productor <|-- MinaOro
 Edificio <|-- NoProductor
 NoProductor <|-- Obelisco
-NoProductor <|-- PlantaElectrica
+Productor <|-- PlantaElectrica
 Edificio <|-- Productor
 @enduml

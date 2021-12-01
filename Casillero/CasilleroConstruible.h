@@ -1,8 +1,8 @@
 #ifndef CASILLERO_CASILLEROCONSTRUIBLE_H_
 #define CASILLERO_CASILLEROCONSTRUIBLE_H_
 
-#include "../Casillero.h"
-#include "../Edificio.h"
+#include "Casillero.h"
+#include "../edificio/Edificio.h"
 
 class Casillero_Construible : public Casillero{
 private:

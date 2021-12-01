@@ -1,8 +1,8 @@
 #ifndef CASILLERO_CASILLEROTRANSITABLE_H_
 #define CASILLERO_CASILLEROTRANSITABLE_H_
 
-#include "../Casillero.h"
-#include "../Material.h"
+#include "Casillero.h"
+#include "../material/Material.h"
 
 class Casillero_Transitable : public Casillero{
 private:

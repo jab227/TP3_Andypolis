@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include "LecturaArchivos.h"
-#include "Programa.h"
+#include "utils/LecturaArchivos.h"
+#include "programa/Programa.h"
 
 
-const string RUTA_MATERIALES = "./materiales.txt", RUTA_EDIFICIOS = "./edificios.txt";
-const string RUTA_MAPA = "./mapa.txt", RUTA_UBICACIONES = "./ubicaciones.txt";
+const string RUTA_MATERIALES = "./saves/materiales.txt", RUTA_EDIFICIOS = "./saves/edificios.txt";
+const string RUTA_MAPA = "./saves/mapa.txt", RUTA_UBICACIONES = "./saves/ubicaciones.txt";
 
 //PRE: programa tiene que ser un objeto bien cargado
 //POST: se pide al usuario una opcion valida

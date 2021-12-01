@@ -9,8 +9,8 @@ NOMBRE = TP2
 
 all: $(NOMBRE)
 
-$(NOMBRE):  *.cpp Edificios/*.cpp Casillero/*.cpp
-	$(CC) *.cpp Edificios/*.cpp Casillero/*.cpp $(CFLAGS) -o $(NOMBRE)
+$(NOMBRE):  *.cpp edificio/*.cpp edificio/edificios/*.cpp casillero/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp 
+	$(CC) *.cpp edificio/*.cpp edificio/edificios/*.cpp casillero/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp $(CFLAGS) -o $(NOMBRE)
 	
 clean:
 	$(RM) -v *.o

@@ -1,7 +1,7 @@
 #ifndef CASILLERO_CASILLEROINACCESIBLE_H_
 #define CASILLERO_CASILLEROINACCESIBLE_H_
 
-#include "../Casillero.h"
+#include "Casillero.h"
 
 class Casillero_Inaccesible : public Casillero{
 public:

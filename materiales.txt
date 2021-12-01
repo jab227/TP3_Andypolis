@@ -1,3 +1,0 @@
-madera 5872
-metal 260
-piedra 6189

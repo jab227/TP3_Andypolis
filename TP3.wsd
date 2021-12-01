@@ -141,34 +141,40 @@ class Programa{
 }
 
 class Productor{
-    + es_productor(): bool
+	+ info_producto(): string
     + producir_material(): Material
 }
 class NoProductor{
-    + es_productor(): bool
+	+ info_producto(): string
     + producir_material(): Material
 }
 
 ' RELACIONES '
+Programa *-- EmpresaConstructora: - empresa_constructora
+
 EmpresaConstructora *-- Planos: - planos
 EmpresaConstructora *-- Almacen: - almacen
 EmpresaConstructora *-- Mapa: - mapa
+
 Almacen *--"*" Material: - lista_material
 Planos *--"*" Edificio: - lista_edificios
 Mapa *--"*" Casillero: - terreno
-Programa *-- EmpresaConstructora: - empresa_constructora
 
 Casillero <|-- CasilleroConstruible
 Casillero <|-- CasilleroTransitable
 Casillero <|-- CasilleroInaccesible
+
+Edificio <|-- NoProductor
+Edificio <|-- Productor
+
+Productor *-- Material: - producto
 
 Productor <|-- Aserradero
 Productor <|-- Escuela
 Productor <|-- Fabrica
 Productor <|-- Mina
 Productor <|-- MinaOro
-Edificio <|-- NoProductor
-NoProductor <|-- Obelisco
 Productor <|-- PlantaElectrica
-Edificio <|-- Productor
+NoProductor <|-- Obelisco
+
 @enduml

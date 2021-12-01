@@ -8,45 +8,47 @@ const int NO_ENCONTRADO = -1;
 
 Planos::Planos() { }
 
+//Cuando este el Parser, hacer que reciba los datos.
 Planos::Planos(string ruta){
-	this -> cargar_edificios(ruta);
+	this->cargar_edificios(ruta);
 }
 
 Planos::~Planos() {
 	for(int i = 1; i <= lista_edificios.consulta_largo(); i++)
-		delete this -> lista_edificios.consulta(i);
+		delete this->lista_edificios.consulta(i);
 }
 
 void Planos::agregar_edificio(Edificio* edificio, int posicion){
-	this -> lista_edificios.alta(edificio, posicion);
+	this->lista_edificios.alta(edificio, posicion);
 }
 
+//Reemplazable con el Parser.
 void Planos::cargar_edificios(string ruta){
-	ifstream archivo(ruta	);
+	ifstream archivo(ruta);
 	if (archivo.is_open()){
 		string lectura;
 		int cant_agregados = 0;
 		Edificio* nuevo_edificio;
 		while(getline(archivo, lectura, ENTER)){
 			nuevo_edificio = procesar_edificio(lectura);
-			agregar_edificio(nuevo_edificio, cant_agregados+1);
-			cant_agregados++;
+			agregar_edificio(nuevo_edificio, ++cant_agregados);
 		}
 	}
 	archivo.close();
 }
 
+//Reemplazable por el printer.
 void Planos::mostrar_edificios(){
 	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
 	Edificio* consultado;
-	for(int i = 1; i <= this -> lista_edificios.consulta_largo(); i++){
-		consultado = this -> lista_edificios.consulta(i);
-		cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
-				    << consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"
-					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[MADERA]) << "\t|"
-					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[METAL])  << "\t|"
-					<< consultado -> obtener_construidos()  << "\t\t|"
-					<< consultado -> obtener_max_permitidos() - consultado -> obtener_construidos() << "\t\t|"
+	for(int i = 1; i <= this->lista_edificios.consulta_largo(); i++){
+		consultado = this->lista_edificios.consulta(i);
+		cout << '|' << consultado->obtener_nombre() << espaciado(consultado->obtener_nombre(), 21)
+				    << consultado->obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"
+					<< consultado->obtener_cant_material(MATERTIALES_EDIFICIOS[MADERA]) << "\t|"
+					<< consultado->obtener_cant_material(MATERTIALES_EDIFICIOS[METAL])  << "\t|"
+					<< consultado->obtener_construidos()  << "\t\t|"
+					<< consultado->obtener_max_permitidos() - consultado->obtener_construidos() << "\t\t|"
 					<< material_producido(consultado) << "\t\t|" << endl;
 	}
 }
@@ -59,10 +61,9 @@ string Planos::material_producido(Edificio* edificio){
 bool Planos::es_edificio_valido(string edificio){
 	bool encontrado = false;
 	int i = 1;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		if(this -> lista_edificios.consulta(i) -> obtener_nombre() == edificio){
+	while(!encontrado && i <= this->lista_edificios.consulta_largo()){
+		if(this->lista_edificios.consulta(i)->obtener_nombre() == edificio)
 			encontrado = true;
-		}
 		i++;
 	}
 	return encontrado;
@@ -72,11 +73,11 @@ int Planos::cant_max_edificio(string edificio){
 	bool encontrado = false;
 	int i = 1, resultado = -1;
 	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
+	while(!encontrado && i <= this->lista_edificios.consulta_largo()){
+		buscado = this->lista_edificios.consulta(i);
+		if(buscado->obtener_nombre() == edificio){
 			encontrado = true;
-			resultado = buscado -> obtener_max_permitidos();
+			resultado = buscado->obtener_max_permitidos();
 		}
 		i++;
 	}
@@ -87,27 +88,29 @@ Lista<Material>* Planos::materiales_necesarios(string edificio){
 	Lista<Material>* lista_materiales = new Lista<Material>;
 	bool encontrado = false;
 	int i = 1;
-		while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-			Edificio* buscado = this -> lista_edificios.consulta(i);
-			if(buscado -> obtener_nombre() == edificio){
-				encontrado = true;
-				for(int j = 0; j < CANT_MATERIALES_EDIFICIOS; j++)
-					lista_materiales -> alta(Material(MATERTIALES_EDIFICIOS[j], buscado -> obtener_cant_material(MATERTIALES_EDIFICIOS[j])), j+1);
-			}
-			i++;
+	Edificio* buscado;
+	while(!encontrado && i <= this->lista_edificios.consulta_largo()){
+		buscado = this->lista_edificios.consulta(i);
+		if(buscado->obtener_nombre() == edificio){
+			encontrado = true;
+			for(int j = 0; j < CANT_MATERIALES_EDIFICIOS; j++)
+				//What
+				lista_materiales->alta(Material(MATERTIALES_EDIFICIOS[j], buscado->obtener_cant_material(MATERTIALES_EDIFICIOS[j])), j+1);
 		}
-		return lista_materiales;
+		i++;
+	}
+	return lista_materiales;
 }
 
 void Planos::aumentar_construidos_edificio(string edificio){
 	bool encontrado = false;
 	int i = 1;
 	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
+	while(!encontrado && i <= this->lista_edificios.consulta_largo()){
+		 buscado = this->lista_edificios.consulta(i);
+		if(buscado->obtener_nombre() == edificio){
 			encontrado = true;
-			buscado -> modificar_construidos(buscado -> obtener_construidos() + 1);
+			buscado->aumentar_construidos();
 		}
 		i++;
 	}
@@ -117,11 +120,11 @@ void Planos::disminuir_construidos_edificio(string edificio){
 	bool encontrado = false;
 	int i = 1;
 	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
+	while(!encontrado && i <= this->lista_edificios.consulta_largo()){
+		 buscado = this->lista_edificios.consulta(i);
+		if(buscado->obtener_nombre() == edificio){
 			encontrado = true;
-			buscado -> modificar_construidos(buscado -> obtener_construidos() - 1);
+			buscado->disminuir_construidos();
 		}
 		i++;
 	}
@@ -129,9 +132,9 @@ void Planos::disminuir_construidos_edificio(string edificio){
 
 Resultado_Chequeos Planos::check_construir_edificio(string edificio){
 	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_edificio_valido(edificio))
+	if(!this->es_edificio_valido(edificio))
 		resultado = NO_EXISTE;
-	else if(this -> cant_construidos(edificio) >= this -> cant_max_edificio(edificio))
+	else if(this->cant_construidos(edificio) >= this->cant_max_edificio(edificio))
 		resultado = MAXIMA_CANTIDAD;
 	return resultado;
 }
@@ -141,11 +144,11 @@ int Planos::cant_construidos(string edificio){
 	int cantidad = NO_ENCONTRADO;
 	int i = 1;
 	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
+	while(!encontrado && i <= this->lista_edificios.consulta_largo()){
+		 buscado = this->lista_edificios.consulta(i);
+		if(buscado->obtener_nombre() == edificio){
 			encontrado = true;
-			cantidad = buscado -> obtener_construidos();
+			cantidad = buscado->obtener_construidos();
 		}
 		i++;
 	}
@@ -163,6 +166,7 @@ Lista<Material>* Planos::obtener_recursos_producidos(){
 		material_producido = edificio->producir_material();
 		//Si no tengo construidos, el material que se sume va a ser 0.
 		material_producido.cambiar_cantidad( material_producido.obtener_cantidad() * edificio->obtener_construidos());
+		//Comparador de Material.
 		if(material_producido.obtener_nombre() != "ninguno") //provisorio.
 			listado->alta(material_producido, ++agregados);
 	}
@@ -171,10 +175,11 @@ Lista<Material>* Planos::obtener_recursos_producidos(){
 }
 
 void Planos::mostrar_materiales_producidos(Lista<Material>* listado){
-	if(listado -> consulta_largo() > 0){
+	//Podria reemplazarse por simple while, pero como aviso cuando no hay edif productor?
+	if(listado->consulta_largo() > 0){
 		cout << "Se produjo: " << endl;
-		for(int i = 1; i <= listado -> consulta_largo(); i++){
-			Material material = listado -> consulta(i);
+		for(int i = 1; i <= listado->consulta_largo(); i++){
+			Material material = listado->consulta(i);
 			cout << "- " << material.obtener_cantidad() << " de " << material.obtener_nombre() << endl;
 		}
 	}else

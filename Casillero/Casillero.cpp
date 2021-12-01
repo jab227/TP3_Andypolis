@@ -1,6 +1,5 @@
 #include "Casillero.h"
 
-
 Casillero::Casillero() {
 	this -> color = "";
 }

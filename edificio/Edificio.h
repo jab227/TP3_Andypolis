@@ -47,10 +47,6 @@ public:
 	int obtener_max_permitidos();
 
 	//PRE: -
-	//POST: devuelve si el edificio produce material alguno.
-	virtual bool es_productor() = 0;
-
-	//PRE: -
 	//POST: imprime un mensaje por consola
 	virtual void saludar() = 0;
 

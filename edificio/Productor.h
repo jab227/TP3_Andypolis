@@ -20,10 +20,6 @@ public:
 	Material producir_material();
 
 	//PRE: -
-	//POST: devuelve si el edificio es productor o no. en este caso devuelve siempre true.
-	bool es_productor();
-
-	//PRE: -
 	//POST: Retorna el nombre y la cantidad del producto en un string.
 	string info_producto() override;
 };

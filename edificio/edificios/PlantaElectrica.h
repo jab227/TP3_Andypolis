@@ -1,9 +1,9 @@
 #ifndef EDIFICIOS_PLANTAELECTRICA_H_
 #define EDIFICIOS_PLANTAELECTRICA_H_
 
-#include "../NoProductor.h"
+#include "../Productor.h"
 
-class Planta_Electrica : public No_Productor{
+class Planta_Electrica : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una planta electrica vacia

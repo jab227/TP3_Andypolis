@@ -1,9 +1,9 @@
 #ifndef EDIFICIOS_ESCUELA_H_
 #define EDIFICIOS_ESCUELA_H_
 
-#include "../NoProductor.h"
+#include "../Productor.h"
 
-class Escuela : public No_Productor{
+class Escuela : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una escuela vacia

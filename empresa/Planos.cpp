@@ -51,17 +51,9 @@ void Planos::mostrar_edificios(){
 	}
 }
 
+
 string Planos::material_producido(Edificio* edificio){
-	string resultado;
-	if(edificio -> es_productor()){
-		resultado = to_string(edificio -> producir_material().obtener_cantidad());
-		resultado += " de ";
-		resultado += edificio -> producir_material().obtener_nombre();
-	}
-	else{
-		resultado = "ninguno";
-	}
-	return resultado;
+	return edificio->info_producto();
 }
 
 bool Planos::es_edificio_valido(string edificio){
@@ -165,16 +157,16 @@ Lista<Material>* Planos::obtener_recursos_producidos(){
 	Edificio* edificio;
 	Material material_producido;
 	int agregados = 0;
-	for(int i = 1; i <= this -> lista_edificios.consulta_largo(); i++){
-		edificio = this -> lista_edificios.consulta(i);
-		if(edificio -> es_productor() && edificio -> obtener_construidos() > 0){
-			material_producido = ((Productor*) edificio) ->  producir_material();
-			material_producido.cambiar_cantidad(material_producido.obtener_cantidad()*edificio -> obtener_construidos());
-			listado -> alta(material_producido, agregados+1);
-			agregados++;
-		}
+	for(int i = 1; i <= this->lista_edificios.consulta_largo(); i++){
+		edificio = this->lista_edificios.consulta(i);
+		//No necesito chequear si esta construido.
+		material_producido = edificio->producir_material();
+		//Si no tengo construidos, el material que se sume va a ser 0.
+		material_producido.cambiar_cantidad( material_producido.obtener_cantidad() * edificio->obtener_construidos());
+		if(material_producido.obtener_nombre() != "ninguno") //provisorio.
+			listado->alta(material_producido, ++agregados);
 	}
-	this -> mostrar_materiales_producidos(listado);
+	this->mostrar_materiales_producidos(listado);
 	return listado;
 }
 

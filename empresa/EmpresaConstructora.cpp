@@ -84,7 +84,9 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 }
 
 void Empresa_Constructora::sumar_contenido(string contenido, int fila, int columna){
-	if(this -> planos -> es_edificio_valido(contenido)){
+	//Arreglar. Liberar?
+	Edificio* edif;
+	if(this -> planos -> es_edificio_valido(contenido,edif)){
 		this -> mapa -> construir_edificio_ubicacion(contenido, fila, columna);
 		this -> planos -> aumentar_construidos_edificio(contenido);
 	}else
@@ -260,7 +262,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_posicion_libre(string fila_ingr
 	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada))
 		resultado = NO_EXISTE;
 	else{
-		resultado = this -> mapa -> chequeo_ubicar_edificio(stoi(fila_ingresada), stoi(columna_ingresada));
+		resultado = this->mapa->chequeo_ubicar_edificio(stoi(fila_ingresada), stoi(columna_ingresada));
 		if(resultado == EXITO){
 			fila = stoi(fila_ingresada);
 			columna = stoi(columna_ingresada);

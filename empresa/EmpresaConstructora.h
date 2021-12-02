@@ -59,7 +59,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
-	void mostrar_construidos(size_t jugador);
+	void mostrar_construidos(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se guardan los datos de los archivos de materiales y las ubicaciones

@@ -118,7 +118,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
             this -> empresa_constructora -> construir_edificio(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case LISTAR_CONSTRUIDOS:
-            this -> empresa_constructora -> mostrar_construidos(this -> jugador_activo);
+            this -> empresa_constructora -> mostrar_construidos(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case DEMOLER:
             this -> empresa_constructora -> demoler_edificio();

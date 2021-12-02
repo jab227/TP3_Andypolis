@@ -104,19 +104,14 @@ void Mapa::mostrar_mapa(){
 	cout << FIN_COLOR;
 }
 
-void Mapa::mostrar_construidos(size_t jugador){
+void Mapa::mostrar_construidos(Jugador* jugador){
 	Lista<string> lista_nombres;
 	Lista<Lista<int*>*> lista_coordenadas;
 	int* coordenadas;
-	for(int fila = 0; fila < this -> filas; fila++){
-		for(int columna = 0; columna < this -> columnas; columna++){
-			if(this -> terreno[fila][columna] -> es_casillero_construible() && this -> terreno[fila][columna] -> esta_ocupado()){
-				coordenadas = new int[2];
-				coordenadas[0] = fila;
-				coordenadas[1] = columna;
-				agregar_edificio_a_listas(this -> terreno[fila][columna], coordenadas, lista_nombres, lista_coordenadas);
-			}
-		}
+	for(int i = 1; i <= jugador -> obtener_largo_ubicaciones(); i++){
+		coordenadas = new int[2];
+		jugador -> obtener_ubicacion(i, coordenadas[0], coordenadas[1]);
+		agregar_edificio_a_listas(this -> terreno[coordenadas[0]][coordenadas[1]], coordenadas, lista_nombres, lista_coordenadas);
 	}
 	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
 }

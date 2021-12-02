@@ -40,7 +40,7 @@ void Empresa_Constructora::mostrar_mapa(){
 	this -> mapa -> mostrar_mapa();
 }
 
-void Empresa_Constructora::mostrar_construidos(size_t jugador){
+void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
 	this -> mapa -> mostrar_construidos(jugador);
 }
 

@@ -3,6 +3,7 @@
 
 #include <string>
 #include "../empresa/Almacen.h"
+#include "../utils/Lista.h"
 
 class Jugador {
 //Atributos
@@ -11,6 +12,8 @@ private:
 	int energia;
 	Almacen* inventario;
 	//objetivos
+	Lista<int> ubicaciones_fila;
+	Lista<int> ubicaciones_columna;
 //Metodos
 public:
 	Jugador(size_t jugador);
@@ -38,6 +41,14 @@ public:
 	//PRE: -
 	//POST: devuelve el inventario del jugador
 	Almacen* obtener_inventario();
+
+	void agregar_ubicacion(int fila, int columna);
+
+	int obtener_largo_ubicaciones();
+
+	void obtener_ubicacion(int ubicacion, int &fila, int &columna);
+
+	void eliminar_ubicacion(int fila, int columna);
 };
 
 #endif /* JUGADOR_JUGADOR_H_ */

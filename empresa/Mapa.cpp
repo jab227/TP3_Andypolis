@@ -74,6 +74,7 @@ Resultado_Chequeos Mapa::chequeo_ubicar_edificio(int fila, int columna){
 
 Resultado_Chequeos Mapa::chequeo_demoler_edificio(int fila, int columna, string &edificio){
 	Resultado_Chequeos resultado = EXITO;
+	//Rompe con el Tell Don't Ask.
 	if(!this -> es_cordenada_valida(fila, columna))
 		resultado = FUERA_RANGO;
 	else if(!(this -> terreno[fila][columna] -> es_casillero_construible()))
@@ -158,9 +159,9 @@ void Mapa::mostrar_posicion(int fila, int columna){
 	this -> terreno[fila][columna] -> saludar();
 }
 
-void Mapa::construir_edificio_ubicacion(string edificio, int fila, int columna){
+void Mapa::construir_edificio_ubicacion(Edificio* edificio, int fila, int columna){
 	( (Casillero_Construible*) this -> terreno[fila][columna] ) ->
-			construir_edificio(traductor_edificios(edificio, 0, 0, 0, 0));
+			construir_edificio(traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0));
 }
 
 string Mapa::demoler_edificio_ubicacion(int fila, int columna){

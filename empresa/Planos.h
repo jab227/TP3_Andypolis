@@ -39,11 +39,11 @@ public:
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
 	//construir el edificio solicitado.
-	Lista<Material>* materiales_necesarios(string edificio);
+	Lista<Material>* materiales_necesarios(Edificio* edificio);
 
 	//PRE: edificio es valido
 	//POST: aumenta 1 la cantidad del edificio construido
-	void aumentar_construidos_edificio(string edificio);
+	void aumentar_construidos_edificio(Edificio* edificio);
 
 	//PRE: edificio es valido
 	//POST: disminuye 1 la cantidad del edificio construido
@@ -51,7 +51,7 @@ public:
 
 	//PRE: edificio es valido
 	//POST: devuele si se puede construir, si no existe o se tiene la cantidad maxima construida.
-	Resultado_Chequeos check_construir_edificio(string edificio);
+	Resultado_Chequeos check_construir_edificio(string edificio, Edificio*& edif);
 
 	//PRE: -
 	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime

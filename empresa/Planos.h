@@ -32,7 +32,9 @@ public:
 
 	//PRE: -
 	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
-	bool es_edificio_valido(string edificio);
+	//bool es_edificio_valido(string edificio) y por interfaz carga un puntero a Edificio
+	// con el edificio de la lista.;
+	bool es_edificio_valido(string nombre_edificio, Edificio*& edificio);
 
 	//PRE: el edificio debe ser valido.
 	//POST: devuelve la cantidad maxima permitida para construir del edificio.

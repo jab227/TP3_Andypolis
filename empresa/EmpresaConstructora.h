@@ -83,13 +83,13 @@ private:
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
 	//devuelve false
-	string pedir_edificio();
+	Edificio* pedir_edificio();
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si no existe el edificio, si se llego a la maxima cantidad
 	//permitida del edificio, si no alcanzan los materiales o si no ocurre nada de lo anterior. en este
 	//ultimo caso, edificio se iguala a edificio_ingresado
-	Resultado_Chequeos chequeo_construir(string edificio_ingresado, string &edificio);
+	Resultado_Chequeos chequeo_construir(string& edificio_ingresado, Edificio* &edificio);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,
@@ -134,7 +134,7 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(string edificio, int fila, int columna);
+	void edificio_construido_confirmado(Edificio* edificio, int fila, int columna);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

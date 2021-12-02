@@ -84,13 +84,15 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 }
 
 void Empresa_Constructora::sumar_contenido(string contenido, int fila, int columna){
-	//Arreglar. Liberar?
-	Edificio* edif;
+	Edificio* edif = nullptr;
+	//Deberia tener una capa mas de abstraccion. Mapa agregar_ubicacion()?
 	if(this -> planos -> es_edificio_valido(contenido,edif)){
-		this -> mapa -> construir_edificio_ubicacion(contenido, fila, columna);
-		this -> planos -> aumentar_construidos_edificio(contenido);
+		this -> mapa -> construir_edificio_ubicacion(edif, fila, columna);
+		this -> planos -> aumentar_construidos_edificio(edif);
+		delete edif;
 	}else
 		this -> mapa -> poner_material_ubicacion(contenido, fila, columna);
+
 }
 
 void Empresa_Constructora::producir_recursos(){
@@ -112,11 +114,11 @@ void Empresa_Constructora::vaciar_materiales(){
 }
 
 void Empresa_Constructora::construir_edificio(){
-	string edificio = pedir_edificio();
+	Edificio* edificio = pedir_edificio();
 
-	if(edificio != EDIFICIO_VACIO){
+	if(edificio != nullptr){
 		//mostrar_materiales_a_usar(planos, almacen, edificio);
-		cout << "Desea realmente construir el edificio: " << edificio << "? [si/no]" << endl;
+		cout << "Desea realmente construir el edificio: " << edificio->obtener_nombre() << "? [si/no]" << endl;
 		string respuesta = pedir_si_no();
 		if(respuesta == SI){
 			int fila, columna;
@@ -126,33 +128,37 @@ void Empresa_Constructora::construir_edificio(){
 			}
 		}else
 			cout << "No se realizo ningun cambio." << endl;
+	delete edificio;
 	}
 }
 
+//Adaptar a Edificio*
 void Empresa_Constructora::demoler_edificio(){
 	int fila, columna;
 	string edificio = pedir_posicion_ocupada(fila, columna);
-
+	
 	if(edificio != EDIFICIO_VACIO){
+		Edificio* edif = traductor_edificios(edificio,0,0,0,0); //Provisorio
 		//mostrar_materiales_a_obtener(planos, almacen, edificio);
-		cout << "Desea realmente demoler el edificio: " << edificio << " ubicado en fila: " << fila
+		cout << "Desea realmente demoler el edificio: " << edif->obtener_nombre() << " ubicado en fila: " << fila
 			 << " y columna: " << columna << "? [si/no]" << endl;
 		string respuesta = pedir_si_no();
 		if(respuesta == SI){
-			Lista<Material>* listado_recuperado = planos -> materiales_necesarios(edificio);
+			Lista<Material>* listado_recuperado = planos -> materiales_necesarios(edif);
 			this -> almacen -> sumar_lista_materiales(listado_recuperado, true);
 			delete listado_recuperado;
 			this -> planos -> disminuir_construidos_edificio(edificio);
 			this -> mapa -> demoler_edificio_ubicacion(fila, columna);
-			cout << "Edificio demolido exitosamente!" << endl;
+			cout << "Edificio demolido exitosamente!" << endl;	
 		}
 		else
 			cout << "No se realizo ningun cambio." << endl;
+	delete edif; //Provisorio
 	}
 }
 
-string Empresa_Constructora::pedir_edificio(){
-	string edificio = EDIFICIO_VACIO;
+Edificio* Empresa_Constructora::pedir_edificio(){
+	Edificio* edificio = nullptr;
 	bool fin = false;
 	string edificio_ingresado;
 	Resultado_Chequeos chequeo;
@@ -185,6 +191,7 @@ bool Empresa_Constructora::pedir_posicion_libre(int &fila, int &columna){
 
 }
 
+//Ver si se puede pasar a Edificio*
 string Empresa_Constructora::pedir_posicion_ocupada(int &fila, int &columna){
 	fila = COORDENADA_VACIA;
 	columna = COORDENADA_VACIA;
@@ -222,18 +229,19 @@ void Empresa_Constructora::pedir_posicion(int &fila, int &columna){
 	while(!fin);
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_construir(string edificio_ingresado, string &edificio){
+Resultado_Chequeos Empresa_Constructora::chequeo_construir(string& edificio_ingresado, Edificio* &edificio){
 	Resultado_Chequeos resultado = EXITO;
 	if(edificio_ingresado == SALIR_STR)
 		resultado = SALIR;
 	else{
-		resultado = planos -> check_construir_edificio(edificio_ingresado);
+		resultado = planos -> check_construir_edificio(edificio_ingresado, edificio);
 		if(resultado == EXITO){
-			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio_ingresado);
+			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 			resultado = almacen -> hay_lista_materiales(listado_necesario);
 			delete listado_necesario;
-			if(resultado == EXITO)
-				edificio = edificio_ingresado;
+			//Es necesario?
+			if(resultado != EXITO)
+				edificio_ingresado == EDIFICIO_VACIO;
 		}
 	}
 	return resultado;
@@ -246,6 +254,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_demoler(string fila_ingresada, 
 	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada))
 		resultado = NO_EXISTE;
 	else{
+		//chequear coordenadas validas fuera?
 		resultado = this -> mapa -> chequeo_demoler_edificio(stoi(fila_ingresada), stoi(columna_ingresada), edificio);
 		if(resultado == EXITO){
 			fila = stoi(fila_ingresada);
@@ -262,7 +271,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_posicion_libre(string fila_ingr
 	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada))
 		resultado = NO_EXISTE;
 	else{
-		resultado = this->mapa->chequeo_ubicar_edificio(stoi(fila_ingresada), stoi(columna_ingresada));
+		resultado = this -> mapa -> chequeo_ubicar_edificio(stoi(fila_ingresada), stoi(columna_ingresada));
 		if(resultado == EXITO){
 			fila = stoi(fila_ingresada);
 			columna = stoi(columna_ingresada);
@@ -336,7 +345,7 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(string edificio, int fila, int columna){
+void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, int fila, int columna){
 	Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 	this -> almacen -> restar_lista_materiales(listado_necesario);
 	delete listado_necesario;

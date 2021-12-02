@@ -31,6 +31,10 @@ public:
 	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
 	//PRE: -
+	//POST: Sobreescribiendo el operador igual.
+	Edificio& operator=(const Edificio& rhs);
+
+	//PRE: -
 	//POST: ejecuta el destructor
 	virtual ~Edificio() = 0;
 
@@ -41,7 +45,7 @@ public:
 	//PRE: -
 	//POST: devuelve la cantidad del material ingresado requerido para construirlo. En caso de que
 	//no se requiera ese material, deuelve 0.
-	std::size_t obtener_cant_material(string material);
+	std::size_t obtener_cant_material(string material) const;
 
 	//PRE: -
 	//PORT: devuleve la cantidad de edificios maximos construidos.
@@ -80,16 +84,15 @@ public:
 	//POST: devuelve la cantidad de edificios construidos
 	std::size_t obtener_construidos();
 
-/*
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.
-	bool operator==(string rhs);
+	bool operator==(const Edificio &rhs);
 	
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.
-	bool operator!=(string rhs);
+	bool operator!=(const Edificio &rhs);
 
-*/
+
 };
 
 #endif /* EDIFICIO_H_ */

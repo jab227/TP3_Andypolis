@@ -27,7 +27,7 @@ string Edificio::obtener_nombre() const {
 	return this->nombre;
 }
 
-std::size_t Edificio::obtener_cant_material(string material){
+std::size_t Edificio::obtener_cant_material(string material) const{
 	std::size_t cantidad = 0, i = 0;
 	bool fin = false;
 	while(i < CANT_MATERIALES_EDIFICIOS && !fin){
@@ -71,7 +71,16 @@ std::size_t Edificio::obtener_construidos(){
 	return this->construidos;
 }
 
-/* Por ahora, inutiles
+Edificio& Edificio::operator=(const Edificio &rhs){
+	this->nombre = rhs.obtener_nombre();
+	this->materiales[PIEDRA] = rhs.obtener_cant_material("piedra");
+	this->materiales[MADERA] = rhs.obtener_cant_material("madera");
+	this->materiales[METAL] = rhs.obtener_cant_material("metal");
+	this->maximo_permitidos = rhs.maximo_permitidos;
+	this->construidos = rhs.construidos;
+	return *this;
+}
+
 bool Edificio::operator==(const Edificio &rhs){
 	return this->nombre == rhs.obtener_nombre();
 }
@@ -79,4 +88,3 @@ bool Edificio::operator==(const Edificio &rhs){
 bool Edificio::operator!=(const Edificio &rhs){
 	return this->nombre != rhs.obtener_nombre();
 }
-*/

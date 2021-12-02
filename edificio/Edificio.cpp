@@ -53,17 +53,17 @@ bool Edificio::vacio(){
 }
 
 void Edificio::modificar_construidos(std::size_t n){
-	if(n < this->maximo_permitidos)
+	if(n <= this->maximo_permitidos)
 		this->construidos = n;
+	//std::cout << "HOLAAAA" << std::endl;
 }
 
 void Edificio::aumentar_construidos(){
-	this->modificar_construidos(construidos + 1);
-
+	this->modificar_construidos(this -> construidos + 1);
 }
 
 void Edificio::disminuir_construidos(){
-	this->modificar_construidos(construidos - 1);	
+	this->modificar_construidos(this -> construidos - 1);	
 }
 
 

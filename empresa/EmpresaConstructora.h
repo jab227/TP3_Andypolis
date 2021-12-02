@@ -5,6 +5,11 @@
 #include "Planos.h"
 #include "../utils/Lista.h"
 #include "Mapa.h"
+#include "../jugador/Jugador.h"
+
+const int ENERGIA_CONSTRUIR = 15, ENERGIA_LISTAR_CONSTRUIDOS = 0, ENERGIA_DEMOLER = 15, ENERGIA_ATACAR = 30,
+		  ENERGIA_REPARAR = 25, ENERGIA_COMPRAR_BOMBAS = 5, ENERGIA_CONSULTAR = 0, ENERGIA_LISTAR_MATERIALES = 0,
+		  ENERGIA_OBJETIVOS = 0, ENERGIA_RECOLECTAR = 20, ENERGIA_MOVERSE = 0, ENERGIA_FIN_TURNO = 0, ENERGIA_GUARDAR_SALIR = 0;
 
 class Empresa_Constructora {
 //Atributos
@@ -27,9 +32,9 @@ public:
 	//POST: se libera la memoria utilizada
 	~Empresa_Constructora();
 
-	//PRE: los archivos deben estar cargados
+	//PRE: los archivos deben estar cargados y el jugador valido con la energia suficiente
 	//POST: se construye un edificio pidiendo al usuario en nombre y las coordenadas
-	void construir_edificio(size_t jugador);
+	void construir_edificio(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
@@ -54,7 +59,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
-	void mostrar_construidos();
+	void mostrar_construidos(size_t jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se guardan los datos de los archivos de materiales y las ubicaciones
@@ -71,6 +76,10 @@ public:
 	//PRE: los archivos deben estar cargados
 	//POST: se vacian los materiales del mapa
 	void vaciar_materiales();
+
+	//PRE: jugador debe ser un puntero valido
+	//POST: se compran las bombas pidiendo al usuario la cantidad
+	void comprar_bombas(Jugador* jugador);
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
@@ -139,7 +148,11 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(string edificio, int fila, int columna, size_t jugador);
+	void edificio_construido_confirmado(string edificio, int fila, int columna, Jugador* jugador);
+
+	int pedir_bombas_validas(Jugador* jugador);
+
+	Resultado_Chequeos chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

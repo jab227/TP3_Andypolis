@@ -25,3 +25,7 @@ int Jugador::energia_suficiente(int energia_necesaria){
 int Jugador::modificar_energia(int valor){
 	return this -> energia += valor;
 }
+
+Almacen* Jugador::obtener_inventario(){
+	return this -> inventario;
+}

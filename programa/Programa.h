@@ -2,6 +2,8 @@
 #define PROGRAMA_H_
 
 #include "../empresa/EmpresaConstructora.h"
+#include "../jugador/jugadores/JugadorUno.h"
+#include "../jugador/jugadores/JugadorDos.h"
 
 enum Instancia {INICIO, JUEGO};
 const int JUGADOR_UNO = 1, JUGADOR_DOS = 2;
@@ -12,6 +14,7 @@ private:
 	Empresa_Constructora* empresa_constructora;
 	Instancia instancia;
 	size_t jugador_activo;
+	Lista<Jugador*> jugadores;
 //Metodos:
 public:
 	//PRE: las rutas deben ser a archivos existentes y bien formados

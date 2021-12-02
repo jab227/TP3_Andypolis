@@ -85,7 +85,7 @@ Resultado_Chequeos Mapa::chequeo_demoler_edificio(int fila, int columna, string 
 }
 
 void Mapa::mostrar_mapa(){
-	cout << "El mapa del terreno es el siguiente:" << endl;
+	cout << "Mapa:" << endl;
 	cout << "   ";
 	for(int columnas = 0; columnas < this -> columnas; columnas++)
 		cout << ' ' << columnas/10 << ' ';
@@ -104,7 +104,7 @@ void Mapa::mostrar_mapa(){
 	cout << FIN_COLOR;
 }
 
-void Mapa::mostrar_construidos(){
+void Mapa::mostrar_construidos(size_t jugador){
 	Lista<string> lista_nombres;
 	Lista<Lista<int*>*> lista_coordenadas;
 	int* coordenadas;

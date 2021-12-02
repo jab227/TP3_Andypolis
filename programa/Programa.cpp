@@ -11,6 +11,11 @@ const int MODIFICAR_EDIFICIO = 1, LISTAR_EDIFICIOS = 2, MOSTRAR_MAPA = 3,
 		  COMENZAR = 4, GUARDAR_SALIR_INICIO = 5;
 const int OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO, OPCION_MAXIMA_INICIO = GUARDAR_SALIR_INICIO;
 
+const int ENERGIA_INICIAL = 50, ENERGIA_SUMADA_FIN_TURNO = 20;
+const int ENERGIA[] = {0, ENERGIA_CONSTRUIR, ENERGIA_LISTAR_CONSTRUIDOS, ENERGIA_DEMOLER, ENERGIA_ATACAR,
+		  ENERGIA_REPARAR, ENERGIA_COMPRAR_BOMBAS, ENERGIA_CONSULTAR, ENERGIA_LISTAR_MATERIALES,
+		  ENERGIA_OBJETIVOS, ENERGIA_RECOLECTAR, ENERGIA_MOVERSE, ENERGIA_FIN_TURNO, ENERGIA_GUARDAR_SALIR};
+
 Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaciones) {
 	this -> empresa_constructora = new Empresa_Constructora();
 	this -> instancia = INICIO;
@@ -18,10 +23,14 @@ Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_ma
 		this -> instancia = JUEGO;
 	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
 	this -> jugador_activo = rand() % 2 + 1;
+	this -> jugadores.alta_al_final(new Jugador_Uno());
+	this -> jugadores.alta_al_final(new Jugador_Dos());
 }
 
 Programa::~Programa() {
 	delete this -> empresa_constructora;
+	while(!this -> jugadores.vacia())
+		delete this -> jugadores.baja(1);
 }
 
 void Programa::mostrar_menu(){
@@ -66,8 +75,13 @@ bool Programa::procesar_opcion(int opcion){
 	bool resultado;
 	if(this -> instancia == INICIO)
 		resultado = this -> procesar_opcion_inicio(opcion);
-	else
-		resultado = this -> procesar_opcion_juego(opcion);
+	else{
+		int energia_restante = this -> jugadores.consulta((int) this -> jugador_activo) -> energia_suficiente(ENERGIA[opcion]);
+		if(energia_restante >= 0)
+			resultado = this -> procesar_opcion_juego(opcion);
+		else
+			cout << "Energia insuficiente, te faltan " << -energia_restante << " de energia para realizar esta accion." << endl;
+	}
 	return resultado;
 }
 
@@ -86,6 +100,8 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
         case COMENZAR:
             cout << "Comienza la partida!" << endl;
             this -> instancia = JUEGO;
+            this -> jugadores.consulta(1) -> modificar_energia(ENERGIA_INICIAL);
+            this -> jugadores.consulta(2) -> modificar_energia(ENERGIA_INICIAL);
             break;
         case GUARDAR_SALIR:
         	fin = true;
@@ -99,10 +115,10 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 	bool fin = false;
     switch (opcion_elegida) {
         case CONSTRUIR:
-            this -> empresa_constructora -> construir_edificio(this -> jugador_activo);
+            this -> empresa_constructora -> construir_edificio(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case LISTAR_CONSTRUIDOS:
-            this -> empresa_constructora -> mostrar_construidos();
+            this -> empresa_constructora -> mostrar_construidos(this -> jugador_activo);
             break;
         case DEMOLER:
             this -> empresa_constructora -> demoler_edificio();
@@ -114,7 +130,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
         	cout << "Implementar reparar!" << endl;
 			break;
         case COMPRAR_BOMBAS:
-        	cout << "Implementar comprar bombas!" << endl;
+        	this -> empresa_constructora -> comprar_bombas(this -> jugadores.consulta((int) this -> jugador_activo));
 			break;
         case CONSULTAR:
         	this -> empresa_constructora -> mostrar_coordenada();
@@ -134,6 +150,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
         case FIN_TURNO:
 			cout << "Turno del jugador " << this -> jugador_activo << " finalizado." << endl;
+			this -> jugadores.consulta((int) this -> jugador_activo) -> modificar_energia(ENERGIA_SUMADA_FIN_TURNO);
 			this -> jugador_activo = 3 - this -> jugador_activo;   //Cambio de jugador activo
 			break;
         case GUARDAR_SALIR:

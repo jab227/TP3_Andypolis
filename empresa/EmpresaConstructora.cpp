@@ -3,7 +3,7 @@
 #include "../utils/LecturaArchivos.h"
 
 string const SALIR_STR = "salir", SI = "si", NO = "no";
-const int COORDENADA_VACIA = -1;
+const int COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
 
 
 Empresa_Constructora::Empresa_Constructora(){
@@ -40,8 +40,8 @@ void Empresa_Constructora::mostrar_mapa(){
 	this -> mapa -> mostrar_mapa();
 }
 
-void Empresa_Constructora::mostrar_construidos(){
-	this -> mapa -> mostrar_construidos();
+void Empresa_Constructora::mostrar_construidos(size_t jugador){
+	this -> mapa -> mostrar_construidos(jugador);
 }
 
 void Empresa_Constructora::mostrar_coordenada(){
@@ -122,7 +122,7 @@ void Empresa_Constructora::vaciar_materiales(){
 	cout << "Mapa limpiado de materiales!" << endl;
 }
 
-void Empresa_Constructora::construir_edificio(size_t jugador){
+void Empresa_Constructora::construir_edificio(Jugador* jugador){
 	string edificio = pedir_edificio();
 
 	if(edificio != EDIFICIO_VACIO){
@@ -347,10 +347,52 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(string edificio, int fila, int columna, size_t jugador){
+void Empresa_Constructora::edificio_construido_confirmado(string edificio, int fila, int columna, Jugador* jugador){
 	Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 	this -> almacen -> restar_lista_materiales(listado_necesario);
 	delete listado_necesario;
 	this -> planos -> aumentar_construidos_edificio(edificio);
-	this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna, jugador);
+	this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna, jugador -> obtener_jugador());
+	jugador -> modificar_energia(-ENERGIA_CONSTRUIR);
+}
+
+void Empresa_Constructora::comprar_bombas(Jugador* jugador){
+	int bombas = this -> pedir_bombas_validas(jugador);
+
+	if(bombas != BOMBAS_VACIAS){
+		cout << "Compraste " << bombas << " bombas exitosamente."  << endl;
+		jugador -> obtener_inventario() -> modificar_cantidad_material("bombas", bombas);
+		jugador -> obtener_inventario() -> modificar_cantidad_material("andycoins", -bombas * COSTO_BOMBAS);
+		cout << "Te quedan " << jugador -> obtener_inventario() -> buscar_material("andycoins") << " andycoins." << endl;
+	}
+}
+
+int Empresa_Constructora::pedir_bombas_validas(Jugador* jugador){
+	int bombas = BOMBAS_VACIAS, bombas_comprables = jugador -> obtener_inventario() -> buscar_material("andycoins") % COSTO_BOMBAS;
+	bool fin = false;
+	string bombas_ingresadas;
+	Resultado_Chequeos chequeo;
+	do{
+		cout << "Se pueden comprar " << bombas_comprables << " bombas." << endl;
+		cout << "Ingresa la cantidad de bombas que queres comprar o salir" << endl << "Bombas: ";
+		getline(cin, bombas_ingresadas);
+		chequeo = this -> chequeo_bombas(bombas_ingresadas, bombas_comprables, bombas);
+		fin = this -> mostrar_mensaje_chequeo(chequeo);
+	}
+	while(!fin);
+	return bombas;
+}
+
+Resultado_Chequeos Empresa_Constructora::chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas){
+	Resultado_Chequeos resultado = EXITO;
+	if(bombas_ingresadas == SALIR_STR)
+		resultado = SALIR;
+	else if(!es_numero(bombas_ingresadas) || stoi(bombas_ingresadas) < 0)
+		resultado = NO_EXISTE;
+	else if(stoi(bombas_ingresadas) > bombas_comprables)
+		resultado = NO_MATERIALES;
+	else{
+		bombas = stoi(bombas_ingresadas);
+	}
+	return resultado;
 }

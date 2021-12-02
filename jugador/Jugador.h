@@ -34,6 +34,10 @@ public:
 	//POST: se modifica el valor de la energia, si el numero es positivo se suma y si es negativo
 	//se resta dicho valor. Devuelve la energia resultante.
 	int modificar_energia(int valor);
+
+	//PRE: -
+	//POST: devuelve el inventario del jugador
+	Almacen* obtener_inventario();
 };
 
 #endif /* JUGADOR_JUGADOR_H_ */

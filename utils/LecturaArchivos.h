@@ -3,7 +3,7 @@
 
 #include <string>
 #include "../edificio/Edificio.h"
-#include "../casillero/Casillero.h"
+#include "../Casillero/Casillero.h"
 
 using namespace std;
 

@@ -14,62 +14,67 @@ private:
 	Mapa* mapa;
 //Metodos
 public:
-	//PRE: las rutas deben ser validas a archivos existentes.
-	//POST: se inicializan los atributos con las rutas ingresadas.
-	Empresa_Constructora(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones);
+	//PRE: -
+	//POST: se crea una empresa constructora vacia.
+	Empresa_Constructora();
+
+	//PRE: las rutas del mapa y edificios deben ser a archivos existentes.
+	//POST: se inicializan los atributos con las rutas ingresadas y devuelve true si el archivo de ubicaciones
+	//existe y no esta vacio, devuelve false en caso contrario.
+	bool cargar_archivos(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada
 	~Empresa_Constructora();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se construye un edificio pidiendo al usuario en nombre y las coordenadas
 	void construir_edificio();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
 	void demoler_edificio();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios existentes junto con sus materiales requeridos para
 	//construirlo, la cantidad construida y los que se pueden construir
 	void mostrar_edificios();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los materiales disponibles en el stock del almacen
 	void mostrar_materiales();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestra el mapa de terrenos y el de los edificios/materiales ubicados en mapa
 	void mostrar_mapa();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
 	void mostrar_coordenada();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
 	void mostrar_construidos();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se guardan los datos de los archivos de materiales y las ubicaciones
 	void guardar_archivos(string ruta_materiales, string ruta_ubicaciones);
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se suman al almacen los recursos producidos por los edificios
 	void producir_recursos();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se generan materiales aleatorios en caminos aleatorios del mapa
 	void lluvia_de_recursos();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se vacian los materiales del mapa
 	void vaciar_materiales();
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
-	void cargar_ubicaciones(string ruta);
+	bool cargar_ubicaciones(string ruta);
 
 	//PRE: ruta debe ser la ruta a un archivo existente. el mapa debe estar cargado.
 	//POST: se guardan la informacion de las ubicaciones en el archivo.

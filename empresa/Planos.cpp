@@ -77,7 +77,7 @@ int Planos::cant_max_edificio(string edificio){
 		buscado = this->lista_edificios.consulta(i);
 		if(buscado->obtener_nombre() == edificio){
 			encontrado = true;
-			resultado = buscado->obtener_max_permitidos();
+			resultado = (int) buscado->obtener_max_permitidos();
 		}
 		i++;
 	}
@@ -95,7 +95,7 @@ Lista<Material>* Planos::materiales_necesarios(string edificio){
 			encontrado = true;
 			for(int j = 0; j < CANT_MATERIALES_EDIFICIOS; j++)
 				//What
-				lista_materiales->alta(Material(MATERTIALES_EDIFICIOS[j], buscado->obtener_cant_material(MATERTIALES_EDIFICIOS[j])), j+1);
+				lista_materiales->alta(Material(MATERTIALES_EDIFICIOS[j], (int) buscado->obtener_cant_material(MATERTIALES_EDIFICIOS[j])), j+1);
 		}
 		i++;
 	}
@@ -148,7 +148,7 @@ int Planos::cant_construidos(string edificio){
 		 buscado = this->lista_edificios.consulta(i);
 		if(buscado->obtener_nombre() == edificio){
 			encontrado = true;
-			cantidad = buscado->obtener_construidos();
+			cantidad = (int) buscado->obtener_construidos();
 		}
 		i++;
 	}
@@ -165,7 +165,7 @@ Lista<Material>* Planos::obtener_recursos_producidos(){
 		//No necesito chequear si esta construido.
 		material_producido = edificio->producir_material();
 		//Si no tengo construidos, el material que se sume va a ser 0.
-		material_producido.cambiar_cantidad( material_producido.obtener_cantidad() * edificio->obtener_construidos());
+		material_producido.cambiar_cantidad( (int) (material_producido.obtener_cantidad() * edificio->obtener_construidos()));
 		//Comparador de Material.
 		if(material_producido.obtener_nombre() != "ninguno") //provisorio.
 			listado->alta(material_producido, ++agregados);

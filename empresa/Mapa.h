@@ -3,7 +3,7 @@
 
 #include "../edificio/Edificio.h"
 #include "../material/Material.h"
-#include "../casillero/Casillero.h"
+#include "../Casillero/Casillero.h"
 #include "../utils/Lista.h"
 
 class Mapa {

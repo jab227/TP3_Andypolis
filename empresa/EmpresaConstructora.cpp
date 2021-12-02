@@ -6,17 +6,26 @@ string const SALIR_STR = "salir", SI = "si", NO = "no";
 const int COORDENADA_VACIA = -1;
 
 
-Empresa_Constructora::Empresa_Constructora(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones){
-	this -> almacen = new Almacen(ruta_materiales);
-	this -> planos = new Planos(ruta_edificios);
-	this -> mapa = new Mapa(ruta_mapa);
-	this -> cargar_ubicaciones(ruta_ubicaiones);
+Empresa_Constructora::Empresa_Constructora(){
+	this -> almacen = nullptr;
+	this -> planos = nullptr;
+	this -> mapa = nullptr;
 }
 
 Empresa_Constructora::~Empresa_Constructora() {
-	delete this -> almacen;
-	delete this -> planos;
-	delete this -> mapa;
+	if(almacen != nullptr)
+		delete this -> almacen;
+	if(planos != nullptr)
+		delete this -> planos;
+	if(mapa != nullptr)
+		delete this -> mapa;
+}
+
+bool Empresa_Constructora::cargar_archivos(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones){
+	this -> almacen = new Almacen(ruta_materiales);
+	this -> planos = new Planos(ruta_edificios);
+	this -> mapa = new Mapa(ruta_mapa);
+	return this -> cargar_ubicaciones(ruta_ubicaiones);
 }
 
 void Empresa_Constructora::mostrar_materiales(){
@@ -49,7 +58,8 @@ void Empresa_Constructora::guardar_archivos(string ruta_materiales, string ruta_
 	this -> guardar_ubicaciones(ruta_ubicaciones);
 }
 
-void Empresa_Constructora::cargar_ubicaciones(string ruta){
+bool Empresa_Constructora::cargar_ubicaciones(string ruta){
+	bool existe = false;
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
 		string lectura;
@@ -59,9 +69,11 @@ void Empresa_Constructora::cargar_ubicaciones(string ruta){
 			nuevo_contenido = procesar_ubicacion(lectura, fila, columna);
 			sumar_contenido(nuevo_contenido, fila, columna);
 			cant_agregados++;
+			existe = true;
 		}
 	}
 	archivo.close();
+	return existe;
 }
 
 void Empresa_Constructora::guardar_ubicaciones(string ruta){

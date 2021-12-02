@@ -7,9 +7,9 @@
 #include "../edificio/edificios/Escuela.h"
 #include "../edificio/edificios/Obelisco.h"
 #include "../edificio/edificios/PlantaElectrica.h"
-#include "../casillero/CasilleroTransitable.h"
-#include "../casillero/CasilleroConstruible.h"
-#include "../casillero/CasilleroInaccesible.h"
+#include "../Casillero/CasilleroTransitable.h"
+#include "../Casillero/CasilleroConstruible.h"
+#include "../Casillero/CasilleroInaccesible.h"
 
 //PRE: -
 //POST: parte la linea en el delimitador, devuelve la primera mitad por la salida y la segunda mitad

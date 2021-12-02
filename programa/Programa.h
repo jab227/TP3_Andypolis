@@ -3,10 +3,13 @@
 
 #include "../empresa/EmpresaConstructora.h"
 
+enum Instancia {INICIO, JUEGO};
+
 class Programa {
 //Atributos:
 private:
 	Empresa_Constructora* empresa_constructora;
+	Instancia instancia;
 //Metodos:
 public:
 	//PRE: las rutas deben ser a archivos existentes y bien formados
@@ -18,15 +21,15 @@ public:
 	~Programa();
 
 	//PRE: -
-	//POST: muestra el menu por terminal
+	//POST: muestra el menu del juego por terminal segun si es el inicio o en el juego
 	void mostrar_menu();
 
 	//PRE: la opcion debe ser valida
-	//POST: se pocesa la opcion ingresada
+	//POST: se pocesa la opcion ingresada segun si es el inicio o en el juego
 	bool procesar_opcion(int opcion_elegida);
 
 	//PRE: -
-	//POST: devuelve si la opcion ingresada es valida
+	//POST: devuelve si la opcion ingresada es valida segun si es el inicio o dentro del juego
 	bool es_opcion_valida(string opcion);
 
 	//PRE: -
@@ -36,6 +39,23 @@ public:
 	//PRE: las rutas deben ser a archivos existentes
 	//POST: se guardan los cambios modificados
 	void guardar_archivos(string ruta_materiales, string ruta_ubicaciones);
+
+private:
+	//PRE: -
+	//POST: muestra el menu del juego por terminal
+	void mostrar_menu_juego();
+
+	//PRE: -
+	//POST: muestra el menu de inicio de partida por terminal
+	void mostrar_menu_inicio();
+
+	//PRE: la opcion debe ser valida
+	//POST: se pocesa la opcion ingresada
+	bool procesar_opcion_juego(int opcion_elegida);
+
+	//PRE: la opcion debe ser valida
+	//POST: se pocesa la opcion ingresada
+	bool procesar_opcion_inicio(int opcion_elegida);
 };
 
 #endif /* PROGRAMA_H_ */

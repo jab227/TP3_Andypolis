@@ -81,6 +81,10 @@ Edificio& Edificio::operator=(const Edificio &rhs){
 	return *this;
 }
 
+bool Edificio::esta_maxima_capacidad(){
+	return this->construidos >= this->maximo_permitidos;
+}
+
 bool Edificio::operator==(const Edificio &rhs){
 	return this->nombre == rhs.obtener_nombre();
 }

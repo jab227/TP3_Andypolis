@@ -59,6 +59,9 @@ public:
 	//POST: devuelve si el edificio es vacio
 	bool vacio();
 
+	//PRE: -
+	//POST: devuelve true si los construidos es igual o mayor a los permitidos.
+	bool esta_maxima_capacidad();
 	//PRE -
 	//POST: devuelve el material producido por el edficio en caso de que sea un productor. Devuelve un
 	//material vacio en caso contratrio.

@@ -36,14 +36,6 @@ public:
 	// con el edificio de la lista.;
 	bool es_edificio_valido(string nombre_edificio, Edificio*& edificio);
 
-	//PRE: el edificio debe ser valido.
-	//POST: devuelve la cantidad maxima permitida para construir del edificio.
-	int cant_max_edificio(string edificio);
-
-	//PRE: el edificio debe ser valido.
-	//POST: devuelve cuantos edificios hay construidos de este tipo.
-	int cant_construidos(string edificio);
-
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
 	//construir el edificio solicitado.

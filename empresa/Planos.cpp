@@ -72,7 +72,7 @@ bool Planos::es_edificio_valido(string nombre_edificio, Edificio*& edificio){
 	} 
 	return encontrado;
 }
-
+/*
 int Planos::cant_max_edificio(string edificio){
 	bool encontrado = false;
 	int i = 1, resultado = -1;
@@ -87,7 +87,7 @@ int Planos::cant_max_edificio(string edificio){
 	}
 	return resultado;
 }
-
+*/
 Lista<Material>* Planos::materiales_necesarios(string edificio){
 	Lista<Material>* lista_materiales = new Lista<Material>;
 	bool encontrado = false;
@@ -136,17 +136,16 @@ void Planos::disminuir_construidos_edificio(string edificio){
 
 Resultado_Chequeos Planos::check_construir_edificio(string edificio){
 	Resultado_Chequeos resultado = EXITO;
-	//ACtualizar .h
 	Edificio* edif;
 	if(!this->es_edificio_valido(edificio, edif))
 		resultado = NO_EXISTE;
-	else if(edif->obtener_construidos() >= edif->obtener_construidos())
+	else if(edif->esta_maxima_capacidad())
 		resultado = MAXIMA_CANTIDAD;
 
 	delete edif;
 	return resultado;
 }
-
+/*
 int Planos::cant_construidos(string edificio){
 	bool encontrado = false;
 	int cantidad = NO_ENCONTRADO;
@@ -163,6 +162,7 @@ int Planos::cant_construidos(string edificio){
 	return cantidad;
 }
 
+*/
 Lista<Material>* Planos::obtener_recursos_producidos(){
 	Lista<Material>* listado = new Lista<Material>;
 	Edificio* edificio;

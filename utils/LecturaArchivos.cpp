@@ -56,7 +56,7 @@ Edificio* procesar_edificio(string linea){
 }
 
 Edificio* traductor_edificios(string nombre, int piedra, int madera, int metal, int max_permitidos){
-	Edificio* edificio;
+	Edificio* edificio = nullptr;
 	if(nombre == "mina")
 		edificio = new Mina(piedra, madera, metal, max_permitidos);
 	else if (nombre == "aserradero")

@@ -19,7 +19,7 @@ Mapa::Mapa(string ruta) {
 	this -> filas = 0;
 	this -> terreno = nullptr;
 	this -> cargar_terreno(ruta);
-	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
+	srand((unsigned int) time(0)); 	//Genero una semilla aleatoria
 }
 
 Mapa::~Mapa() {

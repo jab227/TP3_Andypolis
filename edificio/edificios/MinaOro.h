@@ -1,7 +1,7 @@
 #ifndef EDIFICIOS_MINAORO_H_
 #define EDIFICIOS_MINAORO_H_
 
-#include "./Productor.h"
+#include "../Productor.h"
 
 class Mina_Oro : public Productor{
 public:

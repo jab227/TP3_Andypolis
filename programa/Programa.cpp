@@ -16,6 +16,8 @@ Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_ma
 	this -> instancia = INICIO;
 	if(this -> empresa_constructora -> cargar_archivos(ruta_materiales, ruta_edificios, ruta_mapa, ruta_ubicaciones))
 		this -> instancia = JUEGO;
+	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
+	this -> jugador_activo = rand() % 2 + 1;
 }
 
 Programa::~Programa() {
@@ -97,7 +99,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 	bool fin = false;
     switch (opcion_elegida) {
         case CONSTRUIR:
-            this -> empresa_constructora -> construir_edificio();
+            this -> empresa_constructora -> construir_edificio(this -> jugador_activo);
             break;
         case LISTAR_CONSTRUIDOS:
             this -> empresa_constructora -> mostrar_construidos();
@@ -131,7 +133,8 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			cout << "Implementar moverse!" << endl;
 			break;
         case FIN_TURNO:
-			cout << "Implementar fin turno!" << endl;
+			cout << "Turno del jugador " << this -> jugador_activo << " finalizado." << endl;
+			this -> jugador_activo = 3 - this -> jugador_activo;   //Cambio de jugador activo
 			break;
         case GUARDAR_SALIR:
         	fin = true;

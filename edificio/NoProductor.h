@@ -11,7 +11,7 @@ public:
 
 	//PRE: -
 	//POST: se construye un edificio con los datos ingresados que no produce nada
-	No_Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos);
+	No_Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos, std::size_t propietario);
 
 	//PRE: -
 	//POST: dado que no es un productor devuelve un material vacio

@@ -27,11 +27,11 @@ void cargar_fila_columna(string linea, int &filas, int &columnas);
 
 //PRE: linea debe tener el formato valido para las ubicaciones
 //POST: devuelve el edificio referido en la linea y fila y columna se igualan a la posicion del edificio
-string procesar_ubicacion(string linea, int &fila, int &columna);
+string procesar_ubicacion(string linea, int &fila, int &columna, size_t &propietario);
 
 //PRE: nombre debe ser un edificio valido
 //POST: devuelve el edificio cargado con los datos
-Edificio* traductor_edificios(string nombre, int piedra, int madera, int metal, int max_permitidos);
+Edificio* traductor_edificios(string nombre, int piedra, int madera, int metal, int max_permitidos, size_t propietario);
 
 //PRE: nombre debe corresponder a un casillero
 //POST: se devuelve el casillero vacio correspondiente a nombre creado en memoria dinamica

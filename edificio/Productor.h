@@ -13,7 +13,7 @@ public:
 
 	//PRE: -
 	//POST: se construye un edificio productor con los datos ingresados
-	Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos, Material producto);
+	Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos, Material producto, std::size_t propietario);
 
 	//PRE: -
 	//POST: devuelve el material que produce este edificio

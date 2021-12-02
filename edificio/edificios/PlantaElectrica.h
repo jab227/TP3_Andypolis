@@ -7,11 +7,11 @@ class Planta_Electrica : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una planta electrica vacia
-	Planta_Electrica();
+	Planta_Electrica(std::size_t propietario);
 
 	//PRE: -
 	//POST: se construye una planta electrica con los datos ingresados
-	Planta_Electrica(int piedra, int madera, int metal, int maximo_permitidos);
+	Planta_Electrica(int piedra, int madera, int metal, int maximo_permitidos, std::size_t propietario);
 
 	//PRE: -
 	//POST: imprime un mensaje por consola

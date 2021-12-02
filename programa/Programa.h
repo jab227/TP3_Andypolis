@@ -4,12 +4,14 @@
 #include "../empresa/EmpresaConstructora.h"
 
 enum Instancia {INICIO, JUEGO};
+const int JUGADOR_UNO = 1, JUGADOR_DOS = 2;
 
 class Programa {
 //Atributos:
 private:
 	Empresa_Constructora* empresa_constructora;
 	Instancia instancia;
+	size_t jugador_activo;
 //Metodos:
 public:
 	//PRE: las rutas deben ser a archivos existentes y bien formados

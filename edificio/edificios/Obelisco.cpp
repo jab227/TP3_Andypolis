@@ -3,11 +3,11 @@
 
 const string NOMBRE = "obelisco";
 
-Obelisco::Obelisco() : No_Productor(NOMBRE, 0, 0, 0, 0){
+Obelisco::Obelisco(std::size_t propietario) : No_Productor(NOMBRE, 0, 0, 0, 0, propietario){
 }
 
-Obelisco::Obelisco(int piedra, int madera, int metal, int maximo_permitidos):
-	No_Productor(NOMBRE, piedra, madera, metal, maximo_permitidos){
+Obelisco::Obelisco(int piedra, int madera, int metal, int maximo_permitidos, std::size_t propietario):
+	No_Productor(NOMBRE, piedra, madera, metal, maximo_permitidos, propietario){
 
 }
 

@@ -8,11 +8,11 @@ class Fabrica : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una fabrica vacia
-	Fabrica();
+	Fabrica(std::size_t propietario);
 
 	//PRE: -
 	//POST: se construye una fabrica con los datos ingresados
-	Fabrica(int piedra, int madera, int metal, int maximo_permitidos);
+	Fabrica(int piedra, int madera, int metal, int maximo_permitidos, std::size_t propietario);
 
 	//PRE: -
 	//POST: imprime un mensaje por consola

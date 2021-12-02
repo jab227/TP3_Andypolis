@@ -8,15 +8,17 @@ Edificio::Edificio() {
 	this->materiales[2] = 0;
 	this->maximo_permitidos = 0;
 	this->construidos = 0;
+	this->propietario = 0;
 }
 
-Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos){
+Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario){
 	this->nombre = nombre;
 	this->materiales[PIEDRA] = piedra;
 	this->materiales[MADERA] = madera;
 	this->materiales[METAL] = metal;
 	this->maximo_permitidos = maximo_permitidos;
 	this->construidos = 0;
+	this->propietario = propietario;
 }
 
 Edificio::~Edificio(){
@@ -69,6 +71,10 @@ void Edificio::disminuir_construidos(){
 
 std::size_t Edificio::obtener_construidos(){
 	return this->construidos;
+}
+
+std::size_t Edificio::obtener_propietario(){
+	return this->propietario;
 }
 
 /* Por ahora, inutiles

@@ -50,7 +50,7 @@ public:
 
 	//PRE: el edificio y la posicion deben ser validos y el casillero estar vacio
 	//POST: se construye el edificio en la posicion ingresada
-	void construir_edificio_ubicacion(string edificio, int fila, int columna);
+	void construir_edificio_ubicacion(string edificio, int fila, int columna, size_t propietario);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
 	//POST: se elimina el edificio de esa posicion y se devuelve el edificio demolido

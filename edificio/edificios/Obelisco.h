@@ -7,11 +7,11 @@ class Obelisco : public No_Productor{
 public:
 	//PRE: -
 	//POST: se construye un obelisco vacio
-	Obelisco();
+	Obelisco(std::size_t propietario);
 
 	//PRE: -
 	//POST: se construye un obelisco con los datos ingresados
-	Obelisco(int piedra, int madera, int metal, int maximo_permitidos);
+	Obelisco(int piedra, int madera, int metal, int maximo_permitidos, std::size_t propietario);
 
 	//PRE: -
 	//POST: imprime un mensaje por consola

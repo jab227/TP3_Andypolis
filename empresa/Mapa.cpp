@@ -19,7 +19,6 @@ Mapa::Mapa(string ruta) {
 	this -> filas = 0;
 	this -> terreno = nullptr;
 	this -> cargar_terreno(ruta);
-	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
 }
 
 Mapa::~Mapa() {
@@ -158,9 +157,9 @@ void Mapa::mostrar_posicion(int fila, int columna){
 	this -> terreno[fila][columna] -> saludar();
 }
 
-void Mapa::construir_edificio_ubicacion(string edificio, int fila, int columna){
+void Mapa::construir_edificio_ubicacion(string edificio, int fila, int columna, size_t propietario){
 	( (Casillero_Construible*) this -> terreno[fila][columna] ) ->
-			construir_edificio(traductor_edificios(edificio, 0, 0, 0, 0));
+			construir_edificio(traductor_edificios(edificio, 0, 0, 0, 0, propietario));
 }
 
 string Mapa::demoler_edificio_ubicacion(int fila, int columna){

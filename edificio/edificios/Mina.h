@@ -7,11 +7,11 @@ class Mina : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una mina vacio
-	Mina();
+	Mina(std::size_t propietario);
 
 	//PRE: -
 	//POST: se construye una mina con los datos ingresados aserradero vacio
-	Mina(int piedra, int madera, int metal, int maximo_permitidos);
+	Mina(int piedra, int madera, int metal, int maximo_permitidos, std::size_t propietario);
 
 	//PRE: -
 	//POST: imprime un mensaje por consola

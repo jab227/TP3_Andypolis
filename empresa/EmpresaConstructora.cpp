@@ -64,10 +64,11 @@ bool Empresa_Constructora::cargar_ubicaciones(string ruta){
 	if (archivo.is_open()){
 		string lectura;
 		int cant_agregados = 0, fila, columna;
+		size_t propietario;
 		string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
-			nuevo_contenido = procesar_ubicacion(lectura, fila, columna);
-			sumar_contenido(nuevo_contenido, fila, columna);
+			nuevo_contenido = procesar_ubicacion(lectura, fila, columna, propietario);
+			sumar_contenido(nuevo_contenido, fila, columna, propietario);
 			cant_agregados++;
 			existe = true;
 		}
@@ -95,9 +96,9 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido, int fila, int columna){
+void Empresa_Constructora::sumar_contenido(string contenido, int fila, int columna, size_t propietario){
 	if(this -> planos -> es_edificio_valido(contenido)){
-		this -> mapa -> construir_edificio_ubicacion(contenido, fila, columna);
+		this -> mapa -> construir_edificio_ubicacion(contenido, fila, columna, propietario);
 		this -> planos -> aumentar_construidos_edificio(contenido);
 	}else
 		this -> mapa -> poner_material_ubicacion(contenido, fila, columna);
@@ -121,7 +122,7 @@ void Empresa_Constructora::vaciar_materiales(){
 	cout << "Mapa limpiado de materiales!" << endl;
 }
 
-void Empresa_Constructora::construir_edificio(){
+void Empresa_Constructora::construir_edificio(size_t jugador){
 	string edificio = pedir_edificio();
 
 	if(edificio != EDIFICIO_VACIO){
@@ -131,7 +132,7 @@ void Empresa_Constructora::construir_edificio(){
 		if(respuesta == SI){
 			int fila, columna;
 			if(this -> pedir_posicion_libre(fila, columna)){
-				this -> edificio_construido_confirmado(edificio, fila, columna);
+				this -> edificio_construido_confirmado(edificio, fila, columna, jugador);
 				cout << "Edificio construido exitosamente!" << endl;
 			}
 		}else
@@ -346,10 +347,10 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(string edificio, int fila, int columna){
+void Empresa_Constructora::edificio_construido_confirmado(string edificio, int fila, int columna, size_t jugador){
 	Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 	this -> almacen -> restar_lista_materiales(listado_necesario);
 	delete listado_necesario;
 	this -> planos -> aumentar_construidos_edificio(edificio);
-	this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna);
+	this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna, jugador);
 }

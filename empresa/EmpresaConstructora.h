@@ -29,7 +29,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se construye un edificio pidiendo al usuario en nombre y las coordenadas
-	void construir_edificio();
+	void construir_edificio(size_t jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
@@ -83,7 +83,7 @@ private:
 	//PRE: la linea debe estar bien formada con la ubicacion de un edificio o material. fila y columna
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
-	void sumar_contenido(string linea, int fila, int columna);
+	void sumar_contenido(string linea, int fila, int columna, size_t propietario);
 
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
@@ -139,7 +139,7 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(string edificio, int fila, int columna);
+	void edificio_construido_confirmado(string edificio, int fila, int columna, size_t jugador);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

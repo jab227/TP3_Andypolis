@@ -44,6 +44,11 @@ string Casillero_Transitable::obtener_contenido(){
 	return nombre;
 }
 
+Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas){
+	delete[] coordenadas;
+	Edificio* edificio = nullptr;
+	return edificio;
+}
 
 bool Casillero_Transitable::construir_edificio(Edificio* edificio){
 	cout <<  "La ubicacion ingresada no es construible." << endl;

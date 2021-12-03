@@ -52,13 +52,13 @@ string Casillero_Construible::obtener_contenido(){
 	return nombre;
 }
 
-Edificio* Casillero_Construible::agregar_lista_edificio(int* coordenadas, Lista<string> &lista_nombres,Lista<Lista<int*>*> &lista_coordenadas){
+Edificio* Casillero_Construible::agregar_lista_edificio(std::size_t* coordenadas, Lista<string> &lista_nombres,Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	string edificio = this -> edificio -> obtener_nombre();	 
 	//Agregar que necesitan reparacion.
 	int indice = lista_nombres.buscar_indice(edificio);
 	if(indice == NO_ESTA){
 		lista_nombres.alta_al_final(edificio);
-		Lista<int*>* auxiliar = new Lista<int*>;
+		Lista<std::size_t*>* auxiliar = new Lista<std::size_t*>;
 		lista_coordenadas.alta_al_final(auxiliar);
 		indice = lista_nombres.consulta_largo();
 	}

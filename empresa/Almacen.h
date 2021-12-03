@@ -37,7 +37,7 @@ public:
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
 	//POST: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
 	//se realiza ningun cambio. La cantidad puede ser negativa, en tal caso se restara.
-	void modificar_cantidad_material(string a_cambiar, int cantidad);
+	void modificar_cantidad_material(string a_cambiar, std::size_t cantidad);
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
 	//post: muestra todos los materiales por terminal
@@ -70,7 +70,7 @@ public:
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
 	//POST: se agrega el material al final del vector.
-	void agregar_material(Material material, int posicion);
+	void agregar_material(Material material, std::size_t posicion);
 
 };
 

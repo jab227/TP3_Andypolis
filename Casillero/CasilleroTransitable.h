@@ -4,7 +4,7 @@
 #include "Casillero.h"
 #include "../material/Material.h"
 
-class Casillero_Transitable : public Casillero{
+class Casillero_Transitable: public Casillero{
 private:
 	Material* material;
 	bool ocupado;
@@ -34,6 +34,7 @@ public:
 	//POST: imprime un saludo por terminal. en caso de tener un material, este tambien
 	//saluda. de lo contrario, se informa que no hay material.
 	void saludar();
+
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
 	bool es_casillero_transitable();
@@ -46,10 +47,10 @@ public:
 	//POST:
 	bool construir_edificio(Edificio* edificio);
 
-
-
 	//Agregar demoler_edificio en inacc y transitables.
 	Edificio* demoler_edificio();
+
+	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 };
 
 #endif /* CASILLERO_CASILLEROTRANSITABLE_H_ */

@@ -60,7 +60,7 @@ public:
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
 	//POST: se agrega el material al final del vector.
-	void agregar_edificio(Edificio* edificio, int posicion);
+	void agregar_edificio(Edificio* edificio, std::size_t posicion);
 
 	//PRE: edificio tiene que ser distinto de nullptr
 	//POST: devuelve en un string que cantidad y de que material produce el edificio o "ninguno".

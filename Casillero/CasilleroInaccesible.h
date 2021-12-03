@@ -28,13 +28,14 @@ public:
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
 	bool es_casillero_transitable();
+	
 	//PRE: -
 	//POST:
 	bool construir_edificio(Edificio* edificio);
 
 	//PRE: -
 	//POST: -
-	//Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas) override;
+	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 	//Agregar demoler_edificio en inacc y transitables.
 	Edificio* demoler_edificio();

@@ -57,11 +57,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	virtual Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
-		delete[] coordenadas;
-		Edificio* edificio = nullptr;
-		return edificio;
-	};
+	virtual Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
 
 };
 

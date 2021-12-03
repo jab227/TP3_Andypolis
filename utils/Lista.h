@@ -11,7 +11,7 @@ class Lista {
     // Atributos
 private:
     Nodo<Dato>* primero;
-    int cantidad;
+    std::size_t cantidad;
 
     // Metodos
 public:
@@ -22,7 +22,7 @@ public:
 
     //PRE: 1 <= pos <= cantidad + 1
     //POS: agrega d en la posicion de la lista
-    void alta(Dato d, int pos);
+    void alta(Dato d, std::size_t pos);
 
     //PRE: -
     //POST: agrega d al final de la lista
@@ -30,19 +30,19 @@ public:
 
     //PRE: 1 <= pos <= cantidad
     //POS: devuelve el dato que esta arriba
-    Dato consulta(int pos);
+    Dato consulta(std::size_t pos);
 
     //PRE: -
     //POST: devuelve el largo de la lista
-    int consulta_largo();
+    std::size_t consulta_largo();
 
     //PRE: 1 <= pos <= cantidad
     //POS: devuelve el dato que esta arriba y decrementa tope
-    Dato baja(int pos);
+    Dato baja(std::size_t pos);
 
     //PRE: 1<= pos <= cantidad
     //POST: modifica el dato ubicado en esa posicion
-    void modificar(Dato d, int pos);
+    void modificar(Dato d, std::size_t pos);
 
     //PRE: -
     //POS: devuelve true si la pila esta vacia, false si no
@@ -57,7 +57,7 @@ public:
     ~Lista();
 
 private:
-    Nodo<Dato>* obtener_nodo(int pos);
+    Nodo<Dato>* obtener_nodo(std::size_t pos);
 };
 
 template <typename Dato>
@@ -72,7 +72,7 @@ bool Lista<Dato>::vacia() {
 }
 
 template <typename Dato>
-void Lista<Dato>::alta(Dato dato_nuevo, int pos) {
+void Lista<Dato>::alta(Dato dato_nuevo, std::size_t pos) {
     Nodo<Dato>* nuevo = new Nodo<Dato>(dato_nuevo);
     Nodo<Dato>* siguiente = primero;
 
@@ -95,7 +95,7 @@ void Lista<Dato>::alta_al_final(Dato dato_nuevo) {
 
 
 template <typename Dato>
-Dato Lista<Dato>::baja(int pos) {
+Dato Lista<Dato>::baja(std::size_t pos) {
     Nodo<Dato>* baja = primero;
     if (pos == 1)
         primero = baja->obtener_siguiente();
@@ -111,19 +111,19 @@ Dato Lista<Dato>::baja(int pos) {
 }
 
 template <typename Dato>
-void Lista<Dato>::modificar(Dato d, int pos){
+void Lista<Dato>::modificar(Dato d, std::size_t pos){
 	baja(pos);
 	alta(d, pos);
 }
 
 template <typename Dato>
-Dato Lista<Dato>::consulta(int pos) {
+Dato Lista<Dato>::consulta(std::size_t pos) {
     Nodo<Dato>* aux = obtener_nodo(pos);
     return aux->obtener_dato();
 }
 
 template <typename Dato>
-int Lista<Dato>::consulta_largo(){
+std::size_t Lista<Dato>::consulta_largo(){
 	return this -> cantidad;
 }
 
@@ -156,9 +156,9 @@ Lista<Dato>::~Lista() {
 }
 
 template <typename Dato>
-Nodo<Dato>* Lista<Dato>::obtener_nodo(int pos) {
+Nodo<Dato>* Lista<Dato>::obtener_nodo(std::size_t pos) {
     Nodo<Dato>* aux = primero;
-    for (int i = 1; i < pos; i++)
+    for (std::size_t i = 1; i < pos; i++)
         aux = aux->obtener_siguiente();
     return aux;
 }

@@ -93,13 +93,13 @@ private:
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero
 	//POST: se agregan las coordenadas a la lista de coordenadas del edificio correspondiente. si no existe aun esa lista,
 	//se la crea y se agrega tambien el nombre del edificio en la lista de nombres
-	void agregar_edificio_a_listas(Casillero* casillero, int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas);
+	void agregar_edificio_a_listas(Casillero* casillero, std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 	//PRE: lista de coordenadas deben ser distas ubicadas en memoria dinamica con coordenadas en memoria dinamica y el orden de las listas
 	//se corresponden con un edificio.
 	//POST: se imprime por consola los edificios de la lista junto con la cantidad construidos y sus ubicaciones. tambien se libera la lista
 	//de coordenadas
-	void mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas);
+	void mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 	//PRE: ruta debe ser a un archivo existente y bien cargado para el mapa
 	//POST: se carga el mapa con los casilleros correspondientes a los datos del archivo

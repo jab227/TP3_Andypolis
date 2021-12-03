@@ -43,7 +43,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas);
+	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 };
 

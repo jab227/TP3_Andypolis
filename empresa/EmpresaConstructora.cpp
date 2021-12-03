@@ -83,7 +83,7 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido, int fila, int columna){
+void Empresa_Constructora::sumar_contenido(string contenido, std::size_t fila, std::size_t columna){
 	Edificio* edif = nullptr;
 	//Deberia tener una capa mas de abstraccion. Mapa agregar_ubicacion()?
 	if(this -> planos -> es_edificio_valido(contenido,edif)){
@@ -246,7 +246,7 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, int fila, int columna){
+void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna){
 	// Decirle al mapa que construya. Si es true, restamos.
 	// ¿Si no decimos que la celda no es correcta?
 	if(this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna)){

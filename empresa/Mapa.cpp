@@ -19,7 +19,7 @@ Mapa::Mapa(string ruta) {
 	this -> filas = 0;
 	this -> terreno = nullptr;
 	this -> cargar_terreno(ruta);
-	srand((unsigned int) time(0)); 	//Genero una semilla aleatoria
+	srand((std::size_t) time(0)); 	//Genero una semilla aleatoria
 }
 
 Mapa::~Mapa() {
@@ -83,12 +83,12 @@ void Mapa::mostrar_mapa(){
 // Reveer.
 void Mapa::mostrar_construidos(){
 	Lista<string> lista_nombres;
-	Lista<Lista<int*>*> lista_coordenadas;
-	int* coordenadas;
+	Lista<Lista<std::size_t*>*> lista_coordenadas;
+	std::size_t* coordenadas;
 	for(std::size_t fila = 0; fila < this -> filas; fila++){
 		for(std::size_t columna = 0; columna < this -> columnas; columna++){
 			//Dame el edificio. No es null pointer
-			coordenadas = new int[2];
+			coordenadas = new std::size_t[2];
 			coordenadas[0] = fila;
 			coordenadas[1] = columna;
 
@@ -98,9 +98,9 @@ void Mapa::mostrar_construidos(){
 	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
 }
 
-void Mapa::mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas){
+void Mapa::mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	if(lista_nombres.consulta_largo() > 0){
-		int* coordenadas;
+		std::size_t* coordenadas;
 		cout << "|Edificio\t\t|Cantidad\t|Ubicaciones\t" << endl;
 		for(std::size_t i = 1; ! lista_coordenadas.vacia(); i++){
 			cout << '|' << lista_nombres.consulta(i) << espaciado(lista_nombres.consulta(i), 21)

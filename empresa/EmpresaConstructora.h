@@ -78,7 +78,7 @@ private:
 	//PRE: la linea debe estar bien formada con la ubicacion de un edificio o material. fila y columna
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
-	void sumar_contenido(string linea, int fila, int columna);
+	void sumar_contenido(string linea, std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
@@ -107,7 +107,7 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(Edificio* edificio, int fila, int columna);
+	void edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.

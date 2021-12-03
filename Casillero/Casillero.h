@@ -1,20 +1,26 @@
 #ifndef EDIFICIOS_CASILLERO_H_
 #define EDIFICIOS_CASILLERO_H_
 
-#include <string>
 #include "../utils/colors.h"
+#include "../utils/Lista.h"
+#include "../edificio/Edificio.h"
+#include <string>
 
 const std::string VERDE = BGND_LIGHT_GREEN_46, AZUL = BGND_BLUE_12, GRIS = BGND_GRAY_245, FIN_COLOR = END_COLOR, NEGRO = TXT_DARK_GRAY_233;
 const std::string CONTENIDO_VACIO = "";
 const char TRANSITABLE = 'C', INACCESIBLE = 'L' , CONSTRUIBLE = 'T';
 
 class Casillero {
-protected:
+private:
 	std::string color;
 public:
 	//PRE: -
 	//POST: se construye un casillero vacio
 	Casillero();
+	
+	//PRE: -
+	//POST: se construye un casillero con color
+	Casillero(std::string color);
 
 	//PRE: -
 	//POST: se destruye el casillero
@@ -24,13 +30,9 @@ public:
 	//POST: imprime un saludo por pantalla
 	virtual void saludar() = 0;
 
-	//PRE: -
+	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no
 	virtual bool es_casillero_transitable() = 0;
-
-	//PRE: -
-	//POST: devuelve si el casillero es construible o no
-	virtual bool es_casillero_construible() = 0;
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado o no
@@ -43,6 +45,24 @@ public:
 	//PRE: -
 	//POST: devuelve el color del casillero.
 	std::string obtener_color();
+
+	//PRE: -
+	//POST:
+	virtual bool construir_edificio(Edificio* edificio) = 0;
+
+	//PRE: -
+	//POST: Si es una celda construible y esta ocupado,se quita al edificio del casillero y lo devuelve, ahora esta vacio. 
+	//En caso contrario devuelve nullptr;
+	virtual Edificio* demoler_edificio() = 0;
+
+	//PRE: -
+	//POST: -
+	virtual Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas){
+		delete[] coordenadas;
+		Edificio* edificio = nullptr;
+		return edificio;
+	};
+
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

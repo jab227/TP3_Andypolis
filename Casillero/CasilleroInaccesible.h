@@ -21,17 +21,23 @@ public:
 	//POST: imprime un saludo por terminal.
 	void saludar();
 
-	//PRE: -
-	//POST: devuelve si el casillero es transitable o no.
-	bool es_casillero_transitable();
-
-	//PRE: -
-	//POST: devuelve si el casillero es construible o no.
-	bool es_casillero_construible();
-
 	//PRE: no se deberia llamar a esta funcion, este casillero nunca contiene algo.
 	//POST: devuelve CONTENIDO_VACIO.
 	std::string obtener_contenido();
+	
+	//PRE: - PROVISORIO
+	//POST: devuelve si el casillero es transitable o no.
+	bool es_casillero_transitable();
+	//PRE: -
+	//POST:
+	bool construir_edificio(Edificio* edificio);
+
+	//PRE: -
+	//POST: -
+	//Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas) override;
+
+	//Agregar demoler_edificio en inacc y transitables.
+	Edificio* demoler_edificio();
 };
 
 #endif /* CASILLERO_CASILLEROINACCESIBLE_H_ */

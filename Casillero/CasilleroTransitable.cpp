@@ -1,15 +1,12 @@
 #include "CasilleroTransitable.h"
 #include <iostream>
 
-Casillero_Transitable::Casillero_Transitable() {
-	this -> ocupado = false;
+Casillero_Transitable::Casillero_Transitable(): Casillero(GRIS + NEGRO) {
 	this -> material = nullptr;
-	this -> color = GRIS;
-	this -> color += NEGRO;
 }
 
 Casillero_Transitable::~Casillero_Transitable() {
-	if(this -> ocupado)
+	if(this -> esta_ocupado())
 		delete this -> material;
 }
 
@@ -20,7 +17,7 @@ void Casillero_Transitable::agregar_material(Material* material){
 
 Material* Casillero_Transitable::eliminar_material(){
 	Material* material = nullptr;
-	if(this -> ocupado){
+	if(this -> esta_ocupado()){
 		material = this -> material;
 		this -> material = nullptr;
 		this -> ocupado = false;
@@ -34,24 +31,32 @@ bool Casillero_Transitable::esta_ocupado(){
 
 void Casillero_Transitable::saludar(){
 	cout << "Soy un casillero transitable." << endl;
-	if(this -> ocupado)
+	if(this -> esta_ocupado())
 		this -> material -> saludar();
 	else
 		cout << "No tengo ningun material en mi." << endl;
 }
 
-bool Casillero_Transitable::es_casillero_transitable(){
-	return true;
-}
-
-bool Casillero_Transitable::es_casillero_construible(){
-	return false;
-}
-
 string Casillero_Transitable::obtener_contenido(){
 	string nombre = CONTENIDO_VACIO;
-	if(this -> ocupado)
+	if(this -> esta_ocupado())
 		nombre = this -> material -> obtener_nombre();
 	return nombre;
 }
 
+
+bool Casillero_Transitable::construir_edificio(Edificio* edificio){
+	cout <<  "La ubicacion ingresada no es construible." << endl;
+	return false;
+}
+	
+//Provisorio
+bool es_casillero_transitable(){
+	return true;
+}
+
+//Agregar demoler_edificio en inacc y transitables.
+Edificio* Casillero_Transitable::demoler_edificio(){
+	Edificio* edificio = nullptr;
+	return edificio;
+}

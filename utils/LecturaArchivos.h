@@ -23,15 +23,15 @@ Material procesar_material(string linea);
 
 //PRE: linea debe tener el formato valido para el rango del mapa
 //POST: se carga la linea y la fila con los valores correspondientes a la linea ingresada
-void cargar_fila_columna(string linea, int &filas, int &columnas);
+void cargar_fila_columna(string linea, std::size_t &filas, std::size_t &columnas);
 
 //PRE: linea debe tener el formato valido para las ubicaciones
 //POST: devuelve el edificio referido en la linea y fila y columna se igualan a la posicion del edificio
-string procesar_ubicacion(string linea, int &fila, int &columna);
+string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna);
 
 //PRE: nombre debe ser un edificio valido
 //POST: devuelve el edificio cargado con los datos
-Edificio* traductor_edificios(string nombre, int piedra, int madera, int metal, int max_permitidos);
+Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos);
 
 //PRE: nombre debe corresponder a un casillero
 //POST: se devuelve el casillero vacio correspondiente a nombre creado en memoria dinamica
@@ -39,10 +39,10 @@ Casillero* traductor_casillero(char nombre);
 
 //PRE: nombre debe ser un material valido
 //POST: devuelve el material cargado con los datos
-Material* traductor_materiales(string nombre, int cantidad);
+Material* traductor_materiales(string nombre, std::size_t cantidad);
 
 //PRE: -
 //POST: devuelve un espaciado correspondiente al laro deseado y al largo de la palabra
-string espaciado(string palabra, unsigned long int largo);
+string espaciado(string palabra, std::size_t largo);
 
 #endif /* LECTURAARCHIVOS_H_ */

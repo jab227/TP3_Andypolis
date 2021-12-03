@@ -2,12 +2,10 @@
 #define CASILLERO_CASILLEROCONSTRUIBLE_H_
 
 #include "Casillero.h"
-#include "../edificio/Edificio.h"
 
 class Casillero_Construible : public Casillero{
 private:
 	Edificio* edificio;
-	bool ocupado;
 public:
 	//PRE: -
 	//POST: se crea un casillero vacio
@@ -19,7 +17,7 @@ public:
 
 	//PRE: el edificio debe estar ubicado en memoria dinamica
 	//POST: se construye el edificio en este casillero, ahor esta ocupado
-	void construir_edificio(Edificio* edificio);
+	bool construir_edificio(Edificio* edificio);
 
 	//PRE: -
 	//POST: se quita al edificio del casillero y lo devuelve, ahora esta vacio. si el
@@ -34,18 +32,18 @@ public:
 	//POST: imprime un saludo por terminal. en caso de tener un edificio, este tambien
 	//saluda. de lo contrario, se informa que no hay edificio.
 	void saludar();
-
-	//PRE: -
+	
+	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
 	bool es_casillero_transitable();
 
 	//PRE: -
-	//POST: devuelve si el casillero es construible o no.
-	bool es_casillero_construible();
-
-	//PRE: -
 	//POST: devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
 	string obtener_contenido();
+
+	//PRE: -
+	//POST: -
+	Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas);
 
 };
 

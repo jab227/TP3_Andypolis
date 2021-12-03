@@ -1,60 +1,70 @@
 #include "CasilleroConstruible.h"
 #include <iostream>
 
-Casillero_Construible::Casillero_Construible() {
-	this -> ocupado = false;
+Casillero_Construible::Casillero_Construible(): Casillero(VERDE + NEGRO) {
 	this -> edificio = nullptr;
-	this -> color = VERDE;
-	this -> color += NEGRO;
 }
 
 Casillero_Construible::~Casillero_Construible() {
-	if(this -> ocupado)
-		delete this -> edificio;
+	delete this -> edificio;
 }
 
-void Casillero_Construible::construir_edificio(Edificio* edificio){
-	this -> edificio = edificio;
-	this -> ocupado = true;
+bool Casillero_Construible::construir_edificio(Edificio* edificio){
+	bool resultado=false;
+	if(this -> esta_ocupado()){
+		this -> edificio = edificio;
+		resultado = true;
+	}else{
+		cout <<  "Esta ubicacion esta ocupada por otro edificio." << endl;
+	}
+	return resultado;
 }
 
 Edificio* Casillero_Construible::demoler_edificio(){
 	Edificio* edificio = nullptr;
-	if(this -> ocupado){
+	if(this -> esta_ocupado()){
 		edificio = this -> edificio;
 		this -> edificio = nullptr;
-		this -> ocupado = false;
+	}else{
+		cout <<  "En esta ubicacion no hay ningun edificio." << endl;
 	}
 	return edificio;
 }
 
 bool Casillero_Construible::esta_ocupado(){
-	return this -> ocupado;
+	return !(edificio == nullptr);
 }
 
 void Casillero_Construible::saludar(){
 	cout << "Soy un casillero construible." << endl;
-	if(this -> ocupado)
+	if(this -> esta_ocupado()){
 		this -> edificio -> saludar();
-	else
+		cout << "Edificio construido exitosamente!" << endl;
+	}else
 		cout << "No tengo ningun edificio construido." << endl;
 }
 
-bool Casillero_Construible::es_casillero_transitable(){
-	return false;
-}
-
-bool Casillero_Construible::es_casillero_construible(){
-	return true;
-}
-
+//Necesario?
 string Casillero_Construible::obtener_contenido(){
 	string nombre = EDIFICIO_VACIO;
-	if(this -> ocupado)
+	if(this -> esta_ocupado())
 		nombre = this -> edificio -> obtener_nombre();
 	return nombre;
 }
 
+Edificio* Casillero_Construible::agregar_lista_edificio(int* coordenadas, Lista<string> &lista_nombres,Lista<Lista<int*>*> &lista_coordenadas){
+	string edificio = this -> edificio -> obtener_nombre();	 
+	//Agregar que necesitan reparacion.
+	int indice = lista_nombres.buscar_indice(edificio);
+	if(indice == NO_ESTA){
+		lista_nombres.alta_al_final(edificio);
+		Lista<int*>* auxiliar = new Lista<int*>;
+		lista_coordenadas.alta_al_final(auxiliar);
+		indice = lista_nombres.consulta_largo();
+	}
+	lista_coordenadas.consulta(indice) -> alta_al_final(coordenadas);
+	return this -> edificio;
+}
 
-
-
+//Provisorio
+bool Casillero_Construible::es_casillero_transitable(){return false;}

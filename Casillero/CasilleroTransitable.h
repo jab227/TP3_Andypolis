@@ -34,18 +34,22 @@ public:
 	//POST: imprime un saludo por terminal. en caso de tener un material, este tambien
 	//saluda. de lo contrario, se informa que no hay material.
 	void saludar();
-
-	//PRE: -
+	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
 	bool es_casillero_transitable();
 
-	//PRE: -
-	//POST: devuelve si el casillero es construible o no.
-	bool es_casillero_construible();
-
-	//PRE: -
+	//PRE: - ELIMINAR?
 	//POST: devuelve el nombre del material contenido o MATERIAL_VACIO.
 	string obtener_contenido();
+	
+	//PRE: -
+	//POST:
+	bool construir_edificio(Edificio* edificio);
+
+
+
+	//Agregar demoler_edificio en inacc y transitables.
+	Edificio* demoler_edificio();
 };
 
 #endif /* CASILLERO_CASILLEROTRANSITABLE_H_ */

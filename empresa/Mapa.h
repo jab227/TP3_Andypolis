@@ -9,7 +9,7 @@
 class Mapa {
 //Atributos
 private:
-	int filas, columnas;
+	std::size_t filas, columnas;
 	Casillero*** terreno;
 //Metodos
 public:
@@ -23,18 +23,18 @@ public:
 
 	//PRE: -
 	//POST: devuelve true si las coordenadas se encuentran en el rango del mapa y false de lo contrario
-	bool es_cordenada_valida(int fila, int columna);
+	bool es_cordenada_valida(std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: se chequea que la ubicacion sea disponible para construir un edificio. devuelve si las coordenadas estan
 	//fuera de rango, si el casillero no es construible, si esta ocupado o si no ocurre nada de lo anterior.
-	Resultado_Chequeos chequeo_ubicar_edificio(int fila, int columna);
+	Resultado_Chequeos chequeo_ubicar_edificio(std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: se chequea que la ubicacion sea disponible para demoler un edificio. devuelve si las coordenadas estan
 	//fuera de rango, si el casillero no es construible, si esta libre o si no ocurre nada de lo anterior. en este ultimo
 	//caso, edificio vale el edificio a demoler.
-	Resultado_Chequeos chequeo_demoler_edificio(int fila, int columna, string &edificio);
+	Resultado_Chequeos chequeo_demoler_edificio(std::size_t fila, std::size_t columna, string &edificio);
 
 	//PRE: el mapa debe estar cargado
 	//POST: se muestra el mapa de los edificios con los terrenos en colores
@@ -46,40 +46,40 @@ public:
 
 	//PRE: la posicion debe ser valida
 	//POST: se muestra informacion sobre la ubicacion consultada
-	void mostrar_posicion(int fila, int columna);
+	void mostrar_posicion(std::size_t fila, std::size_t columna);
 
 	//PRE: el edificio y la posicion deben ser validos y el casillero estar vacio
 	//POST: se construye el edificio en la posicion ingresada
-	void construir_edificio_ubicacion(Edificio* edificio, int fila, int columna);
+	bool construir_edificio_ubicacion(Edificio* edificio, std::size_t fila, std::size_t columna);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
 	//POST: se elimina el edificio de esa posicion y se devuelve el edificio demolido
-	string demoler_edificio_ubicacion(int fila, int columna);
+	string demoler_edificio_ubicacion(std::size_t fila, std::size_t columna);
 
 	//PRE: el material y la posicion debe ser valido, y el casillero estar vacio
 	//POST: se pone el material en la ubicacion ingresda
-	void poner_material_ubicacion(string material, int fila, int columna);
+	void poner_material_ubicacion(string material, std::size_t fila, std::size_t columna);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un material
 	//POST: se elimina el material de esa posicion y se devuelve el material quitado
-	string sacar_material_ubicacion(int fila, int columna);
+	string sacar_material_ubicacion(std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: se chequea si se puede poner un material en el casillero ingresado. devuelve si las coordenadas
 	//estan fuera de rango, si el casillero no puede contener materiales, si esta ocupado o si no ocurre
 	//nada de lo anterior
-	Resultado_Chequeos chequeo_poner_material(int fila, int columna);
+	Resultado_Chequeos chequeo_poner_material(std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: se chequea si se puede sacar un material del casillero ingresado. devuelve si las coordenadas
 	//estan fuera de rango, si el casillero no puede contener materiales, si esta libre o si no ocurre
 	//nada de lo anterior
-	Resultado_Chequeos chequeo_sacar_material(int fila, int columna);
+	Resultado_Chequeos chequeo_sacar_material(std::size_t fila, std::size_t columna);
 
 	//PRE: la posicion debe ser valida
 	//POST: se devuelve el contenido en la ubicacion ingresada o CONTENIDO_VACIO si el casillero no esta
 	//ocupado
-	string obtener_contenido_ubicacion(int fila, int columna);
+	string obtener_contenido_ubicacion(std::size_t fila, std::size_t columna);
 
 	//PRE: -
 	//POST: se generan materiales aleatorios por el mapa. devuelve true si no se genero ningun material, y
@@ -107,7 +107,7 @@ private:
 
 	//PRE: lectura debe ser la linea con los terrenos de la fila filas bien formada de largo columnas
 	//POST: se agregan los casilleros vacios a la fila segun la lectura
-	void  iniciar_filas_casilleros(int filas, string lectura);
+	void  iniciar_filas_casilleros(std::size_t filas, string lectura);
 
 	//PRE: el ocupador debe ser un material o edificio valido
 	//POST: se devuelve la letra dentificadora del ocupador
@@ -115,15 +115,15 @@ private:
 
 	//PRE: el mapa debe estar bien cargado
 	//POST: se calculan los casilleros transitables libres en el mapa
-	int casilleros_libres_transitables();
+	std::size_t casilleros_libres_transitables();
 
 	//PRE: minimo <= maximo
 	//POST: se genera un numero aleatorio que puede ir desde minimo hasta maximo incluido
-	int numero_aleatorio(int minimo, int maximo);
+	std::size_t numero_aleatorio(std::size_t minimo, std::size_t maximo);
 
 	//PRE: material debe ser un material valido y numero_casillero menor a los casilleros libres transitables
 	//POST: se crea y ubica un material en el N-esimo casillero transitable libre.
-	void generar_material(string material, int numero_casillero);
+	void generar_material(string material, std::size_t numero_casillero);
 };
 
 #endif /* MAPA_H_ */

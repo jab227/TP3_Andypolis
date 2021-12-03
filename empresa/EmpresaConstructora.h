@@ -98,17 +98,6 @@ private:
 	Resultado_Chequeos chequeo_demoler(string fila_ingresada, string columna_ingresada, int &fila, int &columna, string &edificio);
 
 	//PRE: -
-	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,
-	//si coresponden a un casillero no construible, si el casillero no esta libre o si no ocurre nada de lo anterior.
-	//en este ultimo caso, fila = fila_ingresada, columna = columna_ingresada
-	Resultado_Chequeos chequeo_posicion_libre(string fila_ingresada, string columna_ingresada, int &fila, int &columna);
-
-	//PRE: -
-	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango
-	// o si no ocurre nada de lo anterior. en este ultimo caso, fila = fila_ingresada, columna = columna_ingresada
-	Resultado_Chequeos chequeo_posicion(string fila_ingresada, string columna_ingresada, int &fila, int &columna);
-
-	//PRE: -
 	//POST: se muestra un mensaje por terminal correspondiente al resultado del chequeo
 	bool mostrar_mensaje_chequeo(Resultado_Chequeos chequeo);
 
@@ -116,25 +105,15 @@ private:
 	//POST: se pide al usuario que ingrese un "si" o un "no" y devuelve true en caso de si y false en caso contrario
 	string pedir_si_no();
 
-	//PRE: -
-	//POST: se le pide al usuario una posicion libre en el mapa. si se obtuvo devuelve true y fila y columna valen los
-	//valores ingresados. si no devuelve false.
-	bool pedir_posicion_libre(int &fila, int &columna);
-
-	//PRE: -
-	//POST: se pide al usuario una posicion la cual este ocupada por un edificio. filas y columnas se igualan a lo ingresado
-	//por el usuario y el edificio ubicado en esas coordenadas o devuelve EDIFICIO_VACIO en caso de no obtenerse coordenadas
-	//validas.
-	string pedir_posicion_ocupada(int &fila, int &columna);
-
-	//PRE: -
-	//POST: se pide al usuario una posicion libre u ocupada valida. deuvleve la fila y columna ingresada por el usuario o
-	//fila = columna = COORDENADA_VACIA en caso de no obtener las coordenadas.
-	void pedir_posicion(int &fila, int &columna);
-
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
 	void edificio_construido_confirmado(Edificio* edificio, int fila, int columna);
+
+	//PRE: -
+	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
+	Resultado_Chequeos pedir_coordenadas(std::size_t& fila, std::size_t& columna);
+
+	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, std::size_t fila, std::size_t columna);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

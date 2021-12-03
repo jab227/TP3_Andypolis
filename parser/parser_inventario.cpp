@@ -22,8 +22,8 @@ void ParserInventario::parse(const std::string& input,
 	std::regex_search(input, match, pattern);
 
 	Material* aux;
-	aux = new Material(nombre(match), cantidad(match, 1));
+	aux = new Material(nombre(match), (int)cantidad(match, 1));
 	inventario_p1.alta_al_final(aux);
-	aux = new Material(nombre(match), cantidad(match, 2));
+	aux = new Material(nombre(match), (int)cantidad(match, 2));
 	inventario_p2.alta_al_final(aux);
 }

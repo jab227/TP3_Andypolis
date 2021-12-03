@@ -63,7 +63,7 @@ class Diccionario {
 		if (nodo->clave() == clave) {
 			if (nodo->hoja()) {
 				delete nodo;
-				nodo = nullptr;	
+				nodo = nullptr;
 			} else if (nodo->solo_hijo_derecha()) {
 				nodo->derecha()->cambiar_padre(nodo->padre());
 				NodoDiccionario<T, U>* aux = nodo;
@@ -94,7 +94,8 @@ class Diccionario {
 	NodoDiccionario<T, U>* buscar(NodoDiccionario<T, U>* nodo,
 				      const T& clave) const {
 		if (nodo == nullptr || nodo->clave() == clave) return nodo;
-		if (clave > nodo->clave()) return buscar(nodo->derecha(), clave);
+		if (clave > nodo->clave())
+			return buscar(nodo->derecha(), clave);
 		return buscar(nodo->izquierda(), clave);
 	};
 	// Pre: -
@@ -109,12 +110,12 @@ class Diccionario {
 	// Pos: True si encuentra el sucesor, False en otro caso. Devuelve
 	// la clave del sucesor por referencia.
 	bool sucesor(T clave, T& clave_resultado) {
-		NodoDiccionario<T,U>* nodo_clave = buscar(raiz_, clave);
-		if (nodo_clave == nullptr)
-			return false;
+		NodoDiccionario<T, U>* nodo_clave = buscar(raiz_, clave);
+		if (nodo_clave == nullptr) return false;
 		clave_resultado = sucesor(nodo_clave);
 		return true;
 	};
+
        public:
 	// Pre: -
 	// Pos: Constructor del diccionario;
@@ -124,7 +125,9 @@ class Diccionario {
 	~Diccionario() { borrar_nodos(raiz_); };
 	// Pre: -
 	// Pos: Inserta en el diccionario el dato con la clave "clave".
-	void insertar(const T& clave, const U& dato) { raiz_ = insertar(raiz_, clave, dato); };
+	void insertar(const T& clave, const U& dato) {
+		raiz_ = insertar(raiz_, clave, dato);
+	};
 	// Pre: -
 	// Pos: Remueve el elemento con la clave "clave".
 	void remover(const T& clave) { raiz_ = remover(raiz_, clave); };
@@ -132,7 +135,7 @@ class Diccionario {
 	// Pos: True si encuentra la clave, False en otro caso. Devuelve
 	// por referencia el resultado.
 	bool buscar(const T& clave, U& resultado) const {
-		NodoDiccionario<T,U>* nodo = buscar(raiz_, clave);
+		NodoDiccionario<T, U>* nodo = buscar(raiz_, clave);
 		if (nodo != nullptr) {
 			resultado = nodo->dato();
 			return true;
@@ -142,7 +145,6 @@ class Diccionario {
 	// Pre: -
 	// Pos: True si esta vacio, False en otro caso.
 	bool vacio() const { return (raiz_ == nullptr); };
-
 };
 
 #endif

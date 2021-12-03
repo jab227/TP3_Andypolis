@@ -12,7 +12,7 @@ public:
 
 	//PRE: -
 	//POST: se construye una fabrica con los datos ingresados
-	Fabrica(int piedra, int madera, int metal, int maximo_permitidos);
+	Fabrica(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
 	//PRE: -
 	//POST: imprime un mensaje por consola

@@ -39,7 +39,8 @@ int Almacen::buscar_material(string a_buscar){
 	std::size_t i = 1;
 	while(!fin && i <= this -> lista_materiales.consulta_largo()){
 		if (this -> lista_materiales.consulta(i).obtener_nombre() == a_buscar){
-			cantidad = this -> lista_materiales.consulta(i).obtener_cantidad();
+			//Casteo
+			cantidad = (int) this -> lista_materiales.consulta(i).obtener_cantidad();
 			fin = true;
 		}
 	i++;

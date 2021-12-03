@@ -21,8 +21,6 @@ Mapa::Mapa(string ruta) {
 	this -> cargar_terreno(ruta);
  
 	srand((unsigned int) time(0)); 	//Genero una semilla aleatoria
-=======
- 
 }
 
 Mapa::~Mapa() {
@@ -83,7 +81,7 @@ void Mapa::mostrar_mapa(){
 	cout << FIN_COLOR;
 }
 
-// Adaptar porque ahora tenemos otro diseño.
+//TODO: Responsabilidad del jugador. 
 void Mapa::mostrar_construidos(){
 	Lista<string> lista_nombres;
 	Lista<Lista<std::size_t*>*> lista_coordenadas;
@@ -93,7 +91,7 @@ void Mapa::mostrar_construidos(){
 			//De quien es la responsabilidad de agregarse a la lista?
 			(this -> terreno[fila][columna]) -> agregar_lista_edificio(fila, columna, lista_nombres, lista_coordenadas);
 		}
-
+/*
 void Mapa::mostrar_construidos(Jugador* jugador){
 	Lista<string> lista_nombres;
 	Lista<Lista<int*>*> lista_coordenadas;
@@ -105,7 +103,9 @@ void Mapa::mostrar_construidos(Jugador* jugador){
 	}
 	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
 }
+*/
 
+//TODO: Responsabilidad del jugador. 
 void Mapa::mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	if(lista_nombres.consulta_largo() > 0){
 		std::size_t* coordenadas;
@@ -139,10 +139,13 @@ string Mapa::demoler_edificio_ubicacion(std::size_t fila, std::size_t columna){
 	return edificio_demolido;
 }
 
+//TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
 void Mapa::poner_material_ubicacion(string material, std::size_t fila, std::size_t columna){
 	( (Casillero_Transitable*) this -> terreno[fila][columna] ) ->
 			agregar_material(traductor_materiales(material, 0));
 }
+
+//TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
 string Mapa::sacar_material_ubicacion(std::size_t fila, std::size_t columna){
 	string material_quitado = this -> terreno[fila][columna] -> obtener_contenido();
 	delete ( (Casillero_Transitable*) this -> terreno[fila][columna] ) -> eliminar_material();
@@ -157,25 +160,32 @@ string Mapa::obtener_contenido_ubicacion(std::size_t fila, std::size_t columna){
 }
 
 bool Mapa::generar_materiales_aleatorios(){
+	//Chequea cuando casilleros libres y transitables hay.
 	std::size_t casilleros_libres = this -> casilleros_libres_transitables();
+	//Genera los numeros aleatorios dentro de los rangos [MINIMO,MAXIMO]
 	std::size_t piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
 	std::size_t madera_a_generar = this -> numero_aleatorio(MADERA_MINIMO, MADERA_MAXIMO);
 	std::size_t metal_a_generar = this -> numero_aleatorio(METAL_MINIMO, METAL_MAXIMO);
 	bool todo_ocupado = casilleros_libres == 0;
-	while((piedra_a_generar + madera_a_generar + metal_a_generar) > 0 && casilleros_libres > 0){
+	std::size_t a_generar = piedra_a_generar + madera_a_generar + metal_a_generar;
+	while(a_generar > 0 && !(casilleros_libres == 0)){
 		if(piedra_a_generar > 0 && casilleros_libres > 0){
 			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], numero_aleatorio(1, casilleros_libres));
 			piedra_a_generar--;
+			casilleros_libres--;
 		}
 		if(madera_a_generar > 0 && casilleros_libres > 0){
 			generar_material(MATERTIALES_EDIFICIOS[MADERA], numero_aleatorio(1, casilleros_libres));
 			madera_a_generar--;
+			casilleros_libres--;
 		}
 		if(metal_a_generar > 0 && casilleros_libres > 0){
 			generar_material(MATERTIALES_EDIFICIOS[METAL], numero_aleatorio(1, casilleros_libres));
 			metal_a_generar--;
-		}
 			casilleros_libres--;
+		}
+		//TODO: Ver como utiliza el boolean que retorna.
+		a_generar = piedra_a_generar + madera_a_generar + metal_a_generar;
 	}
 	return todo_ocupado;
 }

@@ -111,7 +111,8 @@ void Empresa_Constructora::sumar_contenido(string contenido, std::size_t fila, s
 
 void Empresa_Constructora::producir_recursos(){
 	Lista<Material>* producidos = this -> planos -> obtener_recursos_producidos();
-	this -> almacen -> sumar_lista_materiales(producidos);
+	//TODO: Constante
+	this -> almacen -> sumar_lista_materiales(producidos,100);
 	delete producidos;
 }
 
@@ -146,7 +147,7 @@ void Empresa_Constructora::construir_edificio(Jugador* jugador){
 	}
 }
 
-//Adaptar a Edificio*
+//TODO: Esto va a pasar a ser responsabilidad de cada Jugador.
 void Empresa_Constructora::demoler_edificio(){
 	std::size_t fila, columna;
 	Resultado_Chequeos resultado = NO_EXISTE;
@@ -157,6 +158,8 @@ void Empresa_Constructora::demoler_edificio(){
 	}while(!fin);
 	//Tengo que avisar si se pudo destruir algo o no?
 	this -> mapa -> demoler_edificio_ubicacion(fila, columna);
+	//Esto va a pasar al jugador.
+	//this -> almacen sumar_lista_materiales();
 }
 
 Edificio* Empresa_Constructora::pedir_edificio(){
@@ -265,9 +268,10 @@ void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, st
 	// ¿Si no decimos que la celda no es correcta?
 	if(this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna)){
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
-		this -> almacen -> restar_lista_materiales(listado_necesario);
+		//TODO: Constante
+		this -> almacen -> descontar_lista_materiales(listado_necesario,100);
 		delete listado_necesario;
-		//Ya no es lo mismo donde aumentamos, cada uno tiene su contador de edificios.
+		//TODO: Ya no es lo mismo donde aumentamos, cada uno tiene su contador de edificios.
 		this -> planos -> aumentar_construidos_edificio(edificio);
 		jugador -> modificar_energia(-ENERGIA_CONSTRUIR);
 	}

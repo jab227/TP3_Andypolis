@@ -8,7 +8,7 @@
 #include "../jugador/Jugador.h"
 
 const int ENERGIA_CONSTRUIR = 15, ENERGIA_LISTAR_CONSTRUIDOS = 0, ENERGIA_DEMOLER = 15, ENERGIA_ATACAR = 30,
-		  ENERGIA_REPARAR = 25, ENERGIA_COMPRAR_BOMBAS = 5, ENERGIA_CONSULTAR = 0, ENERGIA_LISTAR_MATERIALES = 0,
+		  ENERGIA_REPARAR = 25,  ENERGIA_CONSULTAR = 0, ENERGIA_LISTAR_MATERIALES = 0,
 		  ENERGIA_OBJETIVOS = 0, ENERGIA_RECOLECTAR = 20, ENERGIA_MOVERSE = 0, ENERGIA_FIN_TURNO = 0, ENERGIA_GUARDAR_SALIR = 0;
 
 class Empresa_Constructora {
@@ -77,9 +77,7 @@ public:
 	//POST: se vacian los materiales del mapa
 	void vaciar_materiales();
 
-	//PRE: jugador debe ser un puntero valido
-	//POST: se compran las bombas pidiendo al usuario la cantidad
-	void comprar_bombas(Jugador* jugador);
+
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
@@ -130,12 +128,6 @@ private:
 	Resultado_Chequeos pedir_coordenadas(std::size_t& fila, std::size_t& columna);
 
 	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, std::size_t fila, std::size_t columna);
-	
-	//ADAPTAR!
-
-	int pedir_bombas_validas(Jugador* jugador);
-
-	Resultado_Chequeos chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

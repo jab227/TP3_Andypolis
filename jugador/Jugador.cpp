@@ -51,3 +51,23 @@ void Jugador::eliminar_ubicacion(int fila, int columna){
 			this -> ubicaciones_columna.baja(i);
 		}
 }
+
+void Jugador::comprar_bombas(){
+	std::size_t cantidad = this -> pedir_bombas_validas();
+	if(this -> inventario -> comprar_bombas(cantidad) == EXITO){
+		modificar_energia(-ENERGIA_COMPRAR_BOMBAS);
+	}else{
+		std::cout << "No se compraron bombas." << std::endl;
+	}
+}
+
+std::size_t Jugador::pedir_bombas_validas(){
+	string opcion;
+	std::size_t bombas = 0;
+	cout << "Cantidad de bombas:   " ;
+	getline(cin, opcion);
+	if(es_numero(opcion)){
+		bombas = stoul(opcion);
+	}
+	return bombas;
+}

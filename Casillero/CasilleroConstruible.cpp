@@ -60,7 +60,7 @@ Edificio* Casillero_Construible::agregar_lista_edificio(std::size_t* coordenadas
 		lista_nombres.alta_al_final(edificio);
 		Lista<std::size_t*>* auxiliar = new Lista<std::size_t*>;
 		lista_coordenadas.alta_al_final(auxiliar);
-		indice = lista_nombres.consulta_largo();
+		indice = (int) lista_nombres.consulta_largo();
 	}
 	lista_coordenadas.consulta(indice) -> alta_al_final(coordenadas);
 	return this -> edificio;

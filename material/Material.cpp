@@ -38,6 +38,6 @@ bool Material::operator==(Material rhs){
 	return (this -> nombre == rhs.obtener_nombre());
 }
 
-bool Material::operator=(Material rhs){
-	return (this -> nombre = rhs.obtener_nombre());
+void Material::operator=(Material rhs){
+	this -> nombre = rhs.obtener_nombre();
 }

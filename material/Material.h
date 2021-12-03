@@ -47,7 +47,7 @@ public:
 
 	bool operator==(Material rhs);
 
-	bool operator=(Material rhs);
+	void operator=(Material rhs);
 };
 
 #endif /* MATERIAL_H_ */

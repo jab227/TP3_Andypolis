@@ -38,8 +38,16 @@ public:
 	void cambiar_cantidad(std::size_t cantidad);
 
 	//PRE: -
+	//POST: se suma cantidad a la cantidad del material
+	void sumar_cantidad(std::size_t cantidad);
+
+	//PRE: -
 	//POST: imprime un saludo
 	void saludar();
+
+	bool operator==(Material rhs);
+
+	bool operator=(Material rhs);
 };
 
 #endif /* MATERIAL_H_ */

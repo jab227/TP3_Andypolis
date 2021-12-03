@@ -26,6 +26,18 @@ void Material::cambiar_cantidad(std::size_t cantidad){
 	this -> cantidad = cantidad;
 }
 
+void Material::sumar_cantidad(std::size_t cantidad){
+	this -> cantidad += cantidad;
+}
+
 void Material::saludar(){
 	cout << "Soy el material " << this -> nombre << " y estoy en el casillero consultado." << endl;
+}
+
+bool Material::operator==(Material rhs){
+	return (this -> nombre == rhs.obtener_nombre());
+}
+
+bool Material::operator=(Material rhs){
+	return (this -> nombre = rhs.obtener_nombre());
 }

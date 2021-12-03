@@ -53,11 +53,11 @@ public:
 	//PRE: -
 	//POST: Si es una celda construible y esta ocupado,se quita al edificio del casillero y lo devuelve, ahora esta vacio. 
 	//En caso contrario devuelve nullptr;
-	virtual Edificio* demoler_edificio() = 0;
+	virtual std::string demoler_edificio() = 0;
 
 	//PRE: -
 	//POST: -
-	virtual Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
+	virtual Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
 
 };
 

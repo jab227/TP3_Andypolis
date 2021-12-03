@@ -84,15 +84,10 @@ void Mapa::mostrar_mapa(){
 void Mapa::mostrar_construidos(){
 	Lista<string> lista_nombres;
 	Lista<Lista<std::size_t*>*> lista_coordenadas;
-	std::size_t* coordenadas;
 	for(std::size_t fila = 0; fila < this -> filas; fila++){
 		for(std::size_t columna = 0; columna < this -> columnas; columna++){
 			//Dame el edificio. No es null pointer
-			coordenadas = new std::size_t[2];
-			coordenadas[0] = fila;
-			coordenadas[1] = columna;
-
-			(this -> terreno[fila][columna]) -> agregar_lista_edificio(coordenadas, lista_nombres, lista_coordenadas);
+			(this -> terreno[fila][columna]) -> agregar_lista_edificio(fila, columna, lista_nombres, lista_coordenadas);
 		}
 	}
 	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
@@ -127,10 +122,8 @@ bool Mapa::construir_edificio_ubicacion(Edificio* edificio, std::size_t fila, st
 }
 
 string Mapa::demoler_edificio_ubicacion(std::size_t fila, std::size_t columna){
-	Edificio* edificio_demolido = (this -> terreno[fila][columna]) -> demoler_edificio();
-	string edificio = edificio_demolido -> obtener_nombre();
-	delete edificio_demolido;
-	return edificio;
+	std::string edificio_demolido = (this -> terreno[fila][columna]) -> demoler_edificio();
+	return edificio_demolido;
 }
 
 void Mapa::poner_material_ubicacion(string material, std::size_t fila, std::size_t columna){

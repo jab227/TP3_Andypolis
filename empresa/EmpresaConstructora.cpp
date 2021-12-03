@@ -142,6 +142,7 @@ void Empresa_Constructora::demoler_edificio(){
 		resultado = this -> pedir_coordenadas(fila, columna);
 		fin = mostrar_mensaje_chequeo(resultado);
 	}while(!fin);
+	//Tengo que avisar si se pudo destruir algo o no?
 	this -> mapa -> demoler_edificio_ubicacion(fila, columna);
 }
 

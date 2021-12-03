@@ -42,8 +42,7 @@ std::string Casillero_Transitable::obtener_contenido(){
 	return nombre;
 }
 
-Edificio* Casillero_Transitable::agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
-	delete[] coordenadas;
+Edificio* Casillero_Transitable::agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	Edificio* edificio = nullptr;
 	return edificio;
 }
@@ -59,7 +58,6 @@ bool Casillero_Transitable::es_casillero_transitable(){
 }
 
 //Agregar demoler_edificio en inacc y transitables.
-Edificio* Casillero_Transitable::demoler_edificio(){
-	Edificio* edificio = nullptr;
-	return edificio;
+std::string Casillero_Transitable::demoler_edificio(){
+	return "";
 }

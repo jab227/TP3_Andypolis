@@ -22,7 +22,7 @@ public:
 	//PRE: -
 	//POST: se quita al edificio del casillero y lo devuelve, ahora esta vacio. si el
 	//casillero ya estaba vacio, devuelve nullptr.
-	Edificio* demoler_edificio();
+	std::string demoler_edificio();
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado
@@ -43,7 +43,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
+	Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 };
 

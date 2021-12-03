@@ -2,64 +2,66 @@
 #define JUGADOR_JUGADOR_H_
 
 #include <string>
+
+#include "../diccionario/diccionario.h"
 #include "../empresa/Almacen.h"
+#include "../empresa/Mapa.h"
 #include "../utils/Lista.h"
-#include "../utils/LecturaArchivos.h"
+#include "../utils/coordenada.h"
 
 const std::size_t ENERGIA_COMPRAR_BOMBAS = 5;
 
 class Jugador {
-//Atributos
-private:
-	size_t jugador;
-	int energia;
-	Almacen* inventario;
-	//TODO: Objetivos
-	//TODO: Coordenada.
-	Lista<int> ubicaciones_fila;
-	Lista<int> ubicaciones_columna;
-//Metodos
-public:
-	//TODO: Deberiamos pasarle al jugador el inventario y la lsita de coordenadas, ya procesado.
-	Jugador(size_t jugador);
+	// Atributos
+       private:
+	std::size_t id_;
+	std::size_t energia_;
+	Almacen* inventario_;
+	Diccionario<std::string, Lista<Coordenada>*> edificios_;
+
+       public:
+	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
+	// coordenadas, ya procesado.
+	Jugador(std::size_t id, Almacen* inventario);
+	// Destructuor
 	~Jugador();
+	// Pre: 
+	// Pos:
+	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
+	// PRE: -
+	// POST: devuelve el numero del jugador
+	std::size_t obtener_jugador() const;
 
-	//PRE: -
-	//POST: devuelve el numero del jugador
-	size_t obtener_jugador();
+	// PRE: -
+	// POST: devuelve la energia del jugador
+	std::size_t obtener_energia() const;
 
-	//PRE: -
-	//POST: devuelve la energia del jugador
-	int obtener_energia();
+	// PRE: -
+	// POST: devuelve el inventario del jugador
+	Almacen* obtener_inventario() const;
 
-	//PRE: energia_necesaria debe ser un numero positivo
-	//POST: si hay energia suficiente, devuelve un numero >= 0 representando la energia que sobra.
-	//Si no alcanza devuelve un numero negativo representando la energia que falta.
-	int energia_suficiente(int energia_necesaria);
+	// PRE: -
+	// POST: si hay energia suficiente, devuelve un numero >= 0
+	// representando la energia que sobra. Si no alcanza devuelve un numero
+	// negativo representando la energia que falta.
+	bool energia_suficiente(const std::size_t& energia_requerida) const;
 
+	// PRE: el valor tiene que ser mayor o igual a la energia cambiada de
+	// signo. POST: se modifica el valor de la energia, si el numero es
+	// positivo se suma y si es negativo se resta dicho valor. Devuelve la
+	// energia resultante.
+	bool usar_energia(const std::size_t& valor);
 
-	//PRE: el valor tiene que ser mayor o igual a la energia cambiada de signo.
-	//POST: se modifica el valor de la energia, si el numero es positivo se suma y si es negativo
-	//se resta dicho valor. Devuelve la energia resultante.
-	int modificar_energia(int valor);
+	// TODO: Hacer post y pre.
+	void agregar_ubicacion(std::size_t fila, std::size_t columna);
 
-	//PRE: -
-	//POST: devuelve el inventario del jugador
-	Almacen* obtener_inventario();
+	std::size_t obtener_largo_ubicaciones();
 
-	//TODO: Hacer post y pre.
-	void agregar_ubicacion(int fila, int columna);
+	void obtener_ubicacion(std::size_t ubicacion, std::size_t& fila,
+			       std::size_t& columna);
 
-	int obtener_largo_ubicaciones();
+	void eliminar_ubicacion(std::size_t fila, std::size_t columna);
 
-	void obtener_ubicacion(int ubicacion, int &fila, int &columna);
-
-	void eliminar_ubicacion(int fila, int columna);
-
-	void comprar_bombas();
-
-private:
-	std::size_t pedir_bombas_validas();
 };
 
 #endif /* JUGADOR_JUGADOR_H_ */

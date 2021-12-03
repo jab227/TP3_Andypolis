@@ -3,7 +3,7 @@
 No_Productor::No_Productor() {
 }
 
-No_Productor::No_Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos):
+No_Productor::No_Productor(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos):
 	Edificio(nombre, piedra, madera, metal, maximo_permitidos){
 }
 

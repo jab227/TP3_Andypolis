@@ -1,3 +1,5 @@
 madera 300
-metal 1020
-piedra 1060
+metal 940
+piedra 1015
+andycoins 25
+bombas 1

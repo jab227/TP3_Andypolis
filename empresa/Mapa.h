@@ -5,6 +5,7 @@
 #include "../material/Material.h"
 #include "../Casillero/Casillero.h"
 #include "../utils/Lista.h"
+#include "../jugador/Jugador.h"
 
 class Mapa {
 //Atributos
@@ -42,7 +43,7 @@ public:
 
 	//PRE: el mapa debe estar cargado
 	//POST: se muestra en una tabla los edificios que hay construidos o un mensaje si no hay ninguno
-	void mostrar_construidos();
+	void mostrar_construidos(Jugador* jugador);
 
 	//PRE: la posicion debe ser valida
 	//POST: se muestra informacion sobre la ubicacion consultada

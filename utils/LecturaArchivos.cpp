@@ -52,23 +52,23 @@ Edificio* procesar_edificio(string linea){
 		materiales[j] = stoi(dividir_linea(linea, ESPACIO));
 	}
 	std::size_t max_permitidos = stoi(linea);
-	return traductor_edificios(nombre, materiales[0], materiales[1], materiales[2], max_permitidos);
+	return traductor_edificios(nombre, materiales[0], materiales[1], materiales[2], max_permitidos, NINGUNO);
 }
 
-Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos){
+Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos, std::size_t propietario){
 	Edificio* edificio = nullptr;
 	if(nombre == "mina")
-		edificio = new Mina(piedra, madera, metal, max_permitidos);
+		edificio = new Mina(piedra, madera, metal, max_permitidos, propietario);
 	else if (nombre == "aserradero")
-		edificio = new Aserradero(piedra, madera, metal, max_permitidos);
+		edificio = new Aserradero(piedra, madera, metal, max_permitidos, propietario);
 	else if(nombre == "fabrica")
-		edificio = new Fabrica(piedra, madera, metal, max_permitidos);
+		edificio = new Fabrica(piedra, madera, metal, max_permitidos, propietario);
 	else if(nombre == "escuela")
-		edificio = new Escuela(piedra, madera, metal, max_permitidos);
+		edificio = new Escuela(piedra, madera, metal, max_permitidos, propietario);
 	else if(nombre == "obelisco")
-		edificio = new Obelisco(piedra, madera, metal, max_permitidos);
+		edificio = new Obelisco(piedra, madera, metal, max_permitidos, propietario);
 	else if(nombre == "planta electrica")
-		edificio = new Planta_Electrica(piedra, madera, metal, max_permitidos);
+		edificio = new Planta_Electrica(piedra, madera, metal, max_permitidos, propietario);
 	return edificio;
 }
 
@@ -103,11 +103,12 @@ void cargar_fila_columna(string linea, std::size_t& filas, std::size_t& columnas
 	columnas = stoi(dividir_linea(linea, ESPACIO));
 }
 
-string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna){
+string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna, size_t &propietario){
 	string edificio = dividir_linea(linea, DELIMITADOR_UBICACION);
 	edificio.erase(edificio.size()-1, 1); //Le saco el espcio final
 	fila = char_a_int(linea[0]);
 	columna = char_a_int(linea[3]);
+	propietario = 1;					//Elegir bien el propietario
 	return edificio;
 }
 

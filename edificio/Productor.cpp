@@ -3,8 +3,8 @@
 Productor::Productor() {
 }
 
-Productor::Productor(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, Material producto):
-	Edificio(nombre, piedra, madera, metal, maximo_permitidos){
+Productor::Productor(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, Material producto, std::size_t propietario):
+	Edificio(nombre, piedra, madera, metal, maximo_permitidos, propietario){
 	this->producto = producto;
 }
 

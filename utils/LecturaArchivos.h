@@ -25,14 +25,16 @@ Material procesar_material(string linea);
 //POST: se carga la linea y la fila con los valores correspondientes a la linea ingresada
 void cargar_fila_columna(string linea, std::size_t &filas, std::size_t &columnas);
 
-//PRE: linea debe tener el formato valido para las ubicaciones
-//POST: devuelve el edificio referido en la linea y fila y columna se igualan a la posicion del edificio
-string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna);
-
 //PRE: nombre debe ser un edificio valido
 //POST: devuelve el edificio cargado con los datos
 Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos);
 
+string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna, size_t &propietario);
+
+//PRE: nombre debe ser un edificio valido
+//POST: devuelve el edificio cargado con los datos
+Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos, size_t propietario);
+ 
 //PRE: nombre debe corresponder a un casillero
 //POST: se devuelve el casillero vacio correspondiente a nombre creado en memoria dinamica
 Casillero* traductor_casillero(char nombre);

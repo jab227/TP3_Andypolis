@@ -8,15 +8,17 @@ Edificio::Edificio() {
 	this->materiales[2] = 0;
 	this->maximo_permitidos = 0;
 	this->construidos = 0;
+	this->propietario = 0;
 }
 
-Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos){
+Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario){
 	this->nombre = nombre;
 	this->materiales[PIEDRA] = piedra;
 	this->materiales[MADERA] = madera;
 	this->materiales[METAL] = metal;
 	this->maximo_permitidos = maximo_permitidos;
 	this->construidos = 0;
+	this->propietario = propietario;
 }
 
 Edificio::~Edificio(){
@@ -55,7 +57,6 @@ bool Edificio::vacio(){
 void Edificio::modificar_construidos(std::size_t n){
 	if(n <= this->maximo_permitidos)
 		this->construidos = n;
-	//std::cout << "HOLAAAA" << std::endl;
 }
 
 void Edificio::aumentar_construidos(){
@@ -65,7 +66,6 @@ void Edificio::aumentar_construidos(){
 void Edificio::disminuir_construidos(){
 	this->modificar_construidos(this -> construidos - 1);	
 }
-
 
 std::size_t Edificio::obtener_construidos(){
 	return this->construidos;
@@ -83,6 +83,10 @@ Edificio& Edificio::operator=(const Edificio &rhs){
 
 bool Edificio::esta_maxima_capacidad(){
 	return this->construidos >= this->maximo_permitidos;
+}
+
+std::size_t Edificio::obtener_propietario(){
+	return this->propietario;
 }
 
 bool Edificio::operator==(const Edificio &rhs){

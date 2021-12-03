@@ -3,20 +3,29 @@
 #include "../utils/LecturaArchivos.h"
 
 string const SALIR_STR = "salir", SI = "si", NO = "no";
-const int COORDENADA_VACIA = -1;
+const int COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
 
 
-Empresa_Constructora::Empresa_Constructora(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones){
-	this -> almacen = new Almacen(ruta_materiales);
-	this -> planos = new Planos(ruta_edificios);
-	this -> mapa = new Mapa(ruta_mapa);
-	this -> cargar_ubicaciones(ruta_ubicaiones);
+Empresa_Constructora::Empresa_Constructora(){
+	this -> almacen = nullptr;
+	this -> planos = nullptr;
+	this -> mapa = nullptr;
 }
 
 Empresa_Constructora::~Empresa_Constructora() {
-	delete this -> almacen;
-	delete this -> planos;
-	delete this -> mapa;
+	if(almacen != nullptr)
+		delete this -> almacen;
+	if(planos != nullptr)
+		delete this -> planos;
+	if(mapa != nullptr)
+		delete this -> mapa;
+}
+
+bool Empresa_Constructora::cargar_archivos(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones){
+	this -> almacen = new Almacen(ruta_materiales);
+	this -> planos = new Planos(ruta_edificios);
+	this -> mapa = new Mapa(ruta_mapa);
+	return this -> cargar_ubicaciones(ruta_ubicaiones);
 }
 
 void Empresa_Constructora::mostrar_materiales(){
@@ -31,8 +40,8 @@ void Empresa_Constructora::mostrar_mapa(){
 	this -> mapa -> mostrar_mapa();
 }
 
-void Empresa_Constructora::mostrar_construidos(){
-	this -> mapa -> mostrar_construidos();
+void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
+	this -> mapa -> mostrar_construidos(jugador);
 }
 
 void Empresa_Constructora::mostrar_coordenada(){
@@ -49,26 +58,31 @@ void Empresa_Constructora::guardar_archivos(string ruta_materiales, string ruta_
 	this -> guardar_ubicaciones(ruta_ubicaciones);
 }
 
-void Empresa_Constructora::cargar_ubicaciones(string ruta){
+bool Empresa_Constructora::cargar_ubicaciones(string ruta){
+	bool existe = false;
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
 		string lectura;
 		std::size_t cant_agregados = 0, fila, columna;
+		size_t propietario;
+
 		string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
-			nuevo_contenido = procesar_ubicacion(lectura, fila, columna);
-			sumar_contenido(nuevo_contenido, fila, columna);
+			nuevo_contenido = procesar_ubicacion(lectura, fila, columna, propietario);
+			sumar_contenido(nuevo_contenido, fila, columna, propietario);
 			cant_agregados++;
+			existe = true;
 		}
 	}
 	archivo.close();
+	return existe;
 }
 
 void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	ofstream archivo(ruta);
 	string contenido;
 	if (archivo.is_open()){
-		int fila = 0, columna = 0;
+		std::size_t fila = 0, columna = 0;
 		while(this -> mapa -> es_cordenada_valida(fila, columna)){
 			while(this -> mapa -> es_cordenada_valida(fila, columna)){
 				contenido = this -> mapa -> obtener_contenido_ubicacion(fila, columna);
@@ -83,7 +97,7 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido, std::size_t fila, std::size_t columna){
+void Empresa_Constructora::sumar_contenido(string contenido, std::size_t fila, std::size_t columna, std::size_t propietario){
 	Edificio* edif = nullptr;
 	//Deberia tener una capa mas de abstraccion. Mapa agregar_ubicacion()?
 	if(this -> planos -> es_edificio_valido(contenido,edif)){
@@ -113,7 +127,7 @@ void Empresa_Constructora::vaciar_materiales(){
 	std::cout << "Mapa limpiado de materiales!" << std::endl;
 }
 
-void Empresa_Constructora::construir_edificio(){
+void Empresa_Constructora::construir_edificio(Jugador* jugador){
 	//Se rompe si pongo un numero.
 	Edificio* edificio = pedir_edificio();
 	if(edificio != nullptr){
@@ -125,8 +139,7 @@ void Empresa_Constructora::construir_edificio(){
 			Resultado_Chequeos resultado = this -> pedir_coordenadas(fila, columna);
 			mostrar_mensaje_chequeo(resultado);
 			if( resultado == EXITO )
-				this -> edificio_construido_confirmado(edificio, fila, columna);
-
+				this -> edificio_construido_confirmado(edificio, fila, columna, jugador);
 		}else
 			std::cout << "No se realizo ningun cambio." << std::endl;
 	delete edificio;
@@ -247,14 +260,16 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna){
+void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna, Jugador* jugador){
 	// Decirle al mapa que construya. Si es true, restamos.
 	// ¿Si no decimos que la celda no es correcta?
 	if(this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna)){
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 		this -> almacen -> restar_lista_materiales(listado_necesario);
 		delete listado_necesario;
+		//Ya no es lo mismo donde aumentamos, cada uno tiene su contador de edificios.
 		this -> planos -> aumentar_construidos_edificio(edificio);
+		jugador -> modificar_energia(-ENERGIA_CONSTRUIR);
 	}
 	
 }

@@ -5,6 +5,11 @@
 #include "Planos.h"
 #include "../utils/Lista.h"
 #include "Mapa.h"
+#include "../jugador/Jugador.h"
+
+const int ENERGIA_CONSTRUIR = 15, ENERGIA_LISTAR_CONSTRUIDOS = 0, ENERGIA_DEMOLER = 15, ENERGIA_ATACAR = 30,
+		  ENERGIA_REPARAR = 25, ENERGIA_COMPRAR_BOMBAS = 5, ENERGIA_CONSULTAR = 0, ENERGIA_LISTAR_MATERIALES = 0,
+		  ENERGIA_OBJETIVOS = 0, ENERGIA_RECOLECTAR = 20, ENERGIA_MOVERSE = 0, ENERGIA_FIN_TURNO = 0, ENERGIA_GUARDAR_SALIR = 0;
 
 class Empresa_Constructora {
 //Atributos
@@ -14,62 +19,71 @@ private:
 	Mapa* mapa;
 //Metodos
 public:
-	//PRE: las rutas deben ser validas a archivos existentes.
-	//POST: se inicializan los atributos con las rutas ingresadas.
-	Empresa_Constructora(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones);
+	//PRE: -
+	//POST: se crea una empresa constructora vacia.
+	Empresa_Constructora();
+
+	//PRE: las rutas del mapa y edificios deben ser a archivos existentes.
+	//POST: se inicializan los atributos con las rutas ingresadas y devuelve true si el archivo de ubicaciones
+	//existe y no esta vacio, devuelve false en caso contrario.
+	bool cargar_archivos(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada
 	~Empresa_Constructora();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados y el jugador valido con la energia suficiente
 	//POST: se construye un edificio pidiendo al usuario en nombre y las coordenadas
-	void construir_edificio();
+	void construir_edificio(Jugador* jugador);
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
 	void demoler_edificio();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios existentes junto con sus materiales requeridos para
 	//construirlo, la cantidad construida y los que se pueden construir
 	void mostrar_edificios();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los materiales disponibles en el stock del almacen
 	void mostrar_materiales();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestra el mapa de terrenos y el de los edificios/materiales ubicados en mapa
 	void mostrar_mapa();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
 	void mostrar_coordenada();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
-	void mostrar_construidos();
+	void mostrar_construidos(Jugador* jugador);
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se guardan los datos de los archivos de materiales y las ubicaciones
 	void guardar_archivos(string ruta_materiales, string ruta_ubicaciones);
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se suman al almacen los recursos producidos por los edificios
 	void producir_recursos();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se generan materiales aleatorios en caminos aleatorios del mapa
 	void lluvia_de_recursos();
 
-	//PRE: -
+	//PRE: los archivos deben estar cargados
 	//POST: se vacian los materiales del mapa
 	void vaciar_materiales();
+
+	//PRE: jugador debe ser un puntero valido
+	//POST: se compran las bombas pidiendo al usuario la cantidad
+	void comprar_bombas(Jugador* jugador);
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
-	void cargar_ubicaciones(string ruta);
+	bool cargar_ubicaciones(string ruta);
 
 	//PRE: ruta debe ser la ruta a un archivo existente. el mapa debe estar cargado.
 	//POST: se guardan la informacion de las ubicaciones en el archivo.
@@ -78,7 +92,9 @@ private:
 	//PRE: la linea debe estar bien formada con la ubicacion de un edificio o material. fila y columna
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
-	void sumar_contenido(string linea, std::size_t fila, std::size_t columna);
+ 
+	void sumar_contenido(string linea, std::size_t fila, std::size_t columna, size_t propietario);
+ 
 
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
@@ -107,13 +123,19 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna);
+	void edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna,Jugador* jugador);
 
 	//PRE: -
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
 	Resultado_Chequeos pedir_coordenadas(std::size_t& fila, std::size_t& columna);
 
 	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, std::size_t fila, std::size_t columna);
+	
+	//ADAPTAR!
+
+	int pedir_bombas_validas(Jugador* jugador);
+
+	Resultado_Chequeos chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

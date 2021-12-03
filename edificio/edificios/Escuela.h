@@ -7,11 +7,11 @@ class Escuela : public Productor{
 public:
 	//PRE: -
 	//POST: se construye una escuela vacia
-	Escuela();
+	Escuela(std::size_t propietario);
 
 	//PRE: -
 	//POST: se construye una escuela con los datos ingresados
-	Escuela(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
+	Escuela(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario);
 
 	//PRE: -
 	//POST: imprime un saludo por terminal

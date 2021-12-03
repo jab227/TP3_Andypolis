@@ -19,7 +19,10 @@ Mapa::Mapa(string ruta) {
 	this -> filas = 0;
 	this -> terreno = nullptr;
 	this -> cargar_terreno(ruta);
+ 
 	srand((unsigned int) time(0)); 	//Genero una semilla aleatoria
+=======
+ 
 }
 
 Mapa::~Mapa() {
@@ -61,7 +64,7 @@ bool Mapa::es_cordenada_valida(std::size_t fila, std::size_t columna){
 }
 
 void Mapa::mostrar_mapa(){
-	cout << "El mapa del terreno es el siguiente:" << endl;
+	cout << "Mapa:" << endl;
 	cout << "   ";
 	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++)
 		cout << ' ' << columnas/10 << ' ';
@@ -80,15 +83,25 @@ void Mapa::mostrar_mapa(){
 	cout << FIN_COLOR;
 }
 
-// Reveer.
+// Adaptar porque ahora tenemos otro diseño.
 void Mapa::mostrar_construidos(){
 	Lista<string> lista_nombres;
 	Lista<Lista<std::size_t*>*> lista_coordenadas;
 	for(std::size_t fila = 0; fila < this -> filas; fila++){
 		for(std::size_t columna = 0; columna < this -> columnas; columna++){
 			//Dame el edificio. No es null pointer
+			//De quien es la responsabilidad de agregarse a la lista?
 			(this -> terreno[fila][columna]) -> agregar_lista_edificio(fila, columna, lista_nombres, lista_coordenadas);
 		}
+
+void Mapa::mostrar_construidos(Jugador* jugador){
+	Lista<string> lista_nombres;
+	Lista<Lista<int*>*> lista_coordenadas;
+	int* coordenadas;
+	for(int i = 1; i <= jugador -> obtener_largo_ubicaciones(); i++){
+		coordenadas = new int[2];
+		jugador -> obtener_ubicacion(i, coordenadas[0], coordenadas[1]);
+		agregar_edificio_a_listas(this -> terreno[coordenadas[0]][coordenadas[1]], coordenadas, lista_nombres, lista_coordenadas);
 	}
 	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
 }
@@ -116,8 +129,8 @@ void Mapa::mostrar_posicion(std::size_t fila, std::size_t columna){
 	this -> terreno[fila][columna] -> saludar();
 }
 
-bool Mapa::construir_edificio_ubicacion(Edificio* edificio, std::size_t fila, std::size_t columna){
-	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0);
+bool Mapa::construir_edificio_ubicacion(Edificio* edificio, std::size_t fila, std::size_t columna, size_t propietario){
+	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0, propietario);
 	return this -> terreno[fila][columna] -> construir_edificio(edificio);
 }
 

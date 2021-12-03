@@ -4,6 +4,9 @@
 
 #include "../utils/LecturaArchivos.h"
 
+const string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
+const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
+
 Almacen::Almacen() {
 }
 
@@ -26,6 +29,9 @@ void Almacen::cargar_materiales(string ruta){
 			agregar_material(nuevo_material, cant_agregados+1);
 			cant_agregados++;
 		}
+	}else{
+		for(int i = 0; i < CANTIDAD_MATERIALES_DISTINTOS; i++)
+			agregar_material(Material(NOMBRES_MATERIALES[i], CANTIDAD_INICIAL), i+1);
 	}
 	archivo.close();
 }

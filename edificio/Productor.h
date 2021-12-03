@@ -3,7 +3,7 @@
 
 #include "../edificio/Edificio.h"
 
-class Productor : public Edificio{
+class Productor: public Edificio{
 private:
 	Material producto;
 public:

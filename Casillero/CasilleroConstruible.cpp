@@ -11,7 +11,7 @@ Casillero_Construible::~Casillero_Construible() {
 
 bool Casillero_Construible::construir_edificio(Edificio* edificio){
 	bool resultado=false;
-	if(this -> esta_ocupado()){
+	if(!(this -> esta_ocupado())){
 		this -> edificio = edificio;
 		resultado = true;
 	}else{

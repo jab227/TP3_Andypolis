@@ -1,22 +1,13 @@
-#include <iostream>
-
-#include "../edificio/Edificio.h"
-#include "../edificio/edificios/Aserradero.h"
-#include "../edificio/edificios/Escuela.h"
-#include "../edificio/edificios/Fabrica.h"
-#include "../empresa/Planos.h"
-#include "../utils/Lista.h"
-#include "../utils/Nodo.h"
-#include "../utils/LecturaArchivos.h"
+#include "../empresa/EmpresaConstructora.h"
 
 using namespace std;
 
-int main(){
-    Planos plano = Planos("./saves/edificios.txt");
-    Lista<Edificio*> lista = Lista<Edificio*>();
-    Resultado_Chequeos hola = EXITO;
-    cout << hola << endl;
-    hola = plano.check_construir_edificio("escuela");
-    cout << hola << endl;
+const string RUTA_MATERIALES = "./saves/materiales.txt", RUTA_EDIFICIOS = "./saves/edificios.txt";
+const string RUTA_MAPA = "./saves/mapa.txt", RUTA_UBICACIONES = "./saves/ubicaciones.txt";
 
+int main(){
+    Empresa_Constructora coca = Empresa_Constructora(RUTA_MATERIALES,RUTA_EDIFICIOS,RUTA_MAPA,RUTA_UBICACIONES);
+    coca.mostrar_construidos();
+    
+    return 0;
 }

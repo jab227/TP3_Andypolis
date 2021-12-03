@@ -12,7 +12,6 @@ Casillero_Transitable::~Casillero_Transitable() {
 
 void Casillero_Transitable::agregar_material(Material* material){
 	this -> material = material;
-	this -> ocupado = true;
 }
 
 Material* Casillero_Transitable::eliminar_material(){
@@ -20,13 +19,12 @@ Material* Casillero_Transitable::eliminar_material(){
 	if(this -> esta_ocupado()){
 		material = this -> material;
 		this -> material = nullptr;
-		this -> ocupado = false;
 	}
 	return material;
 }
 
 bool Casillero_Transitable::esta_ocupado(){
-	return this -> ocupado;
+	return !(this -> material == nullptr);
 }
 
 void Casillero_Transitable::saludar(){
@@ -37,14 +35,14 @@ void Casillero_Transitable::saludar(){
 		cout << "No tengo ningun material en mi." << endl;
 }
 
-string Casillero_Transitable::obtener_contenido(){
+std::string Casillero_Transitable::obtener_contenido(){
 	string nombre = CONTENIDO_VACIO;
 	if(this -> esta_ocupado())
 		nombre = this -> material -> obtener_nombre();
 	return nombre;
 }
 
-Edificio* agregar_lista_edificio( int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas){
+Edificio* Casillero_Transitable::agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	delete[] coordenadas;
 	Edificio* edificio = nullptr;
 	return edificio;
@@ -56,7 +54,7 @@ bool Casillero_Transitable::construir_edificio(Edificio* edificio){
 }
 	
 //Provisorio
-bool es_casillero_transitable(){
+bool Casillero_Transitable::es_casillero_transitable(){
 	return true;
 }
 

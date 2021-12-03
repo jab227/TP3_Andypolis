@@ -3,7 +3,7 @@
 
 #include "../Productor.h"
 
-class Aserradero : public Productor{
+class Aserradero: public Productor{
 public:
 	//PRE: -
 	//POST: se construye un aserradero vacio

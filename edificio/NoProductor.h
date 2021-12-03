@@ -3,7 +3,7 @@
 
 #include "Edificio.h"
 
-class No_Productor : public Edificio{
+class No_Productor: public Edificio{
 public:
 	//PRE: -
 	//POST: se construye un edificio que no produce nada

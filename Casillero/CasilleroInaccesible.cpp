@@ -26,14 +26,16 @@ bool Casillero_Inaccesible::construir_edificio(Edificio* edificio){
 	return false;
 }
 
-Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
+Edificio* Casillero_Inaccesible::agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	delete[] coordenadas;
 	Edificio* edificio = nullptr;
 	return edificio;
 }
 
 //Provisorio
-bool es_casillero_transitable(){return false;}
+bool Casillero_Inaccesible::es_casillero_transitable(){
+	return false;
+}
 
 //Agregar demoler_edificio en inacc y transitables.
 Edificio* Casillero_Inaccesible::demoler_edificio(){

@@ -3,7 +3,7 @@
 
 #include "Casillero.h"
 
-class Casillero_Inaccesible : public Casillero{
+class Casillero_Inaccesible: public Casillero{
 public:
 	//PRE: -
 	//POST: se crea un casillero vacio
@@ -26,7 +26,7 @@ public:
 	std::string obtener_contenido();
 	
 	//PRE: - PROVISORIO
-	//POST: devuelve si el casillero es transitable o no.
+	//POST: devuelve si el casillero es transitable o no
 	bool es_casillero_transitable();
 	
 	//PRE: -
@@ -35,7 +35,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
+	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 	//Agregar demoler_edificio en inacc y transitables.
 	Edificio* demoler_edificio();

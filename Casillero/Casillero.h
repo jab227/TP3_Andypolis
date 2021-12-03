@@ -57,7 +57,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	virtual Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
+	virtual Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
 
 };
 

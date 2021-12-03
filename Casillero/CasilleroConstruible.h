@@ -3,7 +3,7 @@
 
 #include "Casillero.h"
 
-class Casillero_Construible : public Casillero{
+class Casillero_Construible: public Casillero{
 private:
 	Edificio* edificio;
 public:
@@ -39,7 +39,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
-	string obtener_contenido();
+	std::string obtener_contenido();
 
 	//PRE: -
 	//POST: -

@@ -7,7 +7,6 @@
 class Casillero_Transitable: public Casillero{
 private:
 	Material* material;
-	bool ocupado;
 public:
 	//PRE: -
 	//POST: se crea un casillero vacio
@@ -41,7 +40,7 @@ public:
 
 	//PRE: - ELIMINAR?
 	//POST: devuelve el nombre del material contenido o MATERIAL_VACIO.
-	string obtener_contenido();
+	std::string obtener_contenido();
 	
 	//PRE: -
 	//POST:
@@ -50,7 +49,9 @@ public:
 	//Agregar demoler_edificio en inacc y transitables.
 	Edificio* demoler_edificio();
 
-	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
+	//PRE: -
+	//POST: -
+	Edificio* agregar_lista_edificio( std::size_t* coordenadas, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 };
 
 #endif /* CASILLERO_CASILLEROTRANSITABLE_H_ */

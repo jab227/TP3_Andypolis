@@ -6,7 +6,7 @@ Material::Material(){
 	this -> cantidad = 0;
 }
 
-Material::Material(string nombre, int cantidad){
+Material::Material(string nombre, std::size_t cantidad){
 	this -> nombre = nombre;
 	this -> cantidad = cantidad;
 }
@@ -15,14 +15,14 @@ string Material::obtener_nombre(){
 	return this -> nombre;
 }
 
-int Material::obtener_cantidad(){
+std::size_t Material::obtener_cantidad(){
 	return this -> cantidad;
 }
 
 void Material::cambiar_nombre(string nombre){
 	this -> nombre = nombre;
 }
-void Material::cambiar_cantidad(int cantidad){
+void Material::cambiar_cantidad(std::size_t cantidad){
 	this -> cantidad = cantidad;
 }
 

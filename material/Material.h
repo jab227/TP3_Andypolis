@@ -10,7 +10,7 @@ const string MATERIAL_VACIO = "";
 class Material{
 private:
 	string nombre;
-	int cantidad;
+	std::size_t cantidad;
 
 public:
 	//PRE: -
@@ -19,7 +19,7 @@ public:
 
 	//PRE: -
 	//POST: se crea un material con los datos ingresados
-	Material(string nombre, int cantidad);
+	Material(string nombre, std::size_t cantidad);
 
 	//PRE: -
 	//POST: devuelve el nombre del material
@@ -27,7 +27,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve la cantidad del material
-	int obtener_cantidad();
+	std::size_t obtener_cantidad();
 
 	//PRE: -
 	//POST: se cambia el nombre del material
@@ -35,7 +35,7 @@ public:
 
 	//PRE: -
 	//POST: se cmbia la cantidad del material
-	void cambiar_cantidad(int cantidad);
+	void cambiar_cantidad(std::size_t cantidad);
 
 	//PRE: -
 	//POST: imprime un saludo

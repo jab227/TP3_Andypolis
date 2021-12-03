@@ -5,7 +5,7 @@
 #include "../utils/Lista.h"
 #include "../edificio/Edificio.h"
 
-const int NO_ENCONTRADO = -1;
+const int NO_ENCONTRADO = 0;
 
 class Almacen {
 private:
@@ -29,15 +29,12 @@ public:
 	//lista
 	void cargar_materiales(string ruta);
 
-	//PRE: -
-	//POST: devuelve la cantidad del material en caso de encontrarse o en caso de
-	//no estar en el arreglo, devuelve NO_ENCONTRADO.
-	int buscar_material(string a_buscar);
-
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
 	//POST: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
 	//se realiza ningun cambio. La cantidad puede ser negativa, en tal caso se restara.
-	void modificar_cantidad_material(string a_cambiar, std::size_t cantidad);
+	
+	void sumar_cantidad_material(string a_cambiar, std::size_t cantidad);
+	//Le puse sumar, porque modificar pareciera no suma, sino que reemplaza el valor.
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
 	//post: muestra todos los materiales por terminal
@@ -58,20 +55,26 @@ public:
 	//en stock
 	Resultado_Chequeos hay_lista_materiales(Lista<Material>* materiales_consutlados);
 
-	//PRE: la lista no debe ser un puntero nulo
-	//POST: se restan del almacen los materiales de la lista
-	void restar_lista_materiales(Lista<Material>* materiales_usados);
+	//TODO: Agregue porcentaje para que sea multiuso. Puede agregarse un valor default al porcentaje?
+	void descontar_lista_materiales(Lista<Material>* materiales_usados, std::size_t porcentaje);
+	void sumar_lista_materiales(Lista<Material>* materiales_usados, std::size_t porcentaje);
 
-	//PRE: la lista no debe ser un puntero nulo
-	//POST: se suman al almacen los materiales de la lista. si recuperados vale true, la
-	//mitad de los materiales seran sumados.
-	void sumar_lista_materiales(Lista<Material>* materiales_obtenidos, bool recuperados = false);
+	//PRE:
+	//POST: se compran las bombas pidiendo al usuario la cantidad
+	Resultado_Chequeos comprar_bombas( std::size_t cantidad);
+
 
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
 	//POST: se agrega el material al final del vector.
 	void agregar_material(Material material, std::size_t posicion);
+	
+	Resultado_Chequeos chequeo_bombas(std::size_t cantidad);
 
+	//PRE: -
+	//POST: devuelve el indice del material en caso de encontrarse o en caso de
+	//no estar en el arreglo, devuelve NO_ENCONTRADO.
+	std::size_t buscar_material(Material& a_buscar);
 };
 
 #endif /* ALMACEN_H_ */

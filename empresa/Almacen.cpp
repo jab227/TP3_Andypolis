@@ -6,6 +6,7 @@
 
 const string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
+const int PRECIO_BOMBA = 100;
 
 Almacen::Almacen() {
 }
@@ -35,36 +36,35 @@ void Almacen::cargar_materiales(string ruta){
 	}
 	archivo.close();
 }
+
 void Almacen::agregar_material(Material material, std::size_t posicion){
 	this -> lista_materiales.alta(material, posicion);
 }
 
-int Almacen::buscar_material(string a_buscar){
-	int cantidad = NO_ENCONTRADO;
-	bool fin = false;
-	std::size_t i = 1;
-	while(!fin && i <= this -> lista_materiales.consulta_largo()){
-		if (this -> lista_materiales.consulta(i).obtener_nombre() == a_buscar){
-			//Casteo
-			cantidad = (int) this -> lista_materiales.consulta(i).obtener_cantidad();
-			fin = true;
+
+//ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
+std::size_t Almacen::buscar_material(Material& a_buscar){
+	std::size_t i = 0;
+	std::size_t indice = NO_ENCONTRADO;
+	while(!indice && i <= this -> lista_materiales.consulta_largo()){
+		if (this -> lista_materiales.consulta(i) == a_buscar ){
+			a_buscar = this -> lista_materiales.consulta(i);
+			indice = i;
 		}
 	i++;
 	}
-	return cantidad;
+	return indice;
 }
 
-void Almacen::modificar_cantidad_material(string a_cambiar, std::size_t cantidad){
+
+//ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
+void Almacen::sumar_cantidad_material(string a_cambiar, std::size_t cantidad){
 	bool fin = false;
-	std::size_t i = 1;
-	while(i <= this -> lista_materiales.consulta_largo() && !fin){
-		if(this -> lista_materiales.consulta(i).obtener_nombre() == a_cambiar){
-			Material nuevo = this -> lista_materiales.consulta(i);
-			nuevo.cambiar_cantidad(nuevo.obtener_cantidad()+cantidad);
-			this -> lista_materiales.modificar(nuevo, i);
-			fin = true;
-		}
-	i++;
+	Material material_a_cambiar = Material(a_cambiar,0);
+	std::size_t index = buscar_material(material_a_cambiar);
+	if(index){
+		material_a_cambiar.sumar_cantidad(cantidad);
+		this -> lista_materiales.modificar(material_a_cambiar, index);
 	}
 }
 
@@ -91,15 +91,10 @@ bool Almacen::guardar_materiales(string path){
 }
 
 bool Almacen::hay_material_suficiente(Material material){
-	bool suficiente = false, fin = false;
-	std::size_t i = 1;
-	while (i <= this -> lista_materiales.consulta_largo() && !fin){
-		Material almacenado = this -> lista_materiales.consulta(i);
-		if(almacenado.obtener_nombre() == material.obtener_nombre()){
-			fin = true;
-			suficiente = almacenado.obtener_cantidad() >= material.obtener_cantidad();
-		}
-		i++;
+	bool suficiente = false;
+	Material almacenado = Material(material.obtener_nombre(),0);
+	if(buscar_material(almacenado)){
+		suficiente = almacenado.obtener_cantidad() >= material.obtener_cantidad();
 	}
 	return suficiente;
 }
@@ -118,19 +113,50 @@ Resultado_Chequeos Almacen::hay_lista_materiales(Lista<Material>* materiales_con
 	return suficiente;
 }
 
-void Almacen::restar_lista_materiales(Lista<Material>* materiales_usados){
+
+void Almacen::descontar_lista_materiales(Lista<Material>* materiales_usados, std::size_t porcentaje){
+	std::size_t proporcion = porcentaje/100;
 	for(std::size_t i = 1; i <= materiales_usados -> consulta_largo(); i++){
 		Material material = materiales_usados -> consulta(i);
-		this -> modificar_cantidad_material(material.obtener_nombre(), -material.obtener_cantidad());
+		this -> sumar_cantidad_material(material.obtener_nombre(), -material.obtener_cantidad()*proporcion);
 	}
 }
 
-void Almacen::sumar_lista_materiales(Lista<Material>* materiales_obtenidos, bool recuperados){
+void Almacen::sumar_lista_materiales(Lista<Material>* materiales_obtenidos, std::size_t porcentaje){
+	//TODO: Constantes.
+	std::size_t proporcion = porcentaje/100;
 	for(std::size_t i = 1; i <= materiales_obtenidos -> consulta_largo(); i++){
 		Material material = materiales_obtenidos -> consulta(i);
-		if(!recuperados)
-			this -> modificar_cantidad_material(material.obtener_nombre(), material.obtener_cantidad());
-		else
-			this -> modificar_cantidad_material(material.obtener_nombre(), material.obtener_cantidad()/2);
+		this -> sumar_cantidad_material(material.obtener_nombre(), material.obtener_cantidad()*proporcion);
 	}
+}
+
+
+Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad){
+	Resultado_Chequeos resultado = chequeo_bombas(cantidad);
+	if(resultado == EXITO){
+		this -> sumar_cantidad_material(NOMBRES_MATERIALES[4],cantidad);
+		this -> sumar_cantidad_material(NOMBRES_MATERIALES[3],-(cantidad*PRECIO_BOMBA));
+		
+		//TODO: Mmmm... mejorar.
+		Material andycoins = Material(NOMBRES_MATERIALES[3],0);
+		Material bombas = Material(NOMBRES_MATERIALES[4],0);
+		buscar_material(andycoins);
+		buscar_material(bombas);
+		std::cout << "Cantidad de bombas: " << andycoins.obtener_cantidad() << std::endl; 
+		std::cout << "Andycoins restantes: " << bombas.obtener_cantidad() << std::endl; 
+	}
+	return resultado;
+}
+
+
+Resultado_Chequeos Almacen::chequeo_bombas(std::size_t cantidad){
+	Resultado_Chequeos resultado = NO_MATERIALES;
+	Material andycoins_requeridos = Material(NOMBRES_MATERIALES[3],PRECIO_BOMBA*cantidad);
+	if(cantidad = 0){ //Puede ser porque puso que no queria comprar o porque no es numero lo que ingreso.
+		resultado = SALIR;
+	}else if( this -> hay_material_suficiente(andycoins_requeridos)){
+		resultado = EXITO;
+	}
+	return resultado;
 }

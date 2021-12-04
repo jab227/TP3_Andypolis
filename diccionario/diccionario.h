@@ -116,6 +116,14 @@ class Diccionario {
 		return true;
 	};
 
+	T* imprimir_inorder(NodoDiccionario<T, U>* nodo){
+		if(nodo != nullptr){
+			imprimir_inorder(nodo->izquierda());
+			nodo->imprimir_dato(); 
+			imprimir_inorder(nodo->derecha());
+		}
+	}
+
        public:
 	// Pre: -
 	// Pos: Constructor del diccionario;
@@ -145,6 +153,10 @@ class Diccionario {
 	// Pre: -
 	// Pos: True si esta vacio, False en otro caso.
 	bool vacio() const { return (raiz_ == nullptr); };
+
+	void imprimir_inorden() const {
+			this -> imprimir_inorden(this -> raiz_);
+	}
 };
 
 #endif

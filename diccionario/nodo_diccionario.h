@@ -26,6 +26,9 @@ class NodoDiccionario {
 	// Pre: -
 	// Pos: Devuelve el dato guardado en el nodo.
 	U dato() const { return dato_; }
+	// Pre: U debe tener implementado el metodo a_string().
+	// Pos: Devuelve el dato guardado en el nodo.
+	void imprimir_dato() const { std::cout << dato_ -> a_string() << std::endl;} 
 	// Pre: -
 	// Pos: Cambia la clave guardada dentro del nodo.
 	void cambiar_clave(const T& clave) { clave_ = clave; };

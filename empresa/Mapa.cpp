@@ -50,7 +50,6 @@ void Mapa::cargar_terreno(string ruta){
     }
     
 }
-
 //TODO: Adaptar al parser.
 void Mapa::iniciar_filas_casilleros(std::size_t filas, string lectura){
 	this -> terreno[filas] = new Casillero* [this -> columnas];
@@ -59,9 +58,8 @@ void Mapa::iniciar_filas_casilleros(std::size_t filas, string lectura){
 	}
 }
 
-
-bool Mapa::es_cordenada_valida(std::size_t fila, std::size_t columna){
-	return (fila < this -> filas && columna < this -> columnas);
+bool Mapa::es_cordenada_valida(const Coordenada& coordenada){
+	return (coordenada.x() < this -> filas && coordenada.y() < this -> columnas);
 }
 
 void Mapa::mostrar_mapa(){
@@ -76,141 +74,91 @@ void Mapa::mostrar_mapa(){
 	for(std::size_t filas = 0; filas < this -> filas; filas++){
 		cout << filas/10 << filas%10 << ' ';
 		for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
-			cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
-					<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
+			//TODO: Corregir. Es necesario el indentificador? El edificio, material, etc, no podrian tener su icono?
+			//cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
+			//		<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
 		}
 		cout << endl << FIN_COLOR;
 	}
 	cout << FIN_COLOR;
 }
 
-//TODO: Responsabilidad del jugador. 
-void Mapa::mostrar_construidos(){
-	Lista<string> lista_nombres;
-	Lista<Lista<std::size_t*>*> lista_coordenadas;
-	for(std::size_t fila = 0; fila < this -> filas; fila++){
-		for(std::size_t columna = 0; columna < this -> columnas; columna++){
-			//Dame el edificio. No es null pointer
-			//De quien es la responsabilidad de agregarse a la lista?
-			(this -> terreno[fila][columna]) -> agregar_lista_edificio(fila, columna, lista_nombres, lista_coordenadas);
-		}
-/*
-void Mapa::mostrar_construidos(Jugador* jugador){
-	Lista<string> lista_nombres;
-	Lista<Lista<int*>*> lista_coordenadas;
-	int* coordenadas;
-	for(int i = 1; i <= jugador -> obtener_largo_ubicaciones(); i++){
-		coordenadas = new int[2];
-		jugador -> obtener_ubicacion(i, coordenadas[0], coordenadas[1]);
-		agregar_edificio_a_listas(this -> terreno[coordenadas[0]][coordenadas[1]], coordenadas, lista_nombres, lista_coordenadas);
-	}
-	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
-}
-*/
-
-//TODO: Responsabilidad del jugador. 
-void Mapa::mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
-	if(lista_nombres.consulta_largo() > 0){
-		std::size_t* coordenadas;
-		cout << "|Edificio\t\t|Cantidad\t|Ubicaciones\t" << endl;
-		for(std::size_t i = 1; ! lista_coordenadas.vacia(); i++){
-			cout << '|' << lista_nombres.consulta(i) << espaciado(lista_nombres.consulta(i), 21)
-					<< lista_coordenadas.consulta(1) -> consulta_largo() << "\t\t|";
-			for(std::size_t j = 1; ! lista_coordenadas.consulta(1) -> vacia(); j++){
-				coordenadas = lista_coordenadas.consulta(1) -> baja(1);
-				cout << '(' << coordenadas[0] << ", " << coordenadas[1] << ") ";
-				delete [] coordenadas;
-			}
-			cout << endl;
-			delete lista_coordenadas.baja(1);
-		}
-	}else
-		cout << "No hay ningun edificio construido en el mapa." << endl;
+void Mapa::mostrar_posicion(const Coordenada& coordenada){
+	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
 }
 
-void Mapa::mostrar_posicion(std::size_t fila, std::size_t columna){
-	this -> terreno[fila][columna] -> saludar();
+bool Mapa::construir_edificio_ubicacion(Edificio* edificio, const Coordenada& coordenada){
+	//Fuera el mapa debemos agregar la coordenada de la lista del jugador? O dentro?
+	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0);
+	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio);
 }
 
-bool Mapa::construir_edificio_ubicacion(Edificio* edificio, std::size_t fila, std::size_t columna, size_t propietario){
-	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0, propietario);
-	return this -> terreno[fila][columna] -> construir_edificio(edificio);
-}
-
-string Mapa::demoler_edificio_ubicacion(std::size_t fila, std::size_t columna){
-	std::string edificio_demolido = (this -> terreno[fila][columna]) -> demoler_edificio();
+string Mapa::demoler_edificio_ubicacion(const Coordenada& coordenada){
+	//Fuera el mapa debemos eliminar la coordenada de la lista del jugador? O dentro?
+	std::string edificio_demolido = (this -> terreno[coordenada.x()][coordenada.y()]) -> demoler_edificio();
 	return edificio_demolido;
 }
 
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
-void Mapa::poner_material_ubicacion(string material, std::size_t fila, std::size_t columna){
-	( (Casillero_Transitable*) this -> terreno[fila][columna] ) ->
+void Mapa::poner_material_ubicacion(string material,const Coordenada& coordenada){
+	( (Casillero_Transitable*) this -> terreno[coordenada.x()][coordenada.y()] ) ->
 			agregar_material(traductor_materiales(material, 0));
 }
 
-//TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
-string Mapa::sacar_material_ubicacion(std::size_t fila, std::size_t columna){
-	string material_quitado = this -> terreno[fila][columna] -> obtener_contenido();
-	delete ( (Casillero_Transitable*) this -> terreno[fila][columna] ) -> eliminar_material();
-	return material_quitado;
+//OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
+void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario){
+	 this -> terreno[coordenada.x()][coordenada.y()] -> recoger_material(inventario);
 }
 
-string Mapa::obtener_contenido_ubicacion(std::size_t fila, std::size_t columna){
+//WHY: Se usa?
+string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) const{
 	string contenido = CONTENIDO_VACIO;
-	if(this -> terreno[fila][columna] -> esta_ocupado())
-		contenido = terreno[fila][columna] -> obtener_contenido();
+	//Depende para que lo usemos. Hay una sobrecarga de obtener_contenido. Una para edificios y otra para materiales.
+	//contenido = terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	return contenido;
 }
 
+//TODO: REVISAR que no haya hecho cagadas con la logica.
 bool Mapa::generar_materiales_aleatorios(){
-	//Chequea cuando casilleros libres y transitables hay.
-	std::size_t casilleros_libres = this -> casilleros_libres_transitables();
+	//Chequea cuando casilleros libres y transitables hay. Hace una lista.
+	Lista<Coordenada>* casilleros_libres = new Lista<Coordenada>;
+	casilleros_libres_transitables(casilleros_libres);
 	//Genera los numeros aleatorios dentro de los rangos [MINIMO,MAXIMO]
 	std::size_t piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
 	std::size_t madera_a_generar = this -> numero_aleatorio(MADERA_MINIMO, MADERA_MAXIMO);
 	std::size_t metal_a_generar = this -> numero_aleatorio(METAL_MINIMO, METAL_MAXIMO);
 	std::size_t a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar);
-
-	while(a_generar > 0 && (casilleros_libres > 0)){
-		if((piedra_a_generar > 0) && (casilleros_libres > 0)){
-			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], numero_aleatorio(1, casilleros_libres));
+	std::size_t n_casillero = 0;
+	bool mapa_ocupado = casilleros_libres->vacia();
+	while(a_generar > 0 && !(casilleros_libres->vacia())){
+		mapa_ocupado = casilleros_libres->vacia();
+		if((piedra_a_generar > 0)){ // && (casilleros_libres > 0)){ // innecesario.
+			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
+			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], casilleros_libres->consulta(n_casillero));
 			piedra_a_generar--;
-			casilleros_libres--;
+			casilleros_libres -> baja(n_casillero);
 		}
-		if((madera_a_generar > 0) && (casilleros_libres > 0)){
-			generar_material(MATERTIALES_EDIFICIOS[MADERA], numero_aleatorio(1, casilleros_libres));
+		if((madera_a_generar > 0) && !(casilleros_libres->vacia())){
+			n_casillero = this->numero_aleatorio(0,casilleros_libres->consulta_largo());
+			generar_material(MATERTIALES_EDIFICIOS[MADERA], casilleros_libres->consulta(n_casillero));
 			madera_a_generar--;
-			casilleros_libres--;
+			casilleros_libres -> baja(n_casillero);
+
 		}
-		if((metal_a_generar > 0) && (casilleros_libres > 0)){
-			generar_material(MATERTIALES_EDIFICIOS[METAL], numero_aleatorio(1, casilleros_libres));
+		if((metal_a_generar > 0) && !(casilleros_libres->vacia())){
+			n_casillero = this->numero_aleatorio(0,casilleros_libres->consulta_largo());
+			generar_material(MATERTIALES_EDIFICIOS[METAL], casilleros_libres->consulta(n_casillero));
 			metal_a_generar--;
-			casilleros_libres--;
+			casilleros_libres -> baja(n_casillero);
 		}
-		//TODO: Ver como utiliza el boolean que retorna.
 		a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar);
 	}
-
-	return (casilleros_libres == 0);
+	delete casilleros_libres;
+	return mapa_ocupado;
 }
 
-//TODO:Quitarme la dependencia. TellDontAsk
-void Mapa::generar_material(string material, std::size_t numero_casillero){
-	bool generado = false;
-	std::size_t fila = 0, columna = 0;
-	while(fila < this -> filas && !generado){
-		while(columna < this -> columnas && !generado){
-			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
-				numero_casillero--;
-			if(numero_casillero == 0){
-				this -> poner_material_ubicacion(material, fila, columna);
-				generado = true;
-			}
-			columna++;
-		}
-		columna = 0;
-		fila++;
-	}
+void Mapa::generar_material(string material, Coordenada coordenada){
+	this -> poner_material_ubicacion(material, coordenada);	
 }
 
 std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo){
@@ -218,26 +166,28 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo){
 	return numero;
 }
 
-//TODO:Quitarme la dependencia. TellDontAsk
-std::size_t Mapa::casilleros_libres_transitables(){
-	std::size_t casilleros_libres = 0;
+//TODO:Quitarme la dependencia. TellDontAsk.
+//TODO: Constructor de copia?? Asi no lo creamos fuera a la lista.
+void Mapa::casilleros_libres_transitables(Lista<Coordenada>*& lista_desocupados){
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++)
 			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
-				casilleros_libres++;
-
-	return casilleros_libres;
+				lista_desocupados -> alta_al_final(Coordenada(fila, columna));
 }
 
+//OBS: Va a juntar todos los materiales del piso pero tmb los productos. 
 void Mapa::vaciar_materiales(){
+	Almacen * materiales_basura = new Almacen();
+	Coordenada coordenada = Coordenada(0,0);
 	for(std::size_t fila = 0; fila < this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++){
-			if(this -> terreno[fila][columna] -> es_casillero_transitable()
-					&& this -> terreno[fila][columna] -> esta_ocupado())
-				delete ( (Casillero_Transitable*) this -> terreno[fila][columna] ) -> eliminar_material();
+			coordenada =  Coordenada(fila,columna);
+			recolectar_material_ubicacion(coordenada, materiales_basura);
 		}
+	delete materiales_basura;
 }
 
+//TODO: Modificar la logica para que no sea necesario.
 string Mapa::identificador_ocupados(string ocupador){
 	string identificador = UBICACION_VACIA;
 	if(ocupador == "mina")

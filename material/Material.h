@@ -23,11 +23,11 @@ public:
 
 	//PRE: -
 	//POST: devuelve el nombre del material
-	string obtener_nombre();
+	std::string obtener_nombre() const;
 
 	//PRE: -
 	//POST: devuelve la cantidad del material
-	std::size_t obtener_cantidad();
+	std::size_t obtener_cantidad() const;
 
 	//PRE: -
 	//POST: se cambia el nombre del material

@@ -11,11 +11,11 @@ Material::Material(string nombre, std::size_t cantidad){
 	this -> cantidad = cantidad;
 }
 
-string Material::obtener_nombre(){
+string Material::obtener_nombre() const{
 	return this -> nombre;
 }
 
-std::size_t Material::obtener_cantidad(){
+std::size_t Material::obtener_cantidad() const{
 	return this -> cantidad;
 }
 

@@ -13,24 +13,24 @@ private:
 public:
     //constructor
     //PRE: -
-    //POS: se construye un nodo y se guarda el dato
+    //POST: se construye un nodo y se guarda el dato
     Nodo(Dato d);
 
     //PRE: -
-    //POS: se cambia el dato del nodo
+    //POST: se cambia el dato del nodo
     void cambiar_dato(Dato d);
 
     //PRE: -
-    //POS: se cambia el nodo siguiente
+    //POST: se cambia el nodo siguiente
     void cambiar_siguiente(Nodo* pn);
 
     //PRE: -
-    //POS: devuelve el dato contenido
-    Dato obtener_dato();
+    //POST: devuelve el dato contenido
+    Dato obtener_dato() const;
 
     //PRE: -
-    //POS: devuelve el siguiente nodo
-    Nodo* obtener_siguiente();
+    //POST: devuelve el siguiente nodo
+    Nodo* obtener_siguiente() const;
 };
 
 //Constructor
@@ -51,12 +51,12 @@ void Nodo<Dato>::cambiar_siguiente(Nodo* pn) {
 }
 
 template <typename Dato>
-Dato Nodo<Dato>::obtener_dato() {
+Dato Nodo<Dato>::obtener_dato() const {
     return dato;
 }
 
 template <typename Dato>
-Nodo<Dato>* Nodo<Dato>::obtener_siguiente() {
+Nodo<Dato>* Nodo<Dato>::obtener_siguiente() const {
     return siguiente;
 }
 

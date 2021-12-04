@@ -17,11 +17,11 @@ private:
 public:
     //Constructor
     //PRE: -
-    //POS: se crea una lista vacia
+    //POST: se crea una lista vacia
     Lista();
 
     //PRE: 1 <= pos <= cantidad + 1
-    //POS: agrega d en la posicion de la lista
+    //POST: agrega d en la posicion de la lista
     void alta(Dato d, std::size_t pos);
 
     //PRE: -
@@ -29,15 +29,15 @@ public:
     void alta_al_final(Dato d);
 
     //PRE: 1 <= pos <= cantidad
-    //POS: devuelve el dato que esta arriba
-    Dato consulta(std::size_t pos);
+    //POST: devuelve el dato que esta arriba
+    Dato consulta(std::size_t pos) const;
 
     //PRE: -
     //POST: devuelve el largo de la lista
-    std::size_t consulta_largo();
+    std::size_t consulta_largo() const;
 
     //PRE: 1 <= pos <= cantidad
-    //POS: devuelve el dato que esta arriba y decrementa tope
+    //POST: devuelve el dato que esta arriba y decrementa tope
     Dato baja(std::size_t pos);
 
     //PRE: 1<= pos <= cantidad
@@ -45,19 +45,19 @@ public:
     void modificar(Dato d, std::size_t pos);
 
     //PRE: -
-    //POS: devuelve true si la pila esta vacia, false si no
+    //POST: devuelve true si la pila esta vacia, false si no
     bool vacia();
 
     //PRE: el tipo de dato tiene que poder compararse con el operador =.
     //POST: devuelve el indice en que se encuentra el dato ingresado o NO_ENCONTRADO en caso de
     //no existir el dato
-    int buscar_indice(Dato d);
+    int buscar_indice(Dato d) const;
 
     //Destructor
     ~Lista();
 
 private:
-    Nodo<Dato>* obtener_nodo(std::size_t pos);
+    Nodo<Dato>* obtener_nodo(std::size_t pos) const;
 };
 
 template <typename Dato>
@@ -117,18 +117,18 @@ void Lista<Dato>::modificar(Dato d, std::size_t pos){
 }
 
 template <typename Dato>
-Dato Lista<Dato>::consulta(std::size_t pos) {
+Dato Lista<Dato>::consulta(std::size_t pos) const{
     Nodo<Dato>* aux = obtener_nodo(pos);
     return aux->obtener_dato();
 }
 
 template <typename Dato>
-std::size_t Lista<Dato>::consulta_largo(){
+std::size_t Lista<Dato>::consulta_largo() const{
 	return this -> cantidad;
 }
 
 template <typename Dato>
-int Lista<Dato>::buscar_indice(Dato d){
+int Lista<Dato>::buscar_indice(Dato d) const{
 	bool encontrado = false;
 	int indice = 1;
     //Es mejorable??
@@ -156,7 +156,7 @@ Lista<Dato>::~Lista() {
 }
 
 template <typename Dato>
-Nodo<Dato>* Lista<Dato>::obtener_nodo(std::size_t pos) {
+Nodo<Dato>* Lista<Dato>::obtener_nodo(std::size_t pos) const {
     Nodo<Dato>* aux = primero;
     for (std::size_t i = 1; i < pos; i++)
         aux = aux->obtener_siguiente();

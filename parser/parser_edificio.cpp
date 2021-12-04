@@ -1,12 +1,13 @@
 #include "parser_edificio.h"
 
-#include "../edificio/edificos/Aserradero.h"
-#include "../edificio/edificos/Escuela.h"
-#include "../edificio/edificos/Fabrica.h"
-#include "../edificio/edificos/Mina.h"
-#include "../edificio/edificos/MinaOro.h"
-#include "../edificio/edificos/Obelisco.h"
-#include "../edificio/edificos/PlantaElectrica.h"
+#include "../edificio/edificios/Aserradero.h"
+#include "../edificio/edificios/Escuela.h"
+#include "../edificio/edificios/Fabrica.h"
+#include "../edificio/edificios/Mina.h"
+#include "../edificio/edificios/MinaOro.h"
+#include "../edificio/edificios/Obelisco.h"
+#include "../edificio/edificios/PlantaElectrica.h"
+
 std::string ParserEdificio::nombre(const std::smatch& match) const {
 	return match.str(1);
 }

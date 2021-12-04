@@ -100,8 +100,8 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
         case COMENZAR:
             cout << "Comienza la partida!" << endl;
             this -> instancia = JUEGO;
-            this -> jugadores.consulta(1) -> modificar_energia(ENERGIA_INICIAL);
-            this -> jugadores.consulta(2) -> modificar_energia(ENERGIA_INICIAL);
+            this -> jugadores.consulta(1) -> recuperar_energia(ENERGIA_INICIAL);
+            this -> jugadores.consulta(2) -> recuperar_energia(ENERGIA_INICIAL);
             break;
         case GUARDAR_SALIR:
         	fin = true;

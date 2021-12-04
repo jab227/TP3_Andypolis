@@ -58,7 +58,6 @@ public:
 	//PRE: -
 	//POST: -
 	virtual Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
-
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

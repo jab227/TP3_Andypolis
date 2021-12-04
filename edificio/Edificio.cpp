@@ -96,3 +96,10 @@ bool Edificio::operator==(const Edificio &rhs){
 bool Edificio::operator!=(const Edificio &rhs){
 	return this->nombre != rhs.obtener_nombre();
 }
+
+std::string Edificio::a_string(){
+	//TODO: devolver string con formato.
+	// Necesario para imprimir cuando recorremos el diccionario
+	return "";
+}
+

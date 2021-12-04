@@ -10,11 +10,13 @@
 #include "../utils/coordenada.h"
 
 const std::size_t ENERGIA_COMPRAR_BOMBAS = 5;
+const std::uint8_t ENERGIA_COMPRAR_BOMBAS = 100;
 
 class Jugador {
 	// Atributos
        private:
-	std::size_t id_;
+	const std::size_t id_;
+	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
 	Almacen* inventario_;
 	Diccionario<std::string, Lista<Coordenada>*> edificios_;
@@ -24,7 +26,7 @@ class Jugador {
 	// coordenadas, ya procesado.
 	Jugador(std::size_t id, Almacen* inventario);
 	// Destructuor
-	~Jugador();
+	virtual ~Jugador();
 	// Pre: 
 	// Pos:
 	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
@@ -61,6 +63,11 @@ class Jugador {
 			       std::size_t& columna);
 
 	void eliminar_ubicacion(std::size_t fila, std::size_t columna);
+
+	bool es_energia_maxima(const std::size_t &energia_recuperada) const;
+	
+	bool recuperar_energia(const std::size_t &valor);
+
 
 };
 

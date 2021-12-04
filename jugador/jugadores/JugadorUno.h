@@ -5,7 +5,7 @@
 
 class Jugador_Uno : public Jugador{
 public:
-	Jugador_Uno();
+	Jugador_Uno(std::size_t id, Almacen *inventario);
 	~Jugador_Uno();
 };
 

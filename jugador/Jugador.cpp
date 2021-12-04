@@ -23,3 +23,14 @@ bool Jugador::usar_energia(const std::size_t &valor) {
 	if (es_suficiente) energia_ -= valor;
 	return es_suficiente;
 }
+
+bool Jugador::es_energia_maxima(const std::size_t &energia_recuperada) const {
+	return ((energia_ + energia_recuperada) >= ENERGIA_MAXIMA);
+}
+
+bool Jugador::recuperar_energia(const std::size_t &valor) {
+	bool es_maxima = es_energia_maxima(valor);
+	if (es_maxima) energia_ = ENERGIA_MAXIMA;
+	else energia_ += valor;
+	return es_maxima;
+}

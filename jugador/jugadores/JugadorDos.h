@@ -5,7 +5,7 @@
 
 class Jugador_Dos : public Jugador{
 public:
-	Jugador_Dos();
+	Jugador_Dos(Almacen *inventario);
 	~Jugador_Dos();
 };
 

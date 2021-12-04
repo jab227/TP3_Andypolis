@@ -19,7 +19,7 @@ class Jugador {
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
 	Almacen* inventario_;
-	Diccionario<std::string, Lista<Coordenada>*> edificios_;
+	Lista<Coordenada> ubicaciones_;
 
        public:
 	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
@@ -68,8 +68,7 @@ class Jugador {
 	
 	bool recuperar_energia(const std::size_t &valor);
 
-	//Basicamente debe recorrer el diccionario con las ubicaciones e imprime.
-	void mostrar_construidos();
+	void mostrar_construidos(const Mapa* mapa) const;
 
 };
 

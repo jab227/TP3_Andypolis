@@ -1,4 +1,5 @@
 #include "Jugador.h"
+#include "../printer/TablePrinter.h"
 
 Jugador::Jugador(std::size_t id, Almacen *inventario)
     : id_(id), energia_(0), inventario_(inventario) {}
@@ -35,7 +36,9 @@ bool Jugador::recuperar_energia(const std::size_t &valor) {
 	return es_maxima;
 }
 
-
-void Jugador::mostrar_construidos(){
-	
+void Jugador::mostrar_construidos(const Mapa* mapa) const{
+	if(!ubicaciones_.vacio()){
+		TablePrinter printer = TablePrinter();
+		printer.print_row( mapa , ubicaciones_.consulta(i), std::cout);
+	}
 }

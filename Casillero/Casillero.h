@@ -4,11 +4,22 @@
 #include "../utils/colors.h"
 #include "../utils/Lista.h"
 #include "../edificio/Edificio.h"
+#include "../empresa/Almacen.h"
 #include <string>
 
 const std::string VERDE = BGND_LIGHT_GREEN_46, AZUL = BGND_BLUE_12, GRIS = BGND_GRAY_245, FIN_COLOR = END_COLOR, NEGRO = TXT_DARK_GRAY_233;
 const std::string CONTENIDO_VACIO = "";
 const char TRANSITABLE = 'C', INACCESIBLE = 'L' , CONSTRUIBLE = 'T';
+
+//TODO: Heredados del printer. Colocar en el lugar correspondiente.S
+static const std::string RESET = "\e\[0m";
+static const std::string BOLD = "\e\[1m";
+static const std::string UNDERLINE = "\e\[4m";
+static const std::string CLEAR = "\e\[H\e[2J";
+static const std::string GREEN = "\e\[32m";
+static const std::string RED = "\e\[31m";
+static const std::string YELLOW = "\e\[33m";
+static const std::string BLUE = "\e\[34m";
 
 class Casillero {
 private:
@@ -40,7 +51,10 @@ public:
 
 	//PRE: -
 	//POST: devuelve el contenido del casillero en caso de estar ocupado o CASILLERO_VACIO en caso contrario.
-	virtual std::string obtener_contenido() = 0;
+	virtual void obtener_contenido(Edificio*& edificio) const = 0;
+	//PRE: -
+	//POST: devuelve el contenido del casillero en caso de estar ocupado o CASILLERO_VACIO en caso contrario.
+	virtual void obtener_contenido(Material*& material) const = 0;
 
 	//PRE: -
 	//POST: devuelve el color del casillero.
@@ -58,6 +72,9 @@ public:
 	//PRE: -
 	//POST: -
 	virtual Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
+
+	//WHY: Le pasamos el jugador o el inventario del jugador?
+	virtual void recoger_material(Almacen* inventario);
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

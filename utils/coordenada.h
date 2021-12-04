@@ -14,6 +14,6 @@ class Coordenada {
 	bool operator!=(const Coordenada& rhs) const;
 	std::size_t x() const;
 	std::size_t y() const;
-	std::string mostrar() const;
+	std::string a_string() const;
 };
 #endif

@@ -9,7 +9,7 @@ std::size_t Coordenada::y() const {
 	return y_;
 }
 
-std::string Coordenada::mostrar() const {
+std::string Coordenada::a_string() const {
 	return "(" + std::to_string(x()) + ", " + std::to_string(y()) + ")";
 }
 bool Coordenada::operator==(const Coordenada& rhs) const {
@@ -18,3 +18,4 @@ bool Coordenada::operator==(const Coordenada& rhs) const {
 bool Coordenada::operator!=(const Coordenada& rhs) const {
 	return !(*this == rhs);
 }
+

@@ -11,15 +11,14 @@ bool Casillero_Inaccesible::esta_ocupado(){
 	return true;
 }
 
-void Casillero_Inaccesible::saludar(){
+void Casillero_Inaccesible::saludar() const{
 	std::cout << "Soy un casillero inaccesible." << std::endl;
 	std::cout << "No puedo contener nada, pero podes venir a pescar." << std::endl;
 }
 
 
-std::string Casillero_Inaccesible::obtener_contenido(){
-	return CONTENIDO_VACIO;
-}
+void Casillero_Inaccesible::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr;}
+void Casillero_Inaccesible::obtener_contenido(Material*& material) const{ material = nullptr;}
 
 bool Casillero_Inaccesible::construir_edificio(Edificio* edificio){
 	cout <<  "La ubicacion ingresada no es construible." << endl;
@@ -40,3 +39,5 @@ bool Casillero_Inaccesible::es_casillero_transitable(){
 std::string Casillero_Inaccesible::demoler_edificio(){
 	return "";
 }
+
+void Casillero_Inaccesible::recoger_material(Almacen* inventario){}

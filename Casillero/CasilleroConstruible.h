@@ -5,7 +5,7 @@
 
 class Casillero_Construible: public Casillero{
 private:
-	Edificio* edificio;
+	Edificio* edificio_;
 public:
 	//PRE: -
 	//POST: se crea un casillero vacio
@@ -26,12 +26,12 @@ public:
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado
-	bool esta_ocupado();
+	bool esta_ocupado() const;
 
 	//PRE: -
 	//POST: imprime un saludo por terminal. en caso de tener un edificio, este tambien
 	//saluda. de lo contrario, se informa que no hay edificio.
-	void saludar();
+	void saludar() const;
 	
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
@@ -39,12 +39,17 @@ public:
 
 	//PRE: -
 	//POST: devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
-	std::string obtener_contenido();
+	void obtener_contenido(Edificio*& edificio) const override;
+	
+	//PRE: -
+	//POST: devuelve nullpointer
+	void obtener_contenido(Material*& material) const override;
 
 	//PRE: -
 	//POST: -
 	Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
+	void recoger_material(Almacen* inventario) override;
 };
 
 #endif /* CASILLERO_CASILLEROCONSTRUIBLE_H_ */

@@ -23,24 +23,25 @@ public:
 	//PRE: -
 	//POST: se quita al material del casillero y lo devuelve, ahora esta vacio. si el
 	//casillero ya estaba vacio, devuelve nullptr.
-	Material* eliminar_material();
+	void recoger_material(Almacen* inventario);
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado
-	bool esta_ocupado();
+	bool esta_ocupado() const;
 
 	//PRE: -
 	//POST: imprime un saludo por terminal. en caso de tener un material, este tambien
 	//saluda. de lo contrario, se informa que no hay material.
-	void saludar();
+	void saludar() const;
 
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
 	bool es_casillero_transitable();
 
-	//PRE: - ELIMINAR?
+	//PRE: -
 	//POST: devuelve el nombre del material contenido o MATERIAL_VACIO.
-	std::string obtener_contenido();
+	void obtener_contenido(Edificio*& edificio) const override;
+	void obtener_contenido(Material*& material) const override;
 	
 	//PRE: -
 	//POST:

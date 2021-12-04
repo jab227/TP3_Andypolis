@@ -14,6 +14,8 @@ void Casillero_Transitable::agregar_material(Material* material){
 	this -> material = material;
 }
 
+//WHY: Potencialmente borrable.
+/*
 Material* Casillero_Transitable::eliminar_material(){
 	Material* material = nullptr;
 	if(this -> esta_ocupado()){
@@ -22,12 +24,13 @@ Material* Casillero_Transitable::eliminar_material(){
 	}
 	return material;
 }
+*/
 
-bool Casillero_Transitable::esta_ocupado(){
+bool Casillero_Transitable::esta_ocupado() const{
 	return !(this -> material == nullptr);
 }
 
-void Casillero_Transitable::saludar(){
+void Casillero_Transitable::saludar() const{
 	cout << "Soy un casillero transitable." << endl;
 	if(this -> esta_ocupado())
 		this -> material -> saludar();
@@ -35,12 +38,13 @@ void Casillero_Transitable::saludar(){
 		cout << "No tengo ningun material en mi." << endl;
 }
 
-std::string Casillero_Transitable::obtener_contenido(){
-	string nombre = CONTENIDO_VACIO;
+void Casillero_Transitable::obtener_contenido(Material*& material) const{
 	if(this -> esta_ocupado())
-		nombre = this -> material -> obtener_nombre();
-	return nombre;
+		material = this -> material;
 }
+
+void Casillero_Transitable::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr; }
+
 
 Edificio* Casillero_Transitable::agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
 	Edificio* edificio = nullptr;
@@ -60,4 +64,11 @@ bool Casillero_Transitable::es_casillero_transitable(){
 //Agregar demoler_edificio en inacc y transitables.
 std::string Casillero_Transitable::demoler_edificio(){
 	return "";
+}
+
+void Casillero_Transitable::recoger_material(Almacen* inventario){
+	// WHY: Podriamos pasarle directamente el material?
+	inventario -> sumar_cantidad_material(material -> obtener_nombre(), material -> obtener_cantidad());
+	delete material;
+	material = nullptr;
 }

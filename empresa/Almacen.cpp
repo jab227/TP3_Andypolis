@@ -59,8 +59,8 @@ std::size_t Almacen::buscar_material(Material& a_buscar){
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
 void Almacen::sumar_cantidad_material(string a_cambiar, std::size_t cantidad){
-	bool fin = false;
 	Material material_a_cambiar = Material(a_cambiar,0);
+	//VER: si nos podemos ahorrar ciclos (Edificiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
 	if(index){
 		material_a_cambiar.sumar_cantidad(cantidad);
@@ -153,7 +153,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad){
 Resultado_Chequeos Almacen::chequeo_bombas(std::size_t cantidad){
 	Resultado_Chequeos resultado = NO_MATERIALES;
 	Material andycoins_requeridos = Material(NOMBRES_MATERIALES[3],PRECIO_BOMBA*cantidad);
-	if(cantidad = 0){ //Puede ser porque puso que no queria comprar o porque no es numero lo que ingreso.
+	if(cantidad == 0){ //Puede ser porque puso que no queria comprar o porque no es numero lo que ingreso.
 		resultado = SALIR;
 	}else if( this -> hay_material_suficiente(andycoins_requeridos)){
 		resultado = EXITO;

@@ -41,7 +41,7 @@ void Empresa_Constructora::mostrar_mapa(){
 }
 
 void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
-	this -> mapa -> mostrar_construidos(jugador);
+	this -> jugador -> mostrar_construidos();
 }
 
 void Empresa_Constructora::mostrar_coordenada(){
@@ -273,7 +273,7 @@ void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, st
 		delete listado_necesario;
 		//TODO: Ya no es lo mismo donde aumentamos, cada uno tiene su contador de edificios.
 		this -> planos -> aumentar_construidos_edificio(edificio);
-		jugador -> modificar_energia(-ENERGIA_CONSTRUIR);
+		jugador -> usar_energia(-ENERGIA_CONSTRUIR);
 	}
 	
 }

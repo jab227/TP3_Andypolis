@@ -10,7 +10,7 @@
 #include "../utils/coordenada.h"
 
 const std::size_t ENERGIA_COMPRAR_BOMBAS = 5;
-const std::uint8_t ENERGIA_COMPRAR_BOMBAS = 100;
+const std::size_t ENERGIA_MAXIMA = 100;
 
 class Jugador {
 	// Atributos
@@ -68,6 +68,8 @@ class Jugador {
 	
 	bool recuperar_energia(const std::size_t &valor);
 
+	//Basicamente debe recorrer el diccionario con las ubicaciones e imprime.
+	void mostrar_construidos();
 
 };
 

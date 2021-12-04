@@ -34,3 +34,8 @@ bool Jugador::recuperar_energia(const std::size_t &valor) {
 	else energia_ += valor;
 	return es_maxima;
 }
+
+
+void Jugador::mostrar_construidos(){
+	
+}

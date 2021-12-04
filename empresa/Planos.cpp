@@ -67,11 +67,11 @@ bool Planos::es_edificio_valido(string nombre_edificio, Edificio*& edificio){
 		if(*(this -> lista_edificios.consulta(i)) == *edificio){
 			*edificio =*(this -> lista_edificios.consulta(i));
 			encontrado = true;
-		i++;
+		}
+	i++;
 	}
 	return encontrado;
 }
-
 
 Lista<Material>* Planos::materiales_necesarios(Edificio* edificio){
 	Lista<Material>* lista_materiales = new Lista<Material>;

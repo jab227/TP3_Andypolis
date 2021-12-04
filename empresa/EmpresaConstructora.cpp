@@ -41,14 +41,13 @@ void Empresa_Constructora::mostrar_mapa(){
 }
 
 void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
-	this -> jugador -> mostrar_construidos();
+	jugador -> mostrar_construidos(this -> mapa);
 }
 
 void Empresa_Constructora::mostrar_coordenada(){
-	std::size_t fila, columna;
-	pedir_coordenadas(fila, columna);
-	if(fila == EXITO){
-		this -> mapa -> mostrar_posicion(fila, columna);
+	Coordenada coordenada = Coordenada(0,0);
+	if(pedir_coordenadas(coordenada)){
+		this -> mapa -> mostrar_posicion(coordenada);
 	}
 
 }
@@ -58,6 +57,7 @@ void Empresa_Constructora::guardar_archivos(string ruta_materiales, string ruta_
 	this -> guardar_ubicaciones(ruta_ubicaciones);
 }
 
+//TODO: Adaptar a coordenada.
 bool Empresa_Constructora::cargar_ubicaciones(string ruta){
 	bool existe = false;
 	ifstream archivo(ruta);
@@ -83,29 +83,29 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	string contenido;
 	if (archivo.is_open()){
 		std::size_t fila = 0, columna = 0;
-		while(this -> mapa -> es_cordenada_valida(fila, columna)){
-			while(this -> mapa -> es_cordenada_valida(fila, columna)){
-				contenido = this -> mapa -> obtener_contenido_ubicacion(fila, columna);
+		Coordenada coordenada = Coordenada(fila,columna);
+		while(this -> mapa -> es_cordenada_valida(coordenada)){
+			while(this -> mapa -> es_cordenada_valida(coordenada)){
+				contenido = this -> mapa -> obtener_contenido_ubicacion(coordenada);
 				if(contenido != CONTENIDO_VACIO)
 					archivo << contenido << " (" << fila << ", " << columna << ')' << std::endl;
-				columna++;
+				coordenada = Coordenada(fila, ++columna);
 			}
-			columna = 0;
-			fila++;
+			coordenada = Coordenada(++fila, 0);
 		}
 	}
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido, std::size_t fila, std::size_t columna, std::size_t propietario){
+void Empresa_Constructora::sumar_contenido(string contenido,Coordenada coordenada, std::size_t propietario){
 	Edificio* edif = nullptr;
 	//Deberia tener una capa mas de abstraccion. Mapa agregar_ubicacion()?
 	if(this -> planos -> es_edificio_valido(contenido,edif)){
-		this -> mapa -> construir_edificio_ubicacion(edif, fila, columna);
+		this -> mapa -> construir_edificio_ubicacion(edif, coordenada);
 		this -> planos -> aumentar_construidos_edificio(edif);
 		delete edif;
 	}else
-		this -> mapa -> poner_material_ubicacion(contenido, fila, columna);
+		this -> mapa -> poner_material_ubicacion(contenido, coordenada);
 
 }
 
@@ -136,29 +136,29 @@ void Empresa_Constructora::construir_edificio(Jugador* jugador){
 		std::cout << "Desea realmente construir el edificio: " << edificio->obtener_nombre() << "? [si/no]" << std::endl;
 		string respuesta = pedir_si_no();
 		if(respuesta == SI){
-			std::size_t fila, columna;
-			Resultado_Chequeos resultado = this -> pedir_coordenadas(fila, columna);
+			Coordenada coordenada = Coordenada(0,0);
+			Resultado_Chequeos resultado = this -> pedir_coordenadas(coordenada);
 			mostrar_mensaje_chequeo(resultado);
 			if( resultado == EXITO )
-				this -> edificio_construido_confirmado(edificio, fila, columna, jugador);
+				this -> edificio_construido_confirmado(edificio, coordenada, jugador);
 		}else
 			std::cout << "No se realizo ningun cambio." << std::endl;
 	delete edificio;
 	}
 }
 
-//TODO: Esto va a pasar a ser responsabilidad de cada Jugador.
-void Empresa_Constructora::demoler_edificio(){
-	std::size_t fila, columna;
+//TODO:
+void Empresa_Constructora::demoler_edificio(Jugador* jugador){
+	Coordenada coordenada = Coordenada(0,0);
 	Resultado_Chequeos resultado = NO_EXISTE;
 	bool fin = false;
 	do{
-		resultado = this -> pedir_coordenadas(fila, columna);
+		resultado = this -> pedir_coordenadas(coordenada);
 		fin = mostrar_mensaje_chequeo(resultado);
 	}while(!fin);
 	//Tengo que avisar si se pudo destruir algo o no?
-	this -> mapa -> demoler_edificio_ubicacion(fila, columna);
-	//Esto va a pasar al jugador.
+	this -> mapa -> demoler_edificio_ubicacion(coordenada);
+	//TODO: Esto va a pasar al jugador. Recuperar materiales, eliminar coordenada
 	//this -> almacen sumar_lista_materiales();
 }
 
@@ -177,7 +177,8 @@ Edificio* Empresa_Constructora::pedir_edificio(){
 	return edificio;
 }
 
-Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(std::size_t& fila, std::size_t& columna){
+//TODO: Constructo de copia?? Asi no tenemos que pasarle una coordenada creada.
+Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
 	string fila_ingresada, columna_ingresada;
 	
 	std::cout << "Elegi las coordenadas del edificio que queres construir o salir" << std::endl << "Fila: ";
@@ -185,10 +186,9 @@ Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(std::size_t& fila, st
 	std::cout << "Columna: ";
 	getline(cin, columna_ingresada);
 	
-	fila = stoi(fila_ingresada);
-	columna = stoi(columna_ingresada);
+	coordenada = Coordenada(stoi(fila_ingresada),stoi(columna_ingresada));
 	
-	return chequeo_coordenadas(fila_ingresada, columna_ingresada, fila, columna);
+	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_construir(string& edificio_ingresado, Edificio* &edificio){
@@ -209,14 +209,14 @@ Resultado_Chequeos Empresa_Constructora::chequeo_construir(string& edificio_ingr
 	return resultado;
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(string fila_ingresada, string columna_ingresada, std::size_t fila, std::size_t columna){
+Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(string fila_ingresada, string columna_ingresada, Coordenada coordenada){
 	Resultado_Chequeos resultado = EXITO;
 	
 	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR)
 		resultado = SALIR;
 	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada))
 		resultado = NO_EXISTE;
-	else if(!(this -> mapa -> es_cordenada_valida(fila, columna)))
+	else if(!(this -> mapa -> es_cordenada_valida(coordenada)))
 		resultado = FUERA_RANGO;
 
 	return resultado;
@@ -263,10 +263,10 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna, Jugador* jugador){
+void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio,const Coordenada& coordenada, Jugador* jugador){
 	// Decirle al mapa que construya. Si es true, restamos.
 	// ¿Si no decimos que la celda no es correcta?
-	if(this -> mapa -> construir_edificio_ubicacion(edificio, fila, columna)){
+	if(this -> mapa -> construir_edificio_ubicacion(edificio, coordenada)){
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 		//TODO: Constante
 		this -> almacen -> descontar_lista_materiales(listado_necesario,100);

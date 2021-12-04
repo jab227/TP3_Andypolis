@@ -38,7 +38,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
-	void demoler_edificio();
+	void demoler_edificio(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios existentes junto con sus materiales requeridos para
@@ -91,7 +91,7 @@ private:
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
  
-	void sumar_contenido(string linea, std::size_t fila, std::size_t columna, size_t propietario);
+	void sumar_contenido(string contenido,Coordenada coordenada, std::size_t propietario);
  
 
 	//PRE: -
@@ -121,13 +121,13 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(Edificio* edificio, std::size_t fila, std::size_t columna,Jugador* jugador);
+	void edificio_construido_confirmado(Edificio* edificio, const Coordenada& coordenada,Jugador* jugador);
 
 	//PRE: -
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
-	Resultado_Chequeos pedir_coordenadas(std::size_t& fila, std::size_t& columna);
+	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);
 
-	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, std::size_t fila, std::size_t columna);
+	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, Coordenada coordenada);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

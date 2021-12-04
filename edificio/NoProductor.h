@@ -19,7 +19,7 @@ public:
 
 	//PRE: -
 	//POST: retorna "ninguno".
-	string info_producto() override;
+	std::string info_producto() const override;
 };
 
 #endif /* EDIFICIOS_NOPRODUCTOR_H_ */

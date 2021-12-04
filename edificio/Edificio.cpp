@@ -9,6 +9,7 @@ Edificio::Edificio() {
 	this->maximo_permitidos = 0;
 	this->construidos = 0;
 	this->propietario = 0;
+	this->vida = 0;
 }
 
 Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario){
@@ -19,6 +20,7 @@ Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::s
 	this->maximo_permitidos = maximo_permitidos;
 	this->construidos = 0;
 	this->propietario = propietario;
+	this-> vida = 0;
 }
 
 Edificio::~Edificio(){
@@ -42,7 +44,7 @@ std::size_t Edificio::obtener_cant_material(string material) const{
 	return cantidad;
 }
 
-std::size_t Edificio::obtener_max_permitidos(){
+std::size_t Edificio::obtener_max_permitidos() const{
 	return this->maximo_permitidos;
 }
 
@@ -100,6 +102,7 @@ bool Edificio::operator!=(const Edificio &rhs){
 std::string Edificio::a_string(){
 	//TODO: devolver string con formato.
 	// Necesario para imprimir cuando recorremos el diccionario
+	
 	return "";
 }
 

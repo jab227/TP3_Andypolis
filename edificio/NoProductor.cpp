@@ -11,7 +11,7 @@ Material No_Productor::producir_material(){
 	return Material();
 }
 
-string No_Productor::info_producto(){
+string No_Productor::info_producto() const{
 	return "ninguno";
 }
 

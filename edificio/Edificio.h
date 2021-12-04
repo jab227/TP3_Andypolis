@@ -16,7 +16,8 @@ class Edificio {
 //Atributos
 private:
 	string nombre;
-	//Cambiar a lista/vector de materiales
+	std::size_t vida; //TODO: Inicializar vida para mina y fabrica.
+	//TODO: Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
 	std::size_t construidos;
@@ -45,12 +46,12 @@ public:
 
 	//PRE: -
 	//POST: devuelve la cantidad del material ingresado requerido para construirlo. En caso de que
-	//no se requiera ese material, deuelve 0.
+	//no se requiera ese material, devuelve 0.
 	std::size_t obtener_cant_material(string material) const;
 
 	//PRE: -
-	//PORT: devuleve la cantidad de edificios maximos construidos.
-	std::size_t obtener_max_permitidos();
+	//POST: devuleve la cantidad de edificios maximos construidos.
+	std::size_t obtener_max_permitidos() const;
 
 	//PRE: -
 	//POST: imprime un mensaje por consola
@@ -70,7 +71,7 @@ public:
 
 	//PRE -
 	//POST: devuelve lo que produce en str.
-	virtual string info_producto() = 0;
+	virtual std::string info_producto() const = 0;
 
 	//PRE: -
 	//POST: se modifica el valor de edificios construidos a n

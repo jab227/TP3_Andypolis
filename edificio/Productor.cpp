@@ -12,6 +12,6 @@ Material Productor::producir_material(){
 	return this->producto;
 }
 
-string Productor::info_producto(){
+std::string Productor::info_producto() const{
 	return to_string(this->producto.obtener_cantidad()) + " de " + this->producto.obtener_nombre();
 }

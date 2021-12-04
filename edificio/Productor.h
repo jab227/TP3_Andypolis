@@ -22,7 +22,7 @@ public:
 
 	//PRE: -
 	//POST: Retorna el nombre y la cantidad del producto en un string.
-	string info_producto() override;
+	std::string info_producto() const override;
 };
 
 #endif /* EDIFICIOS_PRODUCTOR_H_ */

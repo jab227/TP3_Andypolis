@@ -14,6 +14,7 @@ const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
 const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
 const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
 
+//TODO: Adaptar al parser.
 Mapa::Mapa(string ruta) {
 	this -> columnas = 0;
 	this -> filas = 0;
@@ -33,6 +34,7 @@ Mapa::~Mapa() {
 	delete [] this -> terreno;
 }
 
+//TODO: Adaptar al parser.
 void Mapa::cargar_terreno(string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
@@ -49,6 +51,7 @@ void Mapa::cargar_terreno(string ruta){
     
 }
 
+//TODO: Adaptar al parser.
 void Mapa::iniciar_filas_casilleros(std::size_t filas, string lectura){
 	this -> terreno[filas] = new Casillero* [this -> columnas];
 	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
@@ -166,30 +169,32 @@ bool Mapa::generar_materiales_aleatorios(){
 	std::size_t piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
 	std::size_t madera_a_generar = this -> numero_aleatorio(MADERA_MINIMO, MADERA_MAXIMO);
 	std::size_t metal_a_generar = this -> numero_aleatorio(METAL_MINIMO, METAL_MAXIMO);
-	bool todo_ocupado = casilleros_libres == 0;
-	std::size_t a_generar = piedra_a_generar + madera_a_generar + metal_a_generar;
-	while(a_generar > 0 && !(casilleros_libres == 0)){
-		if(piedra_a_generar > 0 && casilleros_libres > 0){
+	std::size_t a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar);
+
+	while(a_generar > 0 && (casilleros_libres > 0)){
+		if((piedra_a_generar > 0) && (casilleros_libres > 0)){
 			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], numero_aleatorio(1, casilleros_libres));
 			piedra_a_generar--;
 			casilleros_libres--;
 		}
-		if(madera_a_generar > 0 && casilleros_libres > 0){
+		if((madera_a_generar > 0) && (casilleros_libres > 0)){
 			generar_material(MATERTIALES_EDIFICIOS[MADERA], numero_aleatorio(1, casilleros_libres));
 			madera_a_generar--;
 			casilleros_libres--;
 		}
-		if(metal_a_generar > 0 && casilleros_libres > 0){
+		if((metal_a_generar > 0) && (casilleros_libres > 0)){
 			generar_material(MATERTIALES_EDIFICIOS[METAL], numero_aleatorio(1, casilleros_libres));
 			metal_a_generar--;
 			casilleros_libres--;
 		}
 		//TODO: Ver como utiliza el boolean que retorna.
-		a_generar = piedra_a_generar + madera_a_generar + metal_a_generar;
+		a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar);
 	}
-	return todo_ocupado;
+
+	return (casilleros_libres == 0);
 }
 
+//TODO:Quitarme la dependencia. TellDontAsk
 void Mapa::generar_material(string material, std::size_t numero_casillero){
 	bool generado = false;
 	std::size_t fila = 0, columna = 0;
@@ -213,6 +218,7 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo){
 	return numero;
 }
 
+//TODO:Quitarme la dependencia. TellDontAsk
 std::size_t Mapa::casilleros_libres_transitables(){
 	std::size_t casilleros_libres = 0;
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)

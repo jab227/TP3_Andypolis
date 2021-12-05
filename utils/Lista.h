@@ -62,6 +62,7 @@ class Lista {
 	// POST: devuelve el indice en que se encuentra el dato ingresado o
 	// NO_ENCONTRADO en caso de no existir el dato
 	int buscar_indice(T d);
+	int buscar_indice(T* d);
 
 	// Destructor
 	~Lista();

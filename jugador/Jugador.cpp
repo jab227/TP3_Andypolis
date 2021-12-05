@@ -1,12 +1,10 @@
 #include "Jugador.h"
 
-Jugador::Jugador(std::size_t id, Almacen *inventario)
-    : id_(id), energia_(0), inventario_(inventario) {}
+Jugador::Jugador(std::size_t id, Almacen *inventario, Lista<Coordenada*>* edificios)
+    : id_(id), energia_(0), inventario_(inventario), edificios_(edificios){}
 
-Jugador::~Jugador() {
-	delete inventario_;
-	inventario_ = nullptr;
-}
+Jugador::Jugador(std::size_t id, Almacen *inventario)
+    : id_(id), energia_(0), inventario_(inventario), edificios_(nullptr){}
 
 std::size_t Jugador::obtener_jugador() const { return id_; }
 
@@ -40,4 +38,15 @@ void Jugador::mostrar_construidos(const Mapa* mapa) const{
 		//TablePrinter printer = TablePrinter();
 		//printer.print_row( mapa , ubicaciones_.consulta(i), std::cout); //lo comento por ahora
 	}
+
+void Jugador::agregar_ubicacion(Coordenada* coordenada) {
+	edificios_->alta_al_final(coordenada);
+}
+
+std::size_t Jugador::cantidad_ubicaciones() const {
+	return edificios_->consulta_largo();
+}
+
+void Jugador::eliminar_ubicacion(Coordenada coordenada) {
+	std::size_t indice = (std::size_t) edificios_->buscar_indice(coordenada);
 }

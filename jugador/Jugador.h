@@ -19,14 +19,21 @@ class Jugador {
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
 	Almacen* inventario_;
-	Lista<Coordenada> ubicaciones_;
+	Lista<Coordenada*>* edificios_;
 
        public:
 	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
 	// coordenadas, ya procesado.
-	Jugador(std::size_t id, Almacen* inventario);
+	Jugador(std::size_t id, Almacen* inventario, Lista<Coordenada*>* edificios);
+	//Para cuando sea nueva partida.
+	Jugador(std::size_t id, Almacen *inventario)
 	// Destructuor
-	virtual ~Jugador();
+	virtual ~Jugador() {
+		delete inventario_;
+		delete edificios_;
+		inventario_ = nullptr;
+		edificios_ = nullptr;
+	};
 	// Pre: 
 	// Pos:
 	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
@@ -55,14 +62,14 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-	void agregar_ubicacion(std::size_t fila, std::size_t columna);
+	void agregar_ubicacion(Coordenada* coordenada);
 
-	std::size_t obtener_largo_ubicaciones();
+	std::size_t cantidad_ubicaciones() const;
 
 	void obtener_ubicacion(std::size_t ubicacion, std::size_t& fila,
 			       std::size_t& columna);
 
-	void eliminar_ubicacion(std::size_t fila, std::size_t columna);
+	//void eliminar_ubicacion(Coordenada);
 
 	bool es_energia_maxima(const std::size_t &energia_recuperada) const;
 	

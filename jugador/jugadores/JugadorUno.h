@@ -3,11 +3,12 @@
 
 #include "../Jugador.h"
 
-class Jugador_Uno : public Jugador{
+class Jugador_Uno final : public Jugador{
 public:
 	Jugador_Uno(Almacen *inventario);
+	Jugador_Uno(Almacen *inventario, Lista<Coordenada*>* edificios);
 	~Jugador_Uno();
-	bool mover(const Coordenada& coordenada, const Mapa& mapa);
+	bool mover(const Coordenada& coordenada, const Mapa& mapa) override;
 };
 
 #endif /* JUGADOR_JUGADORES_JUGADORUNO_H_ */

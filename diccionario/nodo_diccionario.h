@@ -12,6 +12,9 @@ class NodoDiccionario {
 	NodoDiccionario<T, U>* padre_;
 
        public:
+	NodoDiccionario() = default;
+	NodoDiccionario(const NodoDiccionario& rhs) = default;
+	NodoDiccionario& operator=(const NodoDiccionario& rhs) = default;
 	// Pre: -
 	// Pos: Construye un nuevo nodo del diccionario.
 	NodoDiccionario(T clave, U dato)
@@ -29,6 +32,7 @@ class NodoDiccionario {
 	// Pre: U debe tener implementado el metodo a_string().
 	// Pos: Devuelve el dato guardado en el nodo.
 	void imprimir_dato() const { std::cout << dato_ -> a_string() << std::endl;} 
+	U& dato() { return dato_; }
 	// Pre: -
 	// Pos: Cambia la clave guardada dentro del nodo.
 	void cambiar_clave(const T& clave) { clave_ = clave; };

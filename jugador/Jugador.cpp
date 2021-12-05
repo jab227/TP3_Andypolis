@@ -47,6 +47,17 @@ std::size_t Jugador::cantidad_ubicaciones() const {
 	return edificios_->consulta_largo();
 }
 
-void Jugador::eliminar_ubicacion(Coordenada coordenada) {
-	std::size_t indice = (std::size_t) edificios_->buscar_indice(coordenada);
+Coordenada* Jugador::obtener_ubicacion(const std::size_t indice) const {
+	return edificios_->consulta(indice);
+}
+
+void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
+	for (std::size_t i = 1; i < edificios_->consulta_largo() + 1; ++i) {
+		Coordenada* tmp = edificios_->consulta(i);
+		if (*tmp == coordenada) {
+			delete tmp;
+			tmp = nullptr;
+			edificios_->baja(i);
+		}
+	}
 }

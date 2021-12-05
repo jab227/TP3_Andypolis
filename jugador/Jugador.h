@@ -66,8 +66,7 @@ class Jugador {
 
 	std::size_t cantidad_ubicaciones() const;
 
-	void obtener_ubicacion(std::size_t ubicacion, std::size_t& fila,
-			       std::size_t& columna);
+	Coordenada* obtener_ubicacion(const std::size_t indice) const;
 
 	//void eliminar_ubicacion(Coordenada);
 
@@ -76,6 +75,8 @@ class Jugador {
 	bool recuperar_energia(const std::size_t &valor);
 
 	void mostrar_construidos(const Mapa* mapa) const;
+	
+	void eliminar_ubicacion(const Coordenada& coordenada);
 
 };
 

@@ -68,7 +68,7 @@ class Jugador {
 	
 	bool recuperar_energia(const std::size_t &valor);
 
-	void mostrar_construidos(const Mapa* mapa);
+	void mostrar_construidos(const Mapa* mapa) const;
 
 };
 

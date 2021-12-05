@@ -56,7 +56,7 @@ class Lista {
 
 	// PRE: -
 	// POS: devuelve true si la pila esta vacia, false si no
-	bool vacia();
+	bool vacia() const;
 
 	// PRE: el tipo de dato tiene que poder compararse con el operador =.
 	// POST: devuelve el indice en que se encuentra el dato ingresado o
@@ -92,7 +92,7 @@ Lista<T>& Lista<T>::operator=(const Lista<T>& rhs) {
 }
 
 template <typename T>
-bool Lista<T>::vacia() {
+bool Lista<T>::vacia() const{
 	return (cantidad_ == 0);
 }
 

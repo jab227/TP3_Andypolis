@@ -3,9 +3,10 @@
 
 #include "Almacen.h"
 #include "Planos.h"
-#include "../utils/Lista.h"
 #include "Mapa.h"
-#include "../jugador/Jugador.h"
+#include "../utils/Lista.h"
+#include "../jugador/jugadores/JugadorUno.h"
+#include "../jugador/jugadores/JugadorDos.h"
 
 const int ENERGIA_CONSTRUIR = 15, ENERGIA_LISTAR_CONSTRUIDOS = 0, ENERGIA_DEMOLER = 15, ENERGIA_ATACAR = 30,
 		  ENERGIA_REPARAR = 25,  ENERGIA_CONSULTAR = 0, ENERGIA_LISTAR_MATERIALES = 0,

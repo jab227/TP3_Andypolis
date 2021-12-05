@@ -12,6 +12,9 @@ class NodoDiccionario {
 	NodoDiccionario<T, U>* padre_;
 
        public:
+	NodoDiccionario() = default;
+	NodoDiccionario(const NodoDiccionario& rhs) = default;
+	NodoDiccionario& operator=(const NodoDiccionario& rhs) = default;
 	// Pre: -
 	// Pos: Construye un nuevo nodo del diccionario.
 	NodoDiccionario(T clave, U dato)
@@ -26,6 +29,7 @@ class NodoDiccionario {
 	// Pre: -
 	// Pos: Devuelve el dato guardado en el nodo.
 	U dato() const { return dato_; }
+	U& dato() { return dato_; }
 	// Pre: -
 	// Pos: Cambia la clave guardada dentro del nodo.
 	void cambiar_clave(const T& clave) { clave_ = clave; };

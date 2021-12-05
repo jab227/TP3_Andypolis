@@ -1,6 +1,8 @@
 #ifndef DICCIONARIO_H_
 #define DICCIONARIO_H_
 
+#include <algorithm>
+
 #include "nodo_diccionario.h"
 // La clave deberia mantenerse en algun tipo basico (incluido std::string).
 //        Clave,   Valor
@@ -116,10 +118,42 @@ class Diccionario {
 		return true;
 	};
 
+	// Pre: -
+	// Pos: Copia recursivamente los pares clave-dato del nodo "nodo"
+	// en el objeto sobre el cual se llama.
+	void copiar(NodoDiccionario<T, U>* nodo) {
+		if (nodo == nullptr) {
+			return;
+		}
+		insertar(nodo->clave(), nodo->dato());
+		copiar(nodo->izquierda());
+		copiar(nodo->derecha());
+	};
+	void swap(Diccionario<T, U>& diccionario) {
+		using std::swap;
+		swap(raiz_, diccionario.raiz_);
+	}
+
        public:
 	// Pre: -
 	// Pos: Constructor del diccionario;
 	Diccionario() : raiz_(nullptr){};
+	// Pre: -
+	// Pos: Construye el nuevo diccionario a partir de una copia del
+	// del lado derecho de la igualdad.
+	Diccionario(const Diccionario& rhs) : raiz_(nullptr) {
+		NodoDiccionario<T, U>* tmp = rhs.raiz_;
+		copiar(tmp);
+	};
+	// Pre: -
+	// Pos: Operador de asignacion del diccionario. Asigna los
+	// contenidos del diccionario a la derecha del igual, al de
+	// la izquierda.
+	Diccionario<T, U>& operator=(const Diccionario<T, U>& rhs) {
+		Diccionario<T, U> copia = rhs;
+		copia.swap(*this);
+		return *this;
+	}
 	// Pre: -
 	// Pos: Destruye el diccionario.
 	~Diccionario() { borrar_nodos(raiz_); };
@@ -134,17 +168,42 @@ class Diccionario {
 	// Pre: -
 	// Pos: True si encuentra la clave, False en otro caso. Devuelve
 	// por referencia el resultado.
-	bool buscar(const T& clave, U& resultado) const {
+	bool buscar(const T& clave) const {
 		NodoDiccionario<T, U>* nodo = buscar(raiz_, clave);
 		if (nodo != nullptr) {
-			resultado = nodo->dato();
 			return true;
 		}
 		return false;
 	};
 	// Pre: -
+	// Pos: Accede al elemento con clave "clave". Si la clave existe
+	// devuelve una referencia al dato asociado; si no existe crea la
+	// clave y devuelve la referencia al dato (Creado usando Constructor
+	// por defecto)
+	U& operator[](const T& clave) {
+		NodoDiccionario<T, U>* nodo = buscar(raiz_, clave);
+		if (nodo == nullptr) {
+			insertar(clave, U());
+			nodo = buscar(raiz_, clave);
+		}
+		return nodo->dato();
+	}
+	const U& operator[](const T& clave) const {
+		NodoDiccionario<T, U>* nodo = buscar(raiz_, clave);
+		if (nodo == nullptr) {
+			insertar(clave, U());
+			nodo = buscar(raiz_, clave);
+		}
+		return nodo->dato();
+	}
+	// Pre: -
 	// Pos: True si esta vacio, False en otro caso.
 	bool vacio() const { return (raiz_ == nullptr); };
+	// Pre: -
+	// Pos: True si existe la clave, False en otro caso.
+	bool existe(const T& clave) {
+		return (search(raiz_, clave) != nullptr);
+	};
 };
 
 #endif

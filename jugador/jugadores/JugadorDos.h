@@ -7,6 +7,7 @@ class Jugador_Dos : public Jugador{
 public:
 	Jugador_Dos(Almacen *inventario);
 	~Jugador_Dos();
+	bool mover(const Coordenada& coordenada, const Mapa& mapa);
 };
 
 #endif /* JUGADOR_JUGADORES_JUGADORDOS_H_ */

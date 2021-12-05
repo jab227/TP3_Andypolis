@@ -23,8 +23,8 @@ Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_ma
 		this -> instancia = JUEGO;
 	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
 	this -> jugador_activo = rand() % 2 + 1;
-	this -> jugadores.alta_al_final(new Jugador_Uno());
-	this -> jugadores.alta_al_final(new Jugador_Dos());
+	this -> jugadores.alta_al_final(new Jugador_Uno(new Almacen())); //arreglo temporal
+	this -> jugadores.alta_al_final(new Jugador_Dos(new Almacen()));
 }
 
 Programa::~Programa() {
@@ -121,7 +121,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
             this -> empresa_constructora -> mostrar_construidos(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case DEMOLER:
-            this -> empresa_constructora -> demoler_edificio();
+            this -> empresa_constructora -> demoler_edificio(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case ATACAR:
             cout << "Implementar atacar!" << endl;
@@ -130,7 +130,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
         	cout << "Implementar reparar!" << endl;
 			break;
         case COMPRAR_BOMBAS:
-        	this -> jugadores.consulta(this -> jugador_activo) -> comprar_bombas();
+        	this -> jugadores.consulta(this -> jugador_activo) -> obtener_inventario() -> comprar_bombas();
 			break;
         case CONSULTAR:
         	this -> empresa_constructora -> mostrar_coordenada();
@@ -150,7 +150,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
         case FIN_TURNO:
 			cout << "Turno del jugador " << this -> jugador_activo << " finalizado." << endl;
-			this -> jugadores.consulta((int) this -> jugador_activo) -> modificar_energia(ENERGIA_SUMADA_FIN_TURNO);
+			this -> jugadores.consulta((int) this -> jugador_activo) -> recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
 			this -> jugador_activo = 3 - this -> jugador_activo;   //Cambio de jugador activo
 			break;
         case GUARDAR_SALIR:

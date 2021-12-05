@@ -6,6 +6,7 @@
 #include "../edificio/Edificio.h"
 
 const int NO_ENCONTRADO = 0;
+string const SALIR_STR = "salir";
 
 class Almacen {
 private:
@@ -61,7 +62,7 @@ public:
 
 	//PRE:
 	//POST: se compran las bombas pidiendo al usuario la cantidad
-	Resultado_Chequeos comprar_bombas( std::size_t cantidad);
+	void comprar_bombas();
 
 	//PRE: -
 	//POST: devuelve el indice del material en caso de encontrarse o en caso de
@@ -73,7 +74,9 @@ private:
 	//POST: se agrega el material al final del vector.
 	void agregar_material(Material material, std::size_t posicion);
 	
-	Resultado_Chequeos chequeo_bombas(std::size_t cantidad);
+	int pedir_bombas();
+
+	bool chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas);
 };
 
 #endif /* ALMACEN_H_ */

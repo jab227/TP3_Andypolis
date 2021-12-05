@@ -2,7 +2,7 @@
 #include <fstream>
 #include "../utils/LecturaArchivos.h"
 
-string const SALIR_STR = "salir", SI = "si", NO = "no";
+string const SI = "si", NO = "no";
 const int COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
 
 
@@ -69,7 +69,7 @@ bool Empresa_Constructora::cargar_ubicaciones(string ruta){
 		string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
 			nuevo_contenido = procesar_ubicacion(lectura, fila, columna, propietario);
-			sumar_contenido(nuevo_contenido, fila, columna, propietario);
+			sumar_contenido(nuevo_contenido, Coordenada(fila, columna), propietario);
 			cant_agregados++;
 			existe = true;
 		}

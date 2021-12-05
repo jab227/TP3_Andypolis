@@ -60,7 +60,7 @@ std::size_t Almacen::buscar_material(Material& a_buscar){
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
 void Almacen::sumar_cantidad_material(string a_cambiar, std::size_t cantidad){
 	Material material_a_cambiar = Material(a_cambiar,0);
-	//VER: si nos podemos ahorrar ciclos (Edificiencia temoporal)
+	//VER: si nos podemos ahorrar ciclos (Eficiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
 	if(index){
 		material_a_cambiar.sumar_cantidad(cantidad);

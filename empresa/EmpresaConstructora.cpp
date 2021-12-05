@@ -63,13 +63,14 @@ bool Empresa_Constructora::cargar_ubicaciones(string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
 		string lectura;
-		std::size_t cant_agregados = 0, fila, columna;
+		std::size_t cant_agregados = 0;
+		Coordenada coordenada = Coordenada(0,0);
 		size_t propietario;
 
 		string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
-			nuevo_contenido = procesar_ubicacion(lectura, fila, columna, propietario);
-			sumar_contenido(nuevo_contenido, fila, columna, propietario);
+			nuevo_contenido = procesar_ubicacion(lectura, coordenada, propietario);
+			sumar_contenido(nuevo_contenido, coordenada, propietario);
 			cant_agregados++;
 			existe = true;
 		}
@@ -97,9 +98,8 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido,Coordenada coordenada, std::size_t propietario){
+void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordenada, std::size_t propietario){
 	Edificio* edif = nullptr;
-	//Deberia tener una capa mas de abstraccion. Mapa agregar_ubicacion()?
 	if(this -> planos -> es_edificio_valido(contenido,edif)){
 		this -> mapa -> construir_edificio_ubicacion(edif, coordenada);
 		this -> planos -> aumentar_construidos_edificio(edif);
@@ -201,7 +201,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_construir(string& edificio_ingr
 			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 			resultado = almacen -> hay_lista_materiales(listado_necesario);
 			delete listado_necesario;
-			//Es necesario?
+			//WHY: Es necesario?
 			if(resultado != EXITO)
 				edificio_ingresado == EDIFICIO_VACIO;
 		}

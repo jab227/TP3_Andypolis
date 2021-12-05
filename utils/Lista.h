@@ -44,7 +44,7 @@ class Lista {
 
 	// PRE: -
 	// POST: devuelve el largo de la lista
-	std::size_t consulta_largo();
+	std::size_t consulta_largo() const;
 
 	// PRE: 1 <= pos <= cantidad
 	// POS: devuelve el dato que esta arriba y decrementa tope
@@ -62,6 +62,7 @@ class Lista {
 	// POST: devuelve el indice en que se encuentra el dato ingresado o
 	// NO_ENCONTRADO en caso de no existir el dato
 	int buscar_indice(T d);
+	int buscar_indice(T* d);
 
 	// Destructor
 	~Lista();
@@ -146,8 +147,8 @@ T Lista<T>::consulta(std::size_t pos) {
 }
 
 template <typename T>
-std::size_t Lista<T>::consulta_largo() {
-	return this->cantidad_;
+std::size_t Lista<T>::consulta_largo() const {
+	return cantidad_;
 }
 
 template <typename T>

@@ -47,6 +47,10 @@ public:
 	virtual void obtener_contenido(Material*& material) const = 0;
 
 	//PRE: -
+	//POST: devuelve el nombre del material o edificio contenido;
+	string obtener_contenido();
+
+	//PRE: -
 	//POST: devuelve el color del casillero.
 	std::string obtener_color();
 

@@ -8,7 +8,7 @@ private:
 	int bombas_actuales;
 	int bombas_usadas;
 public:
-	Bombardero();
+	Bombardero(Jugador* jugador);
 	bool actualizar();
 };
 

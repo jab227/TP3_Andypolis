@@ -4,7 +4,6 @@ const int PIEDRAS_A_OBTENER = 50e3;
 
 Piedras::Piedras(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Edad de piedra";
-	this -> cumplido = false;
 }
 
 bool Piedras::actualizar(){

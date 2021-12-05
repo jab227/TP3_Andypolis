@@ -2,8 +2,7 @@
 
 const int BOMBAS_A_USAR = 5;
 
-Bombardero::Bombardero() {
-	this -> cumplido = false;
+Bombardero::Bombardero(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Bombardero";
 	this -> bombas_usadas = 0;
 	Material bombas = Material("bombas", 0);

@@ -3,7 +3,6 @@
 #include "../utils/LecturaArchivos.h"
 #include <fstream>
 
-
 Planos::Planos() { }
 
 //Cuando este el Parser, hacer que reciba los datos.

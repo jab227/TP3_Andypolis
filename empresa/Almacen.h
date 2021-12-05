@@ -74,9 +74,9 @@ private:
 	//POST: se agrega el material al final del vector.
 	void agregar_material(Material material, std::size_t posicion);
 	
-	int pedir_bombas();
+	std::size_t pedir_bombas();
 
-	bool chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas);
+	bool chequeo_bombas(string bombas_ingresadas, std::size_t bombas_comprables, std::size_t &bombas);
 };
 
 #endif /* ALMACEN_H_ */

@@ -7,7 +7,7 @@ Casillero_Inaccesible::Casillero_Inaccesible(): Casillero(AZUL + NEGRO)  {
 Casillero_Inaccesible::~Casillero_Inaccesible() {
 }
 
-bool Casillero_Inaccesible::esta_ocupado() const{
+bool Casillero_Inaccesible::esta_ocupado() const {
 	return true;
 }
 

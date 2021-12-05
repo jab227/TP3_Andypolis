@@ -31,14 +31,15 @@ std::string Casillero_Construible::demoler_edificio(){
 }
 
 bool Casillero_Construible::esta_ocupado() const{
-	return !(this -> edificio_ == nullptr);
+	return (this -> edificio_ != nullptr);
 }
 
 void Casillero_Construible::saludar() const{
 	cout << "Soy un casillero construible." << endl;
 	if(this -> esta_ocupado()){
 		this -> edificio_ -> saludar();
-		cout << "Edificio construido exitosamente!" << endl;
+		//Q: Por que esto?
+		//cout << "Edificio construido exitosamente!" << endl;
 	}else
 		cout << "No tengo ningun edificio construido." << endl;
 }

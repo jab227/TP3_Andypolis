@@ -3,13 +3,6 @@
 
 #include "../Jugador.h"
 
-<<<<<<< HEAD
-class Jugador_Uno final : public Jugador{
-public:
-	Jugador_Uno(Almacen *inventario, Lista<Coordenada*>* edificios);
-	~Jugador_Uno();
-	bool mover(const Coordenada& coordenada, const Mapa& mapa) override;
-=======
 class Jugador_Uno final : public Jugador {
        private:
 	static const std::size_t costo_camino = 4;
@@ -23,7 +16,6 @@ class Jugador_Uno final : public Jugador {
 	Jugador_Uno(Almacen *inventario);
 	~Jugador_Uno() override;
 	bool mover(const Coordenada& destino, const Mapa& mapa) override;
->>>>>>> 9c60ffad6e2304ac0cda2251d34c81762bf3ed2a
 };
 
 #endif /* JUGADOR_JUGADORES_JUGADORUNO_H_ */

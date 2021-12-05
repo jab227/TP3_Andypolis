@@ -62,10 +62,9 @@ class Jugador {
 
 	std::size_t cantidad_ubicaciones() const;
 
-	void obtener_ubicacion(std::size_t ubicacion, std::size_t& fila,
-			       std::size_t& columna);
+	Coordenada* obtener_ubicacion(const std::size_t indice) const;
 
-	void eliminar_ubicacion(Coordenada);
+	void eliminar_ubicacion(const Coordenada& coordenada);
 
 };
 

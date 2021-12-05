@@ -28,7 +28,7 @@ public:
 	// Pre: Espera un ostream listo para escribir. 
 	// Pos: Imprime el contenido del casillero que se encuentra en la coordenada del mapa en
 	// string en formato fila de tabla. 
-	void print_row(const Mapa* mapa, const Coordenada& coordenada, std::ostream& stream) const{
+	void print_row(const Mapa* mapa, const Coordenada& coordenada, std::ostream& stream) const;
 private: 
 	// Pre: Espera un ostream listo para escribir. 
 	// Pos: Imprime el str en el stream en formato celda de tabla. 

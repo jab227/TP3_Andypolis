@@ -4,8 +4,6 @@
 #include <fstream>
 
 
-const std::size_t NO_ENCONTRADO = -1;
-
 Planos::Planos() { }
 
 //Cuando este el Parser, hacer que reciba los datos.

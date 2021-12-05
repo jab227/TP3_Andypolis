@@ -52,21 +52,18 @@ void Casillero_Construible::obtener_contenido(Edificio*& edificio) const{
 }
 void Casillero_Construible::obtener_contenido(Material*& material) const{ material = nullptr; }
 
-Edificio* Casillero_Construible::agregar_lista_edificio( std::size_t fila, std::size_t columna, Lista<string> &lista_nombres,Lista<Lista<std::size_t*>*> &lista_coordenadas){
+Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
 	if(this -> esta_ocupado()){
-		std::size_t* coordenadas = new std::size_t[2];
-		coordenadas[0] = fila;
-		coordenadas[1] = columna;
-		std::string edificio_ = this -> edificio_ -> obtener_nombre();	 
-		//Agregar que necesitan reparacion.
-		int indice = lista_nombres.buscar_indice(edificio_);
+		std::string edificio = this -> edificio_ -> obtener_nombre();	 
+		//TODO: Agregar que necesitan reparacion.
+		int indice = lista_nombres.buscar_indice(edificio);
 		if(indice == NO_ESTA){
-			lista_nombres.alta_al_final(edificio_);
-			Lista<std::size_t*>* auxiliar = new Lista<std::size_t*>;
+			lista_nombres.alta_al_final(edificio);
+			Lista<Coordenada*>* auxiliar = new Lista<Coordenada*>;
 			lista_coordenadas.alta_al_final(auxiliar);
 			indice = (int) lista_nombres.consulta_largo();
 		}
-		lista_coordenadas.consulta(indice) -> alta_al_final(coordenadas);
+		lista_coordenadas.consulta(indice) -> alta_al_final(coordenada);
 	}
 	return this -> edificio_;
 }

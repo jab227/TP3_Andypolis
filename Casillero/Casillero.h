@@ -11,16 +11,6 @@ const std::string VERDE = BGND_LIGHT_GREEN_46, AZUL = BGND_BLUE_12, GRIS = BGND_
 const std::string CONTENIDO_VACIO = "";
 const char TRANSITABLE = 'C', INACCESIBLE = 'L' , CONSTRUIBLE = 'T';
 
-//TODO: Heredados del printer. Colocar en el lugar correspondiente.S
-static const std::string RESET = "\e\[0m";
-static const std::string BOLD = "\e\[1m";
-static const std::string UNDERLINE = "\e\[4m";
-static const std::string CLEAR = "\e\[H\e[2J";
-static const std::string GREEN = "\e\[32m";
-static const std::string RED = "\e\[31m";
-static const std::string YELLOW = "\e\[33m";
-static const std::string BLUE = "\e\[34m";
-
 class Casillero {
 private:
 	std::string color;

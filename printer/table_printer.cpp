@@ -31,7 +31,7 @@ void TablePrinter::print_row(const Edificio* edificio, std::ostream& stream) con
 }
 
 void TablePrinter::print_row(const Lista<std::string> header, std::ostream& stream) const{
-	for(std::size_t i = 0; i < header.consulta_largo(); i++) {
+	for(std::size_t i = 1; i < header.consulta_largo(); i++) {
 		print_table_cell(header.consulta(i), stream);
 	}
 	print_row_separator(header.consulta_largo(), stream);

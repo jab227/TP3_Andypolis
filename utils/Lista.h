@@ -40,11 +40,11 @@ class Lista {
 
 	// PRE: 1 <= pos <= cantidad
 	// POS: devuelve el dato que esta arriba
-	T consulta(std::size_t pos);
+	T consulta(std::size_t pos) const;
 
 	// PRE: -
 	// POST: devuelve el largo de la lista
-	std::size_t consulta_largo();
+	std::size_t consulta_largo() const;
 
 	// PRE: 1 <= pos <= cantidad
 	// POS: devuelve el dato que esta arriba y decrementa tope
@@ -140,13 +140,13 @@ void Lista<T>::modificar(T d, std::size_t pos) {
 }
 
 template <typename T>
-T Lista<T>::consulta(std::size_t pos) {
+T Lista<T>::consulta(std::size_t pos) const{
 	Nodo<T>* aux = obtener_nodo(pos);
 	return aux->obtener_dato();
 }
 
 template <typename T>
-std::size_t Lista<T>::consulta_largo() {
+std::size_t Lista<T>::consulta_largo() const{
 	return this->cantidad_;
 }
 

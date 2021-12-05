@@ -154,7 +154,6 @@ int Almacen::pedir_bombas(){
 	int bombas = BOMBAS_VACIAS, bombas_comprables =  andycoins.obtener_cantidad() % PRECIO_BOMBA;
 	bool fin = false;
 	string bombas_ingresadas;
-	Resultado_Chequeos chequeo;
 	do{
 		cout << "Se pueden comprar " << bombas_comprables << " bombas." << endl;
 		cout << "Ingresa la cantidad de bombas que queres comprar o salir" << endl << "Bombas: ";

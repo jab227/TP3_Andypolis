@@ -6,7 +6,7 @@
 class Monedas : public Objetivo{
 private:
 	int monedas_juntadas;
-	int monedas_actual;
+	int monedas_actuales;
 public:
 	Monedas(Jugador* jugador);
 	bool actualizar();

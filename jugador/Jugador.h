@@ -17,17 +17,22 @@ class Jugador {
 	const std::size_t id_;
 	std::size_t energia_;
 	Almacen* inventario_;
-	Diccionario<std::string, Lista<Coordenada*>> edificios_;
+	Lista<Coordenada*>* edificios_;
 
        public:
 	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
 	// coordenadas, ya procesado.
-	Jugador(std::size_t id, Almacen* inventario);
+	Jugador(std::size_t id, Almacen* inventario, Lista<Coordenada*>* edificios);
 	// Destructuor
-	~Jugador();
+	virtual ~Jugador() {
+		delete inventario_;
+		delete edificios_;
+		inventario_ = nullptr;
+		edificios_ = nullptr;
+	};
 	// Pre: 
 	// Pos:
-	virtual bool mover(const Coordenada coordenada, const Mapa& mapa) = 0;
+	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
 	// PRE: -
 	// POST: devuelve el numero del jugador
 	std::size_t obtener_jugador() const;
@@ -53,14 +58,14 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-	void agregar_ubicacion(Coordenada* coordenada, const std::string& nombre);
+	void agregar_ubicacion(Coordenada* coordenada);
 
-	std::size_t obtener_largo_ubicaciones();
+	std::size_t cantidad_ubicaciones() const;
 
 	void obtener_ubicacion(std::size_t ubicacion, std::size_t& fila,
 			       std::size_t& columna);
 
-	void eliminar_ubicacion(std::size_t fila, std::size_t columna);
+	void eliminar_ubicacion(Coordenada);
 
 };
 

@@ -1,12 +1,7 @@
 #include "Jugador.h"
 
-Jugador::Jugador(std::size_t id, Almacen *inventario)
-    : id_(id), energia_(0), inventario_(inventario) {}
-
-Jugador::~Jugador() {
-	delete inventario_;
-	inventario_ = nullptr;
-}
+Jugador::Jugador(std::size_t id, Almacen *inventario, Lista<Coordenada*>* edificios)
+    : id_(id), energia_(0), inventario_(inventario), edificios_(edificios){}
 
 std::size_t Jugador::obtener_jugador() const { return id_; }
 
@@ -24,12 +19,14 @@ bool Jugador::usar_energia(const std::size_t &valor) {
 	return es_suficiente;
 }
 
-void Jugador::agregar_ubicacion(Coordenada* coordenada,
-				const std::string &nombre_edificio) {
-	Lista<Coordenada*> aux;
-	if(edificios_.buscar(nombre_edificio, aux)) {
-		aux.alta_al_final(coordenada);
-	} else {
-		edificios_.insertar(nombre_edificio, Lista<Coordenada*>());
-	}
+void Jugador::agregar_ubicacion(Coordenada* coordenada) {
+	edificios_->alta_al_final(coordenada);
+}
+
+std::size_t Jugador::cantidad_ubicaciones() const {
+	return edificios_->consulta_largo();
+}
+
+void Jugador::eliminar_ubicacion(Coordenada coordenada) {
+	std::size_t indice = (std::size_t) edificios_->buscar_indice(coordenada);
 }

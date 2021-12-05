@@ -9,6 +9,10 @@ class Coordenada {
 	std::size_t y_;
 
        public:
+	Coordenada() = default;
+	Coordenada(const Coordenada& rhs) = default;
+	Coordenada& operator=(const Coordenada& rhs) = default;
+	~Coordenada() = default;
 	Coordenada(const std::size_t& x, const std::size_t& y);
 	Coordenada(const Coordenada& coordenada);
 	bool operator==(const Coordenada& rhs) const;

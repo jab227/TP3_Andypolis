@@ -168,11 +168,11 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo){
 
 //TODO:Quitarme la dependencia. TellDontAsk.
 //TODO: Constructor de copia?? Asi no lo creamos fuera a la lista.
-void Mapa::casilleros_libres_transitables(Lista<Coordenada>*& lista_desocupados){
+void Mapa::casilleros_libres_transitables(Lista<Coordenada>& lista_desocupados){
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++)
 			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
-				lista_desocupados -> alta_al_final(Coordenada(fila, columna));
+				lista_desocupados.alta_al_final(Coordenada(fila, columna));
 }
 
 //OBS: Va a juntar todos los materiales del piso pero tmb los productos. 

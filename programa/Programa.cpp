@@ -130,7 +130,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
         	cout << "Implementar reparar!" << endl;
 			break;
         case COMPRAR_BOMBAS:
-        	this -> this -> jugadores.consulta(this -> jugador_activo) -> comprar_bombas();
+        	this -> jugadores.consulta(this -> jugador_activo) -> comprar_bombas();
 			break;
         case CONSULTAR:
         	this -> empresa_constructora -> mostrar_coordenada();

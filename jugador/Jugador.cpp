@@ -1,5 +1,5 @@
 #include "Jugador.h"
-#include "../printer/TablePrinter.h"
+#include "../printer/table_printer.h"
 
 Jugador::Jugador(std::size_t id, Almacen *inventario)
     : id_(id), energia_(0), inventario_(inventario) {}

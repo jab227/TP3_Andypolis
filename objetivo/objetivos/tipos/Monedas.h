@@ -9,6 +9,7 @@ private:
 	int monedas_actual;
 public:
 	Monedas(Jugador* jugador);
+	bool actualizar();
 };
 
 #endif /* OBJETIVO_OBJETIVOS_TIPOS_MONEDAS_H_ */

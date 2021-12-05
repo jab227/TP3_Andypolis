@@ -63,6 +63,10 @@ public:
 	//POST: se compran las bombas pidiendo al usuario la cantidad
 	Resultado_Chequeos comprar_bombas( std::size_t cantidad);
 
+	//PRE: -
+	//POST: devuelve el indice del material en caso de encontrarse o en caso de
+	//no estar en el arreglo, devuelve NO_ENCONTRADO.
+	std::size_t buscar_material(Material& a_buscar);
 
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
@@ -70,11 +74,6 @@ private:
 	void agregar_material(Material material, std::size_t posicion);
 	
 	Resultado_Chequeos chequeo_bombas(std::size_t cantidad);
-
-	//PRE: -
-	//POST: devuelve el indice del material en caso de encontrarse o en caso de
-	//no estar en el arreglo, devuelve NO_ENCONTRADO.
-	std::size_t buscar_material(Material& a_buscar);
 };
 
 #endif /* ALMACEN_H_ */

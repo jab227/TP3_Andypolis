@@ -8,6 +8,7 @@ class Objetivo {
 protected:
 	bool cumplido;
 	Jugador* jugador;
+	string titulo;
 public:
 	Objetivo(Jugador* jugador);
 

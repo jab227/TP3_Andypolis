@@ -103,11 +103,12 @@ void cargar_fila_columna(string linea, std::size_t& filas, std::size_t& columnas
 	columnas = stoi(dividir_linea(linea, ESPACIO));
 }
 
-string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna, size_t &propietario){
+string procesar_ubicacion(string linea, Coordenada& coordenada, size_t &propietario){
 	string edificio = dividir_linea(linea, DELIMITADOR_UBICACION);
 	edificio.erase(edificio.size()-1, 1); //Le saco el espcio final
-	fila = char_a_int(linea[0]);
-	columna = char_a_int(linea[3]);
+	std::size_t fila = char_a_int(linea[0]);
+	std::size_t columna = char_a_int(linea[3]);
+	coordenada = Coordenada(fila, columna);
 	propietario = 1;					//Elegir bien el propietario
 	return edificio;
 }

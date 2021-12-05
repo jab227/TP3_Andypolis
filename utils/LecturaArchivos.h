@@ -4,6 +4,7 @@
 #include <string>
 #include "../edificio/Edificio.h"
 #include "../Casillero/Casillero.h"
+#include "../utils/coordenada.h"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ void cargar_fila_columna(string linea, std::size_t &filas, std::size_t &columnas
 //POST: devuelve el edificio cargado con los datos
 Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos);
 
-string procesar_ubicacion(string linea, std::size_t &fila, std::size_t &columna, size_t &propietario);
+string procesar_ubicacion(string linea, Coordenada& coordenada, size_t &propietario);
 
 //PRE: nombre debe ser un edificio valido
 //POST: devuelve el edificio cargado con los datos

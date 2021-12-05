@@ -2,6 +2,7 @@
 
 
 Coordenada::Coordenada(const std::size_t& x, const std::size_t& y) : x_(x), y_(y) {}
+Coordenada::Coordenada(const Coordenada& coordenada) : x_(coordenada.x()), y_(coordenada.y()) {}
 std::size_t Coordenada::x() const {
 	return x_;
 }

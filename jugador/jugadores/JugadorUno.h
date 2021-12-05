@@ -5,8 +5,9 @@
 
 class Jugador_Uno : public Jugador{
 public:
-	Jugador_Uno(std::size_t id, Almacen *inventario);
+	Jugador_Uno(Almacen *inventario);
 	~Jugador_Uno();
+	bool mover(const Coordenada& coordenada, const Mapa& mapa);
 };
 
 #endif /* JUGADOR_JUGADORES_JUGADORUNO_H_ */

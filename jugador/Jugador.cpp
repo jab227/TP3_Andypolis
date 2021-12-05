@@ -36,9 +36,9 @@ bool Jugador::recuperar_energia(const std::size_t &valor) {
 	return es_maxima;
 }
 
-void Jugador::mostrar_construidos(const Mapa* mapa) const{
-	if(!ubicaciones_.vacio()){
+void Jugador::mostrar_construidos(const Mapa* mapa){
+	if( !this -> ubicaciones_.vacia() ){
 		TablePrinter printer = TablePrinter();
-		printer.print_row( mapa , ubicaciones_.consulta(i), std::cout);
+		//printer.print_row( mapa , ubicaciones_.consulta(i), std::cout); //lo comento por ahora
 	}
 }

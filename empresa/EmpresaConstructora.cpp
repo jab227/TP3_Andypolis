@@ -2,7 +2,7 @@
 #include <fstream>
 #include "../utils/LecturaArchivos.h"
 
-string const SALIR_STR = "salir", SI = "si", NO = "no";
+string const SI = "si", NO = "no";
 const int COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
 
 

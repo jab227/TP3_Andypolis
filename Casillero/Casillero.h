@@ -3,6 +3,7 @@
 
 #include "../utils/colors.h"
 #include "../utils/Lista.h"
+#include "../utils/coordenada.h"
 #include "../edificio/Edificio.h"
 #include "../empresa/Almacen.h"
 #include <string>
@@ -25,7 +26,7 @@ public:
 
 	//PRE: -
 	//POST: se destruye el casillero
-	virtual ~Casillero() = 0;
+	virtual ~Casillero();
 
 	//PRE: -
 	//POST: imprime un saludo por pantalla
@@ -65,10 +66,10 @@ public:
 
 	//PRE: -
 	//POST: -
-	virtual Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas) = 0;
+	virtual Edificio*agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas) = 0;
 
 	//WHY: Le pasamos el jugador o el inventario del jugador?
-	virtual void recoger_material(Almacen* inventario);
+	virtual void recoger_material(Almacen* inventario) = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

@@ -67,7 +67,7 @@ class Lista {
 	~Lista();
 
        private:
-	Nodo<T>* obtener_nodo(std::size_t pos);
+	Nodo<T>* obtener_nodo(std::size_t pos) const;
 	void swap(Lista<T>& lista);
 };
 
@@ -176,7 +176,7 @@ Lista<T>::~Lista() {
 }
 
 template <typename T>
-Nodo<T>* Lista<T>::obtener_nodo(std::size_t pos) {
+Nodo<T>* Lista<T>::obtener_nodo(std::size_t pos) const {
 	Nodo<T>* aux = primero_;
 	for (std::size_t i = 1; i < pos; i++) aux = aux->obtener_siguiente();
 	return aux;

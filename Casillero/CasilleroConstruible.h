@@ -2,7 +2,6 @@
 #define CASILLERO_CASILLEROCONSTRUIBLE_H_
 
 #include "Casillero.h"
-#include "utils/coordenada.h"
 
 class Casillero_Construible: public Casillero{
 private:
@@ -48,7 +47,7 @@ public:
 
 	//PRE: -
 	//POST: SE USA??
-	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas);
+	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas) override;
 
 	void recoger_material(Almacen* inventario) override;
 };

@@ -6,9 +6,7 @@ Casillero::Casillero() {
 	this -> color = VACIO;
 }
 
-Casillero::~Casillero() {
-
-}
+Casillero::~Casillero() {}
 
 Casillero::Casillero(std::string color){
 	this -> color = color;

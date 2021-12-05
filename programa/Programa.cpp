@@ -149,7 +149,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 		//Este sirve tanto para los edificios como para los materiales.
 		//	Edificios -> El jugador tiene una lista de ubicaciones. Con pasarle el inventario le suma el material producido.
 		//	Materiales -> El jugador al moverse por las celdas recoge_material() del transitable con pasarle el inventario le suma el material del suelo.
-		// Problema: me acabo de dar cuenta que tmb se puede caminar por los edificios. :(
+		
         	cout << "Recolecta solo el jugador activo? Sipi, por eso gasta energia" << endl;
 			this -> empresa_constructora -> producir_recursos();
 			break;

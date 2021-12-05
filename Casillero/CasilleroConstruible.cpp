@@ -53,10 +53,11 @@ void Casillero_Construible::obtener_contenido(Edificio*& edificio) const{
 }
 void Casillero_Construible::obtener_contenido(Material*& material) const{ material = nullptr; }
 
+//Cuando lo usamos tenemos que saber que es un casillero construible.
 Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
 	if(this -> esta_ocupado()){
 		std::string edificio = this -> edificio_ -> obtener_nombre();	 
-		//TODO: Agregar que necesitan reparacion.
+		//TODO: Agregar que necesitan reparacion. (!)
 		int indice = lista_nombres.buscar_indice(edificio);
 		if(indice == NO_ESTA){
 			lista_nombres.alta_al_final(edificio);

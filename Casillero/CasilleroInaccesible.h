@@ -36,7 +36,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	Edificio* agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
+	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas) override;
 
 	//Agregar demoler_edificio en inacc y transitables.
 	std::string demoler_edificio();

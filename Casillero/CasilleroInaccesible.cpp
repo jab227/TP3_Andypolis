@@ -25,7 +25,7 @@ bool Casillero_Inaccesible::construir_edificio(Edificio* edificio){
 	return false;
 }
 
-Edificio* Casillero_Inaccesible::agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
+Edificio* Casillero_Inaccesible::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
 	Edificio* edificio = nullptr;
 	return edificio;
 }

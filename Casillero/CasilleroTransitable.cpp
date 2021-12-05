@@ -46,7 +46,7 @@ void Casillero_Transitable::obtener_contenido(Material*& material) const{
 void Casillero_Transitable::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr; }
 
 
-Edificio* Casillero_Transitable::agregar_lista_edificio(std::size_t fila, std::size_t columna, Lista<string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas){
+Edificio* Casillero_Transitable::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
 	Edificio* edificio = nullptr;
 	return edificio;
 }

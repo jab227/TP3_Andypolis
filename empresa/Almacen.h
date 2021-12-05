@@ -5,8 +5,6 @@
 #include "../utils/Lista.h"
 #include "../edificio/Edificio.h"
 
-const int NO_ENCONTRADO = 0;
-
 class Almacen {
 private:
 	Lista<Material> lista_materiales;

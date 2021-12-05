@@ -7,6 +7,7 @@
 const string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
 const int PRECIO_BOMBA = 100;
+const std::size_t NO_ENCONTRADO = 0;
 
 Almacen::Almacen() {
 }
@@ -44,7 +45,7 @@ void Almacen::agregar_material(Material material, std::size_t posicion){
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
 std::size_t Almacen::buscar_material(Material& a_buscar){
-	std::size_t i = 1;
+	std::size_t i = 0;
 	std::size_t indice = NO_ENCONTRADO;
 	while(!indice && i <= this -> lista_materiales.consulta_largo()){
 		if (this -> lista_materiales.consulta(i) == a_buscar ){

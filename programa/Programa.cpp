@@ -1,6 +1,7 @@
 #include "Programa.h"
 
 #include "../utils/LecturaArchivos.h"
+#include <time.h> //WHY: Provisorio, error del time(0);
 
 const int CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
 		  REPARAR = 5, COMPRAR_BOMBAS = 6, CONSULTAR = 7, LISTAR_MATERIALES = 8,
@@ -23,8 +24,10 @@ Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_ma
 		this -> instancia = JUEGO;
 	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
 	this -> jugador_activo = rand() % 2 + 1;
+	/* TODO: Los jugadores necesitan info de ubicaciones.txt y materiales.txt. Comento para que no tire error.
 	this -> jugadores.alta_al_final(new Jugador_Uno());
 	this -> jugadores.alta_al_final(new Jugador_Dos());
+	*/
 }
 
 Programa::~Programa() {
@@ -121,15 +124,18 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
             this -> empresa_constructora -> mostrar_construidos(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case DEMOLER:
-            this -> empresa_constructora -> demoler_edificio();
+            this -> empresa_constructora -> demoler_edificio(this -> jugadores.consulta(this -> jugador_activo));
             break;
         case ATACAR:
+			//TODO: Implementar atacar
             cout << "Implementar atacar!" << endl;
             break;
         case REPARAR:
+			//TODO: Implementar reparar
         	cout << "Implementar reparar!" << endl;
 			break;
         case COMPRAR_BOMBAS:
+			//Lo hace el almacen
         	this -> jugadores.consulta(this -> jugador_activo) -> comprar_bombas();
 			break;
         case CONSULTAR:
@@ -142,7 +148,12 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
         	cout << "Implementar mostrar objetivos!" << endl;
 			break;
         case RECOLECTAR:
-        	cout << "Recolecta solo el jugador activo?" << endl;
+		//FER: Hice recoger_material() en los casilleros
+		//Este sirve tanto para los edificios como para los materiales.
+		//	Edificios -> El jugador tiene una lista de ubicaciones. Con pasarle el inventario le suma el material producido.
+		//	Materiales -> El jugador al moverse por las celdas recoge_material() del transitable con pasarle el inventario le suma el material del suelo.
+		// Problema: me acabo de dar cuenta que tmb se puede caminar por los edificios. :(
+        	cout << "Recolecta solo el jugador activo? Sipi, por eso gasta energia" << endl;
 			this -> empresa_constructora -> producir_recursos();
 			break;
         case MOVERSE:
@@ -150,7 +161,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
         case FIN_TURNO:
 			cout << "Turno del jugador " << this -> jugador_activo << " finalizado." << endl;
-			this -> jugadores.consulta((int) this -> jugador_activo) -> modificar_energia(ENERGIA_SUMADA_FIN_TURNO);
+			this -> jugadores.consulta((int) this -> jugador_activo) -> recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
 			this -> jugador_activo = 3 - this -> jugador_activo;   //Cambio de jugador activo
 			break;
         case GUARDAR_SALIR:

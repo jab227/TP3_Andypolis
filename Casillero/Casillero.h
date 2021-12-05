@@ -39,7 +39,7 @@ public:
 
 	//PRE: -
 	//POST: imprime un saludo por pantalla
-	virtual void saludar() = 0;
+	virtual void saludar() const = 0;
 
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no
@@ -47,7 +47,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado o no
-	virtual bool esta_ocupado() = 0;
+	virtual bool esta_ocupado() const = 0;
 
 	//PRE: -
 	//POST: devuelve el contenido del casillero en caso de estar ocupado o CASILLERO_VACIO en caso contrario.

@@ -44,7 +44,7 @@ void Almacen::agregar_material(Material material, std::size_t posicion){
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
 std::size_t Almacen::buscar_material(Material& a_buscar){
-	std::size_t i = 0;
+	std::size_t i = 1;
 	std::size_t indice = NO_ENCONTRADO;
 	while(!indice && i <= this -> lista_materiales.consulta_largo()){
 		if (this -> lista_materiales.consulta(i) == a_buscar ){
@@ -153,7 +153,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad){
 Resultado_Chequeos Almacen::chequeo_bombas(std::size_t cantidad){
 	Resultado_Chequeos resultado = NO_MATERIALES;
 	Material andycoins_requeridos = Material(NOMBRES_MATERIALES[3],PRECIO_BOMBA*cantidad);
-	if(cantidad = 0){ //Puede ser porque puso que no queria comprar o porque no es numero lo que ingreso.
+	if(cantidad == 0){ //Puede ser porque puso que no queria comprar o porque no es numero lo que ingreso.
 		resultado = SALIR;
 	}else if( this -> hay_material_suficiente(andycoins_requeridos)){
 		resultado = EXITO;

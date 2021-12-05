@@ -1,6 +1,7 @@
 #ifndef NODO_DICCIONARIO_H_
 #define NODO_DICCIONARIO_H_
 
+#include <iostream>
 //        Clave,   Valor
 template <class T, class U>
 class NodoDiccionario {
@@ -28,11 +29,11 @@ class NodoDiccionario {
 	T clave() const { return clave_; };
 	// Pre: -
 	// Pos: Devuelve el dato guardado en el nodo.
-	U dato() const { return dato_; }
+	U dato() const { return dato_; };
 	// Pre: U debe tener implementado el metodo a_string().
 	// Pos: Devuelve el dato guardado en el nodo.
-	void imprimir_dato() const { std::cout << dato_ -> a_string() << std::endl;} 
-	U& dato() { return dato_; }
+	void imprimir_dato() const { std::cout << dato_ -> a_string() << std::endl;}; //WHY: Esta ok que incluya <iostream>?
+	U& dato() { return dato_; };
 	// Pre: -
 	// Pos: Cambia la clave guardada dentro del nodo.
 	void cambiar_clave(const T& clave) { clave_ = clave; };

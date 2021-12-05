@@ -26,7 +26,7 @@ class Jugador {
 	// coordenadas, ya procesado.
 	Jugador(std::size_t id, Almacen* inventario, Lista<Coordenada*>* edificios);
 	//Para cuando sea nueva partida.
-	Jugador(std::size_t id, Almacen *inventario)
+	Jugador(std::size_t id, Almacen *inventario);
 	// Destructuor
 	virtual ~Jugador() {
 		delete inventario_;
@@ -62,7 +62,7 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-	void agregar_ubicacion(Coordenada* coordenada);
+	void agregar_ubicacion( const Coordenada* &coordenada);
 
 	std::size_t cantidad_ubicaciones() const;
 
@@ -75,7 +75,7 @@ class Jugador {
 	bool recuperar_energia(const std::size_t &valor);
 
 	void mostrar_construidos(const Mapa* mapa) const;
-	
+
 	void eliminar_ubicacion(const Coordenada& coordenada);
 
 };

@@ -34,12 +34,13 @@ bool Jugador::recuperar_energia(const std::size_t &valor) {
 }
 
 void Jugador::mostrar_construidos(const Mapa* mapa) const{
-	if( !this -> ubicaciones_.vacia() ){
+	if( !this -> edificios_ -> vacia() ){
 		//TablePrinter printer = TablePrinter();
 		//printer.print_row( mapa , ubicaciones_.consulta(i), std::cout); //lo comento por ahora
 	}
+}
 
-void Jugador::agregar_ubicacion(Coordenada* coordenada) {
+void Jugador::agregar_ubicacion(const Coordenada* &coordenada) {
 	edificios_->alta_al_final(coordenada);
 }
 

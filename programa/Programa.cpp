@@ -1,6 +1,8 @@
 #include "Programa.h"
 
 #include "../utils/LecturaArchivos.h"
+#include "../jugador/jugadores/JugadorUno.h"
+#include "../jugador/jugadores/JugadorDos.h"
 #include <time.h> //WHY: Provisorio, error del time(0);
 
 const int CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,

@@ -127,6 +127,7 @@ class Diccionario {
 			nodo->imprimir_dato(); 
 			imprimir_inorder(nodo->derecha());
 		}
+	};
 	// Pre: -
 	// Pos: Copia recursivamente los pares clave-dato del nodo "nodo"
 	// en el objeto sobre el cual se llama.
@@ -141,7 +142,7 @@ class Diccionario {
 	void swap(Diccionario<T, U>& diccionario) {
 		using std::swap;
 		swap(raiz_, diccionario.raiz_);
-	}
+	};
 
        public:
 	// Pre: -
@@ -162,7 +163,7 @@ class Diccionario {
 		Diccionario<T, U> copia = rhs;
 		copia.swap(*this);
 		return *this;
-	}
+	};
 	// Pre: -
 	// Pos: Destruye el diccionario.
 	~Diccionario() { borrar_nodos(raiz_); };
@@ -196,7 +197,7 @@ class Diccionario {
 			nodo = buscar(raiz_, clave);
 		}
 		return nodo->dato();
-	}
+	};
 	const U& operator[](const T& clave) const {
 		NodoDiccionario<T, U>* nodo = buscar(raiz_, clave);
 		if (nodo == nullptr) {
@@ -204,14 +205,14 @@ class Diccionario {
 			nodo = buscar(raiz_, clave);
 		}
 		return nodo->dato();
-	}
+	};
 	// Pre: -
 	// Pos: True si esta vacio, False en otro caso.
 	bool vacio() const { return (raiz_ == nullptr); };
 
 	void imprimir_inorden() const {
 			this -> imprimir_inorden(this -> raiz_);
-	}
+	};
 	// Pre: -
 	// Pos: True si existe la clave, False en otro caso.
 	bool existe(const T& clave) {

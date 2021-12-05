@@ -2,8 +2,8 @@
 #define PROGRAMA_H_
 
 #include "../empresa/EmpresaConstructora.h"
-#include "../jugador/jugadores/JugadorUno.h"
-#include "../jugador/jugadores/JugadorDos.h"
+#include "../jugador/Jugador.h"
+#include "../utils/Lista.h"
 
 enum Instancia {INICIO, JUEGO};
 const int JUGADOR_UNO = 1, JUGADOR_DOS = 2;

@@ -32,11 +32,11 @@ class Lista {
 
 	// PRE: 1 <= pos <= cantidad + 1
 	// POS: agrega d en la posicion de la lista
-	void alta(T d, std::size_t pos);
+	void alta(const T &d, std::size_t pos);
 
 	// PRE: -
 	// POST: agrega d al final de la lista
-	void alta_al_final(T d);
+	void alta_al_final(const T& d);
 
 	// PRE: 1 <= pos <= cantidad
 	// POS: devuelve el dato que esta arriba
@@ -62,6 +62,7 @@ class Lista {
 	// POST: devuelve el indice en que se encuentra el dato ingresado o
 	// NO_ENCONTRADO en caso de no existir el dato
 	int buscar_indice(T d);
+	
 	int buscar_indice(T* d);
 
 	// Destructor
@@ -98,7 +99,7 @@ bool Lista<T>::vacia() const{
 }
 
 template <typename T>
-void Lista<T>::alta(T dato_nuevo, std::size_t pos) {
+void Lista<T>::alta(const T &dato_nuevo, std::size_t pos) {
 	Nodo<T>* nuevo = new Nodo<T>(dato_nuevo);
 	Nodo<T>* siguiente = primero_;
 
@@ -114,7 +115,7 @@ void Lista<T>::alta(T dato_nuevo, std::size_t pos) {
 }
 
 template <typename T>
-void Lista<T>::alta_al_final(T dato_nuevo) {
+void Lista<T>::alta_al_final(const T &dato_nuevo) {
 	this->alta(dato_nuevo, cantidad_ + 1);
 }
 

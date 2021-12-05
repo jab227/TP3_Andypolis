@@ -2,7 +2,6 @@
 #define NODO_H_INCLUDED
 
 template <typename T>
-
 class Nodo {
 //Atributos
 private:
@@ -55,7 +54,7 @@ T Nodo<T>::obtener_dato() const {
     return dato;
 }
 
-template <typename >
+template <typename T>
 Nodo<T>* Nodo<T>::obtener_siguiente() const {
     return siguiente;
 }

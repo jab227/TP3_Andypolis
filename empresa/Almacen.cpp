@@ -6,7 +6,7 @@
 
 const string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
-const int PRECIO_BOMBA = 100, BOMBAS_VACIAS = -1;
+const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = -1;
 
 Almacen::Almacen() {
 }
@@ -133,7 +133,7 @@ void Almacen::sumar_lista_materiales(Lista<Material>* materiales_obtenidos, std:
 
 
 void Almacen::comprar_bombas(){
-	int bombas = this -> pedir_bombas();
+	std::size_t bombas = this -> pedir_bombas();
 
 		if(bombas != BOMBAS_VACIAS){
 			cout << "Compraste " << bombas << " bombas exitosamente."  << endl;
@@ -148,13 +148,12 @@ void Almacen::comprar_bombas(){
 		}
 }
 
-int Almacen::pedir_bombas(){
+std::size_t Almacen::pedir_bombas(){
 	Material andycoins = Material(NOMBRES_MATERIALES[3],0);
 	this -> buscar_material(andycoins);
-	int bombas = BOMBAS_VACIAS, bombas_comprables =  andycoins.obtener_cantidad() % PRECIO_BOMBA;
+	std::size_t bombas = BOMBAS_VACIAS, bombas_comprables =  andycoins.obtener_cantidad() % PRECIO_BOMBA;
 	bool fin = false;
 	string bombas_ingresadas;
-	Resultado_Chequeos chequeo;
 	do{
 		cout << "Se pueden comprar " << bombas_comprables << " bombas." << endl;
 		cout << "Ingresa la cantidad de bombas que queres comprar o salir" << endl << "Bombas: ";
@@ -165,7 +164,7 @@ int Almacen::pedir_bombas(){
 	return bombas;
 }
 
-bool Almacen::chequeo_bombas(string bombas_ingresadas, int bombas_comprables, int &bombas){
+bool Almacen::chequeo_bombas(string bombas_ingresadas, std::size_t bombas_comprables, std::size_t &bombas){
 	bool resultado = false;
 	if(bombas_ingresadas == SALIR_STR){
 		resultado = true;
@@ -173,7 +172,7 @@ bool Almacen::chequeo_bombas(string bombas_ingresadas, int bombas_comprables, in
 	}
 	else if(!es_numero(bombas_ingresadas) || stoi(bombas_ingresadas) < 0)
 		std::cout << "La/s opcion/es ingresada/s no es/son valida/s." << std::endl;
-	else if(stoi(bombas_ingresadas) > bombas_comprables)
+	else if(stoi(bombas_ingresadas) > (int) bombas_comprables)
 		std::cout << "No hay suficientes materiales." << std::endl;
 	else{
 		bombas = stoi(bombas_ingresadas);

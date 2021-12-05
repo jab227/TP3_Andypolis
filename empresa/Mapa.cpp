@@ -9,7 +9,7 @@
 #include "../Casillero/Casillero.h"
 #include "../utils/LecturaArchivos.h"
 
-const string UBICACION_VACIA = "X", TIPO_TERRENO_VACIO = "";
+const string UBICACION_VACIA = " ", TIPO_TERRENO_VACIO = "";
 const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
 const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
 const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
@@ -75,8 +75,9 @@ void Mapa::mostrar_mapa(){
 		cout << filas/10 << filas%10 << ' ';
 		for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
 			//TODO: Corregir. Es necesario el indentificador? El edificio, material, etc, no podrian tener su icono?
-			//cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
-			//		<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
+			//RTA: Yo lo hice que cada edif y mat tiene nombre y para el identif uso un traduct. se puede cambiar el traductor o agregar un identif a cada mat/edif.
+			cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
+					<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
 		}
 		cout << endl << FIN_COLOR;
 	}
@@ -131,27 +132,27 @@ bool Mapa::generar_materiales_aleatorios(){
 	std::size_t n_casillero = 0;
 	bool mapa_ocupado = casilleros_libres->vacia();
 	while(a_generar > 0 && !(casilleros_libres->vacia())){
-		mapa_ocupado = casilleros_libres->vacia();
-		if((piedra_a_generar > 0)){ // && (casilleros_libres > 0)){ // innecesario.
-			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
-			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], casilleros_libres->consulta(n_casillero));
+		if((piedra_a_generar > 0)){
+			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
+			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], casilleros_libres -> consulta(n_casillero));
 			piedra_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
 		if((madera_a_generar > 0) && !(casilleros_libres->vacia())){
-			n_casillero = this->numero_aleatorio(0,casilleros_libres->consulta_largo());
+			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
 			generar_material(MATERTIALES_EDIFICIOS[MADERA], casilleros_libres->consulta(n_casillero));
 			madera_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 
 		}
 		if((metal_a_generar > 0) && !(casilleros_libres->vacia())){
-			n_casillero = this->numero_aleatorio(0,casilleros_libres->consulta_largo());
+			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
 			generar_material(MATERTIALES_EDIFICIOS[METAL], casilleros_libres->consulta(n_casillero));
 			metal_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
 		a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar);
+		mapa_ocupado = casilleros_libres -> vacia();
 	}
 	delete casilleros_libres;
 	return mapa_ocupado;
@@ -168,14 +169,15 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo){
 
 //TODO:Quitarme la dependencia. TellDontAsk.
 //TODO: Constructor de copia?? Asi no lo creamos fuera a la lista.
-void Mapa::casilleros_libres_transitables(Lista<Coordenada>& lista_desocupados){
+void Mapa::casilleros_libres_transitables(Lista<Coordenada>* &lista_desocupados){
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++)
 			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
-				lista_desocupados.alta_al_final(Coordenada(fila, columna));
+				lista_desocupados -> alta_al_final(Coordenada(fila, columna));
 }
 
 //OBS: Va a juntar todos los materiales del piso pero tmb los productos. 
+//OBS2: solamente estaba para sacar los materiales si el mapa se llenaba, es inutil en este tp
 void Mapa::vaciar_materiales(){
 	Almacen * materiales_basura = new Almacen();
 	Coordenada coordenada = Coordenada(0,0);

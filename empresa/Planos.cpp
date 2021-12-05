@@ -4,7 +4,7 @@
 #include <fstream>
 
 
-const std::size_t NO_ENCONTRADO = -1;
+//const std::size_t NO_ENCONTRADO = -1;
 
 Planos::Planos() { }
 

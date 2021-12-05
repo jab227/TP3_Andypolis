@@ -15,7 +15,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado, para este caso, devuelve siempre true
-	bool esta_ocupado();
+	bool esta_ocupado() const ;
 
 	//PRE: -
 	//POST: imprime un saludo por terminal.

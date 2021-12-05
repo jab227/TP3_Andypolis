@@ -14,10 +14,10 @@ const std::size_t ENERGIA_COMPRAR_BOMBAS = 5;
 class Jugador {
 	// Atributos
        private:
-	std::size_t id_;
+	const std::size_t id_;
 	std::size_t energia_;
 	Almacen* inventario_;
-	Diccionario<std::string, Lista<Coordenada>*> edificios_;
+	Diccionario<std::string, Lista<Coordenada*>> edificios_;
 
        public:
 	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
@@ -27,7 +27,7 @@ class Jugador {
 	~Jugador();
 	// Pre: 
 	// Pos:
-	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
+	virtual bool mover(const Coordenada coordenada, const Mapa& mapa) = 0;
 	// PRE: -
 	// POST: devuelve el numero del jugador
 	std::size_t obtener_jugador() const;
@@ -53,7 +53,7 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-	void agregar_ubicacion(std::size_t fila, std::size_t columna);
+	void agregar_ubicacion(Coordenada* coordenada, const std::string& nombre);
 
 	std::size_t obtener_largo_ubicaciones();
 

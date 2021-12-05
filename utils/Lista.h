@@ -1,168 +1,192 @@
 #ifndef LISTA_H_INCLUDED
 #define LISTA_H_INCLUDED
 
-#include "Nodo.h"
 #include <iostream>
+
+#include "Nodo.h"
 
 const int NO_ESTA = -1;
 
-template <typename Dato>
+template <typename T>
 class Lista {
-    // Atributos
-private:
-    Nodo<Dato>* primero;
-    std::size_t cantidad;
+	// Atributos
+       private:
+	Nodo<T>* primero_;
+	std::size_t cantidad_;
 
-    // Metodos
-public:
-    //Constructor
-    //PRE: -
-    //POS: se crea una lista vacia
-    Lista();
+	// Metodos
+       public:
+	// Constructor
+	// PRE: -
+	// POS: se crea una lista vacia
+	Lista();
+	// Constructor de copia
+	// PRE: -
+	// POS: Construye la nueva lista a partir de una copia de rhs
+	Lista(const Lista<T>& rhs);
 
-    //PRE: 1 <= pos <= cantidad + 1
-    //POS: agrega d en la posicion de la lista
-    void alta(Dato d, std::size_t pos);
+	// PRE: -
+	// POS: Mueve la informacion de la lista rhs a la lista a la cual
+	// se le asigna
+	Lista<T>& operator=(const Lista<T>& rhs);
 
-    //PRE: -
-    //POST: agrega d al final de la lista
-    void alta_al_final(Dato d);
+	// PRE: 1 <= pos <= cantidad + 1
+	// POS: agrega d en la posicion de la lista
+	void alta(T d, std::size_t pos);
 
-    //PRE: 1 <= pos <= cantidad
-    //POS: devuelve el dato que esta arriba
-    Dato consulta(std::size_t pos);
+	// PRE: -
+	// POST: agrega d al final de la lista
+	void alta_al_final(T d);
 
-    //PRE: -
-    //POST: devuelve el largo de la lista
-    std::size_t consulta_largo();
+	// PRE: 1 <= pos <= cantidad
+	// POS: devuelve el dato que esta arriba
+	T consulta(std::size_t pos);
 
-    //PRE: 1 <= pos <= cantidad
-    //POS: devuelve el dato que esta arriba y decrementa tope
-    Dato baja(std::size_t pos);
+	// PRE: -
+	// POST: devuelve el largo de la lista
+	std::size_t consulta_largo();
 
-    //PRE: 1<= pos <= cantidad
-    //POST: modifica el dato ubicado en esa posicion
-    void modificar(Dato d, std::size_t pos);
+	// PRE: 1 <= pos <= cantidad
+	// POS: devuelve el dato que esta arriba y decrementa tope
+	T baja(std::size_t pos);
 
-    //PRE: -
-    //POS: devuelve true si la pila esta vacia, false si no
-    bool vacia();
+	// PRE: 1<= pos <= cantidad
+	// POST: modifica el dato ubicado en esa posicion
+	void modificar(T d, std::size_t pos);
 
-    //PRE: el tipo de dato tiene que poder compararse con el operador =.
-    //POST: devuelve el indice en que se encuentra el dato ingresado o NO_ENCONTRADO en caso de
-    //no existir el dato
-    int buscar_indice(Dato d);
+	// PRE: -
+	// POS: devuelve true si la pila esta vacia, false si no
+	bool vacia();
 
-    //Destructor
-    ~Lista();
+	// PRE: el tipo de dato tiene que poder compararse con el operador =.
+	// POST: devuelve el indice en que se encuentra el dato ingresado o
+	// NO_ENCONTRADO en caso de no existir el dato
+	int buscar_indice(T d);
 
-private:
-    Nodo<Dato>* obtener_nodo(std::size_t pos);
+	// Destructor
+	~Lista();
+
+       private:
+	Nodo<T>* obtener_nodo(std::size_t pos);
+	void swap(Lista<T>& lista);
 };
 
-template <typename Dato>
-Lista<Dato>::Lista() {
-    primero = 0;
-    cantidad = 0;
+template <typename T>
+Lista<T>::Lista() : primero_(nullptr), cantidad_(0) {}
+
+template <typename T>
+Lista<T>::Lista(const Lista<T>& rhs) {
+	Nodo<T>* tmp = rhs.primero_;
+	cantidad_ = 0;
+	while (tmp != nullptr) {
+		alta_al_final(tmp->obtener_dato());
+		tmp = tmp->obtener_siguiente();
+	}
 }
 
-template <typename Dato>
-bool Lista<Dato>::vacia() {
-    return (cantidad == 0);
+template <typename T>
+Lista<T>& Lista<T>::operator=(const Lista<T>& rhs) {
+	Lista<T> copia = rhs;
+	copia.swap(*this);
+	return *this;
 }
 
-template <typename Dato>
-void Lista<Dato>::alta(Dato dato_nuevo, std::size_t pos) {
-    Nodo<Dato>* nuevo = new Nodo<Dato>(dato_nuevo);
-    Nodo<Dato>* siguiente = primero;
-
-    if (pos == 1) {
-        primero = nuevo;
-    }
-    else {
-        Nodo<Dato>* anterior = obtener_nodo(pos - 1);
-        siguiente = anterior->obtener_siguiente();
-        anterior->cambiar_siguiente(nuevo);
-    }
-    nuevo->cambiar_siguiente(siguiente);
-    cantidad++;
+template <typename T>
+bool Lista<T>::vacia() {
+	return (cantidad_ == 0);
 }
 
-template <typename Dato>
-void Lista<Dato>::alta_al_final(Dato dato_nuevo) {
-    this -> alta(dato_nuevo, this -> cantidad + 1);
+template <typename T>
+void Lista<T>::alta(T dato_nuevo, std::size_t pos) {
+	Nodo<T>* nuevo = new Nodo<T>(dato_nuevo);
+	Nodo<T>* siguiente = primero_;
+
+	if (pos == 1) {
+		primero_ = nuevo;
+	} else {
+		Nodo<T>* anterior = obtener_nodo(pos - 1);
+		siguiente = anterior->obtener_siguiente();
+		anterior->cambiar_siguiente(nuevo);
+	}
+	nuevo->cambiar_siguiente(siguiente);
+	cantidad_++;
 }
 
-
-template <typename Dato>
-Dato Lista<Dato>::baja(std::size_t pos) {
-    Nodo<Dato>* baja = primero;
-    if (pos == 1)
-        primero = baja->obtener_siguiente();
-    else {
-        Nodo<Dato>* anterior = obtener_nodo(pos - 1);
-        baja = anterior->obtener_siguiente();
-        anterior->cambiar_siguiente(baja->obtener_siguiente());
-    }
-    cantidad--;
-    Dato d = baja->obtener_dato();
-    delete baja;
-    return d;
+template <typename T>
+void Lista<T>::alta_al_final(T dato_nuevo) {
+	this->alta(dato_nuevo, cantidad_ + 1);
 }
 
-template <typename Dato>
-void Lista<Dato>::modificar(Dato d, std::size_t pos){
+template <typename T>
+T Lista<T>::baja(std::size_t pos) {
+	Nodo<T>* baja = primero_;
+	if (pos == 1)
+		primero_ = baja->obtener_siguiente();
+	else {
+		Nodo<T>* anterior = obtener_nodo(pos - 1);
+		baja = anterior->obtener_siguiente();
+		anterior->cambiar_siguiente(baja->obtener_siguiente());
+	}
+	cantidad_--;
+	T d = baja->obtener_dato();
+	delete baja;
+	return d;
+}
+
+template <typename T>
+void Lista<T>::modificar(T d, std::size_t pos) {
 	baja(pos);
 	alta(d, pos);
 }
 
-template <typename Dato>
-Dato Lista<Dato>::consulta(std::size_t pos) {
-    Nodo<Dato>* aux = obtener_nodo(pos);
-    return aux->obtener_dato();
+template <typename T>
+T Lista<T>::consulta(std::size_t pos) {
+	Nodo<T>* aux = obtener_nodo(pos);
+	return aux->obtener_dato();
 }
 
-template <typename Dato>
-std::size_t Lista<Dato>::consulta_largo(){
-	return this -> cantidad;
+template <typename T>
+std::size_t Lista<T>::consulta_largo() {
+	return this->cantidad_;
 }
 
-template <typename Dato>
-int Lista<Dato>::buscar_indice(Dato d){
+template <typename T>
+int Lista<T>::buscar_indice(T d) {
 	bool encontrado = false;
 	int indice = 1;
-    //Es mejorable??
-	if(this->cantidad > 0){
-		Nodo<Dato>* nodo = this->primero;
-		if(nodo->obtener_dato() == d){
+	// Es mejorable??
+	if (this->cantidad_ > 0) {
+		Nodo<T>* nodo = this->primero_;
+		if (nodo->obtener_dato() == d) {
 			encontrado = true;
 		}
-		while(nodo->obtener_siguiente() != nullptr && !encontrado){
+		while (nodo->obtener_siguiente() != nullptr && !encontrado) {
 			nodo = nodo->obtener_siguiente();
 			indice++;
-			if(nodo->obtener_dato() == d)
-				encontrado = true;
+			if (nodo->obtener_dato() == d) encontrado = true;
 		}
 	}
-	if(!encontrado)
-		indice = NO_ESTA;
+	if (!encontrado) indice = NO_ESTA;
 	return indice;
 }
 
-template <typename Dato>
-Lista<Dato>::~Lista() {
-    while (! vacia())
-        baja(1);
+template <typename T>
+Lista<T>::~Lista() {
+	while (!vacia()) baja(1);
 }
 
-template <typename Dato>
-Nodo<Dato>* Lista<Dato>::obtener_nodo(std::size_t pos) {
-    Nodo<Dato>* aux = primero;
-    for (std::size_t i = 1; i < pos; i++)
-        aux = aux->obtener_siguiente();
-    return aux;
+template <typename T>
+Nodo<T>* Lista<T>::obtener_nodo(std::size_t pos) {
+	Nodo<T>* aux = primero_;
+	for (std::size_t i = 1; i < pos; i++) aux = aux->obtener_siguiente();
+	return aux;
 }
 
+template <typename T>
+void Lista<T>::swap(Lista<T>& lista) {
+	using std::swap;
+	swap(primero_, lista.primero_);
+	swap(cantidad_, lista.cantidad_);
+}
 
-
-#endif // LISTA_H_INCLUDED
+#endif	// LISTA_H_INCLUDED

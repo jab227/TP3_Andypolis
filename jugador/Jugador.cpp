@@ -23,3 +23,13 @@ bool Jugador::usar_energia(const std::size_t &valor) {
 	if (es_suficiente) energia_ -= valor;
 	return es_suficiente;
 }
+
+void Jugador::agregar_ubicacion(Coordenada* coordenada,
+				const std::string &nombre_edificio) {
+	Lista<Coordenada*> aux;
+	if(edificios_.buscar(nombre_edificio, aux)) {
+		aux.alta_al_final(coordenada);
+	} else {
+		edificios_.insertar(nombre_edificio, Lista<Coordenada*>());
+	}
+}

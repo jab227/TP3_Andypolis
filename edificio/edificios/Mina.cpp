@@ -12,6 +12,10 @@ Mina::Mina(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_
 }
 
 void Mina::saludar(){
-	cout << "Soy la mina y estoy en el casillero consultado, estoy buscando minerales precioso!" << endl;
+	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy buscando minerales precioso!" << endl;
 }
 
+
+Resultado_Chequeos reparar(){ 
+//TODO: Implementar
+}

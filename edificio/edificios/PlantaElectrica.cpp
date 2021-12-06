@@ -17,5 +17,7 @@ Planta_Electrica::Planta_Electrica(std::size_t piedra, std::size_t madera, std::
 }
 
 void Planta_Electrica::saludar(){
-	cout << "Soy la planta electrica y estoy en el casillero consultado, estoy para que la electricidad no se corte!" << endl;
+	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy para que la electricidad no se corte!" << endl;
 }
+
+Resultado_Chequeos reparar(){ return NO_REPARABLE;}

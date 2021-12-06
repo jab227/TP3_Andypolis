@@ -9,7 +9,7 @@ const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
 const string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
-	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR};
+	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR, NO_REPARABLE};
 
 
 class Edificio {
@@ -20,7 +20,7 @@ private:
 	//TODO: Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
-	std::size_t construidos; // WHY: Es necesario tener la cantidad construida?
+	std::size_t construidos; // Q: Es necesario tener la cantidad construida?
 //Metodos:
 public:
 	//PRE: -
@@ -98,6 +98,8 @@ public:
 
 	//TODO: Hacer a_string() que devuelva la info en formato "tabla";
 	std::string a_string();
+
+	virtual Resultado_Chequeos reparar() = 0;
 };
 
 #endif /* EDIFICIO_H_ */

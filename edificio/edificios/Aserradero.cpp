@@ -12,5 +12,5 @@ Aserradero::Aserradero(std::size_t piedra, std::size_t madera, std::size_t metal
 }
 
 void Aserradero::saludar(){
-	cout << "Soy el aserradero y estoy en el casillero consultado, estoy tranajando duro!" << endl;
+	cout << "Soy el "+ NOMBRE +" y estoy en el casillero consultado, estoy tranajando duro!" << endl;
 }

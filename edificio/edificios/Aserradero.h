@@ -16,6 +16,7 @@ public:
 	//PRE: -
 	//POST: imprime un saludo por consola
 	void saludar();
+	Resultado_Chequeos reparar() override;
 };
 
 #endif /* EDIFICIOS_ASERRADERO_H_ */

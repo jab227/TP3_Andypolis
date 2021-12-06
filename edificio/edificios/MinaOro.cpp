@@ -15,3 +15,5 @@ Mina_Oro::Mina_Oro(std::size_t piedra, std::size_t madera, std::size_t metal, st
 void Mina_Oro::saludar(){
 	cout << "Soy la mina de oro y estoy en el casillero consultado, estoy recolectando monedas!" << endl;
 }
+
+Resultado_Chequeos reparar(){ return NO_REPARABLE;}

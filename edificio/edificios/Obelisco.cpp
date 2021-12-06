@@ -11,5 +11,8 @@ Obelisco::Obelisco(std::size_t piedra, std::size_t madera, std::size_t metal, st
 }
 
 void Obelisco::saludar(){
-	cout << "Soy el obelisco y estoy en el casillero consultado, estoy luciendome a lo alto!" << endl;
+	cout << "Soy el "+NOMBRE+" y estoy en el casillero consultado, estoy luciendome a lo alto!" << endl;
 }
+
+Resultado_Chequeos reparar(){ return NO_REPARABLE;}
+

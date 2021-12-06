@@ -46,10 +46,6 @@ std::size_t Edificio::obtener_max_permitidos() const{
 	return this->maximo_permitidos;
 }
 
-/*void Edificio::saludar(){
-	cout << "Soy un/a " << this->nombre << " y estoy en el casillero consultado." << endl;
-} */
-
 bool Edificio::vacio(){
 	return this->nombre == EDIFICIO_VACIO;
 }

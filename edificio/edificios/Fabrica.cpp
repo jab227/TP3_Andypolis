@@ -12,5 +12,11 @@ Fabrica::Fabrica(std::size_t piedra, std::size_t madera, std::size_t metal, std:
 }
 
 void Fabrica::saludar(){
-	cout << "Soy la fabrica y estoy en el casillero consultado, estoy funcionando para vos!" << endl;
+	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy funcionando para vos!" << endl;
+}
+
+
+
+Resultado_Chequeos reparar(){ 
+//TODO: Implementar
 }

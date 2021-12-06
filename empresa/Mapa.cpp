@@ -74,8 +74,7 @@ void Mapa::mostrar_mapa(){
 	for(std::size_t filas = 0; filas < this -> filas; filas++){
 		cout << filas/10 << filas%10 << ' ';
 		for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
-			//TODO: Corregir. Es necesario el indentificador? El edificio, material, etc, no podrian tener su icono?
-			//RTA: Yo lo hice que cada edif y mat tiene nombre y para el identif uso un traduct. se puede cambiar el traductor o agregar un identif a cada mat/edif.
+			//identificardor_ocupados, le das un nombre y te devuelve el icono. Ver mas adelante si cambiarlo.
 			cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
 					<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
 		}
@@ -84,7 +83,7 @@ void Mapa::mostrar_mapa(){
 	cout << FIN_COLOR;
 }
 
-void Mapa::mostrar_posicion(const Coordenada& coordenada){
+void Mapa::saludar_coordenada(const Coordenada& coordenada){
 	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
 }
 
@@ -99,6 +98,13 @@ Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const
 	return (this -> terreno[coordenada.x()][coordenada.y()]) -> demoler_edificio();
 
 }
+
+Resultado_Chequeos Mapa::reparar_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada){
+	edificio = (this -> terreno[coordenada.x()][coordenada.y()]) -> obtener_contenido();
+	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio();
+
+}
+
 
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
 void Mapa::poner_material_ubicacion(string material,const Coordenada& coordenada){

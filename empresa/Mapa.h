@@ -44,15 +44,19 @@ public:
 
 	//PRE: la posicion debe ser valida
 	//POST: se muestra informacion sobre la ubicacion consultada
-	void mostrar_posicion(const Coordenada& coordenada);
+	void saludar_coordenada(const Coordenada& coordenada);
 
 	//PRE: el edificio y la posicion deben ser validos y el casillero estar vacio
 	//POST: se construye el edificio en la posicion ingresada
 	Resultado_Chequeos construir_edificio_ubicacion(const std::string & edificio, const Coordenada& coordenada);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
-	//POST: se elimina el edificio de esa posicion y se devuelve el edificio demolido
+	//POST: se elimina el edificio de esa posicion y se devuelve el edificio demolido por interfaz
 	Resultado_Chequeos demoler_edificio_ubicacion(std::string &edificio, const Coordenada& coordenada);
+
+	//PRE: la posicion debe ser valida y estar ocupada por un edificio
+	//POST: 
+	Resultado_Chequeos reparar_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada);
 
 	//PRE: el material y la posicion debe ser valido, y el casillero estar vacio
 	//POST: se pone el material en la ubicacion ingresda

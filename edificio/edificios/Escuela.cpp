@@ -14,3 +14,6 @@ Escuela::Escuela(std::size_t piedra, std::size_t madera, std::size_t metal,  std
 void Escuela::saludar(){
 	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy recolectando fondos!" << endl;
 }
+
+
+Resultado_Chequeos Escuela::reparar(){ return NO_REPARABLE;}

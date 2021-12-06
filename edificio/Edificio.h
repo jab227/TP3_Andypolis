@@ -30,6 +30,7 @@ public:
 	//PRE: -
 	//POST: crea un edificio con los atributos inicializados.
 	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
+	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida);
 
 	//PRE: -
 	//POST: Sobreescribiendo el operador igual.
@@ -47,6 +48,10 @@ public:
 	//POST: devuelve la cantidad del material ingresado requerido para construirlo. En caso de que
 	//no se requiera ese material, devuelve 0.
 	std::size_t obtener_cant_material(string material) const;
+
+	//PRE: -
+	//POST: devuelve la vida del edificio.
+	std::size_t obtener_vida() const;
 
 	//PRE: -
 	//POST: devuleve la cantidad de edificios maximos construidos.
@@ -100,6 +105,10 @@ public:
 	std::string a_string();
 
 	virtual Resultado_Chequeos reparar() = 0;
+
+protected: // Solo me interesa que puedan cambiarlo las hijas si lo necesitan.
+	void recuperar_vida();
+
 };
 
 #endif /* EDIFICIO_H_ */

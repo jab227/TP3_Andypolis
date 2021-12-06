@@ -18,6 +18,8 @@ public:
 	//POST: imprime un mensaje por consola
 	void saludar();
 
+	Resultado_Chequeos reparar() override;
+
 };
 
 #endif /* EDIFICIOS_FABRICA_H_ */

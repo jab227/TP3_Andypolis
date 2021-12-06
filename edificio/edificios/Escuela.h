@@ -16,6 +16,8 @@ public:
 	//PRE: -
 	//POST: imprime un saludo por terminal
 	void saludar();
+	Resultado_Chequeos reparar() override;
+
 };
 
 #endif /* EDIFICIOS_ESCUELA_H_ */

@@ -3,6 +3,7 @@
 
 const string NOMBRE_MATERIAL_PRODUCIDO = "madera", NOMBRE = "aserradero";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 25;
+const std::size_t MAX_VIDA = 1; //Si recibe 1 ataques, se destruye.
 
 Aserradero::Aserradero() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
 }
@@ -14,3 +15,6 @@ Aserradero::Aserradero(std::size_t piedra, std::size_t madera, std::size_t metal
 void Aserradero::saludar(){
 	cout << "Soy el "+ NOMBRE +" y estoy en el casillero consultado, estoy tranajando duro!" << endl;
 }
+
+Resultado_Chequeos Aserradero::reparar(){ return NO_REPARABLE;}
+

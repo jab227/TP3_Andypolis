@@ -17,6 +17,8 @@ public:
 	//PRE: -
 	//POST: imprime un mensaje por consola
 	void saludar();
+	Resultado_Chequeos reparar() override;
+
 };
 
 #endif /* EDIFICIOS_MINAORO_H_ */

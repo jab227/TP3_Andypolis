@@ -8,7 +8,7 @@ Edificio::Edificio() {
 	this->materiales[2] = 0;
 	this->maximo_permitidos = 0;
 	this->construidos = 0;
-	this->vida = 0;
+	this->vida = 1; //Solo Mina y Fabrica poseen 2 de vida.
 }
 
 Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos){
@@ -18,7 +18,18 @@ Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::s
 	this->materiales[METAL] = metal;
 	this->maximo_permitidos = maximo_permitidos;
 	this->construidos = 0;
-	this-> vida = 0;
+	this-> vida = 1;
+}
+
+//Constructor para Mina y Fabrica que tienen vida distinta.
+Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida){
+	this->nombre = nombre;
+	this->materiales[PIEDRA] = piedra;
+	this->materiales[MADERA] = madera;
+	this->materiales[METAL] = metal;
+	this->maximo_permitidos = maximo_permitidos;
+	this->construidos = 0;
+	this-> vida = vida;
 }
 
 Edificio::~Edificio(){
@@ -98,3 +109,10 @@ std::string Edificio::a_string(){
 	return "";
 }
 
+std::size_t Edificio::obtener_vida() const{
+	return 	this -> vida;
+}
+
+void Edificio::recuperar_vida(){
+	++(this -> vida);
+}

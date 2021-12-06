@@ -59,7 +59,9 @@ bool Planos::es_edificio_valido(string nombre_edificio, Edificio*& edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
 	//Provisorio. //Liberar?
-	edificio = traductor_edificios(nombre_edificio,0,0,0,0);
+	//TODO: COrregir
+	std::size_t propietario = 1;
+	edificio = traductor_edificios(nombre_edificio,0,0,0,0, propietario);
 	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
 		if(*(this -> lista_edificios.consulta(i)) == *edificio){
 			*edificio =*(this -> lista_edificios.consulta(i));

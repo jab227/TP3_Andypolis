@@ -62,7 +62,7 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-	void agregar_ubicacion( const Coordenada* &coordenada);
+	void agregar_ubicacion(  Coordenada* coordenada);
 
 	std::size_t cantidad_ubicaciones() const;
 

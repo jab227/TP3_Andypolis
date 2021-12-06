@@ -13,7 +13,7 @@ public:
     //constructor
     //PRE: -
     //POS: se construye un nodo y se guarda el dato
-    Nodo(T d);
+    Nodo(const T &d);
 
     //PRE: -
     //POS: se cambia el dato del nodo
@@ -34,7 +34,7 @@ public:
 
 //Constructor
 template <typename T>
-Nodo<T>::Nodo(T d) {
+Nodo<T>::Nodo(const T &d) {
     dato =  d;
     siguiente = 0;
 }

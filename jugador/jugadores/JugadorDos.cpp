@@ -5,7 +5,7 @@ Jugador_Dos::Jugador_Dos(Almacen *inventario) : Jugador(2, inventario){}
 Jugador_Dos::Jugador_Dos(Almacen *inventario, Lista<Coordenada*>* edificios)
     : Jugador(2, inventario, edificios){}
 
-Jugador_Uno::~Jugador_Uno() {
+Jugador_Dos::~Jugador_Dos() {
 	// Liberar almacen
 	// Liberar lista de coordenadas
 }

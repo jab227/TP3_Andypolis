@@ -40,7 +40,7 @@ void Jugador::mostrar_construidos(const Mapa* mapa) const{
 	}
 }
 
-void Jugador::agregar_ubicacion(const Coordenada* &coordenada) {
+void Jugador::agregar_ubicacion( Coordenada* coordenada) {
 	edificios_->alta_al_final(coordenada);
 }
 

@@ -90,7 +90,8 @@ void Mapa::mostrar_posicion(const Coordenada& coordenada){
 
 bool Mapa::construir_edificio_ubicacion(Edificio* edificio, const Coordenada& coordenada){
 	//Fuera el mapa debemos agregar la coordenada de la lista del jugador? O dentro?
-	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0);
+	std::size_t propietario = 1; //TODO: Corregir.
+	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0, propietario);
 	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio);
 }
 

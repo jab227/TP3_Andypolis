@@ -5,7 +5,8 @@
 
 #include "Nodo.h"
 
-const int NO_ESTA = -1;
+//Esto es suponiendo que la lista arranca en 1, entonces si no esta el elemento, 0 puede ser error
+const int NO_ESTA = 0;
 
 template <typename T>
 class Lista {
@@ -58,11 +59,12 @@ class Lista {
 	// POS: devuelve true si la pila esta vacia, false si no
 	bool vacia() const;
 
-	// PRE: el tipo de dato tiene que poder compararse con el operador =.
+	// PRE: el tipo de dato tiene que poder compararse con el operador ==.
 	// POST: devuelve el indice en que se encuentra el dato ingresado o
 	// NO_ENCONTRADO en caso de no existir el dato
 	int buscar_indice(T d);
 	
+	//WHY: Es usado?
 	int buscar_indice(T* d);
 
 	// Destructor

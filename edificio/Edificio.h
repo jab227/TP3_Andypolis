@@ -20,7 +20,7 @@ private:
 	//TODO: Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
-	std::size_t construidos;
+	std::size_t construidos; // WHY: Es necesario tener la cantidad construida?
 //Metodos:
 public:
 	//PRE: -
@@ -62,7 +62,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve true si los construidos es igual o mayor a los permitidos.
-	bool esta_maxima_capacidad();
+	Resultado_Chequeos esta_maxima_capacidad(const std::size_t &construidos);
 	//PRE -
 	//POST: devuelve el material producido por el edficio en caso de que sea un productor. Devuelve un
 	//material vacio en caso contratrio.

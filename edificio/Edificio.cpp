@@ -81,8 +81,10 @@ Edificio& Edificio::operator=(const Edificio &rhs){
 	return *this;
 }
 
-bool Edificio::esta_maxima_capacidad(){
-	return this->construidos >= this->maximo_permitidos;
+Resultado_Chequeos Edificio::esta_maxima_capacidad(const std::size_t &construidos){
+	Resultado_Chequeos resultado = EXITO;
+	if(construidos >= this->maximo_permitidos) resultado = MAXIMA_CANTIDAD;
+	return resultado;
 }
 
 bool Edificio::operator==(const Edificio &rhs){

@@ -135,13 +135,13 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
         	cout << "Implementar reparar!" << endl;
 			break;
         case COMPRAR_BOMBAS:
-        	this -> jugadores.consulta(this -> jugador_activo) -> obtener_inventario() -> comprar_bombas();
+        	this -> empresa_constructora -> comprar_bombas(this-> jugadores.consulta(jugador_activo));
 			break;
         case CONSULTAR:
-        	this -> empresa_constructora -> mostrar_coordenada();
+        	this -> empresa_constructora -> consultar_coordenada();
 			break;
         case LISTAR_MATERIALES:
-			this -> empresa_constructora -> mostrar_materiales();
+			this -> empresa_constructora -> mostrar_materiales(this -> jugadores.consulta(this -> jugador_activo));
 			break;
         case OBJETIVOS:
         	cout << "Implementar mostrar objetivos!" << endl;
@@ -151,9 +151,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 		//Este sirve tanto para los edificios como para los materiales.
 		//	Edificios -> El jugador tiene una lista de ubicaciones. Con pasarle el inventario le suma el material producido.
 		//	Materiales -> El jugador al moverse por las celdas recoge_material() del transitable con pasarle el inventario le suma el material del suelo.
-		
-        	cout << "Recolecta solo el jugador activo? Sipi, por eso gasta energia" << endl;
-			this -> empresa_constructora -> producir_recursos(this -> jugadores.consulta(this -> jugador_activo) );
+			this -> empresa_constructora -> recolectar_recursos(this -> jugadores.consulta(this -> jugador_activo) );
 			break;
         case MOVERSE:
 			cout << "Implementar moverse!" << endl;

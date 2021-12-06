@@ -80,8 +80,12 @@ void Jugador::usar_lista_materiales( Lista<Material>* materiales){
 	this -> inventario_ -> descontar_lista_materiales(materiales,100);
 }
 
+void Jugador::cobrar_reparacion( Lista<Material>* materiales){
+	this -> inventario_ -> descontar_lista_materiales(materiales,50);
+}
+
 void Jugador::recuperar_lista_materiales( Lista<Material>* materiales){
-	this -> inventario_ -> sumar_lista_materiales(materiales,25);
+	this -> inventario_ -> sumar_lista_materiales(materiales,50);
 }
 
 void Jugador::sumar_lista_materiales( Lista<Material>* materiales){
@@ -125,4 +129,10 @@ std::size_t Jugador::existe_ubicacion( Coordenada coordenada) const{
 
 void Jugador::mostrar_inventario() const{
 	this -> inventario_ -> mostrar_materiales();
+}
+
+void Jugador::recolectar(Mapa* mapa){
+	Lista<Material>* listado = obtener_recursos_producidos(mapa);
+	sumar_lista_materiales(listado);
+	delete listado;
 }

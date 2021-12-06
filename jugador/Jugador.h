@@ -86,6 +86,7 @@ class Jugador {
 	//TODO: Eliminar construidos de edificios.
 	std::size_t cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const;
 
+	void cobrar_reparacion( Lista<Material>* materiales);
 	void usar_lista_materiales( Lista<Material>* materiales);
 	
 	void recuperar_lista_materiales( Lista<Material>* materiales);
@@ -98,6 +99,7 @@ class Jugador {
 	Lista<Material>* obtener_recursos_producidos(Mapa* mapa);
 
 	void mostrar_inventario() const;
+	void recolectar(Mapa* mapa);
 };
 
 #endif /* JUGADOR_JUGADOR_H_ */

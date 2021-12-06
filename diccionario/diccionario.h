@@ -216,7 +216,7 @@ class Diccionario {
 	// Pre: -
 	// Pos: True si existe la clave, False en otro caso.
 	bool existe(const T& clave) {
-		return (search(raiz_, clave) != nullptr);
+		return (buscar(raiz_, clave) != nullptr);
 	};
 };
 

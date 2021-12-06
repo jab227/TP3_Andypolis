@@ -39,7 +39,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
-	void demoler_edificio(Jugador* jugador);
+	void demoler_edificio(Jugador* jugador, Mapa* mapa);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios existentes junto con sus materiales requeridos para
@@ -98,13 +98,13 @@ private:
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
 	//devuelve false
-	std::string pedir_edificio(const Jugador* &jugador);
+	std::string pedir_edificio( Jugador* jugador);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si no existe el edificio, si se llego a la maxima cantidad
 	//permitida del edificio, si no alcanzan los materiales o si no ocurre nada de lo anterior. en este
 	//ultimo caso, edificio se iguala a edificio_ingresado
-	Resultado_Chequeos chequeo_construir(const std::string& edificio_ingresado, const Jugador* &jugador);
+	Resultado_Chequeos chequeo_construir(const std::string& edificio_ingresado,  Jugador* jugador);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,

@@ -28,6 +28,7 @@ bool Empresa_Constructora::cargar_archivos(string ruta_materiales, string ruta_e
 	//TODO: Reemplazable con el ParserUbicacion
 	//Para que no tire error. 
 	//return this -> cargar_ubicaciones(ruta_ubicaiones);
+	return false;
 }
 
 void Empresa_Constructora::mostrar_materiales(){
@@ -142,27 +143,34 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 			if( resultado == EXITO )
 				this -> edificio_construido_confirmado(edificio, coordenada, jugador);
 		}else
-			std::cout << "No se realizo ningun cambio." << std::endl;
+			std::cout << "No se realizó ningún cambio." << std::endl;
 	}
 }
 
-//TODO: Adaptar
-void Empresa_Constructora::demoler_edificio(Jugador* jugador){
+//TODO: Embellecer
+void Empresa_Constructora::demoler_edificio(Jugador* jugador, Mapa* mapa){
 	Coordenada coordenada = Coordenada(0,0);
 	Resultado_Chequeos resultado = NO_EXISTE;
-	bool fin = false;
-	do{
-		resultado = this -> pedir_coordenadas(coordenada);
-		fin = mostrar_mensaje_chequeo(resultado);
-	}while(!fin);
-	//Tengo que avisar si se pudo destruir algo o no?
-	this -> mapa -> demoler_edificio_ubicacion(coordenada);
-	//TODO: Esto va a pasar al jugador. Recuperar materiales
-	//jugador ->  recuperar_lista_materiales();
+	do resultado = this -> pedir_coordenadas(coordenada);
+	while(!mostrar_mensaje_chequeo(resultado));
+	std::size_t indice = jugador -> existe_ubicacion(coordenada);
+	if(indice){ //Chequeo que le pertenece.
+		std::string nombre_edificio = EDIFICIO_VACIO;
+		resultado = this -> mapa -> demoler_edificio_ubicacion(nombre_edificio, coordenada);
+		if(resultado == EXITO){
+			//demoler_edificio_confirmado()
+			Edificio* edificio = Planos::buscar(nombre_edificio);
+			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
+			jugador -> recuperar_lista_materiales(listado_necesario);
+			jugador -> eliminar_ubicacion(coordenada);
+			jugador -> usar_energia(-ENERGIA_DEMOLER);
+			delete listado_necesario;
+		}
+	} 
+	mostrar_mensaje_chequeo( resultado );
 }
 
-std::string Empresa_Constructora::pedir_edificio(const Jugador* &jugador){
-	Edificio* edificio = nullptr;
+std::string Empresa_Constructora::pedir_edificio( Jugador* jugador){
 	bool fin = false;
 	string edificio_ingresado;
 	Resultado_Chequeos chequeo;
@@ -190,7 +198,7 @@ Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenad
 	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_construir(const std::string& edificio_ingresado, const Jugador* &jugador){
+Resultado_Chequeos Empresa_Constructora::chequeo_construir(const std::string& edificio_ingresado, Jugador* jugador){
 	Resultado_Chequeos resultado = EXITO;
 
 	if(edificio_ingresado == SALIR_STR) resultado = SALIR;

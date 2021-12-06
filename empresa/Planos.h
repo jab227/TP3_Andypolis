@@ -24,6 +24,8 @@ public:
 	//POST: se libera la memoria utilizada y el puntero se apunta  nullptr.
 	~Planos();
 
+	// NO esta compilando el static. Referencia indefinida. 
+	// Tendre que adaptarlo si no lo resuelvo.
 	static Edificio* buscar(std::string nombre_edificio);
 	static bool existe(std::string nombre_edificio);
 
@@ -39,7 +41,7 @@ public:
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
 	//construir el edificio solicitado.
-	Lista<Material>* materiales_necesarios(const Edificio* &edificio);
+	Lista<Material>* materiales_necesarios( Edificio* edificio);
 
 	//PRE: edificio es valido
 	//POST: aumenta 1 la cantidad del edificio construido
@@ -53,15 +55,13 @@ public:
 	//POST: devuele si se puede construir, si no existe o se tiene la cantidad maxima construida.
 	Resultado_Chequeos check_construir_edificio(const string &edificio, Edificio*& edif);
 
-	//PRE: -
-	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
-	//por la consola los materiales producidos.
-	Lista<Material>* obtener_recursos_producidos();
-
+//Lo pase al jugador porque es quien sabe las coordenadas donde estan ubicados
+//sus edificios.
+//Lista<Material>* obtener_recursos_producidos()
 	//PRE: -
 	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
 	//por interfaz carga un puntero a Edificio con el edificio de la lista.
-	Resultado_Chequeos permitido_construir(const std::string &nombre_edificio, const Jugador* &jugador, const Mapa* &mapa);
+	Resultado_Chequeos permitido_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa);
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
 	//POST: se agrega el material al final del vector.

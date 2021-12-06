@@ -122,3 +122,7 @@ std::size_t Jugador::existe_ubicacion( Coordenada coordenada) const{
 	}
 	return indice;
 }
+
+void Jugador::mostrar_inventario() const{
+	this -> inventario_ -> mostrar_materiales();
+}

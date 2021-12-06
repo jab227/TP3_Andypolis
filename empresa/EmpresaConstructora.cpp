@@ -31,8 +31,8 @@ bool Empresa_Constructora::cargar_archivos(string ruta_materiales, string ruta_e
 	return false;
 }
 
-void Empresa_Constructora::mostrar_materiales(){
-	this -> almacen -> mostrar_materiales();
+void Empresa_Constructora::mostrar_materiales(Jugador* jugador){
+	jugador -> mostrar_inventario();
 }
 
 void Empresa_Constructora::mostrar_edificios(){

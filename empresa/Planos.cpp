@@ -34,11 +34,10 @@ void Planos::cargar_edificios(string ruta){
 	archivo.close();
 }
 
-//TODO: Agregar a diccionario un metodo para imprimir en formato tabla.
-//o tener un vector con los nombres posibles para las construcciones...
+//TODO: Agregar vector con claves del diccionario para poder recorrerla.
 void Planos::mostrar_edificios(){
-	/*
 	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
+	/*
 	Edificio* consultado = this -> lista_edificios[key];
 		cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
 				    << consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"

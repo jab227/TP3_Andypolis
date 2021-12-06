@@ -48,7 +48,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los materiales disponibles en el stock del almacen
-	void mostrar_materiales();
+	void mostrar_materiales(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestra el mapa de terrenos y el de los edificios/materiales ubicados en mapa

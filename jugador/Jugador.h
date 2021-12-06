@@ -97,6 +97,7 @@ class Jugador {
 	//por la consola los materiales producidos.
 	Lista<Material>* obtener_recursos_producidos(Mapa* mapa);
 
+	void mostrar_inventario() const;
 };
 
 #endif /* JUGADOR_JUGADOR_H_ */

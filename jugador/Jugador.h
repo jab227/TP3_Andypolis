@@ -17,18 +17,17 @@ class Jugador {
 	const std::size_t id_;
 	std::size_t energia_;
 	Almacen* inventario_;
-	Lista<Coordenada*>* edificios_;
+	Coordenada posicion_;
+	Lista<Coordenada> edificios_;
 
        public:
 	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
 	// coordenadas, ya procesado.
-	Jugador(std::size_t id, Almacen* inventario, Lista<Coordenada*>* edificios);
+	Jugador(std::size_t id, const Coordenada& coordenada);
 	// Destructuor
 	virtual ~Jugador() {
 		delete inventario_;
-		delete edificios_;
 		inventario_ = nullptr;
-		edificios_ = nullptr;
 	};
 	// Pre: 
 	// Pos:
@@ -44,7 +43,10 @@ class Jugador {
 	// PRE: -
 	// POST: devuelve el inventario del jugador
 	Almacen* obtener_inventario() const;
-
+	
+	// PRE: -
+	// POST: Devuelve la posicoin del jugador 
+	Coordenada obtener_posicion() const;
 	// PRE: -
 	// POST: si hay energia suficiente, devuelve un numero >= 0
 	// representando la energia que sobra. Si no alcanza devuelve un numero
@@ -58,11 +60,11 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-	void agregar_ubicacion(Coordenada* coordenada);
+	void agregar_ubicacion(const Coordenada& coordenada);
 
 	std::size_t cantidad_ubicaciones() const;
 
-	Coordenada* obtener_ubicacion(const std::size_t indice) const;
+	Coordenada obtener_ubicacion(const std::size_t indice) const;
 
 	void eliminar_ubicacion(const Coordenada& coordenada);
 

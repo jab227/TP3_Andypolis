@@ -94,10 +94,10 @@ Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edifici
 	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
 }
 
-string Mapa::demoler_edificio_ubicacion(const Coordenada& coordenada){
-	//Fuera el mapa debemos eliminar la coordenada de la lista del jugador? O dentro?
-	std::string edificio_demolido = (this -> terreno[coordenada.x()][coordenada.y()]) -> demoler_edificio();
-	return edificio_demolido;
+Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada){
+	edificio = (this -> terreno[coordenada.x()][coordenada.y()]) -> obtener_contenido();
+	return (this -> terreno[coordenada.x()][coordenada.y()]) -> demoler_edificio();
+
 }
 
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.

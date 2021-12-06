@@ -47,12 +47,11 @@ void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
 	jugador -> mostrar_construidos(this -> mapa);
 }
 
-void Empresa_Constructora::mostrar_coordenada(){
+void Empresa_Constructora::consultar_coordenada(){
 	Coordenada coordenada = Coordenada(0,0);
-	if(pedir_coordenadas(coordenada)){
-		this -> mapa -> mostrar_posicion(coordenada);
-	}
-
+	Resultado_Chequeos resultado = pedir_coordenadas(coordenada);
+	if(resultado == EXITO) this -> mapa -> saludar_coordenada(coordenada);
+	mostrar_mensaje_chequeo(resultado);
 }
 
 void Empresa_Constructora::guardar_archivos(string ruta_materiales, string ruta_ubicaciones){
@@ -110,12 +109,11 @@ void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordena
 		this -> mapa -> poner_material_ubicacion(contenido, coordenada);
 
 }
-//WHY: Responsabilidad del jugador?
-void Empresa_Constructora::producir_recursos(Jugador * jugador){
-	Lista<Material>* listado = jugador -> obtener_recursos_producidos(this-> mapa);
-	jugador -> sumar_lista_materiales(listado);
-	jugador -> usar_energia(-ENERGIA_RECOLECTAR);
-	delete listado;
+
+void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
+	jugador -> recolectar(this -> mapa);
+	jugador -> usar_energia(ENERGIA_RECOLECTAR);
+	jugador -> mostrar_inventario();
 }
 
 //TODO: Adaptar a las bolsitas de recursos.
@@ -163,7 +161,7 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 			jugador -> recuperar_lista_materiales(listado_necesario);
 			jugador -> eliminar_ubicacion(coordenada);
-			jugador -> usar_energia(-ENERGIA_DEMOLER);
+			jugador -> usar_energia(ENERGIA_DEMOLER);
 			delete listado_necesario;
 		}
 	} 
@@ -272,8 +270,31 @@ void Empresa_Constructora::edificio_construido_confirmado(const std::string &nom
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 		jugador -> usar_lista_materiales(listado_necesario);
 		delete listado_necesario;
-		jugador -> usar_energia(-ENERGIA_CONSTRUIR);
+		jugador -> usar_energia(ENERGIA_CONSTRUIR);
 		Coordenada* ptr_coordenada = new Coordenada(coordenada);
 		jugador -> agregar_ubicacion(ptr_coordenada);
 	}
+}
+
+
+void Empresa_Constructora::reparar_edificio(Jugador* jugador){
+	Coordenada coordenada = Coordenada(0,0);
+	Resultado_Chequeos resultado = NO_EXISTE;
+	do resultado = this -> pedir_coordenadas(coordenada);
+	while(!mostrar_mensaje_chequeo(resultado));
+	std::size_t indice = jugador -> existe_ubicacion(coordenada);
+	if(indice){ //Chequeo que le pertenece.
+		std::string nombre_edificio = EDIFICIO_VACIO;
+		resultado = this -> mapa -> reparar_edificio_ubicacion(nombre_edificio, coordenada);
+		if(resultado == EXITO){
+			//reparar_edificio_confirmado()
+			Edificio* edificio = Planos::buscar(nombre_edificio);
+			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
+			jugador -> cobrar_reparacion(listado_necesario);
+			jugador -> usar_energia(ENERGIA_REPARAR);
+			delete listado_necesario;
+		}
+	} 
+	mostrar_mensaje_chequeo( resultado );
+}
 }

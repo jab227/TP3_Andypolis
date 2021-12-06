@@ -56,7 +56,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
-	void mostrar_coordenada();
+	void consultar_coordenada();
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
@@ -68,7 +68,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se suman al almacen los recursos producidos por los edificios
-	void producir_recursos(Jugador* jugador);
+	void recolectar_recursos(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se generan materiales aleatorios en caminos aleatorios del mapa
@@ -78,6 +78,11 @@ public:
 	//POST: se vacian los materiales del mapa
 	void vaciar_materiales();
 
+	//Metodos que faltan.
+	void reparar_edificio(Jugador* jugador);
+	void atacar_edificio();
+	void comprar_bombas();
+	void ver_objetivos();
 
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.

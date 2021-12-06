@@ -11,16 +11,27 @@ Planos::Planos(string ruta){
 }
 
 Planos::~Planos() {
+<<<<<<< HEAD
 	//Eliminar el diccionario y liberar la memoria de los nodos.
 	//WHY: Como sabe cuando liberar el dato y cuando no?
 }
 
 //PARSER: Reemplazable con el Parser_Ubicacion.
+=======
+	delete 
+}
+
+//PARSER: Reemplazable con el Parser.
+>>>>>>> 6aaf09fc043ba0021e16841568d0c8eb5302958b
 void Planos::agregar_edificio(Edificio* edificio){
 	this -> lista_edificios.insertar(edificio -> obtener_nombre(), edificio);
 }
 
+<<<<<<< HEAD
 //PARSER: Reemplazable con el Parser_Ubicacion.
+=======
+//PARSER: Reemplazable con el Parser.
+>>>>>>> 6aaf09fc043ba0021e16841568d0c8eb5302958b
 void Planos::cargar_edificios(string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){

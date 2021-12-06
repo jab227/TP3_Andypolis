@@ -33,7 +33,11 @@ public:
 	//PRE: -
 	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
 	//por interfaz carga un puntero a Edificio con el edificio de la lista.
+<<<<<<< HEAD
 	bool es_edificio_valido(const string &nombre_edificio, Edificio*& edificio);
+=======
+	bool es_edificio_valido(string nombre_edificio, Edificio*& edificio);
+>>>>>>> 6aaf09fc043ba0021e16841568d0c8eb5302958b
 
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para

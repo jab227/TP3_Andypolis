@@ -78,10 +78,12 @@ public:
 	//POST: se vacian los materiales del mapa
 	void vaciar_materiales();
 
-	//Metodos que faltan.
 	void reparar_edificio(Jugador* jugador);
+
+	void comprar_bombas(Jugador* jugador);
+	
+	//Metodos que faltan.
 	void atacar_edificio();
-	void comprar_bombas();
 	void ver_objetivos();
 
 private:
@@ -134,6 +136,11 @@ private:
 	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);
 
 	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, Coordenada coordenada);
+	
+	Resultado_Chequeos pedir_bombas(std::size_t &bombas);
+	
+	Resultado_Chequeos chequeo_bombas(string bombas_ingresadas, std::size_t &bombas);
+
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

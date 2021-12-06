@@ -111,6 +111,7 @@ void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordena
 }
 
 void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
+	//TODO: Chequear que tenga construidos.
 	jugador -> recolectar(this -> mapa);
 	jugador -> usar_energia(ENERGIA_RECOLECTAR);
 	jugador -> mostrar_inventario();
@@ -230,7 +231,7 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 			break;
 		case NO_MATERIALES:
 			std::cout << "No hay suficientes materiales." << std::endl;
-			//mostrar_materiales_insuficientes(edificio);
+			//TODO: mostrar_materiales_insuficientes(edificio);
 			break;
 		case FUERA_RANGO:
 			std::cout <<  "La ubicacion ingresada excede el rango del mapa." << std::endl;
@@ -244,6 +245,9 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 			break;
 		case CASILLERO_OCUPADO:
 			cout <<  "Esta ubicacion esta ocupada por otro edificio." << endl;
+			break;
+		case NO_REPARABLE:
+			cout <<  "El edificio no necesita reparación." << endl;
 			break;
 		default:
 			break;
@@ -297,4 +301,29 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 	} 
 	mostrar_mensaje_chequeo( resultado );
 }
+
+
+
+void Empresa_Constructora::comprar_bombas(Jugador* jugador){
+	std::size_t cantidad_bombas = 0;
+	mostrar_mensaje_chequeo(pedir_bombas(cantidad_bombas));
+	if(mostrar_mensaje_chequeo(jugador -> obtener_inventario() -> comprar_bombas(cantidad_bombas))){
+		jugador -> usar_energia(ENERGIA_COMPRAR_BOMBAS);
+	}
+}
+
+Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
+	std::string cantidad_ingresada;
+	std::cout << "¿Cuantas bombas desea comprar? (Precio: "+ COSTO_BOMBAS + "andycoins): ";
+	getline(cin, cantidad_ingresada);
+	
+	return chequeo_bombas(cantidad_ingresada, bombas);
+}
+
+Resultado_Chequeos Empresa_Constructora::chequeo_bombas(string bombas_ingresadas, std::size_t &bombas){
+	Resultado_Chequeos resultado = EXITO;
+	if(bombas_ingresadas == SALIR_STR) resultado = SALIR;
+	else if(!es_numero(bombas_ingresadas)) resultado = NO_EXISTE;
+	else bombas = stoul(bombas_ingresadas);
+	return resultado;
 }

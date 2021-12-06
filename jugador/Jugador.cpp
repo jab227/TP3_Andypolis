@@ -54,22 +54,18 @@ Coordenada* Jugador::obtener_ubicacion(const std::size_t indice) const {
 }
 
 void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
-	for (std::size_t i = 1; i < edificios_->consulta_largo() + 1; ++i) {
-		Coordenada* tmp = edificios_->consulta(i);
-		if (*tmp == coordenada) {
-			delete tmp;
-			tmp = nullptr;
-			edificios_->baja(i);
-		}
+	std::size_t indice = existe_ubicacion(coordenada);
+	if(indice){
+		edificios_->baja(indice);
 	}
 }
 
-Resultado_Chequeos Jugador::tiene_materiales(const Lista<Material>* &materiales) const{
+Resultado_Chequeos Jugador::tiene_materiales( Lista<Material>* materiales) const{
 	//Hacer sobrecarga.
 	return this -> inventario_ -> hay_lista_materiales(materiales);
 }
 
-std::size_t Jugador::cantidad_edificios(std::string nombre_edificio, const Mapa*& mapa) const{
+std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const{
 	std::size_t construidos;
 	for(std::size_t i = 1; i < edificios_ -> consulta_largo() + 1; i++){
 		Coordenada* ubicacion = this -> obtener_ubicacion(i);
@@ -80,15 +76,19 @@ std::size_t Jugador::cantidad_edificios(std::string nombre_edificio, const Mapa*
 }
 
 //TODO: Constantes
-void Jugador::usar_lista_materiales(const Lista<Material>* &materiales){
+void Jugador::usar_lista_materiales( Lista<Material>* materiales){
 	this -> inventario_ -> descontar_lista_materiales(materiales,100);
 }
 
-void Jugador::recuperar_lista_materiales(const Lista<Material>* &materiales){
+void Jugador::recuperar_lista_materiales( Lista<Material>* materiales){
 	this -> inventario_ -> sumar_lista_materiales(materiales,25);
 }
 
-Lista<Material>* Jugador::obtener_recursos_producidos(const Mapa* &mapa){
+void Jugador::sumar_lista_materiales( Lista<Material>* materiales){
+	this -> inventario_ -> sumar_lista_materiales(materiales,100);
+}
+
+Lista<Material>* Jugador::obtener_recursos_producidos( Mapa* mapa){
 	std::string nombre_edificio;
 	Edificio* edificio;
 	Lista<Material>* listado = new Lista<Material>;
@@ -109,4 +109,16 @@ Lista<Material>* Jugador::obtener_recursos_producidos(const Mapa* &mapa){
 			listado -> alta(material_producido, ++agregados);
 	}
 	return listado;
+}
+
+std::size_t Jugador::existe_ubicacion( Coordenada coordenada) const{
+	std::size_t i = 1;
+	std::size_t indice = 0;
+	Coordenada* tmp;
+	while(i <= edificios_ -> consulta_largo() || !indice){
+		tmp = obtener_ubicacion(i);
+		if( coordenada == *tmp) indice = i;
+		else i++;
+	}
+	return indice;
 }

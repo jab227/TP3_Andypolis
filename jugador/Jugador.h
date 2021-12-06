@@ -68,6 +68,9 @@ class Jugador {
 
 	Coordenada* obtener_ubicacion(const std::size_t indice) const;
 
+	//Devuelve 0 si no encontro, devuelve el indice si lo encontro.
+	std::size_t existe_ubicacion( Coordenada coordenada) const;
+
 	//void eliminar_ubicacion(Coordenada);
 
 	bool es_energia_maxima(const std::size_t &energia_recuperada) const;
@@ -78,20 +81,21 @@ class Jugador {
 
 	void eliminar_ubicacion(const Coordenada& coordenada);
 
-	Resultado_Chequeos tiene_materiales(const Lista<Material>* &materiales) const;
+	Resultado_Chequeos tiene_materiales( Lista<Material>* materiales) const;
 	
 	//TODO: Eliminar construidos de edificios.
-	std::size_t Jugador::cantidad_edificios(std::string nombre_edificio, const Mapa*& mapa) const;
+	std::size_t cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const;
 
-	void usar_lista_materiales(const Lista<Material>* &materiales);
+	void usar_lista_materiales( Lista<Material>* materiales);
 	
-	void recuperar_lista_materiales(const Lista<Material>* &materiales);
-
+	void recuperar_lista_materiales( Lista<Material>* materiales);
+	
+	void sumar_lista_materiales( Lista<Material>* materiales);
 	
 	//PRE: -
 	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
 	//por la consola los materiales producidos.
-	Lista<Material>* obtener_recursos_producidos(const Mapa* &mapa);
+	Lista<Material>* obtener_recursos_producidos(Mapa* mapa);
 
 };
 

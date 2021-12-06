@@ -88,10 +88,10 @@ void Mapa::mostrar_posicion(const Coordenada& coordenada){
 	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
 }
 
-bool Mapa::construir_edificio_ubicacion(Edificio* edificio, const Coordenada& coordenada){
-	//Fuera el mapa debemos agregar la coordenada de la lista del jugador? O dentro?
-	edificio = traductor_edificios(edificio->obtener_nombre(), 0, 0, 0, 0);
-	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio);
+Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edificio, const Coordenada& coordenada){
+	//TODO: reemplazar por el diccionario o adaptar traductor al diccionario?
+	Edificio* edificio_mapa = traductor_edificios(edificio, 0, 0, 0, 0);
+	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
 }
 
 string Mapa::demoler_edificio_ubicacion(const Coordenada& coordenada){

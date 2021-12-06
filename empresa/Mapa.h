@@ -48,7 +48,7 @@ public:
 
 	//PRE: el edificio y la posicion deben ser validos y el casillero estar vacio
 	//POST: se construye el edificio en la posicion ingresada
-	bool construir_edificio_ubicacion(Edificio* edificio, const Coordenada& coordenada);
+	Resultado_Chequeos construir_edificio_ubicacion(const std::string & edificio, const Coordenada& coordenada);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
 	//POST: se elimina el edificio de esa posicion y se devuelve el edificio demolido
@@ -73,7 +73,7 @@ public:
 	//estan fuera de rango, si el casillero no puede contener materiales, si esta libre o si no ocurre
 	//nada de lo anterior
 	Resultado_Chequeos chequeo_sacar_material(const Coordenada& coordenada);
-
+//WHY: Se usa?
 	//PRE: la posicion debe ser valida
 	//POST: se devuelve el contenido en la ubicacion ingresada o CONTENIDO_VACIO si el casillero no esta
 	//ocupado
@@ -88,6 +88,7 @@ public:
 	//POST: se limpia todo el mapa de materiales
 	void vaciar_materiales();
 private:
+//WHY: Se usa?
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero
 	//POST: se agregan las coordenadas a la lista de coordenadas del edificio correspondiente. si no existe aun esa lista,
 	//se la crea y se agrega tambien el nombre del edificio en la lista de nombres

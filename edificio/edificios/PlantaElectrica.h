@@ -12,7 +12,7 @@ public:
 	//PRE: -
 	//POST: se construye una planta electrica con los datos ingresados
  
-	Planta_Electrica(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario);
+	Planta_Electrica(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
  
 
 	//PRE: -

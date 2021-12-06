@@ -11,7 +11,7 @@ public:
 
 	//PRE: -
 	//POST: se construye una escuela con los datos ingresados
-	Escuela(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario);
+	Escuela(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
 	//PRE: -
 	//POST: imprime un saludo por terminal

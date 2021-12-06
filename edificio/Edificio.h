@@ -3,105 +3,112 @@
 
 #include "../material/Material.h"
 
-
 const std::size_t CANT_MATERIALES_EDIFICIOS = 3, NINGUNO = 0;
 const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
 const string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const string EDIFICIO_VACIO = "";
-enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
-	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR};
-
+enum Resultado_Chequeos {
+	EXITO,
+	NO_EXISTE,
+	MAXIMA_CANTIDAD,
+	NO_MATERIALES,
+	FUERA_RANGO,
+	CASILLERO_NO_CONSTRUIBLE,
+	CASILLERO_NO_TRANSITABLE,
+	CASILLERO_OCUPADO,
+	CASILLERO_LIBRE,
+	SALIR
+};
 
 class Edificio {
-//Atributos
-private:
+	// Atributos
+       private:
 	string nombre;
-	//Cambiar a lista/vector de materiales
+	// Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
 	std::size_t construidos;
 	std::size_t propietario;
-//Metodos:
-public:
-	//PRE: -
-	//POST: crea un edificio con los nombre vacio y datos en 0.
+	// Metodos:
+       public:
+	// PRE: -
+	// POST: crea un edificio con los nombre vacio y datos en 0.
 	Edificio();
 
-	//PRE: -
-	//POST: crea un edificio con los atributos inicializados.
-	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario);
+	// PRE: -
+	// POST: crea un edificio con los atributos inicializados.
+	Edificio(std::string nombre, std::size_t piedra, std::size_t madera,
+		 std::size_t metal, std::size_t maximo_permitidos);
 
-	//PRE: -
-	//POST: Sobreescribiendo el operador igual.
+	// PRE: -
+	// POST: Sobreescribiendo el operador igual.
 	Edificio& operator=(const Edificio& rhs);
 
-	//PRE: -
-	//POST: ejecuta el destructor
+	// PRE: -
+	// POST: ejecuta el destructor
 	virtual ~Edificio() = 0;
 
-	//PRE: -
-	//POST: devuelve el nombre del edificio.
+	// PRE: -
+	// POST: devuelve el nombre del edificio.
 	std::string obtener_nombre() const;
 
-	//PRE: -
-	//POST: devuelve la cantidad del material ingresado requerido para construirlo. En caso de que
-	//no se requiera ese material, deuelve 0.
+	// PRE: -
+	// POST: devuelve la cantidad del material ingresado requerido para
+	// construirlo. En caso de que no se requiera ese material, deuelve 0.
 	std::size_t obtener_cant_material(string material) const;
 
-	//PRE: -
-	//PORT: devuleve la cantidad de edificios maximos construidos.
+	// PRE: -
+	// PORT: devuleve la cantidad de edificios maximos construidos.
 	std::size_t obtener_max_permitidos();
 
-	//PRE: -
-	//POST: imprime un mensaje por consola
+	// PRE: -
+	// POST: imprime un mensaje por consola
 	virtual void saludar() = 0;
 
-	//PRE: -
-	//POST: devuelve si el edificio es vacio
+	// PRE: -
+	// POST: devuelve si el edificio es vacio
 	bool vacio();
 
-	//PRE: -
-	//POST: devuelve true si los construidos es igual o mayor a los permitidos.
+	// PRE: -
+	// POST: devuelve true si los construidos es igual o mayor a los
+	// permitidos.
 	bool esta_maxima_capacidad();
-	//PRE -
-	//POST: devuelve el material producido por el edficio en caso de que sea un productor. Devuelve un
-	//material vacio en caso contratrio.
+	// PRE -
+	// POST: devuelve el material producido por el edficio en caso de que
+	// sea un productor. Devuelve un material vacio en caso contratrio.
 	virtual Material producir_material() = 0;
 
-	//PRE -
-	//POST: devuelve lo que produce en str.
+	// PRE -
+	// POST: devuelve lo que produce en str.
 	virtual string info_producto() = 0;
 
-	//PRE: -
-	//POST: se modifica el valor de edificios construidos a n
+	// PRE: -
+	// POST: se modifica el valor de edificios construidos a n
 	void modificar_construidos(std::size_t n);
 
-	//PRE: -
-	//POST: Aumenta en 1 el valor de edificios construidos.
+	// PRE: -
+	// POST: Aumenta en 1 el valor de edificios construidos.
 	void aumentar_construidos();
-	
-	//PRE: -
-	//POST: Disminuye en 1 el valor de edificios construidos.
+
+	// PRE: -
+	// POST: Disminuye en 1 el valor de edificios construidos.
 	void disminuir_construidos();
 
-	//PRE: -
-	//POST: devuelve la cantidad de edificios construidos
+	// PRE: -
+	// POST: devuelve la cantidad de edificios construidos
 	std::size_t obtener_construidos();
-	
-	//PRE: -
-	//POST: devuelve el propietario del edificio o NINGUNO
+
+	// PRE: -
+	// POST: devuelve el propietario del edificio o NINGUNO
 	std::size_t obtener_propietario();
 
+	// PRE: -
+	// POST: Devuelve true si el nombre es el mimso.
+	bool operator==(const Edificio& rhs);
 
-	//PRE: -
-	//POST: Devuelve true si el nombre es el mimso.
-	bool operator==(const Edificio &rhs);
-	
-	//PRE: -
-	//POST: Devuelve true si el nombre es el mimso.
-	bool operator!=(const Edificio &rhs);
-
-
+	// PRE: -
+	// POST: Devuelve true si el nombre es el mimso.
+	bool operator!=(const Edificio& rhs);
 };
 
 #endif /* EDIFICIO_H_ */

@@ -153,7 +153,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 		//	Materiales -> El jugador al moverse por las celdas recoge_material() del transitable con pasarle el inventario le suma el material del suelo.
 		
         	cout << "Recolecta solo el jugador activo? Sipi, por eso gasta energia" << endl;
-			this -> empresa_constructora -> producir_recursos();
+			this -> empresa_constructora -> producir_recursos(this -> jugadores.consulta(this -> jugador_activo) );
 			break;
         case MOVERSE:
 			cout << "Implementar moverse!" << endl;

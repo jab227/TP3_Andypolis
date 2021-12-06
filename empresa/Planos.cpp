@@ -11,7 +11,8 @@ Planos::Planos(string ruta){
 }
 
 Planos::~Planos() {
-	delete 
+	//Eliminar el diccionario y liberar la memoria de los nodos.
+	//WHY: Como sabe cuando liberar el dato y cuando no?
 }
 
 //PARSER: Reemplazable con el Parser_Ubicacion.
@@ -34,7 +35,6 @@ void Planos::cargar_edificios(string ruta){
 	archivo.close();
 }
 
-//PRINTER: Reemplazable con el Printer
 void Planos::mostrar_edificios(){
 	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
 	Edificio* consultado;
@@ -51,16 +51,15 @@ void Planos::mostrar_edificios(){
 }
 
 
-string Planos::material_producido(Edificio* edificio){
+std::string Planos::material_producido( Edificio* edificio){
 	return edificio -> info_producto();
 }
 
-bool Planos::es_edificio_valido(string nombre_edificio, Edificio*& edificio){
+bool Planos::es_edificio_valido(const string &nombre_edificio, Edificio*& edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
-	//Provisorio. //Liberar?
-	//TODO: Corregir
-	edificio = traductor_edificios(nombre_edificio,0,0,0,0,0);
+	//Provisorio.  
+	edificio = traductor_edificios(nombre_edificio,0,0,0,0);
 	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
 		if(*(this -> lista_edificios.consulta(i)) == *edificio){
 			*edificio =*(this -> lista_edificios.consulta(i));
@@ -71,7 +70,7 @@ bool Planos::es_edificio_valido(string nombre_edificio, Edificio*& edificio){
 	return encontrado;
 }
 
-Lista<Material>* Planos::materiales_necesarios(Edificio* edificio){
+Lista<Material>* Planos::materiales_necesarios(const Edificio* &edificio){
 	Lista<Material>* lista_materiales = new Lista<Material>;
 	//Chequear que no haya roto al cambiar alta() por alta_al_final().
 	for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
@@ -79,7 +78,7 @@ Lista<Material>* Planos::materiales_necesarios(Edificio* edificio){
 	return lista_materiales;
 }
 
-void Planos::aumentar_construidos_edificio(Edificio* edificio){
+void Planos::aumentar_construidos_edificio(const Edificio* &edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
 	Edificio* buscado;
@@ -93,7 +92,7 @@ void Planos::aumentar_construidos_edificio(Edificio* edificio){
 	}
 }
 
-void Planos::disminuir_construidos_edificio(string edificio){
+void Planos::disminuir_construidos_edificio(const string &edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
 	Edificio* buscado;
@@ -107,7 +106,7 @@ void Planos::disminuir_construidos_edificio(string edificio){
 	}
 }
 
-Resultado_Chequeos Planos::check_construir_edificio(string edificio, Edificio*& edif){
+Resultado_Chequeos Planos::check_construir_edificio(const string &edificio, Edificio*& edif){
 	Resultado_Chequeos resultado = EXITO;
 	if(!this -> es_edificio_valido(edificio, edif))
 		resultado = NO_EXISTE;

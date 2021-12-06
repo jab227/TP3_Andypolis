@@ -65,12 +65,11 @@ bool Empresa_Constructora::cargar_ubicaciones(string ruta){
 		string lectura;
 		std::size_t cant_agregados = 0;
 		Coordenada coordenada = Coordenada(0,0);
-		size_t propietario;
-
+		
 		string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
-			nuevo_contenido = procesar_ubicacion(lectura, coordenada, propietario);
-			sumar_contenido(nuevo_contenido, coordenada, propietario);
+			nuevo_contenido = procesar_ubicacion(lectura, coordenada);
+			sumar_contenido(nuevo_contenido, coordenada);
 			cant_agregados++;
 			existe = true;
 		}
@@ -98,7 +97,7 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordenada, std::size_t propietario){
+void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordenada){
 	Edificio* edif = nullptr;
 	if(this -> planos -> es_edificio_valido(contenido,edif)){
 		this -> mapa -> construir_edificio_ubicacion(edif, coordenada);

@@ -7,12 +7,12 @@ const string NOMBRE = "planta electrica";
 const string NOMBRE_MATERIAL_PRODUCIDO = "energia";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 15;
 
-Planta_Electrica::Planta_Electrica(std::size_t propietario) : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO), propietario){
+Planta_Electrica::Planta_Electrica() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
 }
 
  
-Planta_Electrica::Planta_Electrica(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario):
-		Productor(NOMBRE, piedra, madera, metal, maximo_permitidos, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO), propietario){
+Planta_Electrica::Planta_Electrica(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos):
+		Productor(NOMBRE, piedra, madera, metal, maximo_permitidos, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
  
 }
 

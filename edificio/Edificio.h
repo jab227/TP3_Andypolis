@@ -21,7 +21,6 @@ private:
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
 	std::size_t construidos;
-	std::size_t propietario;
 //Metodos:
 public:
 	//PRE: -
@@ -30,7 +29,7 @@ public:
 
 	//PRE: -
 	//POST: crea un edificio con los atributos inicializados.
-	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t propietario);
+	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
 	//PRE: -
 	//POST: Sobreescribiendo el operador igual.
@@ -89,11 +88,6 @@ public:
 	//POST: devuelve la cantidad de edificios construidos
 	std::size_t obtener_construidos();
 	
-	//PRE: -
-	//POST: devuelve el propietario del edificio o NINGUNO
-	std::size_t obtener_propietario();
-
-
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.
 	bool operator==(const Edificio &rhs);

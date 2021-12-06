@@ -92,7 +92,7 @@ private:
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
  
-	void sumar_contenido(string contenido,Coordenada coordenada, std::size_t propietario);
+	void sumar_contenido(string contenido,Coordenada coordenada);
  
 
 	//PRE: -

@@ -33,24 +33,24 @@ public:
 	//PRE: -
 	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
 	//por interfaz carga un puntero a Edificio con el edificio de la lista.
-	bool es_edificio_valido(string nombre_edificio, Edificio*& edificio);
+	bool es_edificio_valido(const string &nombre_edificio, Edificio*& edificio);
 
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
 	//construir el edificio solicitado.
-	Lista<Material>* materiales_necesarios(Edificio* edificio);
+	Lista<Material>* materiales_necesarios(const Edificio* &edificio);
 
 	//PRE: edificio es valido
 	//POST: aumenta 1 la cantidad del edificio construido
-	void aumentar_construidos_edificio(Edificio* edificio);
+	void aumentar_construidos_edificio(const Edificio* &edificio);
 
 	//PRE: edificio es valido
 	//POST: disminuye 1 la cantidad del edificio construido
-	void disminuir_construidos_edificio(string edificio);
+	void disminuir_construidos_edificio(const string &edificio);
 
 	//PRE: edificio es valido
 	//POST: devuele si se puede construir, si no existe o se tiene la cantidad maxima construida.
-	Resultado_Chequeos check_construir_edificio(string edificio, Edificio*& edif);
+	Resultado_Chequeos check_construir_edificio(const string &edificio, Edificio*& edif);
 
 	//PRE: -
 	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
@@ -63,7 +63,7 @@ private:
 
 	//PRE: edificio tiene que ser distinto de nullptr
 	//POST: devuelve en un string que cantidad y de que material produce el edificio o "ninguno".
-	string material_producido(Edificio* edificio);
+	string material_producido( Edificio* edificio);
 
 	void mostrar_materiales_producidos(Lista<Material>* listado);
 };

@@ -1,4 +1,5 @@
 #include "Jugador.h"
+#include "../empresa/Planos.h"
 
 Jugador::Jugador(std::size_t id, Almacen *inventario, Lista<Coordenada*>* edificios)
     : id_(id), energia_(0), inventario_(inventario), edificios_(edificios){}
@@ -61,4 +62,51 @@ void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 			edificios_->baja(i);
 		}
 	}
+}
+
+Resultado_Chequeos Jugador::tiene_materiales(const Lista<Material>* &materiales) const{
+	//Hacer sobrecarga.
+	return this -> inventario_ -> hay_lista_materiales(materiales);
+}
+
+std::size_t Jugador::cantidad_edificios(std::string nombre_edificio, const Mapa*& mapa) const{
+	std::size_t construidos;
+	for(std::size_t i = 1; i < edificios_ -> consulta_largo() + 1; i++){
+		Coordenada* ubicacion = this -> obtener_ubicacion(i);
+		std::string edificio = mapa -> obtener_contenido_ubicacion( *ubicacion );
+		if(edificio == nombre_edificio) construidos++;
+	}
+	return construidos;
+}
+
+//TODO: Constantes
+void Jugador::usar_lista_materiales(const Lista<Material>* &materiales){
+	this -> inventario_ -> descontar_lista_materiales(materiales,100);
+}
+
+void Jugador::recuperar_lista_materiales(const Lista<Material>* &materiales){
+	this -> inventario_ -> sumar_lista_materiales(materiales,25);
+}
+
+Lista<Material>* Jugador::obtener_recursos_producidos(const Mapa* &mapa){
+	std::string nombre_edificio;
+	Edificio* edificio;
+	Lista<Material>* listado = new Lista<Material>;
+	Material material_producido;
+	std::size_t agregados = 0;
+	Coordenada* coordenada;
+
+	for(std::size_t i = 1; i <= this -> edificios_->consulta_largo(); i++){
+		coordenada = obtener_ubicacion(i);
+		//No necesito chequear si esta construido.
+		nombre_edificio = mapa -> obtener_contenido_ubicacion(*coordenada);
+		edificio = Planos::buscar(nombre_edificio);
+		material_producido = edificio -> producir_material();
+		//Si no tengo construidos, el material que se sume va a ser 0.
+		material_producido.cambiar_cantidad( material_producido.obtener_cantidad() * cantidad_edificios(nombre_edificio,mapa) );
+		//TODO: Comparador de Material.
+		if(material_producido.obtener_nombre() != "ninguno") //provisorio.
+			listado -> alta(material_producido, ++agregados);
+	}
+	return listado;
 }

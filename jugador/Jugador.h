@@ -78,6 +78,21 @@ class Jugador {
 
 	void eliminar_ubicacion(const Coordenada& coordenada);
 
+	Resultado_Chequeos tiene_materiales(const Lista<Material>* &materiales) const;
+	
+	//TODO: Eliminar construidos de edificios.
+	std::size_t Jugador::cantidad_edificios(std::string nombre_edificio, const Mapa*& mapa) const;
+
+	void usar_lista_materiales(const Lista<Material>* &materiales);
+	
+	void recuperar_lista_materiales(const Lista<Material>* &materiales);
+
+	
+	//PRE: -
+	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
+	//por la consola los materiales producidos.
+	Lista<Material>* obtener_recursos_producidos(const Mapa* &mapa);
+
 };
 
 #endif /* JUGADOR_JUGADOR_H_ */

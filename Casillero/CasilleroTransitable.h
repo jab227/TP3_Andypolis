@@ -40,15 +40,14 @@ public:
 
 	//PRE: -
 	//POST: devuelve el nombre del material contenido o MATERIAL_VACIO.
-	void obtener_contenido(Edificio*& edificio) const override;
-	void obtener_contenido(Material*& material) const override;
+	std::string obtener_contenido() const override;
 	
 	//PRE: -
 	//POST:
 	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//Agregar demoler_edificio en inacc y transitables.
-	std::string demoler_edificio();
+	Resultado_Chequeos demoler_edificio();
 
 	//PRE: -
 	//POST: -

@@ -22,7 +22,7 @@ public:
 	//PRE: -
 	//POST: se quita al edificio del casillero y lo devuelve, ahora esta vacio. si el
 	//casillero ya estaba vacio, devuelve nullptr.
-	std::string demoler_edificio();
+	Resultado_Chequeos demoler_edificio();
 
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado
@@ -39,11 +39,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
-	void obtener_contenido(Edificio*& edificio) const override;
-	
-	//PRE: -
-	//POST: devuelve nullpointer
-	void obtener_contenido(Material*& material) const override;
+	std::string obtener_contenido() const override;
 
 	//PRE: -
 	//POST: SE USA??

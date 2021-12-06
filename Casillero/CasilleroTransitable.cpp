@@ -38,17 +38,18 @@ void Casillero_Transitable::saludar() const{
 		cout << "No tengo ningun material en mi." << endl;
 }
 
-void Casillero_Transitable::obtener_contenido(Material*& material) const{
+std::string Casillero_Transitable::obtener_contenido() const{ 
+	std::string material = MATERIAL_VACIO;
 	if(this -> esta_ocupado())
-		material = this -> material;
-}
+		material = this -> material -> obtener_nombre();
 
-void Casillero_Transitable::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr; }
+	return material;
+ }
 
 
 Edificio* Casillero_Transitable::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
-//	Edificio* edificio = nullptr;
-//	return edificio;
+	Edificio* edificio = nullptr;
+	return edificio;
 }
 
 Resultado_Chequeos Casillero_Transitable::construir_edificio(Edificio* edificio){
@@ -62,8 +63,8 @@ bool Casillero_Transitable::es_casillero_transitable(){
 }
 
 //Agregar demoler_edificio en inacc y transitables.
-std::string Casillero_Transitable::demoler_edificio(){
-	return "";
+Resultado_Chequeos Casillero_Transitable::demoler_edificio(){
+	return CASILLERO_NO_CONSTRUIBLE;
 }
 
 void Casillero_Transitable::recoger_material(Almacen* inventario){

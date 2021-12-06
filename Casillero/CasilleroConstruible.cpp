@@ -21,14 +21,14 @@ Resultado_Chequeos Casillero_Construible::construir_edificio(Edificio* edificio)
 	return resultado;
 }
 
-std::string Casillero_Construible::demoler_edificio(){
-	std::string edificio = this -> edificio_ -> obtener_nombre();
+Resultado_Chequeos Casillero_Construible::demoler_edificio(){
+	// Reveer.
+	Resultado_Chequeos resultado = SALIR;
 	if(this -> esta_ocupado()){
 		this -> edificio_ = nullptr;
-	}else{
-		cout <<  "En esta ubicacion no hay ningun edificio." << endl;
+		resultado = EXITO;
 	}
-	return edificio;
+	return resultado;
 }
 
 bool Casillero_Construible::esta_ocupado() const{
@@ -46,13 +46,13 @@ void Casillero_Construible::saludar() const{
 }
 
 //Necesario?
-void Casillero_Construible::obtener_contenido(Edificio*& edificio) const{
-	edificio = nullptr;
+std::string Casillero_Construible::obtener_contenido() const{
+	std::string edificio = EDIFICIO_VACIO; 
 	if( this -> esta_ocupado()){
-		edificio = this -> edificio_;
+		edificio = this -> edificio_ -> obtener_nombre();
 	}
+	return edificio;
 }
-void Casillero_Construible::obtener_contenido(Material*& material) const{ material = nullptr; }
 
 //Necesario? 
 //PRE: Comentado porque necesita adaptarse a la lista de coordenadas de cada jugador.

@@ -23,8 +23,7 @@ public:
 
 	//PRE: no se deberia llamar a esta funcion, este casillero nunca contiene algo.
 	//POST: devuelve CONTENIDO_VACIO.
-	void obtener_contenido(Edificio*& edificio) const override;
-	void obtener_contenido(Material*& material) const override;
+	std::string obtener_contenido() const override;
 	
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no
@@ -39,7 +38,7 @@ public:
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	//Agregar demoler_edificio en inacc y transitables.
-	std::string demoler_edificio();
+	Resultado_Chequeos demoler_edificio();
 
 	void recoger_material(Almacen* inventario) override;
 };

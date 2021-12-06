@@ -41,15 +41,8 @@ public:
 	virtual bool esta_ocupado() const = 0;
 
 	//PRE: -
-	//POST: devuelve el contenido del casillero en caso de estar ocupado o CASILLERO_VACIO en caso contrario.
-	virtual void obtener_contenido(Edificio*& edificio) const = 0;
-	//PRE: -
-	//POST: devuelve el contenido del casillero en caso de estar ocupado o CASILLERO_VACIO en caso contrario.
-	virtual void obtener_contenido(Material*& material) const = 0;
-
-	//PRE: -
 	//POST: devuelve el nombre del material o edificio contenido;
-	string obtener_contenido();
+	virtual std::string obtener_contenido() const = 0;
 
 	//PRE: -
 	//POST: devuelve el color del casillero.
@@ -62,7 +55,7 @@ public:
 	//PRE: -
 	//POST: Si es una celda construible y esta ocupado,se quita al edificio del casillero y lo devuelve, ahora esta vacio. 
 	//En caso contrario devuelve nullptr;
-	virtual std::string demoler_edificio() = 0;
+	virtual Resultado_Chequeos demoler_edificio() = 0;
 
 	//PRE: -
 	//POST: -

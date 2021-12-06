@@ -16,6 +16,7 @@ std::string Casillero::obtener_color(){
 	return this -> color;
 }
 
+/*
 std::string Casillero::obtener_contenido(){
 	string contenido = VACIO;
 	Edificio* edificio_contenido;
@@ -30,3 +31,4 @@ std::string Casillero::obtener_contenido(){
 		contenido = material_contenido -> obtener_nombre();
 	return contenido;
 }
+*/

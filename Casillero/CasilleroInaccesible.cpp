@@ -17,16 +17,15 @@ void Casillero_Inaccesible::saludar() const{
 }
 
 
-void Casillero_Inaccesible::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr;}
-void Casillero_Inaccesible::obtener_contenido(Material*& material) const{ material = nullptr;}
+std::string Casillero_Inaccesible::obtener_contenido() const{ return CONTENIDO_VACIO;}
 
 Resultado_Chequeos Casillero_Inaccesible::construir_edificio(Edificio* edificio){
 	return CASILLERO_NO_CONSTRUIBLE;
 }
 
 Edificio* Casillero_Inaccesible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
-//	Edificio* edificio = nullptr;
-//	return edificio;
+	Edificio* edificio = nullptr;
+	return edificio;
 }
 
 //Provisorio
@@ -34,9 +33,8 @@ bool Casillero_Inaccesible::es_casillero_transitable(){
 	return false;
 }
 
-//Agregar demoler_edificio en inacc y transitables.
-std::string Casillero_Inaccesible::demoler_edificio(){
-	return "";
+Resultado_Chequeos Casillero_Inaccesible::demoler_edificio(){
+	return CASILLERO_NO_CONSTRUIBLE;
 }
 
 void Casillero_Inaccesible::recoger_material(Almacen* inventario){}

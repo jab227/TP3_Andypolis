@@ -6,7 +6,7 @@
 
 class Planos {
 private:
-	Lista<Edificio*> lista_edificios;
+	Diccionario<std::string, Edificio*> lista_edificios;
 public:
 
 	//PRE: -
@@ -32,8 +32,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
-	//bool es_edificio_valido(string edificio) y por interfaz carga un puntero a Edificio
-	// con el edificio de la lista.;
+	//por interfaz carga un puntero a Edificio con el edificio de la lista.
 	bool es_edificio_valido(string nombre_edificio, Edificio*& edificio);
 
 	//PRE: el edificio debe ser valido
@@ -60,7 +59,7 @@ public:
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
 	//POST: se agrega el material al final del vector.
-	void agregar_edificio(Edificio* edificio, std::size_t posicion);
+	void agregar_edificio(Edificio* edificio);
 
 	//PRE: edificio tiene que ser distinto de nullptr
 	//POST: devuelve en un string que cantidad y de que material produce el edificio o "ninguno".

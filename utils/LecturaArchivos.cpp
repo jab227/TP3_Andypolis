@@ -55,6 +55,7 @@ Edificio* procesar_edificio(string linea){
 	return traductor_edificios(nombre, materiales[0], materiales[1], materiales[2], max_permitidos, NINGUNO);
 }
 
+//TODO: Buscar valores defualt para ahorrar poner siempre todos los param.
 Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos, std::size_t propietario){
 	Edificio* edificio = nullptr;
 	if(nombre == "mina")

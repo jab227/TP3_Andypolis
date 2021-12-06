@@ -11,15 +11,15 @@ Planos::Planos(string ruta){
 }
 
 Planos::~Planos() {
-	for(std::size_t i = 1; i <= lista_edificios.consulta_largo(); i++)
-		delete this -> lista_edificios.consulta(i);
+	delete 
 }
 
-void Planos::agregar_edificio(Edificio* edificio, std::size_t posicion){
-	this -> lista_edificios.alta(edificio, posicion);
+//PARSER: Reemplazable con el Parser_Ubicacion.
+void Planos::agregar_edificio(Edificio* edificio){
+	this -> lista_edificios.insertar(edificio -> obtener_nombre(), edificio);
 }
 
-//Reemplazable con el Parser.
+//PARSER: Reemplazable con el Parser_Ubicacion.
 void Planos::cargar_edificios(string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
@@ -28,13 +28,13 @@ void Planos::cargar_edificios(string ruta){
 		Edificio* nuevo_edificio;
 		while(getline(archivo, lectura, ENTER)){
 			nuevo_edificio = procesar_edificio(lectura);
-			agregar_edificio(nuevo_edificio, ++cant_agregados);
+			agregar_edificio(nuevo_edificio);
 		}
 	}
 	archivo.close();
 }
 
-//Reemplazable por el printer.
+//PRINTER: Reemplazable con el Printer
 void Planos::mostrar_edificios(){
 	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
 	Edificio* consultado;
@@ -59,9 +59,8 @@ bool Planos::es_edificio_valido(string nombre_edificio, Edificio*& edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
 	//Provisorio. //Liberar?
-	//TODO: COrregir
-	std::size_t propietario = 1;
-	edificio = traductor_edificios(nombre_edificio,0,0,0,0, propietario);
+	//TODO: Corregir
+	edificio = traductor_edificios(nombre_edificio,0,0,0,0,0);
 	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
 		if(*(this -> lista_edificios.consulta(i)) == *edificio){
 			*edificio =*(this -> lista_edificios.consulta(i));

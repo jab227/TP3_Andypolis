@@ -16,7 +16,7 @@ class Empresa_Constructora {
 //Atributos
 private:
 	Almacen* almacen;
-	Planos* planos;
+	Planos planos;
 	Mapa* mapa;
 //Metodos
 public:

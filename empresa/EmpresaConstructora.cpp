@@ -132,7 +132,6 @@ void Empresa_Constructora::construir_edificio(Jugador* jugador){
 	//Se rompe si pongo un numero.
 	Edificio* edificio = pedir_edificio();
 	if(edificio != nullptr){
-		//mostrar_materiales_a_usar(planos, almacen, edificio);
 		std::cout << "Desea realmente construir el edificio: " << edificio->obtener_nombre() << "? [si/no]" << std::endl;
 		string respuesta = pedir_si_no();
 		if(respuesta == SI){
@@ -201,7 +200,6 @@ Resultado_Chequeos Empresa_Constructora::chequeo_construir(string& edificio_ingr
 			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
 			resultado = almacen -> hay_lista_materiales(listado_necesario);
 			delete listado_necesario;
-			//WHY: Es necesario?
 			if(resultado != EXITO)
 				edificio_ingresado == EDIFICIO_VACIO;
 		}

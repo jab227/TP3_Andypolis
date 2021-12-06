@@ -16,7 +16,7 @@ class Empresa_Constructora {
 //Atributos
 private:
 	Almacen* almacen;
-	Planos planos;
+	Planos* planos;
 	Mapa* mapa;
 //Metodos
 public:
@@ -35,7 +35,7 @@ public:
 
 	//PRE: los archivos deben estar cargados y el jugador valido con la energia suficiente
 	//POST: se construye un edificio pidiendo al usuario en nombre y las coordenadas
-	void construir_edificio(Jugador* jugador);
+	void construir_edificio( Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
@@ -68,7 +68,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se suman al almacen los recursos producidos por los edificios
-	void producir_recursos();
+	void producir_recursos(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se generan materiales aleatorios en caminos aleatorios del mapa
@@ -82,7 +82,7 @@ public:
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
-	bool cargar_ubicaciones(string ruta);
+	bool cargar_ubicaciones(string ruta, Jugador* jugador);
 
 	//PRE: ruta debe ser la ruta a un archivo existente. el mapa debe estar cargado.
 	//POST: se guardan la informacion de las ubicaciones en el archivo.
@@ -92,19 +92,19 @@ private:
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
  
-	void sumar_contenido(string contenido,Coordenada coordenada);
+	void sumar_contenido(string contenido,Coordenada coordenada, Jugador* jugador);
  
 
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
 	//devuelve false
-	Edificio* pedir_edificio();
+	std::string pedir_edificio(const Jugador* &jugador);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si no existe el edificio, si se llego a la maxima cantidad
 	//permitida del edificio, si no alcanzan los materiales o si no ocurre nada de lo anterior. en este
 	//ultimo caso, edificio se iguala a edificio_ingresado
-	Resultado_Chequeos chequeo_construir(string& edificio_ingresado, Edificio* &edificio);
+	Resultado_Chequeos chequeo_construir(const std::string& edificio_ingresado, const Jugador* &jugador);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,
@@ -122,7 +122,7 @@ private:
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
-	void edificio_construido_confirmado(Edificio* edificio, const Coordenada& coordenada,Jugador* jugador);
+	void edificio_construido_confirmado(const std::string &edificio, const Coordenada& coordenada, Jugador* jugador);
 
 	//PRE: -
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.

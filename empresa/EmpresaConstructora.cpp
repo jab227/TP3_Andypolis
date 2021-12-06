@@ -25,7 +25,9 @@ bool Empresa_Constructora::cargar_archivos(string ruta_materiales, string ruta_e
 	this -> almacen = new Almacen(ruta_materiales);
 	this -> planos = new Planos(ruta_edificios);
 	this -> mapa = new Mapa(ruta_mapa);
-	return this -> cargar_ubicaciones(ruta_ubicaiones);
+	//TODO: Reemplazable con el ParserUbicacion
+	//Para que no tire error. 
+	//return this -> cargar_ubicaciones(ruta_ubicaiones);
 }
 
 void Empresa_Constructora::mostrar_materiales(){
@@ -57,8 +59,8 @@ void Empresa_Constructora::guardar_archivos(string ruta_materiales, string ruta_
 	this -> guardar_ubicaciones(ruta_ubicaciones);
 }
 
-//TODO: Adaptar a coordenada.
-bool Empresa_Constructora::cargar_ubicaciones(string ruta){
+//TODO: Reemplazable con el ParserUbicacion
+bool Empresa_Constructora::cargar_ubicaciones(string ruta, Jugador* jugador){
 	bool existe = false;
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
@@ -69,7 +71,7 @@ bool Empresa_Constructora::cargar_ubicaciones(string ruta){
 		string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
 			nuevo_contenido = procesar_ubicacion(lectura, coordenada);
-			sumar_contenido(nuevo_contenido, coordenada);
+			sumar_contenido(nuevo_contenido, coordenada, jugador);
 			cant_agregados++;
 			existe = true;
 		}
@@ -97,24 +99,25 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 	archivo.close();
 }
 
-void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordenada){
-	Edificio* edif = nullptr;
-	if(this -> planos -> es_edificio_valido(contenido,edif)){
-		this -> mapa -> construir_edificio_ubicacion(edif, coordenada);
-		this -> planos -> aumentar_construidos_edificio(edif);
-		delete edif;
+//TODO: Reemplazable con el ParserUbicacion
+void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordenada, Jugador* jugador){
+	if(Planos::existe(contenido)){
+		this -> mapa -> construir_edificio_ubicacion(contenido, coordenada);
+		Coordenada* ptr_coordenada = new Coordenada(coordenada);
+		jugador -> agregar_ubicacion(ptr_coordenada);
 	}else
 		this -> mapa -> poner_material_ubicacion(contenido, coordenada);
 
 }
-
-void Empresa_Constructora::producir_recursos(){
-	Lista<Material>* producidos = this -> planos -> obtener_recursos_producidos();
-	//TODO: Constante
-	this -> almacen -> sumar_lista_materiales(producidos,100);
-	delete producidos;
+//WHY: Responsabilidad del jugador?
+void Empresa_Constructora::producir_recursos(Jugador * jugador){
+	Lista<Material>* listado = jugador -> obtener_recursos_producidos(this-> mapa);
+	jugador -> sumar_lista_materiales(listado);
+	jugador -> usar_energia(-ENERGIA_RECOLECTAR);
+	delete listado;
 }
 
+//TODO: Adaptar a las bolsitas de recursos.
 void Empresa_Constructora::lluvia_de_recursos(){
 	if(!this -> mapa -> generar_materiales_aleatorios())
 		std::cout << "Materiales generados por el mapa!" << std::endl;
@@ -127,11 +130,10 @@ void Empresa_Constructora::vaciar_materiales(){
 	std::cout << "Mapa limpiado de materiales!" << std::endl;
 }
 
-void Empresa_Constructora::construir_edificio(Jugador* jugador){
-	//Se rompe si pongo un numero.
-	Edificio* edificio = pedir_edificio();
-	if(edificio != nullptr){
-		std::cout << "Desea realmente construir el edificio: " << edificio->obtener_nombre() << "? [si/no]" << std::endl;
+void Empresa_Constructora::construir_edificio( Jugador* jugador){
+	std::string edificio = pedir_edificio(jugador);
+	if(edificio != EDIFICIO_VACIO){
+		std::cout << "Desea realmente construir el edificio: " << edificio << "? [si/no]" << std::endl;
 		string respuesta = pedir_si_no();
 		if(respuesta == SI){
 			Coordenada coordenada = Coordenada(0,0);
@@ -141,11 +143,10 @@ void Empresa_Constructora::construir_edificio(Jugador* jugador){
 				this -> edificio_construido_confirmado(edificio, coordenada, jugador);
 		}else
 			std::cout << "No se realizo ningun cambio." << std::endl;
-	delete edificio;
 	}
 }
 
-//TODO:
+//TODO: Adaptar
 void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	Coordenada coordenada = Coordenada(0,0);
 	Resultado_Chequeos resultado = NO_EXISTE;
@@ -156,11 +157,11 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	}while(!fin);
 	//Tengo que avisar si se pudo destruir algo o no?
 	this -> mapa -> demoler_edificio_ubicacion(coordenada);
-	//TODO: Esto va a pasar al jugador. Recuperar materiales, eliminar coordenada
-	//this -> almacen sumar_lista_materiales();
+	//TODO: Esto va a pasar al jugador. Recuperar materiales
+	//jugador ->  recuperar_lista_materiales();
 }
 
-Edificio* Empresa_Constructora::pedir_edificio(){
+std::string Empresa_Constructora::pedir_edificio(const Jugador* &jugador){
 	Edificio* edificio = nullptr;
 	bool fin = false;
 	string edificio_ingresado;
@@ -168,11 +169,11 @@ Edificio* Empresa_Constructora::pedir_edificio(){
 	do{
 		std::cout << "Elegi el edificio que queres construir o salir" << std::endl << "Edificio: ";
 		getline(cin, edificio_ingresado);
-		chequeo = chequeo_construir(edificio_ingresado, edificio);
+		chequeo = chequeo_construir(edificio_ingresado, jugador);
 		fin = mostrar_mensaje_chequeo(chequeo);
 	}
 	while(!fin);
-	return edificio;
+	return edificio_ingresado;
 }
 
 //TODO: Constructo de copia?? Asi no tenemos que pasarle una coordenada creada.
@@ -189,32 +190,22 @@ Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenad
 	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_construir(string& edificio_ingresado, Edificio* &edificio){
+Resultado_Chequeos Empresa_Constructora::chequeo_construir(const std::string& edificio_ingresado, const Jugador* &jugador){
 	Resultado_Chequeos resultado = EXITO;
-	if(edificio_ingresado == SALIR_STR)
-		resultado = SALIR;
-	else{
-		resultado = planos -> check_construir_edificio(edificio_ingresado, edificio);
-		if(resultado == EXITO){
-			Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
-			resultado = almacen -> hay_lista_materiales(listado_necesario);
-			delete listado_necesario;
-			if(resultado != EXITO)
-				edificio_ingresado == EDIFICIO_VACIO;
-		}
-	}
+
+	if(edificio_ingresado == SALIR_STR) resultado = SALIR;
+	else if(es_numero(edificio_ingresado)) resultado = NO_EXISTE;
+	else resultado = planos -> permitido_construir(edificio_ingresado, jugador, this -> mapa);
+
 	return resultado;
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(string fila_ingresada, string columna_ingresada, Coordenada coordenada){
 	Resultado_Chequeos resultado = EXITO;
 	
-	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR)
-		resultado = SALIR;
-	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada))
-		resultado = NO_EXISTE;
-	else if(!(this -> mapa -> es_cordenada_valida(coordenada)))
-		resultado = FUERA_RANGO;
+	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR) resultado = SALIR;
+	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada)) resultado = NO_EXISTE;
+	else if(!(this -> mapa -> es_cordenada_valida(coordenada))) resultado = FUERA_RANGO;
 
 	return resultado;
 }
@@ -242,6 +233,12 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 			std::cout << "No se realizo ninguna accion." << std::endl;
 			fin = true;
 			break;
+		case CASILLERO_NO_CONSTRUIBLE:
+			cout <<  "La ubicacion ingresada no es construible." << endl;
+			break;
+		case CASILLERO_OCUPADO:
+			cout <<  "Esta ubicacion esta ocupada por otro edificio." << endl;
+			break;
 		default:
 			break;
 		}
@@ -260,17 +257,15 @@ string Empresa_Constructora::pedir_si_no(){
 	return respuesta;
 }
 
-void Empresa_Constructora::edificio_construido_confirmado(Edificio* edificio,const Coordenada& coordenada, Jugador* jugador){
-	// Decirle al mapa que construya. Si es true, restamos.
-	// ¿Si no decimos que la celda no es correcta?
-	if(this -> mapa -> construir_edificio_ubicacion(edificio, coordenada)){
+void Empresa_Constructora::edificio_construido_confirmado(const std::string &nombre_edificio,const Coordenada& coordenada, Jugador* jugador){
+	Resultado_Chequeos resultado = this -> mapa -> construir_edificio_ubicacion(nombre_edificio, coordenada);
+	if(mostrar_mensaje_chequeo(resultado)){
+		Edificio* edificio = Planos::buscar(nombre_edificio);
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
-		//TODO: Constante
-		this -> almacen -> descontar_lista_materiales(listado_necesario,100);
+		jugador -> usar_lista_materiales(listado_necesario);
 		delete listado_necesario;
-		//TODO: Ya no es lo mismo donde aumentamos, cada uno tiene su contador de edificios.
-		this -> planos -> aumentar_construidos_edificio(edificio);
 		jugador -> usar_energia(-ENERGIA_CONSTRUIR);
+		Coordenada* ptr_coordenada = new Coordenada(coordenada);
+		jugador -> agregar_ubicacion(ptr_coordenada);
 	}
-	
 }

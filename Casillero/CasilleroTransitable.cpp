@@ -73,3 +73,5 @@ void Casillero_Transitable::recoger_material(Almacen* inventario){
 	delete material;
 	material = nullptr;
 }
+
+Resultado_Chequeos Casillero_Transitable::reparar_edificio(){ return CASILLERO_NO_CONSTRUIBLE;}

@@ -46,6 +46,8 @@ public:
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	void recoger_material(Almacen* inventario) override;
+	Resultado_Chequeos reparar_edificio() override;
+
 };
 
 #endif /* CASILLERO_CASILLEROCONSTRUIBLE_H_ */

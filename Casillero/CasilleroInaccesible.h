@@ -40,6 +40,7 @@ public:
 	//Agregar demoler_edificio en inacc y transitables.
 	Resultado_Chequeos demoler_edificio();
 
+	Resultado_Chequeos reparar_edificio() override;
 	void recoger_material(Almacen* inventario) override;
 };
 

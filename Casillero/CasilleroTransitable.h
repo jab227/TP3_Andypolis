@@ -52,6 +52,9 @@ public:
 	//PRE: -
 	//POST: -
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
+
+	Resultado_Chequeos reparar_edificio() override;
+
 };
 
 #endif /* CASILLERO_CASILLEROTRANSITABLE_H_ */

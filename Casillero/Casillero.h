@@ -61,8 +61,9 @@ public:
 	//POST: -
 	virtual Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) = 0;
 
-	//WHY: Le pasamos el jugador o el inventario del jugador?
+	//Q: Le pasamos el jugador o el inventario del jugador o devolvemos el material y que el jugador se haga cargo de sumarlo.
 	virtual void recoger_material(Almacen* inventario) = 0;
+	virtual Resultado_Chequeos reparar_edificio() = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

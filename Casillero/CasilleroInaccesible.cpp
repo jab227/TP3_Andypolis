@@ -38,3 +38,5 @@ Resultado_Chequeos Casillero_Inaccesible::demoler_edificio(){
 }
 
 void Casillero_Inaccesible::recoger_material(Almacen* inventario){}
+
+Resultado_Chequeos Casillero_Inaccesible::reparar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}

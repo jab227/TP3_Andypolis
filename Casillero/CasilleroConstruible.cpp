@@ -39,8 +39,6 @@ void Casillero_Construible::saludar() const{
 	cout << "Soy un casillero construible." << endl;
 	if(this -> esta_ocupado()){
 		this -> edificio_ -> saludar();
-		//Q: Por que esto?
-		//cout << "Edificio construido exitosamente!" << endl;
 	}else
 		cout << "No tengo ningun edificio construido." << endl;
 }
@@ -78,4 +76,9 @@ bool Casillero_Construible::es_casillero_transitable(){return false;}
 void Casillero_Construible::recoger_material(Almacen* inventario){
 	Material producto = this -> edificio_ -> producir_material();
 	inventario -> sumar_cantidad_material(producto.obtener_nombre(), producto.obtener_cantidad());
+}
+
+
+Resultado_Chequeos Casillero_Construible::reparar_edificio(){
+	return this -> edificio_ -> reparar();
 }

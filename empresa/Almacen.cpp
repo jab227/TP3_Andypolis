@@ -6,7 +6,7 @@
 
 const string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
-const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = -1;
+const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = 0;
 
 Almacen::Almacen() {
 }
@@ -57,7 +57,7 @@ std::size_t Almacen::buscar_material(Material& a_buscar){
 
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
-void Almacen::sumar_cantidad_material(string a_cambiar, std::size_t cantidad){
+void Almacen::sumar_cantidad_material(string a_cambiar, int cantidad){
 	Material material_a_cambiar = Material(a_cambiar,0);
 	//VER: si nos podemos ahorrar ciclos (Eficiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
@@ -130,52 +130,23 @@ void Almacen::sumar_lista_materiales( Lista<Material>* materiales_obtenidos, std
 	}
 }
 
-
-void Almacen::comprar_bombas(){
-	std::size_t bombas = this -> pedir_bombas();
-
-		if(bombas != BOMBAS_VACIAS){
-			cout << "Compraste " << bombas << " bombas exitosamente."  << endl;
-			this -> sumar_cantidad_material(NOMBRES_MATERIALES[4], bombas);
-			this -> sumar_cantidad_material(NOMBRES_MATERIALES[3], -(bombas*PRECIO_BOMBA));
-			Material andycoins = Material(NOMBRES_MATERIALES[3],0);
-			Material bombas = Material(NOMBRES_MATERIALES[4],0);
-			buscar_material(andycoins);
-			buscar_material(bombas);
-			std::cout << "Cantidad de bombas: " << andycoins.obtener_cantidad() << std::endl;
-			std::cout << "Andycoins restantes: " << bombas.obtener_cantidad() << std::endl;
-		}
-}
-
-std::size_t Almacen::pedir_bombas(){
+//Se puede mejorar pero es lo mas comodo. 
+Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas){
+	Resultado_Chequeos resultado = NO_MATERIALES;
 	Material andycoins = Material(NOMBRES_MATERIALES[3],0);
-	this -> buscar_material(andycoins);
-	std::size_t bombas = BOMBAS_VACIAS, bombas_comprables =  andycoins.obtener_cantidad() % PRECIO_BOMBA;
-	bool fin = false;
-	string bombas_ingresadas;
-	do{
-		cout << "Se pueden comprar " << bombas_comprables << " bombas." << endl;
-		cout << "Ingresa la cantidad de bombas que queres comprar o salir" << endl << "Bombas: ";
-		getline(cin, bombas_ingresadas);
-		fin = this -> chequeo_bombas(bombas_ingresadas, bombas_comprables, bombas);
-	}
-	while(!fin);
-	return bombas;
-}
-
-bool Almacen::chequeo_bombas(string bombas_ingresadas, std::size_t bombas_comprables, std::size_t &bombas){
-	bool resultado = false;
-	if(bombas_ingresadas == SALIR_STR){
-		resultado = true;
-		std::cout << "No se realizo ninguna accion." << std::endl;
-	}
-	else if(!es_numero(bombas_ingresadas) || stoi(bombas_ingresadas) < 0)
-		std::cout << "La/s opcion/es ingresada/s no es/son valida/s." << std::endl;
-	else if(stoi(bombas_ingresadas) > (int) bombas_comprables)
-		std::cout << "No hay suficientes materiales." << std::endl;
-	else{
-		bombas = stoi(bombas_ingresadas);
-		resultado = true;
+	buscar_material(andycoins);
+	int gasto = cantidad_bombas * PRECIO_BOMBA;
+	if(andycoins.obtener_cantidad() < gasto){
+		cout << "Compraste " << cantidad_bombas << " bombas exitosamente."  << endl;
+		this -> sumar_cantidad_material(NOMBRES_MATERIALES[4], cantidad_bombas);
+		this -> sumar_cantidad_material(NOMBRES_MATERIALES[3], -gasto);
+		resultado = EXITO;
+		Material bombas = Material(NOMBRES_MATERIALES[4],0);
+		buscar_material(bombas); //Busca y devuelve por interfaz la cantidad de bombas.
+		std::cout << "Cantidad de bombas: " << andycoins.obtener_cantidad() << std::endl;
+		std::cout << "Andycoins restantes: " << bombas.obtener_cantidad() << std::endl;
 	}
 	return resultado;
 }
+
+

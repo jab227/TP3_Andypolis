@@ -34,7 +34,7 @@ public:
 	//POST: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
 	//se realiza ningun cambio. La cantidad puede ser negativa, en tal caso se restara.
 	
-	void sumar_cantidad_material(string a_cambiar, std::size_t cantidad);
+	void sumar_cantidad_material(string a_cambiar, int cantidad);
 	//Le puse sumar, porque modificar pareciera no suma, sino que reemplaza el valor.
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
@@ -65,7 +65,7 @@ public:
 
 	//PRE:
 	//POST: se compran las bombas pidiendo al usuario la cantidad
-	void comprar_bombas();
+	Resultado_Chequeos comprar_bombas(std::size_t cantidad_bombas);
 
 	//PRE: -
 	//POST: devuelve el indice del material en caso de encontrarse o en caso de
@@ -77,9 +77,7 @@ private:
 	//POST: se agrega el material al final del vector.
 	void agregar_material(Material material, std::size_t posicion);
 	
-	std::size_t pedir_bombas();
 
-	bool chequeo_bombas(string bombas_ingresadas, std::size_t bombas_comprables, std::size_t &bombas);
 };
 
 #endif /* ALMACEN_H_ */

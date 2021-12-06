@@ -99,7 +99,7 @@ bool Almacen::hay_material_suficiente(Material material){
 	return suficiente;
 }
 
-Resultado_Chequeos Almacen::hay_lista_materiales(Lista<Material>* materiales_consultados){
+Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material>* &materiales_consultados){
 	bool fin = false;
 	Resultado_Chequeos suficiente = EXITO;
 	std::size_t i = 1;
@@ -114,7 +114,7 @@ Resultado_Chequeos Almacen::hay_lista_materiales(Lista<Material>* materiales_con
 }
 
 
-void Almacen::descontar_lista_materiales(Lista<Material>* materiales_usados, std::size_t porcentaje){
+void Almacen::descontar_lista_materiales(const Lista<Material>* &materiales_usados, std::size_t porcentaje){
 	std::size_t proporcion = porcentaje/100;
 	for(std::size_t i = 1; i <= materiales_usados -> consulta_largo(); i++){
 		Material material = materiales_usados -> consulta(i);
@@ -122,7 +122,7 @@ void Almacen::descontar_lista_materiales(Lista<Material>* materiales_usados, std
 	}
 }
 
-void Almacen::sumar_lista_materiales(Lista<Material>* materiales_obtenidos, std::size_t porcentaje){
+void Almacen::sumar_lista_materiales(const Lista<Material>* &materiales_obtenidos, std::size_t porcentaje){
 	//TODO: Constantes.
 	std::size_t proporcion = porcentaje/100;
 	for(std::size_t i = 1; i <= materiales_obtenidos -> consulta_largo(); i++){

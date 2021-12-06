@@ -2,11 +2,14 @@
 #define PLANOS_H_
 
 #include "../edificio/Edificio.h"
+#include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
 
 class Planos {
 private:
-	Diccionario<std::string, Edificio*> lista_edificios;
+//FER: Lo hago estatico ya que es comun a todo el programa, no es de la intancia particular.
+//Evita tener a mano la instancia del diccionario cuando queremos preguntar si existe un edificio.
+	static Diccionario<std::string, Edificio*> lista_edificios;
 public:
 
 	//PRE: -
@@ -21,6 +24,9 @@ public:
 	//POST: se libera la memoria utilizada y el puntero se apunta  nullptr.
 	~Planos();
 
+	static Edificio* buscar(std::string nombre_edificio);
+	static bool existe(std::string nombre_edificio);
+
 	//PRE: se le debe pasar la ruta del archivo a abrir el cual debe estar bien estructurado
 	//POST: en caso de poder abrir el archivo, carga la lista con los elementos del archivo
 	void cargar_edificios(string ruta);
@@ -29,15 +35,6 @@ public:
 	//POST: muestra por terminal la cantidad de edificios construidos de cada tipo,
 	//los que se pueden construir y los materiales necesarios para construirlos.
 	void mostrar_edificios();
-
-	//PRE: -
-	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
-	//por interfaz carga un puntero a Edificio con el edificio de la lista.
-<<<<<<< HEAD
-	bool es_edificio_valido(const string &nombre_edificio, Edificio*& edificio);
-=======
-	bool es_edificio_valido(string nombre_edificio, Edificio*& edificio);
->>>>>>> 6aaf09fc043ba0021e16841568d0c8eb5302958b
 
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
@@ -60,6 +57,11 @@ public:
 	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
 	//por la consola los materiales producidos.
 	Lista<Material>* obtener_recursos_producidos();
+
+	//PRE: -
+	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
+	//por interfaz carga un puntero a Edificio con el edificio de la lista.
+	Resultado_Chequeos permitido_construir(const std::string &nombre_edificio, const Jugador* &jugador, const Mapa* &mapa);
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.
 	//POST: se agrega el material al final del vector.
@@ -70,6 +72,7 @@ private:
 	string material_producido( Edificio* edificio);
 
 	void mostrar_materiales_producidos(Lista<Material>* listado);
+
 };
 
 

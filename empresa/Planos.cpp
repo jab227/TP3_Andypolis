@@ -11,27 +11,16 @@ Planos::Planos(string ruta){
 }
 
 Planos::~Planos() {
-<<<<<<< HEAD
 	//Eliminar el diccionario y liberar la memoria de los nodos.
 	//WHY: Como sabe cuando liberar el dato y cuando no?
 }
 
 //PARSER: Reemplazable con el Parser_Ubicacion.
-=======
-	delete 
-}
-
-//PARSER: Reemplazable con el Parser.
->>>>>>> 6aaf09fc043ba0021e16841568d0c8eb5302958b
 void Planos::agregar_edificio(Edificio* edificio){
 	this -> lista_edificios.insertar(edificio -> obtener_nombre(), edificio);
 }
 
-<<<<<<< HEAD
 //PARSER: Reemplazable con el Parser_Ubicacion.
-=======
-//PARSER: Reemplazable con el Parser.
->>>>>>> 6aaf09fc043ba0021e16841568d0c8eb5302958b
 void Planos::cargar_edificios(string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
@@ -46,11 +35,12 @@ void Planos::cargar_edificios(string ruta){
 	archivo.close();
 }
 
+//TODO: Agregar a diccionario un metodo para imprimir en formato tabla.
+//o tener un vector con los nombres posibles para las construcciones...
 void Planos::mostrar_edificios(){
+	/*
 	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
-	Edificio* consultado;
-	for(std::size_t i = 1; i <= this -> lista_edificios.consulta_largo(); i++){
-		consultado = this -> lista_edificios.consulta(i);
+	Edificio* consultado = this -> lista_edificios[key];
 		cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
 				    << consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"
 					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[MADERA]) << "\t|"
@@ -59,6 +49,7 @@ void Planos::mostrar_edificios(){
 					<< consultado -> obtener_max_permitidos() - consultado -> obtener_construidos() << "\t\t|"
 					<< material_producido(consultado) << "\t\t|" << endl;
 	}
+	*/
 }
 
 
@@ -66,19 +57,22 @@ std::string Planos::material_producido( Edificio* edificio){
 	return edificio -> info_producto();
 }
 
-bool Planos::es_edificio_valido(const string &nombre_edificio, Edificio*& edificio){
-	bool encontrado = false;
-	std::size_t i = 1;
-	//Provisorio.  
-	edificio = traductor_edificios(nombre_edificio,0,0,0,0);
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		if(*(this -> lista_edificios.consulta(i)) == *edificio){
-			*edificio =*(this -> lista_edificios.consulta(i));
-			encontrado = true;
+Resultado_Chequeos Planos::permitido_construir(const std::string &nombre_edificio, const Jugador* &jugador, const Mapa* &mapa){
+	Resultado_Chequeos resultado = NO_EXISTE;
+	if(existe(nombre_edificio)){
+		Edificio* ptr_edificio = lista_edificios[nombre_edificio];
+		Lista<Material>* materiales = materiales_necesarios(ptr_edificio);
+		resultado = jugador -> tiene_materiales(materiales);
+		if(resultado != NO_MATERIALES){
+			std::size_t construidos = jugador -> cantidad_edificios(nombre_edificio, mapa);
+			resultado = ptr_edificio -> esta_maxima_capacidad(construidos);
 		}
-	i++;
 	}
-	return encontrado;
+	return resultado;
+}
+
+bool Planos::existe(std::string nombre_edificio){
+	return lista_edificios.existe(nombre_edificio);
 }
 
 Lista<Material>* Planos::materiales_necesarios(const Edificio* &edificio){
@@ -89,6 +83,7 @@ Lista<Material>* Planos::materiales_necesarios(const Edificio* &edificio){
 	return lista_materiales;
 }
 
+/* WHY: Borrables?
 void Planos::aumentar_construidos_edificio(const Edificio* &edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
@@ -116,17 +111,10 @@ void Planos::disminuir_construidos_edificio(const string &edificio){
 		i++;
 	}
 }
+*/
 
-Resultado_Chequeos Planos::check_construir_edificio(const string &edificio, Edificio*& edif){
-	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_edificio_valido(edificio, edif))
-		resultado = NO_EXISTE;
-	else if(edif -> esta_maxima_capacidad())
-		resultado = MAXIMA_CANTIDAD;
-	return resultado;
-}
-
-Lista<Material>* Planos::obtener_recursos_producidos(){
+// TODO: Responsabilidad del jugador.
+Lista<Material>* Jugador::obtener_recursos_producidos(){
 	Lista<Material>* listado = new Lista<Material>;
 	Edificio* edificio;
 	Material material_producido;
@@ -156,4 +144,9 @@ void Planos::mostrar_materiales_producidos(Lista<Material>* listado){
 	}else
 		cout << "No hay edificios construidos que produzcan materiales.\n"
 				"Construyo alguno para empezar a producir!" << endl;
+}
+
+
+Edificio* Planos::buscar(std::string nombre_edificio){
+	return lista_edificios[nombre_edificio];
 }

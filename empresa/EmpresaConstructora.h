@@ -39,7 +39,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se destruye un edificio pidiendo al usuario las cordenadas
-	void demoler_edificio(Jugador* jugador, Mapa* mapa);
+	void demoler_edificio(Jugador* jugador);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios existentes junto con sus materiales requeridos para

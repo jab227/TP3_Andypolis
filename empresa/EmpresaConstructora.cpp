@@ -148,7 +148,7 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 }
 
 //TODO: Embellecer
-void Empresa_Constructora::demoler_edificio(Jugador* jugador, Mapa* mapa){
+void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	Coordenada coordenada = Coordenada(0,0);
 	Resultado_Chequeos resultado = NO_EXISTE;
 	do resultado = this -> pedir_coordenadas(coordenada);

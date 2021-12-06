@@ -32,11 +32,11 @@ public:
 	
 	//PRE: -
 	//POST:
-	bool construir_edificio(Edificio* edificio);
+	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
 	//POST: -
-	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas) override;
+	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	//Agregar demoler_edificio en inacc y transitables.
 	std::string demoler_edificio();

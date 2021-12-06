@@ -20,14 +20,13 @@ void Casillero_Inaccesible::saludar() const{
 void Casillero_Inaccesible::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr;}
 void Casillero_Inaccesible::obtener_contenido(Material*& material) const{ material = nullptr;}
 
-bool Casillero_Inaccesible::construir_edificio(Edificio* edificio){
-	cout <<  "La ubicacion ingresada no es construible." << endl;
-	return false;
+Resultado_Chequeos Casillero_Inaccesible::construir_edificio(Edificio* edificio){
+	return CASILLERO_NO_CONSTRUIBLE;
 }
 
-Edificio* Casillero_Inaccesible::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
-	Edificio* edificio = nullptr;
-	return edificio;
+Edificio* Casillero_Inaccesible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
+//	Edificio* edificio = nullptr;
+//	return edificio;
 }
 
 //Provisorio

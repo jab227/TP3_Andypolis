@@ -57,7 +57,7 @@ public:
 
 	//PRE: -
 	//POST:
-	virtual bool construir_edificio(Edificio* edificio) = 0;
+	virtual Resultado_Chequeos construir_edificio(Edificio* edificio) = 0;
 
 	//PRE: -
 	//POST: Si es una celda construible y esta ocupado,se quita al edificio del casillero y lo devuelve, ahora esta vacio. 
@@ -66,7 +66,7 @@ public:
 
 	//PRE: -
 	//POST: -
-	virtual Edificio*agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas) = 0;
+	virtual Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) = 0;
 
 	//WHY: Le pasamos el jugador o el inventario del jugador?
 	virtual void recoger_material(Almacen* inventario) = 0;

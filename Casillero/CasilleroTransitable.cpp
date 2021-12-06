@@ -46,15 +46,15 @@ void Casillero_Transitable::obtener_contenido(Material*& material) const{
 void Casillero_Transitable::obtener_contenido(Edificio*& edificio) const{ edificio = nullptr; }
 
 
-Edificio* Casillero_Transitable::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
-	Edificio* edificio = nullptr;
-	return edificio;
+Edificio* Casillero_Transitable::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
+//	Edificio* edificio = nullptr;
+//	return edificio;
 }
 
-bool Casillero_Transitable::construir_edificio(Edificio* edificio){
-	cout <<  "La ubicacion ingresada no es construible." << endl;
-	return false;
+Resultado_Chequeos Casillero_Transitable::construir_edificio(Edificio* edificio){
+	return CASILLERO_NO_CONSTRUIBLE;
 }
+
 	
 //Provisorio
 bool Casillero_Transitable::es_casillero_transitable(){

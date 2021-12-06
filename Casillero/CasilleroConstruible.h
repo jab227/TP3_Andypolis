@@ -17,7 +17,7 @@ public:
 
 	//PRE: el edificio debe estar ubicado en memoria dinamica
 	//POST: se construye el edificio en este casillero, ahor esta ocupado
-	bool construir_edificio(Edificio* edificio);
+	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
 	//POST: se quita al edificio del casillero y lo devuelve, ahora esta vacio. si el
@@ -47,7 +47,7 @@ public:
 
 	//PRE: -
 	//POST: SE USA??
-	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas) override;
+	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	void recoger_material(Almacen* inventario) override;
 };

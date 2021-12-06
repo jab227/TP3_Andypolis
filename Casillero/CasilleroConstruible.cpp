@@ -1,4 +1,5 @@
 #include "CasilleroConstruible.h"
+#include "../empresa/Planos.h"
 #include <iostream>
 
 Casillero_Construible::Casillero_Construible(): Casillero(VERDE + NEGRO) {
@@ -9,11 +10,11 @@ Casillero_Construible::~Casillero_Construible() {
 	delete this -> edificio_;
 }
 
-bool Casillero_Construible::construir_edificio(Edificio* edificio){
-	bool resultado=false;
+Resultado_Chequeos Casillero_Construible::construir_edificio(Edificio* edificio){
+	Resultado_Chequeos resultado=CASILLERO_OCUPADO;
 	if(!(this -> esta_ocupado())){
 		this -> edificio_ = edificio;
-		resultado = true;
+		resultado = EXITO;
 	}else{
 		cout <<  "Esta ubicacion esta ocupada por otro edificio." << endl;
 	}
@@ -53,20 +54,21 @@ void Casillero_Construible::obtener_contenido(Edificio*& edificio) const{
 }
 void Casillero_Construible::obtener_contenido(Material*& material) const{ material = nullptr; }
 
-//Cuando lo usamos tenemos que saber que es un casillero construible.
-Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<string> &lista_nombres,Lista<Lista<Coordenada*>*> &lista_coordenadas){
-	if(this -> esta_ocupado()){
-		std::string edificio = this -> edificio_ -> obtener_nombre();	 
+//Necesario? 
+//PRE: Comentado porque necesita adaptarse a la lista de coordenadas de cada jugador.
+
+Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
+/*	if(this -> esta_ocupado()){
+		Edificio* edificio = this -> edificio_; 
+		Planos::existe(edificio -> obtener_nombre());
+		//Necesitamos acceso al diccionario.
 		//TODO: Agregar que necesitan reparacion. (!)
-		int indice = lista_nombres.buscar_indice(edificio);
 		if(indice == NO_ESTA){
 			lista_nombres.alta_al_final(edificio);
-			Lista<Coordenada*>* auxiliar = new Lista<Coordenada*>;
-			lista_coordenadas.alta_al_final(auxiliar);
 			indice = (int) lista_nombres.consulta_largo();
 		}
-		lista_coordenadas.consulta(indice) -> alta_al_final(coordenada);
 	}
+*/
 	return this -> edificio_;
 }
 

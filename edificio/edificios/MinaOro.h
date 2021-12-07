@@ -13,10 +13,12 @@ public:
 	//POST: se construye una mina con los datos ingresados aserradero vacio
 	Mina_Oro(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
-
 	//PRE: -
 	//POST: imprime un mensaje por consola
 	void saludar();
+	
+	//PRE: -
+	//POST: Devuelve NO_REPARABLE
 	Resultado_Chequeos reparar() override;
 
 };

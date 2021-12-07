@@ -1,7 +1,7 @@
 #include "Mina.h"
 #include <iostream>
 
-const string NOMBRE_MATERIAL_PRODUCIDO = "piedra", NOMBRE = "mina";
+const std::string NOMBRE_MATERIAL_PRODUCIDO = "piedra", NOMBRE = "mina";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 15;
 const std::size_t MAX_VIDA = 2; //Si recibe dos ataques, se destruye.
 
@@ -13,7 +13,7 @@ Mina::Mina(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_
 }
 
 void Mina::saludar(){
-	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy buscando minerales precioso!" << endl;
+	std::cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy buscando minerales precioso!" << std::endl;
 }
 
 

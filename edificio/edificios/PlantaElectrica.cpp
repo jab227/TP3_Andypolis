@@ -3,8 +3,8 @@
 
 
 //Energia no es un material...
-const string NOMBRE = "planta electrica";
-const string NOMBRE_MATERIAL_PRODUCIDO = "energia";
+const std::string NOMBRE = "planta electrica";
+const std::string NOMBRE_MATERIAL_PRODUCIDO = "energia";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 15;
 
 Planta_Electrica::Planta_Electrica() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
@@ -17,7 +17,7 @@ Planta_Electrica::Planta_Electrica(std::size_t piedra, std::size_t madera, std::
 }
 
 void Planta_Electrica::saludar(){
-	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy para que la electricidad no se corte!" << endl;
+	std::cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy para que la electricidad no se corte!" << std::endl;
 }
 
 Resultado_Chequeos Planta_Electrica::reparar(){ return NO_REPARABLE;}

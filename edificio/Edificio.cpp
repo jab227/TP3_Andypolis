@@ -11,7 +11,7 @@ Edificio::Edificio() {
 	this->vida = 1; //Solo Mina y Fabrica poseen 2 de vida.
 }
 
-Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos){
+Edificio::Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos){
 	this->nombre = nombre;
 	this->materiales[PIEDRA] = piedra;
 	this->materiales[MADERA] = madera;
@@ -22,7 +22,7 @@ Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::s
 }
 
 //Constructor para Mina y Fabrica que tienen vida distinta.
-Edificio::Edificio(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida){
+Edificio::Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida){
 	this->nombre = nombre;
 	this->materiales[PIEDRA] = piedra;
 	this->materiales[MADERA] = madera;
@@ -36,11 +36,11 @@ Edificio::~Edificio(){
 
 }
 
-string Edificio::obtener_nombre() const {
+std::string Edificio::obtener_nombre() const {
 	return this->nombre;
 }
 
-std::size_t Edificio::obtener_cant_material(string material) const{
+std::size_t Edificio::obtener_cant_material(std::string material) const{
 	std::size_t cantidad = 0, i = 0;
 	bool fin = false;
 	while(i < CANT_MATERIALES_EDIFICIOS && !fin){
@@ -62,7 +62,6 @@ bool Edificio::vacio(){
 	return this->nombre == EDIFICIO_VACIO;
 }
 
-//Privado
 //Q: Se usa? Podriamos usar una lista de edificios con el atributos construido para cuando contamos construidos.
 void Edificio::modificar_construidos(std::size_t n){
 	if(n <= this->maximo_permitidos)
@@ -106,9 +105,9 @@ bool Edificio::operator!=(const Edificio &rhs){
 }
 
 std::string Edificio::a_string(){
-	//TODO: devolver string con formato.
-	// Necesario para imprimir cuando recorremos el diccionario
-	
+	//VER: devolver string con formato.
+	//¿Necesario para imprimir cuando recorremos el diccionario?
+	// Si tenemos la lista de claves, podriamos ahorrarnos imprmir dentro del diccionario.
 	return "";
 }
 

@@ -16,6 +16,9 @@ public:
 	//PRE: -
 	//POST: imprime un saludo por terminal
 	void saludar();
+		
+	//PRE: -
+	//POST: Devuelve NO_REPARABLE
 	Resultado_Chequeos reparar() override;
 
 };

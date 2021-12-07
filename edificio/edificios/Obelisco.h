@@ -18,6 +18,9 @@ public:
 	//PRE: -
 	//POST: imprime un mensaje por consola
 	void saludar();
+
+	//PRE: -
+	//POST: Devuelve NO_REPARABLE
 	Resultado_Chequeos reparar() override;
 };
 #endif /* EDIFICIOS_OBELISCO_H_ */

@@ -1,7 +1,7 @@
 #include "MinaOro.h"
 #include <iostream>
 
-const string NOMBRE_MATERIAL_PRODUCIDO = "andycoins", NOMBRE = "mina oro";
+const std::string NOMBRE_MATERIAL_PRODUCIDO = "andycoins", NOMBRE = "mina oro";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 50;
 
 Mina_Oro::Mina_Oro() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
@@ -13,7 +13,7 @@ Mina_Oro::Mina_Oro(std::size_t piedra, std::size_t madera, std::size_t metal, st
 }
 
 void Mina_Oro::saludar(){
-	cout << "Soy la mina de oro y estoy en el casillero consultado, estoy recolectando monedas!" << endl;
+	std::cout << "Soy la mina de oro y estoy en el casillero consultado, estoy recolectando monedas!" << std::endl;
 }
 
 Resultado_Chequeos Mina_Oro::reparar(){ return NO_REPARABLE;}

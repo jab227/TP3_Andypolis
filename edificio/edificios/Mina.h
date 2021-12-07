@@ -16,6 +16,9 @@ public:
 	//PRE: -
 	//POST: imprime un mensaje por consola
 	void saludar();
+	
+	//PRE: -
+	//POST: Devuelve NO_REPARABLE en caso de que vida = MAX_VIDA. Devuelve REPARABLE en caso contario.
 	Resultado_Chequeos reparar() override;
 };
 

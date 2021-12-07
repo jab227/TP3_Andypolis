@@ -13,9 +13,9 @@ public:
 
 	//PRE: -
 	//POST: se construye un edificio productor con los datos ingresados
-	Productor(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, Material producto);
+	Productor(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, Material producto);
 
-	Productor(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida, Material producto);
+	Productor(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida, Material producto);
 
 
 	//PRE: -

@@ -3,13 +3,11 @@
 
 #include <string>
 
-using namespace std;
-
-const string MATERIAL_VACIO = "";
+const std::string MATERIAL_VACIO = "";
 
 class Material{
 private:
-	string nombre;
+	std::string nombre;
 	std::size_t cantidad;
 
 public:
@@ -19,7 +17,7 @@ public:
 
 	//PRE: -
 	//POST: se crea un material con los datos ingresados
-	Material(string nombre, std::size_t cantidad);
+	Material(std::string nombre, std::size_t cantidad);
 
 	//PRE: -
 	//POST: devuelve el nombre del material
@@ -31,7 +29,7 @@ public:
 
 	//PRE: -
 	//POST: se cambia el nombre del material
-	void cambiar_nombre(string nombre);
+	void cambiar_nombre(std::string nombre);
 
 	//PRE: -
 	//POST: se cmbia la cantidad del material

@@ -1,7 +1,7 @@
 #include "Aserradero.h"
 #include <iostream>
 
-const string NOMBRE_MATERIAL_PRODUCIDO = "madera", NOMBRE = "aserradero";
+const std::string NOMBRE_MATERIAL_PRODUCIDO = "madera", NOMBRE = "aserradero";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 25;
 const std::size_t MAX_VIDA = 1; //Si recibe 1 ataques, se destruye.
 
@@ -13,7 +13,7 @@ Aserradero::Aserradero(std::size_t piedra, std::size_t madera, std::size_t metal
 }
 
 void Aserradero::saludar(){
-	cout << "Soy el "+ NOMBRE +" y estoy en el casillero consultado, estoy tranajando duro!" << endl;
+	std::cout << "Soy el "+ NOMBRE +" y estoy en el casillero consultado, estoy tranajando duro!" << std::endl;
 }
 
 Resultado_Chequeos Aserradero::reparar(){ return NO_REPARABLE;}

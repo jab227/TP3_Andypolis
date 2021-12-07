@@ -6,8 +6,8 @@
 
 const std::size_t CANT_MATERIALES_EDIFICIOS = 3, NINGUNO = 0;
 const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
-const string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
-const string EDIFICIO_VACIO = "";
+const std::string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
+const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
 	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO};
 
@@ -15,7 +15,7 @@ enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA
 class Edificio {
 //Atributos
 private:
-	string nombre;
+	std::string nombre;
 	std::size_t vida;
 	//TODO: Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
@@ -47,7 +47,7 @@ public:
 	//PRE: -
 	//POST: devuelve la cantidad del material ingresado requerido para construirlo. En caso de que
 	//no se requiera ese material, devuelve 0.
-	std::size_t obtener_cant_material(string material) const;
+	std::size_t obtener_cant_material(std::string material) const;
 
 	//PRE: -
 	//POST: devuelve la vida del edificio.

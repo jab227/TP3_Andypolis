@@ -6,12 +6,12 @@ Material::Material(){
 	this -> cantidad = 0;
 }
 
-Material::Material(string nombre, std::size_t cantidad){
+Material::Material(std::string nombre, std::size_t cantidad){
 	this -> nombre = nombre;
 	this -> cantidad = cantidad;
 }
 
-string Material::obtener_nombre() const{
+std::string Material::obtener_nombre() const{
 	return this -> nombre;
 }
 
@@ -19,7 +19,7 @@ std::size_t Material::obtener_cantidad() const{
 	return this -> cantidad;
 }
 
-void Material::cambiar_nombre(string nombre){
+void Material::cambiar_nombre(std::string nombre){
 	this -> nombre = nombre;
 }
 void Material::cambiar_cantidad(std::size_t cantidad){
@@ -31,7 +31,7 @@ void Material::sumar_cantidad(std::size_t cantidad){
 }
 
 void Material::saludar(){
-	cout << "Soy el material " << this -> nombre << " y estoy en el casillero consultado." << endl;
+	std::cout << "Soy el material " << this -> nombre << " y estoy en el casillero consultado." << std::endl;
 }
 
 bool Material::operator==(Material rhs){

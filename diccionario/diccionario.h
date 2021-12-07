@@ -3,6 +3,7 @@
 
 #include <algorithm>
 
+#include "../utils/Lista.h"
 #include "nodo_diccionario.h"
 // La clave deberia mantenerse en algun tipo basico (incluido std::string).
 //        Clave,   Valor
@@ -129,11 +130,22 @@ class Diccionario {
 		copiar(nodo->izquierda());
 		copiar(nodo->derecha());
 	};
+	// Pre: -
+	// Pos: Intercambia los contenidos del diccionario pasado por 
+	// referencia, con los del diccionario sobre el que se llama
 	void swap(Diccionario<T, U>& diccionario) {
 		using std::swap;
 		swap(raiz_, diccionario.raiz_);
 	}
-
+	// Pre:
+	// Pos:
+	void claves(NodoDiccionario<T, U>* nodo, Lista<T>& lista) { 
+		if (nodo != nullptr) {			
+			lista.alta_al_final(nodo->clave());
+			claves(nodo->izquierda(), lista);
+			claves(nodo->derecha(), lista);
+		}
+	};
        public:
 	// Pre: -
 	// Pos: Constructor del diccionario;
@@ -203,6 +215,13 @@ class Diccionario {
 	// Pos: True si existe la clave, False en otro caso.
 	bool existe(const T& clave) {
 		return (search(raiz_, clave) != nullptr);
+	};
+	// Pre: -
+	// Pos: 
+	Lista<T> claves() {
+		Lista<T> lista;
+		claves(raiz_, lista);
+		return lista;
 	};
 };
 

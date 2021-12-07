@@ -32,7 +32,7 @@ void Planos::cargar_edificios(std::string ruta){
 		std::string lectura;
 		Edificio* nuevo_edificio;
 		while(getline(archivo, lectura, ENTER)){
-			//nuevo_edificio = procesar_edificio(lectura);
+			//nuevo_edificio = procesar_edificio(lectura); viejo
 			parser.parse(lectura, nuevo_edificio);
 			agregar_edificio(nuevo_edificio);
 		}

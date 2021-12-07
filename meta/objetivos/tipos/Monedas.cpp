@@ -12,7 +12,7 @@ Monedas::Monedas(Jugador* jugador) : Objetivo(jugador){
 
 bool Monedas::actualizar(){
 	if(!this -> cumplido){
-		Material monedas = Material("andycoins", 0);
+		Material monedas("andycoins", 0);
 		this -> jugador -> obtener_inventario() -> buscar_material(monedas);
 		if(monedas.obtener_cantidad() > this -> monedas_actuales)
 			this -> monedas_juntadas += monedas.obtener_cantidad() - this -> monedas_actuales;

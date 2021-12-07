@@ -43,7 +43,7 @@ void Almacen::agregar_material(Material material, std::size_t posicion){
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
 std::size_t Almacen::buscar_material(Material& a_buscar){
-	std::size_t i = 0;
+	std::size_t i = 1;		//La lista empieza por 1, si pones 0 da error.
 	std::size_t indice = NO_ENCONTRADO;
 	while(!indice && i <= this -> lista_materiales.consulta_largo()){
 		if (this -> lista_materiales.consulta(i) == a_buscar ){

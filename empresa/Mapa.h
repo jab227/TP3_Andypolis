@@ -106,11 +106,11 @@ private:
 
 	//PRE: ruta debe ser a un archivo existente y bien cargado para el mapa
 	//POST: se carga el mapa con los casilleros correspondientes a los datos del archivo
-	void cargar_terreno(std::string ruta);
+	void cargar_terreno(const std::string& terreno);
 
 	//PRE: lectura debe ser la linea con los terrenos de la fila filas bien formada de largo columnas
 	//POST: se agregan los casilleros vacios a la fila segun la lectura
-	void  iniciar_filas_casilleros(std::size_t filas, std::string lectura);
+	void  iniciar_filas_casilleros(std::size_t fila, const std::string& mapa);
 
 	//PRE: el ocupador debe ser un material o edificio valido
 	//POST: se devuelve la letra dentificadora del ocupador

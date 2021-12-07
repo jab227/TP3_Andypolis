@@ -1,12 +1,14 @@
 #include "Mapa.h"
+
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <random>
-#include <ctime>
+
+#include "../Casillero/Casillero.h"
 #include "../Casillero/CasilleroConstruible.h"
 #include "../Casillero/CasilleroInaccesible.h"
 #include "../Casillero/CasilleroTransitable.h"
-#include "../Casillero/Casillero.h"
 #include "../utils/LecturaArchivos.h"
 
 const std::string UBICACION_VACIA = " ", TIPO_TERRENO_VACIO = "";
@@ -14,62 +16,61 @@ const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
 const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
 const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
 
-Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas) : filas(filas), columnas(columnas), terreno(nullptr) {
-	this -> cargar_terreno(mapa);
-	srand((unsigned int) time(0)); 	//Genero una semilla aleatoria
+Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
+    : filas(filas), columnas(columnas), terreno(nullptr) {
+	this->cargar_terreno(mapa);
+	srand((unsigned int)time(0));  // Genero una semilla aleatoria
 }
 
 Mapa::~Mapa() {
-	for(std::size_t i = 0; i < this -> filas; i++){
-		for(std::size_t j = 0; j < this -> columnas; j++){
-			delete this -> terreno[i][j];
+	for (std::size_t i = 0; i < this->filas; i++) {
+		for (std::size_t j = 0; j < this->columnas; j++) {
+			delete this->terreno[i][j];
 		}
-		delete [] this -> terreno[i];
+		delete[] this->terreno[i];
 	}
-	delete [] this -> terreno;
+	delete[] this->terreno;
 }
 
-//TODO: Adaptar al parser.
-void Mapa::cargar_terreno(std::string ruta){
-	ifstream archivo(ruta);
-	if (archivo.is_open()){
-		std::string lectura;
-		getline(archivo, lectura, ENTER);
-		cargar_fila_columna(lectura, this -> filas, this -> columnas);
-		this -> terreno = new Casillero** [this -> filas];
-        for(std::size_t i = 0; i < this -> filas; i++){
-            this -> iniciar_filas_casilleros(i,  lectura);
-        }
-    }
-    
-}
-//TODO: Adaptar al parser.
-void Mapa::iniciar_filas_casilleros(std::size_t filas, std::string lectura){
-	this -> terreno[filas] = new Casillero* [this -> columnas];
-	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
-        this -> terreno[filas][columnas] = traductor_casillero(lectura[2*columnas]);
+void Mapa::cargar_terreno(const std::string& mapa) {
+	this->terreno = new Casillero**[this->filas];
+	for (std::size_t fila = 0; fila < this->filas; fila++) {
+		this->iniciar_filas_casilleros(fila, mapa);
 	}
 }
 
-bool Mapa::es_cordenada_valida(const Coordenada& coordenada){
-	return (coordenada.x() < this -> filas && coordenada.y() < this -> columnas);
+void Mapa::iniciar_filas_casilleros(std::size_t fila, const std::string& mapa) {
+	this->terreno[filas] = new Casillero*[this->columnas];
+	for (std::size_t columnas = 0; columnas < this->columnas; columnas++) {
+		this->terreno[filas][columnas] =
+		    traductor_casillero(mapa[columnas]);
+	}
 }
 
-void Mapa::mostrar_mapa(){
-	std::cout << "Mapa:" << std::endl;
-	std::cout << "   ";
-	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++)
-		std::cout << ' ' << columnas/10 << ' ';
-	std::cout << std::endl << "   ";
-	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++)
-		std::cout << ' ' << columnas%10 << ' ';
-	std::cout << std::endl;
-	for(std::size_t filas = 0; filas < this -> filas; filas++){
-		std::cout << filas/10 << filas%10 << ' ';
-		for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
-			//identificardor_ocupados, le das un nombre y te devuelve el icono. Ver mas adelante si cambiarlo.
-			std::cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
-					<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
+bool Mapa::es_cordenada_valida(std::size_t fila, std::size_t columna) {
+	return (fila < this->filas && columna < this->columnas);
+}
+
+void Mapa::mostrar_mapa() {
+	cout << "Mapa:" << endl;
+	cout << "   ";
+	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
+		cout << ' ' << columnas / 10 << ' ';
+	cout << endl << "   ";
+	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
+		cout << ' ' << columnas % 10 << ' ';
+	cout << endl;
+	for (std::size_t filas = 0; filas < this->filas; filas++) {
+		cout << filas / 10 << filas % 10 << ' ';
+		for (std::size_t columnas = 0; columnas < this->columnas;
+		     columnas++) {
+			cout << this->terreno[filas][columnas]->obtener_color()
+			     << ' '
+			     << this->identificador_ocupados(
+				    this->terreno[filas][columnas]
+					->obtener_contenido())
+			     << ' ';
+>>>>>>> DiccionarioEdificios
 		}
 		std::cout << std::endl << FIN_COLOR;
 	}
@@ -140,6 +141,7 @@ bool Mapa::generar_materiales_aleatorios(){
 		if((madera_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
 			generar_material(MATERIALES_EDIFICIOS[MADERA], casilleros_libres->consulta(n_casillero));
+
 			madera_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 
@@ -147,21 +149,25 @@ bool Mapa::generar_materiales_aleatorios(){
 		if((metal_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
 			generar_material(MATERIALES_EDIFICIOS[METAL], casilleros_libres->consulta(n_casillero));
+
 			metal_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
 		a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar);
 		mapa_ocupado = casilleros_libres -> vacia();
+		a_generar =
+		    piedra_a_generar + madera_a_generar + metal_a_generar;
 	}
 	delete casilleros_libres;
 	return mapa_ocupado;
 }
 
+// Ver si es necesario.
 void Mapa::generar_material(std::string material, Coordenada coordenada){
 	this -> poner_material_ubicacion(material, coordenada);	
 }
 
-std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo){
+std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {
 	std::size_t numero = rand() % (maximo - minimo + 1) + minimo;
 	return numero;
 }
@@ -193,23 +199,23 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 	std::string identificador = UBICACION_VACIA;
 	if(ocupador == "mina")
 		identificador = "M";
-	else if(ocupador == "aserradero")
+	else if (ocupador == "aserradero")
 		identificador = "A";
-	else if(ocupador == "fabrica")
+	else if (ocupador == "fabrica")
 		identificador = "F";
-	else if(ocupador == "escuela")
+	else if (ocupador == "escuela")
 		identificador = "E";
-	else if(ocupador == "obelisco")
+	else if (ocupador == "obelisco")
 		identificador = "O";
-	else if(ocupador == "planta electrica")
+	else if (ocupador == "planta electrica")
 		identificador = "P";
-	else if(ocupador == "madera")
+	else if (ocupador == "madera")
 		identificador = "W";
-	else if(ocupador == "piedra")
+	else if (ocupador == "piedra")
 		identificador = "S";
-	else if(ocupador == "metal")
+	else if (ocupador == "metal")
 		identificador = "I";
-	else if(ocupador == "mina oro")
+	else if (ocupador == "mina oro")
 		identificador = "G";
 	return identificador;
 }

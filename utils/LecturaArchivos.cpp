@@ -65,15 +65,20 @@ Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t mad
 	return edificio;
 }
 
-Casillero* traductor_casillero(char nombre){
-    Casillero* casillero;
-	if (nombre == INACCESIBLE)
-        casillero = new Casillero_Inaccesible();
-    //else if(nombre == TRANSITABLE)
-        //casillero = new Casillero_Transitable(); Correcion provisoria
-    else if(nombre == CONSTRUIBLE)
-        casillero = new Casillero_Construible();
-    return casillero;
+
+Casillero* traductor_casillero(char nombre) {
+	Casillero* casillero;
+	if (nombre == BETUN)
+		casillero = new Betun();
+	if (nombre == CAMINO)
+		casillero = new Camino();
+	else if (nombre == LAGO)
+		casillero = new Lago();
+	else if (nombre == MUELLE)
+		casillero = new Muelle();
+	else if (nombre == TERRENO)
+		casillero = new Terreno();
+	return casillero;
 }
 
 Material* traductor_materiales(std::string nombre, std::size_t cantidad) {

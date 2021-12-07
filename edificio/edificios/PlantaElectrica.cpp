@@ -20,4 +20,4 @@ void Planta_Electrica::saludar(){
 	cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy para que la electricidad no se corte!" << endl;
 }
 
-Resultado_Chequeos reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Planta_Electrica::reparar(){ return NO_REPARABLE;}

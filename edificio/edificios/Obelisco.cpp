@@ -14,5 +14,5 @@ void Obelisco::saludar(){
 	cout << "Soy el "+NOMBRE+" y estoy en el casillero consultado, estoy luciendome a lo alto!" << endl;
 }
 
-Resultado_Chequeos reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Obelisco::reparar(){ return NO_REPARABLE;}
 

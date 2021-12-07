@@ -5,7 +5,7 @@ const string NOMBRE_MATERIAL_PRODUCIDO = "piedra", NOMBRE = "mina";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 15;
 const std::size_t MAX_VIDA = 2; //Si recibe dos ataques, se destruye.
 
-Mina::Mina() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
+Mina::Mina() : Productor(NOMBRE, 0, 0, 0, 0, MAX_VIDA ,Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
 }
 
 Mina::Mina(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos):

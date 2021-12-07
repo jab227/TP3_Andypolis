@@ -9,14 +9,14 @@ const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
 const string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
-	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR, NO_REPARABLE};
+	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO};
 
 
 class Edificio {
 //Atributos
 private:
 	string nombre;
-	std::size_t vida; //TODO: Inicializar vida para mina y fabrica.
+	std::size_t vida;
 	//TODO: Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
@@ -68,6 +68,7 @@ public:
 	//PRE: -
 	//POST: devuelve true si los construidos es igual o mayor a los permitidos.
 	Resultado_Chequeos esta_maxima_capacidad(const std::size_t &construidos);
+	
 	//PRE -
 	//POST: devuelve el material producido por el edficio en caso de que sea un productor. Devuelve un
 	//material vacio en caso contratrio.
@@ -104,9 +105,17 @@ public:
 	//TODO: Hacer a_string() que devuelva la info en formato "tabla";
 	std::string a_string();
 
+	//PRE: -
+	//POST: Devuelve NO_REPARABLE si la vida está al máximo. Devuelve REPARABLE si 0 < vida < MAX_VIDA.
 	virtual Resultado_Chequeos reparar() = 0;
 
+	//PRE: -
+	//POST: Resta 1 de vida al edificio. Devuelve DESTRUIDO si el edificio tiene 0 de vida. Devuelve REPARABLE si aún tiene.
+	Resultado_Chequeos disminuir_vida();
+
 protected: // Solo me interesa que puedan cambiarlo las hijas si lo necesitan.
+	//PRE: -
+	//POST: Suma 1 de vida al edificio.
 	void recuperar_vida();
 
 };

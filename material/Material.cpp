@@ -40,4 +40,5 @@ bool Material::operator==(Material rhs){
 
 void Material::operator=(Material rhs){
 	this -> nombre = rhs.obtener_nombre();
+	this -> cantidad = rhs.obtener_cantidad();
 }

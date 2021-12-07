@@ -57,23 +57,26 @@ std::size_t Edificio::obtener_max_permitidos() const{
 	return this->maximo_permitidos;
 }
 
+//Q: se usa?
 bool Edificio::vacio(){
 	return this->nombre == EDIFICIO_VACIO;
 }
 
+//Privado
+//Q: Se usa? Podriamos usar una lista de edificios con el atributos construido para cuando contamos construidos.
 void Edificio::modificar_construidos(std::size_t n){
 	if(n <= this->maximo_permitidos)
 		this->construidos = n;
 }
-
+//Q: Se usa?
 void Edificio::aumentar_construidos(){
 	this->modificar_construidos(this -> construidos + 1);
 }
-
+//Q: Se usa?
 void Edificio::disminuir_construidos(){
 	this->modificar_construidos(this -> construidos - 1);	
 }
-
+//Q: Se usa?
 std::size_t Edificio::obtener_construidos(){
 	return this->construidos;
 }
@@ -115,4 +118,11 @@ std::size_t Edificio::obtener_vida() const{
 
 void Edificio::recuperar_vida(){
 	++(this -> vida);
+}
+
+Resultado_Chequeos Edificio::disminuir_vida(){
+	Resultado_Chequeos resultado = DESTRUIDO;
+	if(this->vida)	--(this->vida);
+	if(this->vida) resultado = REPARABLE;
+	return resultado;
 }

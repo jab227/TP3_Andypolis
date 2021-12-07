@@ -6,7 +6,7 @@
 #include "../edificio/Edificio.h"
 
 const int NO_ENCONTRADO = 0;
-string const SALIR_STR = "salir";
+std::string const SALIR_STR = "salir";
 
 class Almacen {
 private:
@@ -19,7 +19,7 @@ public:
 
 	//PRE: ruta debe ser una ruta a un archivo bien estructurado.
 	//POST: creo un almacen inicializado con el archivo en la ruta espesificada.
-	Almacen(string ruta);
+	Almacen(std::string ruta);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada
@@ -28,13 +28,13 @@ public:
 	//PRE: se le debe pasar la ruta del archivo a abrir el cual debe estar bien estructurado
 	//POST: en caso de poder abrir el archivo, se agregan los materiales del archivo a la
 	//lista
-	void cargar_materiales(string ruta);
+	void cargar_materiales(std::string ruta);
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
 	//POST: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
 	//se realiza ningun cambio. La cantidad puede ser negativa, en tal caso se restara.
 	
-	void sumar_cantidad_material(string a_cambiar, int cantidad);
+	void sumar_cantidad_material(std::string a_cambiar, int cantidad);
 	//Le puse sumar, porque modificar pareciera no suma, sino que reemplaza el valor.
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
@@ -44,7 +44,7 @@ public:
 	//PRE: almacen debe ser puntero a estructura existente, es decir, != nullptr.
 	//POST: se guardan los datos de los edificios en el archivo de salida en caso
 	//de que exista y devuelve true. De lo contrario devuelve false.
-	bool guardar_materiales(string ruta);
+	bool guardar_materiales(std::string ruta);
 
 
 //TODO: Sobrecarga de hay_material_suficiente y hay_lista_materiales.

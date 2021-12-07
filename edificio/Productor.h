@@ -17,7 +17,6 @@ public:
 
 	Productor(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida, Material producto);
 
-
 	//PRE: -
 	//POST: devuelve el material que produce este edificio
 	Material producir_material();

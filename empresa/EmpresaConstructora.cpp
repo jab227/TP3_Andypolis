@@ -2,7 +2,7 @@
 #include <fstream>
 #include "../utils/LecturaArchivos.h"
 
-string const SI = "si", NO = "no";
+std::string const SI = "si", NO = "no";
 const int COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
 
 
@@ -21,7 +21,7 @@ Empresa_Constructora::~Empresa_Constructora() {
 		delete this -> mapa;
 }
 
-bool Empresa_Constructora::cargar_archivos(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones){
+bool Empresa_Constructora::cargar_archivos(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaiones){
 	this -> almacen = new Almacen(ruta_materiales);
 	this -> planos = new Planos(ruta_edificios);
 	this -> mapa = new Mapa(ruta_mapa);
@@ -54,21 +54,21 @@ void Empresa_Constructora::consultar_coordenada(){
 	mostrar_mensaje_chequeo(resultado);
 }
 
-void Empresa_Constructora::guardar_archivos(string ruta_materiales, string ruta_ubicaciones){
+void Empresa_Constructora::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){
 	this -> almacen -> guardar_materiales(ruta_materiales);
 	this -> guardar_ubicaciones(ruta_ubicaciones);
 }
 
 //TODO: Reemplazable con el ParserUbicacion
-bool Empresa_Constructora::cargar_ubicaciones(string ruta, Jugador* jugador){
+bool Empresa_Constructora::cargar_ubicaciones(std::string ruta, Jugador* jugador){
 	bool existe = false;
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
-		string lectura;
+		std::string lectura;
 		std::size_t cant_agregados = 0;
 		Coordenada coordenada = Coordenada(0,0);
 		
-		string nuevo_contenido;
+		std::string nuevo_contenido;
 		while(getline(archivo, lectura, ENTER)){
 			nuevo_contenido = procesar_ubicacion(lectura, coordenada);
 			sumar_contenido(nuevo_contenido, coordenada, jugador);
@@ -80,9 +80,9 @@ bool Empresa_Constructora::cargar_ubicaciones(string ruta, Jugador* jugador){
 	return existe;
 }
 
-void Empresa_Constructora::guardar_ubicaciones(string ruta){
+void Empresa_Constructora::guardar_ubicaciones(std::string ruta){
 	ofstream archivo(ruta);
-	string contenido;
+	std::string contenido;
 	if (archivo.is_open()){
 		std::size_t fila = 0, columna = 0;
 		Coordenada coordenada = Coordenada(fila,columna);
@@ -100,7 +100,7 @@ void Empresa_Constructora::guardar_ubicaciones(string ruta){
 }
 
 //TODO: Reemplazable con el ParserUbicacion
-void Empresa_Constructora::sumar_contenido(string contenido, Coordenada coordenada, Jugador* jugador){
+void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coordenada, Jugador* jugador){
 	if(Planos::existe(contenido)){
 		this -> mapa -> construir_edificio_ubicacion(contenido, coordenada);
 		Coordenada* ptr_coordenada = new Coordenada(coordenada);
@@ -134,7 +134,7 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 	std::string edificio = pedir_edificio(jugador);
 	if(edificio != EDIFICIO_VACIO){
 		std::cout << "Desea realmente construir el edificio: " << edificio << "? [si/no]" << std::endl;
-		string respuesta = pedir_si_no();
+		std::string respuesta = pedir_si_no();
 		if(respuesta == SI){
 			Coordenada coordenada = Coordenada(0,0);
 			Resultado_Chequeos resultado = this -> pedir_coordenadas(coordenada);
@@ -171,7 +171,7 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 
 std::string Empresa_Constructora::pedir_edificio( Jugador* jugador){
 	bool fin = false;
-	string edificio_ingresado;
+	std::string edificio_ingresado;
 	Resultado_Chequeos chequeo;
 	do{
 		std::cout << "Elegi el edificio que queres construir o salir" << std::endl << "Edificio: ";
@@ -185,7 +185,7 @@ std::string Empresa_Constructora::pedir_edificio( Jugador* jugador){
 
 //TODO: Constructo de copia?? Asi no tenemos que pasarle una coordenada creada.
 Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
-	string fila_ingresada, columna_ingresada;
+	std::string fila_ingresada, columna_ingresada;
 	
 	std::cout << "Elegi las coordenadas del edificio que queres construir o salir" << std::endl << "Fila: ";
 	getline(cin, fila_ingresada);
@@ -207,7 +207,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_construir(const std::string& ed
 	return resultado;
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(string fila_ingresada, string columna_ingresada, Coordenada coordenada){
+Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada coordenada){
 	Resultado_Chequeos resultado = EXITO;
 	
 	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR) resultado = SALIR;
@@ -255,8 +255,8 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 	return fin;
 }
 
-string Empresa_Constructora::pedir_si_no(){
-	string respuesta;
+std::string Empresa_Constructora::pedir_si_no(){
+	std::string respuesta;
 	std::cout << "Respuesta:   ";
 	getline(cin, respuesta);
 	while(respuesta != SI && respuesta != NO){
@@ -320,7 +320,7 @@ Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
 	return chequeo_bombas(cantidad_ingresada, bombas);
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_bombas(string bombas_ingresadas, std::size_t &bombas){
+Resultado_Chequeos Empresa_Constructora::chequeo_bombas(std::string bombas_ingresadas, std::size_t &bombas){
 	Resultado_Chequeos resultado = EXITO;
 	if(bombas_ingresadas == SALIR_STR) resultado = SALIR;
 	else if(!es_numero(bombas_ingresadas)) resultado = NO_EXISTE;

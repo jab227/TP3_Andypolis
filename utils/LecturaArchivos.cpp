@@ -75,10 +75,10 @@ Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t mad
 
 Casillero* traductor_casillero(char nombre){
     Casillero* casillero;
-    if(nombre == TRANSITABLE)
-        casillero = new Casillero_Transitable();
-    else if (nombre == INACCESIBLE)
+	if (nombre == INACCESIBLE)
         casillero = new Casillero_Inaccesible();
+    //else if(nombre == TRANSITABLE)
+        //casillero = new Casillero_Transitable(); Correcion provisoria
     else if(nombre == CONSTRUIBLE)
         casillero = new Casillero_Construible();
     return casillero;

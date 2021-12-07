@@ -4,25 +4,25 @@
 
 #include "../utils/LecturaArchivos.h"
 
-const string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
+const std::string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
 const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = 0;
 
 Almacen::Almacen() {
 }
 
-Almacen::Almacen(string ruta) {
+Almacen::Almacen(std::string ruta) {
 	this -> cargar_materiales(ruta);
 }
 
 Almacen::~Almacen() {
 }
 
-void Almacen::cargar_materiales(string ruta){
+void Almacen::cargar_materiales(std::string ruta){
 	ifstream archivo;
 	archivo.open(ruta);
 	if (archivo.is_open()){
-		string linea;
+		std::string linea;
 		Material nuevo_material;
 		std::size_t cant_agregados = 0;
 		while(getline(archivo, linea, ENTER)){
@@ -57,7 +57,7 @@ std::size_t Almacen::buscar_material(Material& a_buscar){
 
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
-void Almacen::sumar_cantidad_material(string a_cambiar, int cantidad){
+void Almacen::sumar_cantidad_material(std::string a_cambiar, int cantidad){
 	Material material_a_cambiar = Material(a_cambiar,0);
 	//VER: si nos podemos ahorrar ciclos (Eficiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
@@ -75,7 +75,7 @@ void Almacen::mostrar_materiales(){
 	}
 }
 
-bool Almacen::guardar_materiales(string path){
+bool Almacen::guardar_materiales(std::string path){
 	ofstream archivo(path);
 	bool salida = false;
 
@@ -136,7 +136,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas){
 	Material andycoins = Material(NOMBRES_MATERIALES[3],0);
 	buscar_material(andycoins);
 	int gasto = cantidad_bombas * PRECIO_BOMBA;
-	if(andycoins.obtener_cantidad() < gasto){
+	if((int) andycoins.obtener_cantidad() < gasto){
 		cout << "Compraste " << cantidad_bombas << " bombas exitosamente."  << endl;
 		this -> sumar_cantidad_material(NOMBRES_MATERIALES[4], cantidad_bombas);
 		this -> sumar_cantidad_material(NOMBRES_MATERIALES[3], -gasto);

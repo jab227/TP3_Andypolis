@@ -7,7 +7,7 @@ Planos::Planos() {
  }
 
 //Cuando este el Parser, hacer que reciba los datos.
-Planos::Planos(string ruta){
+Planos::Planos(std::string ruta){
 	this -> cargar_edificios(ruta);
 }
 
@@ -21,10 +21,10 @@ void Planos::agregar_edificio(Edificio* edificio){
 }
 
 //PARSER: Reemplazable con el Parser_Ubicacion.
-void Planos::cargar_edificios(string ruta){
+void Planos::cargar_edificios(std::string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
-		string lectura;
+		std::string lectura;
 		Edificio* nuevo_edificio;
 		while(getline(archivo, lectura, ENTER)){
 			nuevo_edificio = procesar_edificio(lectura);
@@ -36,16 +36,16 @@ void Planos::cargar_edificios(string ruta){
 
 //TODO: Agregar vector con claves del diccionario para poder recorrerla.
 void Planos::mostrar_edificios(){
-	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
+	std::cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << std::endl;
 	/*
 	Edificio* consultado = this -> lista_edificios[key];
-		cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
+		std::cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
 				    << consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"
 					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[MADERA]) << "\t|"
 					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[METAL])  << "\t|"
 					<< consultado -> obtener_construidos()  << "\t\t|"
 					<< consultado -> obtener_max_permitidos() - consultado -> obtener_construidos() << "\t\t|"
-					<< material_producido(consultado) << "\t\t|" << endl;
+					<< material_producido(consultado) << "\t\t|" << std::endl;
 	}
 	*/
 }
@@ -98,7 +98,7 @@ void Planos::aumentar_construidos_edificio(const Edificio* &edificio){
 	}
 }
 
-void Planos::disminuir_construidos_edificio(const string &edificio){
+void Planos::disminuir_construidos_edificio(const std::string &edificio){
 	bool encontrado = false;
 	std::size_t i = 1;
 	Edificio* buscado;
@@ -116,14 +116,14 @@ void Planos::disminuir_construidos_edificio(const string &edificio){
 void Planos::mostrar_materiales_producidos(Lista<Material>* listado){
 	//Podria reemplazarse por simple while, pero como aviso cuando no hay edif productor?
 	if(listado -> consulta_largo() > 0){
-		cout << "Se produjo: " << endl;
+		std::cout << "Se produjo: " << std::endl;
 		for(std::size_t i = 1; i <= listado -> consulta_largo(); i++){
 			Material material = listado -> consulta(i);
-			cout << "- " << material.obtener_cantidad() << " de " << material.obtener_nombre() << endl;
+			std::cout << "- " << material.obtener_cantidad() << " de " << material.obtener_nombre() << std::endl;
 		}
 	}else
-		cout << "No hay edificios construidos que produzcan materiales.\n"
-				"Construyo alguno para empezar a producir!" << endl;
+		std::cout << "No hay edificios construidos que produzcan materiales.\n"
+				"Construyo alguno para empezar a producir!" << std::endl;
 }
 
 

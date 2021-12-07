@@ -9,13 +9,13 @@
 #include "../Casillero/Casillero.h"
 #include "../utils/LecturaArchivos.h"
 
-const string UBICACION_VACIA = " ", TIPO_TERRENO_VACIO = "";
+const std::string UBICACION_VACIA = " ", TIPO_TERRENO_VACIO = "";
 const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
 const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
 const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
 
 //TODO: Adaptar al parser.
-Mapa::Mapa(string ruta) {
+Mapa::Mapa(std::string ruta) {
 	this -> columnas = 0;
 	this -> filas = 0;
 	this -> terreno = nullptr;
@@ -35,10 +35,10 @@ Mapa::~Mapa() {
 }
 
 //TODO: Adaptar al parser.
-void Mapa::cargar_terreno(string ruta){
+void Mapa::cargar_terreno(std::string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
-		string lectura;
+		std::string lectura;
 		getline(archivo, lectura, ENTER);
 		cargar_fila_columna(lectura, this -> filas, this -> columnas);
 		this -> terreno = new Casillero** [this -> filas];
@@ -51,7 +51,7 @@ void Mapa::cargar_terreno(string ruta){
     
 }
 //TODO: Adaptar al parser.
-void Mapa::iniciar_filas_casilleros(std::size_t filas, string lectura){
+void Mapa::iniciar_filas_casilleros(std::size_t filas, std::string lectura){
 	this -> terreno[filas] = new Casillero* [this -> columnas];
 	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
         this -> terreno[filas][columnas] = traductor_casillero(lectura[2*columnas]);
@@ -63,24 +63,24 @@ bool Mapa::es_cordenada_valida(const Coordenada& coordenada){
 }
 
 void Mapa::mostrar_mapa(){
-	cout << "Mapa:" << endl;
-	cout << "   ";
+	std::cout << "Mapa:" << std::endl;
+	std::cout << "   ";
 	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++)
-		cout << ' ' << columnas/10 << ' ';
-	cout << endl << "   ";
+		std::cout << ' ' << columnas/10 << ' ';
+	std::cout << std::endl << "   ";
 	for(std::size_t columnas = 0; columnas < this -> columnas; columnas++)
-		cout << ' ' << columnas%10 << ' ';
-	cout << endl;
+		std::cout << ' ' << columnas%10 << ' ';
+	std::cout << std::endl;
 	for(std::size_t filas = 0; filas < this -> filas; filas++){
-		cout << filas/10 << filas%10 << ' ';
+		std::cout << filas/10 << filas%10 << ' ';
 		for(std::size_t columnas = 0; columnas < this -> columnas; columnas++){
 			//identificardor_ocupados, le das un nombre y te devuelve el icono. Ver mas adelante si cambiarlo.
-			cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
+			std::cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
 					<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
 		}
-		cout << endl << FIN_COLOR;
+		std::cout << std::endl << FIN_COLOR;
 	}
-	cout << FIN_COLOR;
+	std::cout << FIN_COLOR;
 }
 
 void Mapa::saludar_coordenada(const Coordenada& coordenada){
@@ -107,7 +107,7 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(std::string& edificio, const
 
 
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
-void Mapa::poner_material_ubicacion(string material,const Coordenada& coordenada){
+void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
 	( (Casillero_Transitable*) this -> terreno[coordenada.x()][coordenada.y()] ) ->
 			agregar_material(traductor_materiales(material, 0));
 }
@@ -118,8 +118,8 @@ void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* 
 }
 
 //WHY: Se usa?
-string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) const{
-	string contenido = CONTENIDO_VACIO;
+std::string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) const{
+	std::string contenido = CONTENIDO_VACIO;
 	//Depende para que lo usemos. Hay una sobrecarga de obtener_contenido. Una para edificios y otra para materiales.
 	//contenido = terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	return contenido;
@@ -164,7 +164,7 @@ bool Mapa::generar_materiales_aleatorios(){
 	return mapa_ocupado;
 }
 
-void Mapa::generar_material(string material, Coordenada coordenada){
+void Mapa::generar_material(std::string material, Coordenada coordenada){
 	this -> poner_material_ubicacion(material, coordenada);	
 }
 
@@ -196,8 +196,8 @@ void Mapa::vaciar_materiales(){
 }
 
 //TODO: Modificar la logica para que no sea necesario.
-string Mapa::identificador_ocupados(string ocupador){
-	string identificador = UBICACION_VACIA;
+std::string Mapa::identificador_ocupados(std::string ocupador){
+	std::string identificador = UBICACION_VACIA;
 	if(ocupador == "mina")
 		identificador = "M";
 	else if(ocupador == "aserradero")

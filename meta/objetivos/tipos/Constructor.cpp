@@ -1,7 +1,7 @@
 #include "Constructor.h"
 
-Constructor::Constructor(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Constructor";
+const std::string NOMBRE = "Constructor";
+Constructor::Constructor(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 }
 
 Constructor::~Constructor(){ }

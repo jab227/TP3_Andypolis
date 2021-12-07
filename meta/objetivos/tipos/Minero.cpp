@@ -1,7 +1,7 @@
 #include "Minero.h"
 
-Minero::Minero(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Minero";
+const std::string NOMBRE = "Minero";
+Minero::Minero(Jugador* jugador) : Objetivo(NOMBRE,jugador) {
 }
 
 Minero::~Minero(){ }

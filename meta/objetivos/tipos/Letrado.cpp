@@ -1,7 +1,8 @@
 #include "Letrado.h"
 
-Letrado::Letrado(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Letrado.h";
+const std::string NOMBRE = "Letrado.h";
+
+Letrado::Letrado(Jugador* jugador) : Objetivo(NOMBRE,jugador) {
 }
 
 Letrado::~Letrado(){ }

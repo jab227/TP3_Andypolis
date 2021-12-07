@@ -19,10 +19,10 @@ void TablePrinter::print_row(const Material*  material, std::ostream& stream) co
 void TablePrinter::print_row(const Edificio* edificio, std::ostream& stream) const{
 	std::string name = edificio->obtener_nombre();
 	print_table_cell( name , stream);
-	//TODO: Adaptar a los materiales. Hacer lista de materiales.
-	for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
-		print_table_cell( std::to_string(edificio->obtener_cant_material("madera")), stream );
-	
+	//for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
+	print_table_cell( std::to_string(edificio->obtener_cant_material("madera")), stream );
+	print_table_cell( std::to_string(edificio->obtener_cant_material("piedra")), stream );
+	print_table_cell( std::to_string(edificio->obtener_cant_material("metal")), stream );
 	print_table_cell( std::to_string(edificio->obtener_max_permitidos()), stream);
 	print_table_cell(edificio->info_producto(), stream);
 	//TODO: Constante
@@ -31,7 +31,7 @@ void TablePrinter::print_row(const Edificio* edificio, std::ostream& stream) con
 }
 
 void TablePrinter::print_row(const Lista<std::string> header, std::ostream& stream) const{
-	for(std::size_t i = 1; i < header.consulta_largo(); i++) {
+	for(std::size_t i = 1; i <= header.consulta_largo(); i++) {
 		print_table_cell(header.consulta(i), stream);
 	}
 	print_row_separator(header.consulta_largo(), stream);

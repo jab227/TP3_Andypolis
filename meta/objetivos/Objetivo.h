@@ -6,13 +6,13 @@
 class Objetivo {
 //Atributos
 protected:
-	bool cumplido;
-	Jugador* jugador;
 	std::string titulo;
+	Jugador* jugador;
+	bool cumplido;
 public:
 	//PRE: el jugador debe estar bien cargado
 	//POST: se crea un objetivo para el jugador
-	Objetivo(Jugador* jugador);
+	Objetivo(std::string titulo, Jugador* jugador);
 
 	//PRE: -
 	//POST: se destruye el objetivo

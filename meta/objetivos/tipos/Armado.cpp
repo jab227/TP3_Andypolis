@@ -1,9 +1,9 @@
 #include "Armado.h"
 
 const std::size_t BOMBAS_A_OBTENER = 10;
+const std::string NOMBRE = "Armado";
 
-Armado::Armado(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Armado";
+Armado::Armado(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 }
 
 Armado::~Armado(){ }

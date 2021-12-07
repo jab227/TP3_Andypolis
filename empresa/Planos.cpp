@@ -2,63 +2,40 @@
 #include "../edificio/Productor.h"
 #include "../utils/LecturaArchivos.h"
 #include "../parser/parser_edificio.h"
+#include "../printer/table_printer.h"
 #include <fstream>
 
 Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
 
 Planos::Planos() {
 }
-
-//Cuando este el Parser, hacer que reciba los datos.
-Planos::Planos(std::string ruta){
-	//this -> cargar_edificios(ruta);
+Planos::Planos(Diccionario<std::string, Edificio*> diccionario) {
+	Planos::lista_edificios = diccionario;
 }
-
-Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
-
 
 Planos::~Planos() {
 	//delete lista_edificios;
 }
 
-//PARSER: Reemplazable con el Parser_Ubicacion.
-/*
-void Planos::agregar_edificio(Edificio* edificio){
-	lista_edificios.insertar(edificio -> obtener_nombre(), edificio);
-}
-*/
-//PARSER: Reemplazable con el Parser_Ubicacion.
-/*
-void Planos::cargar_edificios(std::string ruta){
-	ifstream archivo(ruta);
-	if (archivo.is_open()){
-		ParserEdificio parser;
-		std::string lectura;
-		Edificio* nuevo_edificio;
-		while(getline(archivo, lectura, ENTER)){
-			//nuevo_edificio = procesar_edificio(lectura); viejo
-			parser.parse(lectura, nuevo_edificio);
-			agregar_edificio(nuevo_edificio);
-		}
-	}
-	archivo.close();
-}
-*/
-//TODO: Agregar vector con claves del diccionario para poder recorrerla.
+
+//EMBELLECER.
 void Planos::mostrar_edificios(){
-	std::cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << std::endl;
-	/*
-	Edificio* consultado = this -> lista_edificios[key];
-		std::cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
-				    << consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"
-					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[MADERA]) << "\t|"
-					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[METAL])  << "\t|"
-					<< consultado -> obtener_construidos()  << "\t\t|"
-					<< consultado -> obtener_max_permitidos() - consultado -> obtener_construidos() << "\t\t|"
-					<< material_producido(consultado) << "\t\t|" << std::endl;
+	TablePrinter printer;
+	Lista<std::string> header; > //feo pero comodo jaja
+	header.alta_al_final("Edificio");
+	header.alta_al_final("Piedra");
+	header.alta_al_final("Madera");
+	header.alta_al_final("Metal");
+	header.alta_al_final("Cantidad permitida");
+	header.alta_al_final("Material producido");
+	printer.print_row(header, std::cout);
+	Lista<std::string> claves = lista_edificios.claves();
+	for(std::size_t i = 1; i <= claves.consulta_largo(); i++){
+		Edificio* consultado = this -> lista_edificios[claves.consulta(i)];
+		printer.print_row(consultado, std::cout);
 	}
-	*/
 }
+
 
 
 std::string Planos::material_producido( Edificio* edificio){

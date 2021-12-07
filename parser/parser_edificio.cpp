@@ -1,8 +1,6 @@
 #include "parser_edificio.h"
 #include "../utils/LecturaArchivos.h"
 
-#include "../utils/LecturaArchivos.h"
-
 std::string ParserEdificio::nombre(const std::smatch& match) const {
 	return match.str(1);
 }
@@ -28,9 +26,5 @@ void ParserEdificio::parse(const std::string& input, Edificio*& edificio) {
 	std::smatch match;
 	std::regex_search(input, match, pattern);
 
-<<<<<<< HEAD
-	traductor_edificios(nombre(match), piedra(match), madera(match), metal(match), permitidos(match));
-=======
 	edificio = traductor_edificios(nombre(match), piedra(match), madera(match), metal(match), permitidos(match));
->>>>>>> objetivos3
 }

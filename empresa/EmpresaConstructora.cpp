@@ -12,6 +12,8 @@ Empresa_Constructora::Empresa_Constructora(){
 	this -> mapa = nullptr;
 }
 
+Empresa_Constructora::Empresa_Constructora(Planos* plano): almacen(nullptr), planos(plano), mapa(nullptr) {}
+
 Empresa_Constructora::~Empresa_Constructora() {
 	if(almacen != nullptr)
 		delete this -> almacen;

@@ -12,10 +12,7 @@ public:
 	//PRE: -
 	//POST: creo unos planos inicializado en 0;
 	Planos();
-
-	//PRE: ruta debe ser una ruta a un archivo bien estructurado
-	//POST: creo unos planos inicializado con el archivo en la ruta espesificada.
-	Planos(std::string ruta);
+	Planos(Diccionario<std::string, Edificio*> diccionario);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada y el puntero se apunta  nullptr.
@@ -25,10 +22,6 @@ public:
 	// Tendre que adaptarlo si no lo resuelvo.
 	static Edificio* buscar(std::string nombre_edificio);
 	static bool existe(std::string nombre_edificio);
-
-	//PRE: se le debe pasar la ruta del archivo a abrir el cual debe estar bien estructurado
-	//POST: en caso de poder abrir el archivo, carga la lista con los elementos del archivo
-	void cargar_edificios(std::string ruta);
 
 	//PRE: -
 	//POST: muestra por terminal la cantidad de edificios construidos de cada tipo,
@@ -60,9 +53,6 @@ public:
 	//por interfaz carga un puntero a Edificio con el edificio de la lista.
 	Resultado_Chequeos permitido_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa);
 private:
-	//PRE: 1 <= posicion <= el largo de la lista.
-	//POST: se agrega el material al final del vector.
-	void agregar_edificio(Edificio* edificio);
 
 	//PRE: edificio tiene que ser distinto de nullptr
 	//POST: devuelve en un std::string que cantidad y de que material produce el edificio o "ninguno".

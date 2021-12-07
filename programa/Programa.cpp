@@ -3,8 +3,11 @@
 #include "../utils/LecturaArchivos.h"
 #include "../jugador/jugadores/JugadorUno.h"
 #include "../jugador/jugadores/JugadorDos.h"
+#include "../parser/parser_edificio.h"
+#include "../diccionario/diccionario.h"
+#include <fstream>
+#include <iostream>
 #include <time.h> //WHY: Provisorio, error del time(0);
-
 const int CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
 		  REPARAR = 5, COMPRAR_BOMBAS = 6, CONSULTAR = 7, LISTAR_MATERIALES = 8,
 		  OBJETIVOS = 9, RECOLECTAR = 10, MOVERSE = 11, FIN_TURNO = 12, GUARDAR_SALIR = 13;
@@ -20,22 +23,33 @@ const int ENERGIA[] = {0, ENERGIA_CONSTRUIR, ENERGIA_LISTAR_CONSTRUIDOS, ENERGIA
 		  ENERGIA_OBJETIVOS, ENERGIA_RECOLECTAR, ENERGIA_MOVERSE, ENERGIA_FIN_TURNO, ENERGIA_GUARDAR_SALIR};
 
 Programa::Programa(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaciones) {
+	//Parser edificio en accion. Encapsulable (JUAN, todo tuyo con tus queridos templates.)
+	ParserEdificio parser;
+	std::ifstream fin(ruta_edificios);
+	std::string input;
+	Edificio* value; 
+	Diccionario<std::string, Edificio*> diccionario;
+	while(getline(fin,input)){
+		parser.parse(input,value);
+		diccionario.insertar(value->obtener_nombre(),value);
+	} 
+	Planos* plano = new Planos(diccionario);	
+	empresa_constructora = new Empresa_Constructora(plano);
 	
+	this -> instancia = INICIO;
 	//PARSER AL RESCATE.
 	/*this -> empresa_constructora = new Empresa_Constructora();
-	this -> instancia = INICIO;
 	if(this -> empresa_constructora -> cargar_archivos(ruta_materiales, ruta_edificios, ruta_mapa, ruta_ubicaciones))
 		this -> instancia = JUEGO;
-	srand((unsigned int) time(0)); 						 //Genero una semilla aleatoria
 	this -> jugadores.alta_al_final(new Jugador_Uno());  //arreglo temporal
 	this -> jugadores.alta_al_final(new Jugador_Dos();
-	this -> jugador_activo = rand() % 2 + 1;
 	this -> jugadores.alta_al_final(new Jugador_Uno(new Almacen())); //arreglo temporal
 	this -> jugadores.alta_al_final(new Jugador_Dos(new Almacen()));
 	this -> objetivos_jugadores.alta_al_final(new Meta(this -> jugadores.consulta(1)));
 	this -> objetivos_jugadores.alta_al_final(new Meta(this -> jugadores.consulta(2)));
 	*/
-
+	srand((unsigned int) time(0)); 						 //Genero una semilla aleatoria
+	this -> jugador_activo = rand() % 2 + 1;
 }
 
 Programa::~Programa() {

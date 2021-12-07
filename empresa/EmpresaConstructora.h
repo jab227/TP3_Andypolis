@@ -23,7 +23,7 @@ public:
 	//PRE: -
 	//POST: se crea una empresa constructora vacia.
 	Empresa_Constructora();
-
+	Empresa_Constructora(Planos* plano);
 	//PRE: las rutas del mapa y edificios deben ser a archivos existentes.
 	//POST: se inicializan los atributos con las rutas ingresadas y devuelve true si el archivo de ubicaciones
 	//existe y no esta vacio, devuelve false en caso contrario.

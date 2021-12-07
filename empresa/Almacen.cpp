@@ -12,7 +12,7 @@ Almacen::Almacen() {
 }
 
 Almacen::Almacen(std::string ruta) {
-	this -> cargar_materiales(ruta);
+	//this -> cargar_materiales(ruta);
 }
 
 Almacen::~Almacen() {

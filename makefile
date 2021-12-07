@@ -9,8 +9,8 @@ NOMBRE = TP3
 
 all: $(NOMBRE)
 
-$(NOMBRE):  *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp objetivos/*.cpp objetivos/tipos/*.cpp  
-	$(CC) *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp objetivos/*.cpp objetivos/tipos/*.cpp  $(CFLAGS) -o $(NOMBRE)
+$(NOMBRE):  *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp  Casillero/casilleros/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp objetivos/*.cpp objetivos/tipos/*.cpp  
+	$(CC) *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp  Casillero/casilleros/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp objetivos/*.cpp objetivos/tipos/*.cpp  $(CFLAGS) -o $(NOMBRE)
 
 test_material:  test/test_material/*.cpp material/*.cpp 
 	$(CC)  test/test_material/*.cpp material/*.cpp  $(CFLAGS) -o test

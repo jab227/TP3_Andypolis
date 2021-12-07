@@ -20,7 +20,6 @@ class Jugador {
 	std::size_t energia_;
 	Almacen* inventario_;
 	Coordenada posicion_;
-	//Q:Puntero a lista o lista?
 	Lista<Coordenada> edificios_;
 
        public:

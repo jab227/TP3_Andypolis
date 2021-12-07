@@ -47,8 +47,8 @@ void Mapa::iniciar_filas_casilleros(std::size_t fila, const std::string& mapa) {
 	}
 }
 
-bool Mapa::es_cordenada_valida(std::size_t fila, std::size_t columna) {
-	return (fila < this->filas && columna < this->columnas);
+bool Mapa::es_cordenada_valida(const Coordenada& coordenada) {
+	return (coordenada.x() < this->filas && coordenada.y() < this->columnas);
 }
 
 void Mapa::mostrar_mapa() {
@@ -70,7 +70,6 @@ void Mapa::mostrar_mapa() {
 				    this->terreno[filas][columnas]
 					->obtener_contenido())
 			     << ' ';
->>>>>>> DiccionarioEdificios
 		}
 		std::cout << std::endl << FIN_COLOR;
 	}

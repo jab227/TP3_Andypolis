@@ -3,14 +3,14 @@
 #include "../utils/LecturaArchivos.h"
 #include <fstream>
 
-Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario();
+Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
 
 Planos::Planos() {
 }
 
 //Cuando este el Parser, hacer que reciba los datos.
 Planos::Planos(std::string ruta){
-	this -> cargar_edificios(ruta);
+	//this -> cargar_edificios(ruta);
 }
 
 Planos::~Planos() {

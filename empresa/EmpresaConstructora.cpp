@@ -21,13 +21,8 @@ Empresa_Constructora::~Empresa_Constructora() {
 		delete this -> mapa;
 }
 
-bool Empresa_Constructora::cargar_archivos(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaiones){
-	this -> almacen = new Almacen(ruta_materiales);
-	this -> planos = new Planos(ruta_edificios);
-	this -> mapa = new Mapa(ruta_mapa);
-	//TODO: Reemplazable con el ParserUbicacion
-	//Para que no tire error. 
-	//return this -> cargar_ubicaciones(ruta_ubicaiones);
+bool Empresa_Constructora::cargar_archivos(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaciones){
+	//TODO: Poner parsers.
 	return false;
 }
 
@@ -59,27 +54,6 @@ void Empresa_Constructora::guardar_archivos(std::string ruta_materiales, std::st
 	this -> guardar_ubicaciones(ruta_ubicaciones);
 }
 
-//TODO: Reemplazable con el ParserUbicacion
-bool Empresa_Constructora::cargar_ubicaciones(std::string ruta, Jugador* jugador){
-	bool existe = false;
-	ifstream archivo(ruta);
-	if (archivo.is_open()){
-		std::string lectura;
-		std::size_t cant_agregados = 0;
-		Coordenada coordenada = Coordenada(0,0);
-		
-		std::string nuevo_contenido;
-		while(getline(archivo, lectura, ENTER)){
-			nuevo_contenido = procesar_ubicacion(lectura, coordenada);
-			sumar_contenido(nuevo_contenido, coordenada, jugador);
-			cant_agregados++;
-			existe = true;
-		}
-	}
-	archivo.close();
-	return existe;
-}
-
 void Empresa_Constructora::guardar_ubicaciones(std::string ruta){
 	ofstream archivo(ruta);
 	std::string contenido;
@@ -103,8 +77,7 @@ void Empresa_Constructora::guardar_ubicaciones(std::string ruta){
 void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coordenada, Jugador* jugador){
 	if(Planos::existe(contenido)){
 		this -> mapa -> construir_edificio_ubicacion(contenido, coordenada);
-		Coordenada* ptr_coordenada = new Coordenada(coordenada);
-		jugador -> agregar_ubicacion(ptr_coordenada);
+		jugador -> agregar_ubicacion(coordenada);
 	}else
 		this -> mapa -> poner_material_ubicacion(contenido, coordenada);
 
@@ -275,11 +248,9 @@ void Empresa_Constructora::edificio_construido_confirmado(const std::string &nom
 		jugador -> usar_lista_materiales(listado_necesario);
 		delete listado_necesario;
 		jugador -> usar_energia(ENERGIA_CONSTRUIR);
-		Coordenada* ptr_coordenada = new Coordenada(coordenada);
-		jugador -> agregar_ubicacion(ptr_coordenada);
+		jugador -> agregar_ubicacion(coordenada);
 	}
 }
-
 
 void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 	Coordenada coordenada = Coordenada(0,0);
@@ -314,7 +285,7 @@ void Empresa_Constructora::comprar_bombas(Jugador* jugador){
 
 Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
 	std::string cantidad_ingresada;
-	std::cout << "¿Cuantas bombas desea comprar? (Precio: "+ COSTO_BOMBAS + "andycoins): ";
+	std::cout << "¿Cuantas bombas desea comprar? (Precio: " << COSTO_BOMBAS << "andycoins): ";
 	getline(cin, cantidad_ingresada);
 	
 	return chequeo_bombas(cantidad_ingresada, bombas);

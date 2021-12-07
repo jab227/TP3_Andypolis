@@ -19,15 +19,17 @@ const int ENERGIA[] = {0, ENERGIA_CONSTRUIR, ENERGIA_LISTAR_CONSTRUIDOS, ENERGIA
 		  ENERGIA_REPARAR, ENERGIA_COMPRAR_BOMBAS, ENERGIA_CONSULTAR, ENERGIA_LISTAR_MATERIALES,
 		  ENERGIA_OBJETIVOS, ENERGIA_RECOLECTAR, ENERGIA_MOVERSE, ENERGIA_FIN_TURNO, ENERGIA_GUARDAR_SALIR};
 
-Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaciones) {
-	this -> empresa_constructora = new Empresa_Constructora();
+Programa::Programa(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaciones) {
+	
+	//PARSER AL RESCATE.
+	/*this -> empresa_constructora = new Empresa_Constructora();
 	this -> instancia = INICIO;
 	if(this -> empresa_constructora -> cargar_archivos(ruta_materiales, ruta_edificios, ruta_mapa, ruta_ubicaciones))
 		this -> instancia = JUEGO;
-	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
+	srand((unsigned int) time(0)); 						 //Genero una semilla aleatoria
+	this -> jugadores.alta_al_final(new Jugador_Uno());  //arreglo temporal
+	this -> jugadores.alta_al_final(new Jugador_Dos();*/
 	this -> jugador_activo = rand() % 2 + 1;
-	this -> jugadores.alta_al_final(new Jugador_Uno(new Almacen())); //arreglo temporal
-	this -> jugadores.alta_al_final(new Jugador_Dos(new Almacen()));
 }
 
 Programa::~Programa() {
@@ -169,7 +171,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
     return fin;
 }
 
-bool Programa::es_opcion_valida(string opcion) {
+bool Programa::es_opcion_valida(std::string opcion) {
 	bool valida = true;
 	if(!es_numero(opcion))
 		valida = false;
@@ -185,6 +187,6 @@ void Programa::limpiar_pantalla(){
     cout << "--------------------------------------------------------------" << endl;
 }
 
-void Programa::guardar_archivos(string ruta_materiales, string ruta_ubicaciones){
+void Programa::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){
 	this -> empresa_constructora -> guardar_archivos(ruta_materiales, ruta_ubicaciones);
 }

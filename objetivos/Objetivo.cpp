@@ -1,6 +1,7 @@
 #include "Objetivo.h"
 
-Objetivo::Objetivo(Jugador* jugador) {
+Objetivo::Objetivo(std::string titulo, Jugador* jugador) {
+	this -> titulo = titulo;
 	this -> cumplido = false;
 	this -> jugador = jugador;
 }

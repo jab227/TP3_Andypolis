@@ -3,9 +3,9 @@
 
 Jugador::Jugador(std::size_t id, const Coordenada& coordenada)
     : id_(id),
-      posicion_(coordenada),
       energia_(0),
       inventario_(new Almacen()),
+      posicion_(coordenada),
       edificios_(Lista<Coordenada>()) {}
 
 std::size_t Jugador::obtener_jugador() const { return id_; }

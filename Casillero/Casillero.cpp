@@ -1,6 +1,6 @@
 #include "Casillero.h"
 
-const string VACIO = "";
+const std::string VACIO = "";
 
 Casillero::Casillero() {
 	this -> color = VACIO;

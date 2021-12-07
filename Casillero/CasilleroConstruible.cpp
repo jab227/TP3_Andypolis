@@ -16,7 +16,7 @@ Resultado_Chequeos Casillero_Construible::construir_edificio(Edificio* edificio)
 		this -> edificio_ = edificio;
 		resultado = EXITO;
 	}else{
-		cout <<  "Esta ubicacion esta ocupada por otro edificio." << endl;
+		std::cout <<  "Esta ubicacion esta ocupada por otro edificio." << std::endl;
 	}
 	return resultado;
 }
@@ -36,11 +36,11 @@ bool Casillero_Construible::esta_ocupado() const{
 }
 
 void Casillero_Construible::saludar() const{
-	cout << "Soy un casillero construible." << endl;
+	std::cout << "Soy un casillero construible." << std::endl;
 	if(this -> esta_ocupado()){
 		this -> edificio_ -> saludar();
 	}else
-		cout << "No tengo ningun edificio construido." << endl;
+		std::cout << "No tengo ningun edificio construido." << std::endl;
 }
 
 //Necesario?

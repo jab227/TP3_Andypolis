@@ -10,12 +10,13 @@ private:
 public:
 	//PRE: -
 	//POST: se crea un casillero vacio
-	Casillero_Transitable();
+	Casillero_Transitable(std::string color);
 
 	//PRE: -
 	//POST: se destruye el casillero, se libera el material en caso de estar ocupado
 	~Casillero_Transitable();
 
+	//Q: virtual?
 	//PRE: el material debe estar ubicado en memoria dinamica
 	//POST: se ocupa el casillero con el material
 	void agregar_material(Material* material);
@@ -28,11 +29,6 @@ public:
 	//PRE: -
 	//POST: devuelve si el casillero esta ocupado
 	bool esta_ocupado() const;
-
-	//PRE: -
-	//POST: imprime un saludo por terminal. en caso de tener un material, este tambien
-	//saluda. de lo contrario, se informa que no hay material.
-	void saludar() const;
 
 	//PRE: - PROVISORIO
 	//POST: devuelve si el casillero es transitable o no.
@@ -54,6 +50,8 @@ public:
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	Resultado_Chequeos reparar_edificio() override;
+
+	void saludo_material() const;
 
 };
 

@@ -1,7 +1,7 @@
 #include "CasilleroTransitable.h"
 #include <iostream>
 
-Casillero_Transitable::Casillero_Transitable(): Casillero(GRIS + NEGRO) {
+Casillero_Transitable::Casillero_Transitable(std::string color): Casillero(color) {
 	this -> material = nullptr;
 }
 
@@ -30,14 +30,6 @@ bool Casillero_Transitable::esta_ocupado() const{
 	return !(this -> material == nullptr);
 }
 
-void Casillero_Transitable::saludar() const{
-	cout << "Soy un casillero transitable." << endl;
-	if(this -> esta_ocupado())
-		this -> material -> saludar();
-	else
-		cout << "No tengo ningun material en mi." << endl;
-}
-
 std::string Casillero_Transitable::obtener_contenido() const{ 
 	std::string material = MATERIAL_VACIO;
 	if(this -> esta_ocupado())
@@ -62,16 +54,19 @@ bool Casillero_Transitable::es_casillero_transitable(){
 	return true;
 }
 
-//Agregar demoler_edificio en inacc y transitables.
 Resultado_Chequeos Casillero_Transitable::demoler_edificio(){
 	return CASILLERO_NO_CONSTRUIBLE;
 }
 
 void Casillero_Transitable::recoger_material(Almacen* inventario){
-	// WHY: Podriamos pasarle directamente el material?
+	// Q: Podriamos pasarle directamente el material?
 	inventario -> sumar_cantidad_material(material -> obtener_nombre(), material -> obtener_cantidad());
 	delete material;
 	material = nullptr;
 }
 
 Resultado_Chequeos Casillero_Transitable::reparar_edificio(){ return CASILLERO_NO_CONSTRUIBLE;}
+
+void Casillero_Transitable::saludo_material() const{
+    this -> material -> saludar();
+}

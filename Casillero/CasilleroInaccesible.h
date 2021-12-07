@@ -41,7 +41,10 @@ public:
 	Resultado_Chequeos demoler_edificio();
 
 	Resultado_Chequeos reparar_edificio() override;
+
 	void recoger_material(Almacen* inventario) override;
+
+
 };
 
 #endif /* CASILLERO_CASILLEROINACCESIBLE_H_ */

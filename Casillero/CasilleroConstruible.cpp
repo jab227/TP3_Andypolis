@@ -54,7 +54,6 @@ std::string Casillero_Construible::obtener_contenido() const{
 
 //Necesario? 
 //PRE: Comentado porque necesita adaptarse a la lista de coordenadas de cada jugador.
-
 Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
 /*	if(this -> esta_ocupado()){
 		Edificio* edificio = this -> edificio_; 
@@ -73,16 +72,24 @@ Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada,
 //Provisorio
 bool Casillero_Construible::es_casillero_transitable(){return false;}
 
-void Casillero_Construible::recoger_material(Almacen* inventario){
+//En teoria deberia ser impoisble pedirle materiales al obelisco porque termina el juego.
+Resultado_Chequeos Casillero_Construible::recoger_material(Almacen* inventario){
 	Material producto = this -> edificio_ -> producir_material();
 	inventario -> sumar_cantidad_material(producto.obtener_nombre(), producto.obtener_cantidad());
+	return EXITO;
 }
 
 
 Resultado_Chequeos Casillero_Construible::reparar_edificio(){
-	return this -> edificio_ -> reparar();
+	Resultado_Chequeos resultado = NO_EXISTE;
+	if(this->esta_ocupado())
+		resultado = this -> edificio_ -> reparar();
+	return resultado;
 }
 
 Resultado_Chequeos Casillero_Construible::atacar_edificio() {
-	return this -> edificio_ -> disminuir_vida();
+	Resultado_Chequeos resultado = NO_EXISTE;
+	if(this->esta_ocupado())
+		resultado = this -> edificio_ -> disminuir_vida();
+	return resultado;
 }

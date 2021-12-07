@@ -8,47 +8,52 @@ private:
 	Edificio* edificio_;
 public:
 	//PRE: -
-	//POST: se crea un casillero vacio
+	//POST: Se crea un casillero vacio
 	Casillero_Construible();
 
 	//PRE: -
-	//POST: se destruye el casillero, se libera el edificio en caso de estar ocupado
+	//POST: Se destruye el casillero, se libera el edificio en caso de estar ocupado
 	~Casillero_Construible();
 
-	//PRE: el edificio debe estar ubicado en memoria dinamica
+	//PRE: El edificio debe estar ubicado en memoria dinamica
 	//POST: se construye el edificio en este casillero, ahor esta ocupado
 	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
-	//POST: se quita al edificio del casillero y lo devuelve, ahora esta vacio. si el
-	//casillero ya estaba vacio, devuelve nullptr.
+	//POST: En caso de estar ocupado, liberal el edificio y lo deja en nullptr;
 	Resultado_Chequeos demoler_edificio();
 
 	//PRE: -
-	//POST: devuelve si el casillero esta ocupado
+	//POST: True si edificio != nullptr, es decir, edificio_ esa inicializado.
+	//Q: Creo que podría ser privado si logramos cambiar el telldontask.
 	bool esta_ocupado() const;
 
 	//PRE: -
-	//POST: imprime un saludo por terminal. en caso de tener un edificio, este tambien
-	//saluda. de lo contrario, se informa que no hay edificio.
+	//POST: Imprime un saludo del casillero por terminal. Si estaá ocupado, también saludará el edificio; en caso contrario indica que no tiene.
 	void saludar() const;
 	
 	//PRE: - PROVISORIO
-	//POST: devuelve si el casillero es transitable o no.
+	//POST: Devuelve false.
 	bool es_casillero_transitable();
 
 	//PRE: -
-	//POST: devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
+	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
 	std::string obtener_contenido() const override;
 
 	//PRE: -
 	//POST: SE USA??
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
-	void recoger_material(Almacen* inventario) override;
-	
+	//PRE: -
+	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
+	Resultado_Chequeos recoger_material(Almacen* inventario) override;
+
+	//PRE: -
+	//POST: Si esta ocupado, pide al edificio de repararse. Devuelve NO_REPARABLE o EXITO.
 	Resultado_Chequeos reparar_edificio() override;
 	
+	//PRE: -
+	//POST: Si esta ocupado, disminuye la vida del edificio. 
 	Resultado_Chequeos atacar_edificio() override;
 
 

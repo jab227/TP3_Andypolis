@@ -19,58 +19,64 @@ private:
 
 public:
 	// PRE: -
-	// POST: se construye un casillero vacio
+	// POST: Se construye un casillero vacio
 	Casillero();
 
 	// PRE: -
-	// POST: se construye un casillero con color
+	// POST: Se construye un casillero con color
 	Casillero(std::string color);
 
 	// PRE: -
-	// POST: se destruye el casillero
+	// POST: Se destruye el casillero
 	virtual ~Casillero();
 
 	// PRE: -
-	// POST: imprime un saludo por pantalla
+	// POST: Imprime un saludo por pantalla
 	virtual void saludar() const = 0;
 
-	// Q: PROVISORIO?
+	//Q: PROVISORIO? Ya que rompe el telldontask.
 	// PRE: -
-	// POST: devuelve si el casillero es transitable o no
+	// POST: Devuelve si el casillero es transitable o no
 	virtual bool es_casillero_transitable() = 0;
 
 	// PRE: -
-	// POST: devuelve si el casillero esta ocupado o no
+	// POST: Devuelve si el casillero esta ocupado o no
 	virtual bool esta_ocupado() const = 0;
 
 	// PRE: -
-	// POST: devuelve el nombre del material o edificio contenido;
-	// Q: Es correcto que CasilleroInaccesible devuelve un string vacio? (Dependerá de como usemos, obviamente)
+	// POST: Devuelve el nombre del material o edificio contenido;
+	//Q: Es correcto que CasilleroInaccesible devuelve un string vacio? (Dependerá de como usemos, obviamente)
 	virtual std::string obtener_contenido() const = 0;
 
 	// PRE: -
-	// POST: devuelve el color del casillero.
+	// POST: Devuelve el color del casillero.
 	std::string obtener_color();
 
 	// PRE: -
-	// POST:
+	// POST: -
+	//Q: Casi seguro que podemos prescindir de este metodo.
+	virtual Edificio *agregar_lista_edificio(Coordenada *coordenada, Lista<Edificio> *&lista_construidos) = 0;
+
+	// PRE: inventario != nullptr;
+	// POST: Lepide al casillero que cargue al inventario el material que posee.
+	//Q: Le pasamos el jugador o el inventario del jugador o devolvemos el material y que el jugador se haga cargo de sumarlo.
+	virtual Resultado_Chequeos recoger_material(Almacen *inventario) = 0;
+
+	// PRE: -
+	// POST: Pide al casillero reparar un edficio.
+	virtual Resultado_Chequeos reparar_edificio() = 0;
+
+	// PRE: -
+	// POST: Pide al casillero atacar un edficio.
+	virtual Resultado_Chequeos atacar_edificio() = 0;
+	
+	// PRE: -
+	// POST: Pide al casillero construir un edficio.
 	virtual Resultado_Chequeos construir_edificio(Edificio *edificio) = 0;
 
 	// PRE: -
-	// POST: Si es una celda construible y esta ocupado,se quita al edificio del casillero y lo devuelve, ahora esta vacio.
-	// En caso contrario devuelve nullptr;
+	// POST: Le pide al casillero destruir un edificio.
 	virtual Resultado_Chequeos demoler_edificio() = 0;
-
-	// PRE: -
-	// POST: Casi seguro que podemos prescindir de este metodo.
-	virtual Edificio *agregar_lista_edificio(Coordenada *coordenada, Lista<Edificio> *&lista_construidos) = 0;
-
-	// Q: Le pasamos el jugador o el inventario del jugador o devolvemos el material y que el jugador se haga cargo de sumarlo.
-	virtual void recoger_material(Almacen *inventario) = 0;
-
-	virtual Resultado_Chequeos reparar_edificio() = 0;
-
-	virtual Resultado_Chequeos atacar_edificio() = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

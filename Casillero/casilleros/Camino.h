@@ -5,9 +5,7 @@ class Camino: public Casillero_Transitable{
     //Constructor
     Camino();
 
-    //PRE: -
-    //POST: imprime un saludo por terminal. en caso de tener un material, este tambien
-    //saluda. de lo contrario, se informa que no hay material.
-    void saludar() const override;
+     //PRE: -
+    //POST: Imprime un saludo por terminal y si esta ocupado pide al material que salude. Si no tiene, avisa por terminal.  void saludar() const override;
 
 };

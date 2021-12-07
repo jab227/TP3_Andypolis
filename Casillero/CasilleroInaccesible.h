@@ -6,44 +6,50 @@
 class Casillero_Inaccesible: public Casillero{
 public:
 	//PRE: -
-	//POST: se crea un casillero vacio
+	//POST: Se crea un casillero vacio
 	Casillero_Inaccesible();
 
 	//PRE: -
-	//POST: se destruye el casillero
+	//POST: Se destruye el casillero
 	~Casillero_Inaccesible();
 
 	//PRE: -
-	//POST: devuelve si el casillero esta ocupado, para este caso, devuelve siempre true
+	//POST: Devuelve true, ya que no puede ser ocupado por nada.
 	bool esta_ocupado() const;
 
 	//PRE: -
-	//POST: imprime un saludo por terminal.
+	//POST: Imprime un saludo por terminal.
 	void saludar() const;
 
-	//PRE: no se deberia llamar a esta funcion, este casillero nunca contiene algo.
-	//POST: devuelve CONTENIDO_VACIO.
+	//PRE: No se deberia llamar a esta funcion, este casillero nunca contiene algo.
+	//POST: Devuelve CONTENIDO_VACIO.
 	std::string obtener_contenido() const override;
 	
 	//PRE: - PROVISORIO
-	//POST: devuelve si el casillero es transitable o no
+	//POST: Devuelve false.
 	bool es_casillero_transitable();
 	
 	//PRE: -
-	//POST:
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
-	//POST: -
+	//POST: - PROVISORIO
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
-	//Agregar demoler_edificio en inacc y transitables.
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos demoler_edificio();
 
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos reparar_edificio() override;
 
-	void recoger_material(Almacen* inventario) override;
+	//PRE: -
+	//POST: Retorna NO_MATERIALES.
+	Resultado_Chequeos recoger_material(Almacen* inventario) override;
 
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos atacar_edificio() override;
 
 };

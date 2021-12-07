@@ -19,9 +19,6 @@ void Casillero_Inaccesible::saludar() const{
 
 std::string Casillero_Inaccesible::obtener_contenido() const{ return CONTENIDO_VACIO;}
 
-Resultado_Chequeos Casillero_Inaccesible::construir_edificio(Edificio* edificio){
-	return CASILLERO_NO_CONSTRUIBLE;
-}
 
 Edificio* Casillero_Inaccesible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
 	Edificio* edificio = nullptr;
@@ -29,18 +26,14 @@ Edificio* Casillero_Inaccesible::agregar_lista_edificio( Coordenada* coordenada,
 }
 
 //Provisorio
-bool Casillero_Inaccesible::es_casillero_transitable(){
-	return false;
-}
+bool Casillero_Inaccesible::es_casillero_transitable(){	return false; }
 
-Resultado_Chequeos Casillero_Inaccesible::demoler_edificio(){
-	return CASILLERO_NO_CONSTRUIBLE;
-}
+Resultado_Chequeos Casillero_Inaccesible::demoler_edificio(){return CASILLERO_NO_CONSTRUIBLE;}
 
-void Casillero_Inaccesible::recoger_material(Almacen* inventario){}
+Resultado_Chequeos Casillero_Inaccesible::construir_edificio(Edificio* edificio){return CASILLERO_NO_CONSTRUIBLE;}
+
+Resultado_Chequeos Casillero_Inaccesible::recoger_material(Almacen* inventario){return NO_MATERIALES;}
 
 Resultado_Chequeos Casillero_Inaccesible::reparar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}
 
-Resultado_Chequeos Casillero_Inaccesible::atacar_edificio() {
-	return NO_EXISTE;
-}
+Resultado_Chequeos Casillero_Inaccesible::atacar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}

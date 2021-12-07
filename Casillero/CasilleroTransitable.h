@@ -9,50 +9,56 @@ private:
 	Material* material;
 public:
 	//PRE: -
-	//POST: se crea un casillero vacio
+	//POST: Se crea un casillero transitable vacio con color
 	Casillero_Transitable(std::string color);
 
 	//PRE: -
-	//POST: se destruye el casillero, se libera el material en caso de estar ocupado
+	//POST: Se destruye el casillero, se libera el material en caso de estar ocupado
 	~Casillero_Transitable();
 
-	//Q: virtual?
-	//PRE: el material debe estar ubicado en memoria dinamica
-	//POST: se ocupa el casillero con el material
+	//Q: virtual de la clase base?
+	//PRE: El material debe estar ubicado en memoria dinamica
+	//POST: Se ocupa el casillero con el material
 	void agregar_material(Material* material);
 
-	//PRE: -
-	//POST: se quita al material del casillero y lo devuelve, ahora esta vacio. si el
-	//casillero ya estaba vacio, devuelve nullptr.
-	void recoger_material(Almacen* inventario);
+	//PRE: inventario != nullpointer.
+	//POST: Si esta ocupado, se suma el material al inventario y se deja vacío el casillero, devuelve EXITO. Devuelve NO_MATERIALES si no hay ningun material.
+	Resultado_Chequeos recoger_material(Almacen* inventario);
 
 	//PRE: -
-	//POST: devuelve si el casillero esta ocupado
+	//POST: Devuelve true si el casillero esta ocupado por un material.
 	bool esta_ocupado() const;
 
 	//PRE: - PROVISORIO
-	//POST: devuelve si el casillero es transitable o no.
+	//POST: Devuelve true.
 	bool es_casillero_transitable();
 
 	//PRE: -
-	//POST: devuelve el nombre del material contenido o MATERIAL_VACIO.
+	//POST: Devuelve el nombre del material contenido o MATERIAL_VACIO.
 	std::string obtener_contenido() const override;
 	
 	//PRE: -
-	//POST:
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
-	//Agregar demoler_edificio en inacc y transitables.
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos demoler_edificio();
 
 	//PRE: -
 	//POST: -
 	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos reparar_edificio() override;
 
+	//PRE: -
+	//POST: Imprime por pantalla el saludo del material que posee.
 	void saludo_material() const;
 	
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos atacar_edificio() override;
 
 };

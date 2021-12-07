@@ -5,12 +5,15 @@
 
 class Objetivo {
 //Atributos
+private:
+	std::string titulo;
+
 protected:
 	bool cumplido;
 	Jugador* jugador;
-	string titulo;
+
 public:
-	Objetivo(Jugador* jugador);
+	Objetivo(std::string titulo, Jugador* jugador);
 
 	virtual ~Objetivo(){ delete jugador;};
 

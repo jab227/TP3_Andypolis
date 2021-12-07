@@ -1,9 +1,9 @@
 #include "Bombardero.h"
 
-const int BOMBAS_A_USAR = 5;
+const std::size_t BOMBAS_A_USAR = 5;
+const std::string NOMBRE = "Bombardero";
 
-Bombardero::Bombardero(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Bombardero";
+Bombardero::Bombardero(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 	this -> bombas_usadas = 0;
 	Material bombas = Material("bombas", 0);
 	this -> jugador -> obtener_inventario() -> buscar_material(bombas);

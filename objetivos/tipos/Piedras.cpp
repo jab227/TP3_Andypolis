@@ -1,9 +1,9 @@
 #include "Piedras.h"
 
-const int PIEDRAS_A_OBTENER = 50e3;
+const std::size_t PIEDRAS_A_OBTENER = 50e3;
+const std::string NOMBRE = "Edad de piedra";
 
-Piedras::Piedras(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Edad de piedra";
+Piedras::Piedras(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 }
 
 bool Piedras::actualizar(){

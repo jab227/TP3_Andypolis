@@ -61,7 +61,7 @@ void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 }
 
 Resultado_Chequeos Jugador::tiene_materiales( Lista<Material>* materiales) const{
-	//Hacer sobrecarga.
+	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
 	return this -> inventario_ -> hay_lista_materiales(materiales);
 }
 
@@ -104,6 +104,7 @@ Lista<Material>* Jugador::obtener_recursos_producidos( Mapa* mapa){
 		coordenada = obtener_ubicacion(i);
 		//No necesito chequear si esta construido.
 		nombre_edificio = mapa -> obtener_contenido_ubicacion(*coordenada);
+		//Error de static.
 		edificio = Planos::buscar(nombre_edificio);
 		material_producido = edificio -> producir_material();
 		//Si no tengo construidos, el material que se sume va a ser 0.

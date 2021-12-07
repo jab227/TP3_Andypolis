@@ -1,9 +1,9 @@
 #include "Energetico.h"
 
 const std::size_t ENERGIA_A_OBTENER = 100;
+const std::string NOMBRE = "Energetico";
 
-Energetico::Energetico(Jugador* jugador) : Objetivo(jugador) {
-	this -> titulo = "Energetico";
+Energetico::Energetico(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 }
 
 bool Energetico::actualizar(){

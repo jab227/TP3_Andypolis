@@ -1,13 +1,13 @@
 #include "Monedas.h"
 
-const int MONEDAS_A_OBTENER = 100e3;
+const std::size_t MONEDAS_A_OBTENER = 100e3;
+const std::string NOMBRE = "Comprar andypolis";
 
-Monedas::Monedas(Jugador* jugador) : Objetivo(jugador){
+Monedas::Monedas(Jugador* jugador) : Objetivo(NOMBRE, jugador){
 	this -> monedas_juntadas = 0;
 	Material monedas = Material("andycoins", 0);
 	this -> jugador -> obtener_inventario() -> buscar_material(monedas);
 	this -> monedas_actuales = monedas.obtener_cantidad();
-	this -> titulo = "Comprar andypolis";
 }
 
 bool Monedas::actualizar(){

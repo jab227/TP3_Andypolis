@@ -15,13 +15,17 @@ std::size_t ParserUbicacion::y(const std::smatch& match) const {
 	return std::stoul(match.str(3));
 }
 
-void ParserUbicacion::material(const smatch& match, Mapa*& mapa) {
-	mapa->poner_material_ubicacion(nombre(match), x(match), y(match));
+void ParserUbicacion::material(const std::smatch& match, Mapa*& mapa) {
+	Coordenada coordenada = Coordenada(x(match), y(match));
+	mapa->poner_material_ubicacion(nombre(match), coordenada);
 }
+
+//Podemos prescindir del diccionario si asumimos que los archivos estan bien formados
 Coordenada ParserUbicacion::edificio(const std::smatch& match, Mapa*& mapa,
 		    const Diccionario<std::string, Edificio*>& edificios) {	
-		    mapa->construir_edificio_ubicacion(edificios[nombre(match)], x(match), y(match));
-		    return Coordenada(x(match), y(match));
+			Coordenada coordenada = Coordenada(x(match), y(match));
+		    mapa->construir_edificio_ubicacion(nombre(match), coordenada);
+		    return coordenada;
 }
 
 std::smatch ParserUbicacion::conseguir_coincidencia(const std::string& str) {	

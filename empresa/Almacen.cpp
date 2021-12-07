@@ -18,6 +18,7 @@ Almacen::Almacen(std::string ruta) {
 Almacen::~Almacen() {
 }
 
+/* Reemplazar por el Parser
 void Almacen::cargar_materiales(std::string ruta){
 	ifstream archivo;
 	archivo.open(ruta);
@@ -33,8 +34,9 @@ void Almacen::cargar_materiales(std::string ruta){
 		for(int i = 0; i < CANTIDAD_MATERIALES_DISTINTOS; i++)
 			agregar_material(Material(NOMBRES_MATERIALES[i], CANTIDAD_INICIAL), i+1);
 	}
-	archivo.close();
+	archivo.close(); 
 }
+*/
 
 void Almacen::agregar_material(Material material, std::size_t posicion){
 	this -> lista_materiales.alta(material, posicion);

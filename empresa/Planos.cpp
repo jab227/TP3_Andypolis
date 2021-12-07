@@ -3,8 +3,10 @@
 #include "../utils/LecturaArchivos.h"
 #include <fstream>
 
+Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario();
+
 Planos::Planos() {
- }
+}
 
 //Cuando este el Parser, hacer que reciba los datos.
 Planos::Planos(std::string ruta){
@@ -16,11 +18,13 @@ Planos::~Planos() {
 }
 
 //PARSER: Reemplazable con el Parser_Ubicacion.
+/*
 void Planos::agregar_edificio(Edificio* edificio){
 	lista_edificios.insertar(edificio -> obtener_nombre(), edificio);
 }
-
+*/
 //PARSER: Reemplazable con el Parser_Ubicacion.
+/*
 void Planos::cargar_edificios(std::string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
@@ -33,7 +37,7 @@ void Planos::cargar_edificios(std::string ruta){
 	}
 	archivo.close();
 }
-
+*/
 //TODO: Agregar vector con claves del diccionario para poder recorrerla.
 void Planos::mostrar_edificios(){
 	std::cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << std::endl;
@@ -79,7 +83,7 @@ Lista<Material>* Planos::materiales_necesarios( Edificio* edificio){
 	Lista<Material>* lista_materiales = new Lista<Material>;
 	//Chequear que no haya roto al cambiar alta() por alta_al_final().
 	for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
-		lista_materiales -> alta_al_final(Material(MATERTIALES_EDIFICIOS[i], edificio -> obtener_cant_material(MATERTIALES_EDIFICIOS[i])));
+		lista_materiales -> alta_al_final(Material(MATERIALES_EDIFICIOS[i], edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[i])));
 	return lista_materiales;
 }
 

@@ -44,7 +44,7 @@ std::size_t Edificio::obtener_cant_material(std::string material) const{
 	std::size_t cantidad = 0, i = 0;
 	bool fin = false;
 	while(i < CANT_MATERIALES_EDIFICIOS && !fin){
-		if(MATERTIALES_EDIFICIOS[i] == material){
+		if(MATERIALES_EDIFICIOS[i] == material){
 			cantidad = this->materiales[i];
 			fin = true;
 		}

@@ -20,14 +20,10 @@ class Jugador {
 	std::size_t energia_;
 	Almacen* inventario_;
 	Coordenada posicion_;
+	//Q:Puntero a lista o lista?
 	Lista<Coordenada> edificios_;
 
        public:
-	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
-	// coordenadas, ya procesado.
-	Jugador(std::size_t id, Almacen* inventario, Lista<Coordenada*>* edificios);
-	//Para cuando sea nueva partida.
-	Jugador(std::size_t id, Almacen *inventario);
 	// Q: Construimos primero el jugador con las cosas o primero lo ubicamos?
 	Jugador(std::size_t id, const Coordenada& coordenada);
 	// Destructuor
@@ -66,11 +62,7 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
-<<<<<<< HEAD
-	void agregar_ubicacion(  Coordenada* coordenada);
-=======
 	void agregar_ubicacion(const Coordenada& coordenada);
->>>>>>> DiccionarioEdificios
 
 	std::size_t cantidad_ubicaciones() const;
 

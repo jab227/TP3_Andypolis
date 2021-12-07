@@ -27,7 +27,7 @@ public:
 	//PRE: las rutas del mapa y edificios deben ser a archivos existentes.
 	//POST: se inicializan los atributos con las rutas ingresadas y devuelve true si el archivo de ubicaciones
 	//existe y no esta vacio, devuelve false en caso contrario.
-	bool cargar_archivos(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaiones);
+	bool cargar_archivos(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaiones);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada
@@ -64,7 +64,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se guardan los datos de los archivos de materiales y las ubicaciones
-	void guardar_archivos(string ruta_materiales, string ruta_ubicaciones);
+	void guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se suman al almacen los recursos producidos por los edificios
@@ -89,17 +89,17 @@ public:
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
-	bool cargar_ubicaciones(string ruta, Jugador* jugador);
+	bool cargar_ubicaciones(std::string ruta, Jugador* jugador);
 
 	//PRE: ruta debe ser la ruta a un archivo existente. el mapa debe estar cargado.
 	//POST: se guardan la informacion de las ubicaciones en el archivo.
-	void guardar_ubicaciones(string ruta);
+	void guardar_ubicaciones(std::string ruta);
 
 	//PRE: la linea debe estar bien formada con la ubicacion de un edificio o material. fila y columna
 	//debe ser valido en el mapa
 	//POST: se carga el contenido de la ubicacion en el mapa, sea material o edificio.
  
-	void sumar_contenido(string contenido,Coordenada coordenada, Jugador* jugador);
+	void sumar_contenido(std::string contenido,Coordenada coordenada, Jugador* jugador);
  
 
 	//PRE: -
@@ -117,7 +117,7 @@ private:
 	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,
 	//si coresponden a un casillero no construible, si el casillero esta libre o si no ocurre nada de lo anterior.
 	//en este ultimo caso, fila = fila_ingresada, columna = columna_ingresada y edificio = el ocupado en el casillero.
-	Resultado_Chequeos chequeo_demoler(string fila_ingresada, string columna_ingresada, int &fila, int &columna, string &edificio);
+	Resultado_Chequeos chequeo_demoler(std::string fila_ingresada, std::string columna_ingresada, int &fila, int &columna, std::string &edificio);
 
 	//PRE: -
 	//POST: se muestra un mensaje por terminal correspondiente al resultado del chequeo
@@ -125,7 +125,7 @@ private:
 
 	//PRE: -
 	//POST: se pide al usuario que ingrese un "si" o un "no" y devuelve true en caso de si y false en caso contrario
-	string pedir_si_no();
+	std::string pedir_si_no();
 
 	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
@@ -135,11 +135,11 @@ private:
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
 	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);
 
-	Resultado_Chequeos chequeo_coordenadas(string fila_ingresada, string columna_ingresada, Coordenada coordenada);
+	Resultado_Chequeos chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada coordenada);
 	
 	Resultado_Chequeos pedir_bombas(std::size_t &bombas);
 	
-	Resultado_Chequeos chequeo_bombas(string bombas_ingresadas, std::size_t &bombas);
+	Resultado_Chequeos chequeo_bombas(std::string bombas_ingresadas, std::size_t &bombas);
 
 };
 

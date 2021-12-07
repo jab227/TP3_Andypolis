@@ -5,8 +5,7 @@
 
 const std::size_t CANT_MATERIALES_EDIFICIOS = 3, NINGUNO = 0;
 const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
-<<<<<<< HEAD
-const std::string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
+const std::string MATERIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
 	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO};
@@ -30,7 +29,7 @@ public:
 	//PRE: -
 	//POST: crea un edificio con los atributos inicializados.
 	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
-	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida)
+	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida);
 
 	// PRE: -
 	// POST: Sobreescribiendo el operador igual.
@@ -65,7 +64,6 @@ public:
 	// POST: devuelve si el edificio es vacio
 	bool vacio();
 
-<<<<<<< HEAD
 	//PRE: -
 	//POST: devuelve true si los construidos es igual o mayor a los permitidos.
 	Resultado_Chequeos esta_maxima_capacidad(const std::size_t &construidos);
@@ -94,7 +92,7 @@ public:
 	// PRE: -
 	// POST: devuelve la cantidad de edificios construidos
 	std::size_t obtener_construidos();
-<<<<<<< HEAD
+
 	
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.

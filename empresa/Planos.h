@@ -7,8 +7,6 @@
 
 class Planos {
 private:
-//FER: Lo hago estatico ya que es comun a todo el programa, no es de la intancia particular.
-//Evita tener a mano la instancia del diccionario cuando queremos preguntar si existe un edificio.
 	static Diccionario<std::string, Edificio*> lista_edificios;
 public:
 

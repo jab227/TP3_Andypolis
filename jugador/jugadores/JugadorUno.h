@@ -12,8 +12,6 @@ class Jugador_Uno final : public Jugador {
 	static const std::size_t costo_terreno = 25;
 
        public:
-	Jugador_Uno(Almacen* inventario, Lista<Coordenada*>* edificios);
-	Jugador_Uno(Almacen *inventario);
 	Jugador_Uno(const Coordenada& coordenada);
 	~Jugador_Uno() override;
 	bool mover(const Coordenada& destino, const Mapa& mapa) override;

@@ -8,9 +8,6 @@ Jugador::Jugador(std::size_t id, const Coordenada& coordenada)
       inventario_(new Almacen()),
       edificios_(Lista<Coordenada>()) {}
 
-Jugador::Jugador(std::size_t id, Almacen *inventario)
-    : id_(id), energia_(0), inventario_(inventario), edificios_(nullptr){}
-
 std::size_t Jugador::obtener_jugador() const { return id_; }
 
 std::size_t Jugador::obtener_energia() const { return energia_; }
@@ -39,14 +36,14 @@ bool Jugador::recuperar_energia(const std::size_t &valor) {
 }
 
 void Jugador::mostrar_construidos(const Mapa* mapa) const{
-	if( !this -> edificios_ -> vacia() ){
+	if( !this -> edificios_.vacia() ){
 		//TablePrinter printer = TablePrinter();
 		//printer.print_row( mapa , ubicaciones_.consulta(i), std::cout); //lo comento por ahora
 	}
 }
 
-void Jugador::agregar_ubicacion( Coordenada* coordenada) {
-	edificios_->alta_al_final(coordenada);
+void Jugador::agregar_ubicacion(const Coordenada& coordenada) {
+	edificios_.alta_al_final(coordenada);
 }
 
 std::size_t Jugador::cantidad_ubicaciones() const {
@@ -60,7 +57,7 @@ Coordenada Jugador::obtener_ubicacion(const std::size_t indice) const {
 void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 	std::size_t indice = existe_ubicacion(coordenada);
 	if(indice){
-		edificios_->baja(indice);
+		edificios_.baja(indice);
 	}
 }
 
@@ -71,9 +68,9 @@ Resultado_Chequeos Jugador::tiene_materiales( Lista<Material>* materiales) const
 
 std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const{
 	std::size_t construidos;
-	for(std::size_t i = 1; i < edificios_ -> consulta_largo() + 1; i++){
-		Coordenada* ubicacion = this -> obtener_ubicacion(i);
-		std::string edificio = mapa -> obtener_contenido_ubicacion( *ubicacion );
+	for(std::size_t i = 1; i < edificios_.consulta_largo() + 1; i++){
+		Coordenada ubicacion = this -> obtener_ubicacion(i);
+		std::string edificio = mapa -> obtener_contenido_ubicacion( ubicacion );
 		if(edificio == nombre_edificio) construidos++;
 	}
 	return construidos;
@@ -102,12 +99,12 @@ Lista<Material>* Jugador::obtener_recursos_producidos( Mapa* mapa){
 	Lista<Material>* listado = new Lista<Material>;
 	Material material_producido;
 	std::size_t agregados = 0;
-	Coordenada* coordenada;
+	Coordenada coordenada;
 
-	for(std::size_t i = 1; i <= this -> edificios_->consulta_largo(); i++){
+	for(std::size_t i = 1; i <= this -> edificios_.consulta_largo(); i++){
 		coordenada = obtener_ubicacion(i);
 		//No necesito chequear si esta construido.
-		nombre_edificio = mapa -> obtener_contenido_ubicacion(*coordenada);
+		nombre_edificio = mapa -> obtener_contenido_ubicacion(coordenada);
 		//Error de static.
 		edificio = Planos::buscar(nombre_edificio);
 		material_producido = edificio -> producir_material();
@@ -123,10 +120,10 @@ Lista<Material>* Jugador::obtener_recursos_producidos( Mapa* mapa){
 std::size_t Jugador::existe_ubicacion( Coordenada coordenada) const{
 	std::size_t i = 1;
 	std::size_t indice = 0;
-	Coordenada* tmp;
-	while(i <= edificios_ -> consulta_largo() || !indice){
+	Coordenada tmp;
+	while(i <= edificios_.consulta_largo() || !indice){
 		tmp = obtener_ubicacion(i);
-		if( coordenada == *tmp) indice = i;
+		if( coordenada == tmp) indice = i;
 		else i++;
 	}
 	return indice;

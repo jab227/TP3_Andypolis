@@ -1,10 +1,10 @@
 #ifndef LECTURAARCHIVOS_H_
 #define LECTURAARCHIVOS_H_
 
-#include <std::string>
 #include "../edificio/Edificio.h"
 #include "../Casillero/Casillero.h"
 #include "../utils/coordenada.h"
+#include <string>
 
 using namespace std;
 

@@ -1,10 +1,9 @@
 #ifndef PARSER_EDIFICIO_H_
 #define PARSER_EDIFICIO_H_
 
-#include <regex>
-
-#include "../edificio/Edificio.h"
 #include "parser.h"
+#include "../edificio/Edificio.h"
+#include <regex>
 
 class ParserEdificio final : public Parser<Edificio*> {
        private:

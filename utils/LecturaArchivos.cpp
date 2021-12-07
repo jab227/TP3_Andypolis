@@ -23,7 +23,6 @@ bool es_numero(std::string palabra){
 	return resultado;
 }
 
-/* Q: No es mas necesario con el parser?
 string dividir_linea(string &linea, char delimitador){
 	std::size_t pos = linea.find(delimitador);
 	string dato = linea.substr(0, pos);
@@ -31,6 +30,7 @@ string dividir_linea(string &linea, char delimitador){
 	return dato;
 }
 
+/* Q: No es mas necesario con el parser?
 Edificio* procesar_edificio(string linea){
 	string nombre = dividir_linea(linea, ESPACIO);
 	string dato_sig;

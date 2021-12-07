@@ -98,12 +98,12 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(std::string& edificio, const
 
 }
 
-
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
 void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
 	( (Casillero_Transitable*) this -> terreno[coordenada.x()][coordenada.y()] ) ->
 			agregar_material(traductor_materiales(material, 0));
 }
+
 
 //OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
 void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario){
@@ -133,20 +133,20 @@ bool Mapa::generar_materiales_aleatorios(){
 	while(a_generar > 0 && !(casilleros_libres->vacia())){
 		if((piedra_a_generar > 0)){
 			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
-			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], casilleros_libres -> consulta(n_casillero));
+			generar_material(MATERIALES_EDIFICIOS[PIEDRA], casilleros_libres -> consulta(n_casillero));
 			piedra_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
 		if((madera_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
-			generar_material(MATERTIALES_EDIFICIOS[MADERA], casilleros_libres->consulta(n_casillero));
+			generar_material(MATERIALES_EDIFICIOS[MADERA], casilleros_libres->consulta(n_casillero));
 			madera_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 
 		}
 		if((metal_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
-			generar_material(MATERTIALES_EDIFICIOS[METAL], casilleros_libres->consulta(n_casillero));
+			generar_material(MATERIALES_EDIFICIOS[METAL], casilleros_libres->consulta(n_casillero));
 			metal_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}

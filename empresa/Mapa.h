@@ -15,15 +15,9 @@ private:
 	Casillero*** terreno;
 //Metodos
 public:
-<<<<<<< HEAD
-	//PRE: ruta debe ser a un archivo exitente de un mapa bien formado
-	//POST: se crea un mapa con los datos del archivo
-	Mapa(std::string ruta);
-=======
 	//PRE: -
 	//POST: Crea el mapa a partir de un string, el mapa es de filas x columnas. 
 	Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas);
->>>>>>> DiccionarioEdificios
 
 	//PRE: -
 	//POST: se destruye el mapa liberando toda la memoria utilizada

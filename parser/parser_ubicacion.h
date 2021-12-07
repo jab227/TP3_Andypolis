@@ -1,14 +1,14 @@
 #ifndef PARSER_UBICACION_H_
 #define PARSER_UBICACION_H_
-#include <regex>
 
+#include "parser.h"
 #include "../Casillero/Casillero.h"
 #include "../diccionario/diccionario.h"
 #include "../empresa/Mapa.h"
 #include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
 #include "../utils/coordenada.h"
-#include "parser.h"
+#include <regex>
 class ParserUbicacion final : public Parser<Mapa*> {
        private:
 	// Pre: -
@@ -23,9 +23,9 @@ class ParserUbicacion final : public Parser<Mapa*> {
 	// material
 	std::size_t y(const std::smatch& match) const;
 	Coordenada edificio(
-	    const smatch& match, Mapa*& mapa,
+	    const std::smatch& match, Mapa*& mapa,
 	    const Diccionario<std::string, Edificio*>& edificios);
-	void material(const smatch& match, Mapa*& mapa);
+	void material(const std::smatch& match, Mapa*& mapa);
 	std::smatch conseguir_coincidencia(const std::string& str);
       public:
 	// Constructor por defecto

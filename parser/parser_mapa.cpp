@@ -16,11 +16,10 @@ Mapa* ParserMapa::mapa(const std::smatch& match) const {
 	std::stringstream ss(match.str(3));
 	while(getline(ss,aux,' '))
 		resultado+=aux;
-	
-
-				
+	Mapa* mapa = new Mapa(resultado, filas(match), columnas(match));
+	return mapa;
 }
 
-std::size_t ParserMapa::filas(const std::smatch& match) const { return std::stoul(match[1]);}//stoul(match[1]); }
+std::size_t ParserMapa::filas(const std::smatch& match) const { return std::stoul(match.str(1));}
 
-std::size_t ParserMapa::columnas(const std::smatch& match) const { return std::stoul(match[2]);}//stoul(match[2]); }
+std::size_t ParserMapa::columnas(const std::smatch& match) const { return std::stoul(match.str(2));}

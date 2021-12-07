@@ -8,7 +8,11 @@
 
 const std::string VERDE = BGND_LIGHT_GREEN_46, AZUL = BGND_BLUE_12, GRIS = BGND_GRAY_245, FIN_COLOR = END_COLOR, NEGRO = TXT_DARK_GRAY_233;
 const std::string CONTENIDO_VACIO = "";
-const char TRANSITABLE = 'C', INACCESIBLE = 'L' , CONSTRUIBLE = 'T';
+const char BETUN = 'B';
+const char CAMINO = 'C';
+const char LAGO = 'L';
+const char MUELLE = 'M';
+const char TERRENO = 'T';
 
 class Casillero {
 private:

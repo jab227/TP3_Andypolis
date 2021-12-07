@@ -33,12 +33,16 @@ Edificio* traductor_edificios(std::string nombre, std::size_t piedra,
 
 Casillero* traductor_casillero(char nombre) {
 	Casillero* casillero;
-	if (nombre == TRANSITABLE)
-		casillero = new Casillero_Transitable();
-	else if (nombre == INACCESIBLE)
-		casillero = new Casillero_Inaccesible();
-	else if (nombre == CONSTRUIBLE)
-		casillero = new Casillero_Construible();
+	if (nombre == BETUN)
+		casillero = new Betun();
+	if (nombre == CAMINO)
+		casillero = new Camino();
+	else if (nombre == LAGO)
+		casillero = new Lago();
+	else if (nombre == MUELLE)
+		casillero = new Muelle();
+	else if (nombre == TERRENO)
+		casillero = new Terreno();
 	return casillero;
 }
 
@@ -46,8 +50,3 @@ Material* traductor_materiales(std::string nombre, std::size_t cantidad) {
 	return new Material(nombre, cantidad);
 }
 
-void cargar_fila_columna(std::string linea, std::size_t& filas,
-			 std::size_t& columnas) {
-	filas = stoi(dividir_linea(linea, ESPACIO));
-	columnas = stoi(dividir_linea(linea, ESPACIO));
-}

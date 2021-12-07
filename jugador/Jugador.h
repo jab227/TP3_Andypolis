@@ -19,7 +19,8 @@ class Jugador {
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
 	Almacen* inventario_;
-	Lista<Coordenada*>* edificios_;
+	Coordenada posicion_;
+	Lista<Coordenada> edificios_;
 
        public:
 	// TODO: Deberiamos pasarle al jugador el inventario y la lsita de
@@ -27,12 +28,12 @@ class Jugador {
 	Jugador(std::size_t id, Almacen* inventario, Lista<Coordenada*>* edificios);
 	//Para cuando sea nueva partida.
 	Jugador(std::size_t id, Almacen *inventario);
+	// Q: Construimos primero el jugador con las cosas o primero lo ubicamos?
+	Jugador(std::size_t id, const Coordenada& coordenada);
 	// Destructuor
 	virtual ~Jugador() {
 		delete inventario_;
-		delete edificios_;
 		inventario_ = nullptr;
-		edificios_ = nullptr;
 	};
 	// Pre: 
 	// Pos:
@@ -48,7 +49,10 @@ class Jugador {
 	// PRE: -
 	// POST: devuelve el inventario del jugador
 	Almacen* obtener_inventario() const;
-
+	
+	// PRE: -
+	// POST: Devuelve la posicoin del jugador 
+	Coordenada obtener_posicion() const;
 	// PRE: -
 	// POST: si hay energia suficiente, devuelve un numero >= 0
 	// representando la energia que sobra. Si no alcanza devuelve un numero
@@ -62,11 +66,15 @@ class Jugador {
 	bool usar_energia(const std::size_t& valor);
 
 	// TODO: Hacer post y pre.
+<<<<<<< HEAD
 	void agregar_ubicacion(  Coordenada* coordenada);
+=======
+	void agregar_ubicacion(const Coordenada& coordenada);
+>>>>>>> DiccionarioEdificios
 
 	std::size_t cantidad_ubicaciones() const;
 
-	Coordenada* obtener_ubicacion(const std::size_t indice) const;
+	Coordenada obtener_ubicacion(const std::size_t indice) const;
 
 	//Devuelve 0 si no encontro, devuelve el indice si lo encontro.
 	std::size_t existe_ubicacion( Coordenada coordenada) const;

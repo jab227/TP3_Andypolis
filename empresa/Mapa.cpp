@@ -14,13 +14,8 @@ const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
 const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
 const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
 
-//TODO: Adaptar al parser.
-Mapa::Mapa(std::string ruta) {
-	this -> columnas = 0;
-	this -> filas = 0;
-	this -> terreno = nullptr;
-	this -> cargar_terreno(ruta);
- 
+Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas) : filas(filas), columnas(columnas), terreno(nullptr) {
+	this -> cargar_terreno(mapa);
 	srand((unsigned int) time(0)); 	//Genero una semilla aleatoria
 }
 
@@ -43,10 +38,8 @@ void Mapa::cargar_terreno(std::string ruta){
 		cargar_fila_columna(lectura, this -> filas, this -> columnas);
 		this -> terreno = new Casillero** [this -> filas];
         for(std::size_t i = 0; i < this -> filas; i++){
-            getline(archivo, lectura, ENTER);
             this -> iniciar_filas_casilleros(i,  lectura);
         }
-        archivo.close();
     }
     
 }

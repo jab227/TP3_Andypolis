@@ -1,37 +1,29 @@
 #include "LecturaArchivos.h"
 
-#include <ctype.h>
-#include "../edificio/edificios/Mina.h"
-#include "../edificio/edificios/Aserradero.h"
-#include "../edificio/edificios/Fabrica.h"
-#include "../edificio/edificios/Escuela.h"
-#include "../edificio/edificios/Obelisco.h"
-#include "../edificio/edificios/PlantaElectrica.h"
-#include "../Casillero/CasilleroTransitable.h"
 #include "../Casillero/CasilleroConstruible.h"
 #include "../Casillero/CasilleroInaccesible.h"
+#include "../Casillero/CasilleroTransitable.h"
+#include "../edificio/edificios/Aserradero.h"
+#include "../edificio/edificios/Escuela.h"
+#include "../edificio/edificios/Fabrica.h"
+#include "../edificio/edificios/Mina.h"
+#include "../edificio/edificios/Obelisco.h"
+#include "../edificio/edificios/PlantaElectrica.h"
 
-//PRE: -
-//POST: parte la linea en el delimitador, devuelve la primera mitad por la salida y la segunda mitad
-//se iguala a linea
-string dividir_linea(string &linea, char delimitador);
-
-//PRE: c debe ser el caracter correspondiente a un numero
-//POST: devuelve el numero entero
-std::size_t char_a_int(char c);
 
 bool es_numero(std::string palabra){
 	bool resultado = true;
-	std::size_t i = 0;
+	int i = 0;
 	if(palabra.size() == 0)
 		resultado = false;
-	while (i < palabra.length() && resultado){
+	while (i < (int) palabra.length() && resultado){
 		resultado = isdigit(palabra[i]);
 		i++;
 	}
 	return resultado;
 }
 
+/* Q: No es mas necesario con el parser?
 string dividir_linea(string &linea, char delimitador){
 	std::size_t pos = linea.find(delimitador);
 	string dato = linea.substr(0, pos);
@@ -54,7 +46,7 @@ Edificio* procesar_edificio(string linea){
 	std::size_t max_permitidos = stoi(linea);
 	return traductor_edificios(nombre, materiales[0], materiales[1], materiales[2], max_permitidos);
 }
-
+*/
 //TODO: Buscar valores defualt para ahorrar poner siempre todos los param.
 Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos){
 	Edificio* edificio = nullptr;
@@ -84,26 +76,16 @@ Casillero* traductor_casillero(char nombre){
     return casillero;
 }
 
-Material* traductor_materiales(string nombre, std::size_t cantidad){
+Material* traductor_materiales(std::string nombre, std::size_t cantidad) {
 	return new Material(nombre, cantidad);
 }
 
-Material procesar_material(string linea){
-	string nombre = dividir_linea(linea, ESPACIO);
-	string dato_sig;
-	while(!es_numero(dato_sig = dividir_linea(linea, ESPACIO))){
-		nombre += ' ';
-		nombre += dato_sig;
-	}
-	std::size_t cantidad = stoi(dato_sig);
-	return Material(nombre, cantidad);
-}
-
-void cargar_fila_columna(string linea, std::size_t& filas, std::size_t& columnas){
+void cargar_fila_columna(std::string linea, std::size_t& filas,
+			 std::size_t& columnas) {
 	filas = stoi(dividir_linea(linea, ESPACIO));
 	columnas = stoi(dividir_linea(linea, ESPACIO));
 }
-
+/* Q: No es más necesario con el parser?
 string procesar_ubicacion(string linea, Coordenada& coordenada){
 	string edificio = dividir_linea(linea, DELIMITADOR_UBICACION);
 	edificio.erase(edificio.size()-1, 1); //Le saco el espcio final
@@ -127,4 +109,4 @@ string espaciado(string palabra, std::size_t largo){
 	espacio += "|";
 	return espacio;
 }
-
+*/

@@ -3,9 +3,9 @@
 
 #include "../material/Material.h"
 
-
 const std::size_t CANT_MATERIALES_EDIFICIOS = 3, NINGUNO = 0;
 const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
+<<<<<<< HEAD
 const std::string MATERTIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
@@ -30,18 +30,18 @@ public:
 	//PRE: -
 	//POST: crea un edificio con los atributos inicializados.
 	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
-	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida);
+	Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida)
 
-	//PRE: -
-	//POST: Sobreescribiendo el operador igual.
+	// PRE: -
+	// POST: Sobreescribiendo el operador igual.
 	Edificio& operator=(const Edificio& rhs);
 
-	//PRE: -
-	//POST: ejecuta el destructor
+	// PRE: -
+	// POST: ejecuta el destructor
 	virtual ~Edificio() = 0;
 
-	//PRE: -
-	//POST: devuelve el nombre del edificio.
+	// PRE: -
+	// POST: devuelve el nombre del edificio.
 	std::string obtener_nombre() const;
 
 	//PRE: -
@@ -57,14 +57,15 @@ public:
 	//POST: devuleve la cantidad de edificios maximos construidos.
 	std::size_t obtener_max_permitidos() const;
 
-	//PRE: -
-	//POST: imprime un mensaje por consola
+	// PRE: -
+	// POST: imprime un mensaje por consola
 	virtual void saludar() = 0;
 
-	//PRE: -
-	//POST: devuelve si el edificio es vacio
+	// PRE: -
+	// POST: devuelve si el edificio es vacio
 	bool vacio();
 
+<<<<<<< HEAD
 	//PRE: -
 	//POST: devuelve true si los construidos es igual o mayor a los permitidos.
 	Resultado_Chequeos esta_maxima_capacidad(const std::size_t &construidos);
@@ -78,21 +79,22 @@ public:
 	//POST: devuelve lo que produce en str.
 	virtual std::string info_producto() const = 0;
 
-	//PRE: -
-	//POST: se modifica el valor de edificios construidos a n
+	// PRE: -
+	// POST: se modifica el valor de edificios construidos a n
 	void modificar_construidos(std::size_t n);
 
-	//PRE: -
-	//POST: Aumenta en 1 el valor de edificios construidos.
+	// PRE: -
+	// POST: Aumenta en 1 el valor de edificios construidos.
 	void aumentar_construidos();
-	
-	//PRE: -
-	//POST: Disminuye en 1 el valor de edificios construidos.
+
+	// PRE: -
+	// POST: Disminuye en 1 el valor de edificios construidos.
 	void disminuir_construidos();
 
-	//PRE: -
-	//POST: devuelve la cantidad de edificios construidos
+	// PRE: -
+	// POST: devuelve la cantidad de edificios construidos
 	std::size_t obtener_construidos();
+<<<<<<< HEAD
 	
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.
@@ -117,7 +119,6 @@ protected: // Solo me interesa que puedan cambiarlo las hijas si lo necesitan.
 	//PRE: -
 	//POST: Suma 1 de vida al edificio.
 	void recuperar_vida();
-
 };
 
 #endif /* EDIFICIO_H_ */

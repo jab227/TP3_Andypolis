@@ -1,5 +1,6 @@
 #include "parser_edificio.h"
 
+#include "../utils/LecturaArchivos.h"
 #include "../edificio/edificios/Aserradero.h"
 #include "../edificio/edificios/Escuela.h"
 #include "../edificio/edificios/Fabrica.h"
@@ -33,28 +34,5 @@ void ParserEdificio::parse(const std::string& input, Edificio*& edificio) {
 	std::smatch match;
 	std::regex_search(input, match, pattern);
 
-	std::string nombre_edificio = nombre();
-	if (nombre_edificio == "aserradero") {
-		edificio =
-		    new Aserradero(piedra(), madera(), metal(), permitidos())
-	} else if (nombre_edificio == "escuela") {
-		edificio =
-		    new Escuela(piedra(), madera(), metal(), permitidos())
-	} else if (nombre_edificio == "fabrica") {
-		edificio =
-		    new Fabrica(piedra(), madera(), metal(), permitidos())
-	} else if (nombre_edificio == "mina") {
-		edificio = new Mina(piedra(), madera(), metal(), permitidos())
-	} else if (nombre_edificio == "mina oro") {
-		edificio =
-		    new Mina_Oro(piedra(), madera(), metal(), permitidos())
-	} else if (nombre_edificio == "obelisco") {
-		edificio =
-		    new Obelisco(piedra(), madera(), metal(), permitidos())
-	} else if (nombre_edificio == "planta electrica") {
-		edificio = new Planta_Electrica(piedra(), madera(), metal(),
-						permitidos())
-	} else {
-		edificio = nullptr;
-	}
+	traductor_edificios(nombre(match), piedra(match), madera(match), metal(match), permitidos(match));
 }

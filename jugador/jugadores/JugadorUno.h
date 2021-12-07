@@ -14,7 +14,8 @@ class Jugador_Uno final : public Jugador {
        public:
 	Jugador_Uno(Almacen* inventario, Lista<Coordenada*>* edificios);
 	Jugador_Uno(Almacen *inventario);
-	~Jugador_Uno();
+	Jugador_Uno(const Coordenada& coordenada);
+	~Jugador_Uno() override;
 	bool mover(const Coordenada& destino, const Mapa& mapa) override;
 };
 

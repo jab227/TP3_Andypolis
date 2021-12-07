@@ -24,8 +24,8 @@ public:
     void cambiar_siguiente(Nodo* pn);
 
     //PRE: -
-    //POST: devuelve el dato contenido
-    T obtener_dato() const;
+    //POS: devuelve la referencia al dato contenido
+    T& obtener_dato() const;
 
     //PRE: -
     //POST: devuelve el siguiente nodo
@@ -50,7 +50,7 @@ void Nodo<T>::cambiar_siguiente(Nodo* pn) {
 }
 
 template <typename T>
-T Nodo<T>::obtener_dato() const {
+T& Nodo<T>::obtener_dato() const {
     return dato;
 }
 

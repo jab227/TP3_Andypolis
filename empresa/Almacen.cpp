@@ -57,11 +57,14 @@ std::size_t Almacen::buscar_material(Material& a_buscar){
 
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
+//TODO. Adaptar a Material.
 void Almacen::sumar_cantidad_material(std::string a_cambiar, int cantidad){
 	Material material_a_cambiar = Material(a_cambiar,0);
 	//VER: si nos podemos ahorrar ciclos (Eficiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
+	cout << index;
 	if(index){
+		cout << index;
 		material_a_cambiar.sumar_cantidad(cantidad);
 		this -> lista_materiales.modificar(material_a_cambiar, index);
 	}

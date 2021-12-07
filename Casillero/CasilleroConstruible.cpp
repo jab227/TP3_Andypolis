@@ -82,3 +82,7 @@ void Casillero_Construible::recoger_material(Almacen* inventario){
 Resultado_Chequeos Casillero_Construible::reparar_edificio(){
 	return this -> edificio_ -> reparar();
 }
+
+Resultado_Chequeos Casillero_Construible::atacar_edificio() {
+	return this -> edificio_ -> disminuir_vida();
+}

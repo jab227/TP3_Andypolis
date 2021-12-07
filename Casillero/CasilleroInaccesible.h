@@ -44,6 +44,7 @@ public:
 
 	void recoger_material(Almacen* inventario) override;
 
+	Resultado_Chequeos atacar_edificio() override;
 
 };
 

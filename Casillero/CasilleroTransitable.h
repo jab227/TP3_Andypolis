@@ -52,6 +52,8 @@ public:
 	Resultado_Chequeos reparar_edificio() override;
 
 	void saludo_material() const;
+	
+	Resultado_Chequeos atacar_edificio() override;
 
 };
 

@@ -70,3 +70,7 @@ Resultado_Chequeos Casillero_Transitable::reparar_edificio(){ return CASILLERO_N
 void Casillero_Transitable::saludo_material() const{
     this -> material -> saludar();
 }
+
+Resultado_Chequeos Casillero_Transitable::atacar_edificio() {
+	return NO_EXISTE;
+}

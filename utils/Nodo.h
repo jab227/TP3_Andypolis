@@ -26,7 +26,7 @@ public:
 
     //PRE: -
     //POS: devuelve el dato contenido
-    T obtener_dato();
+    T& obtener_dato();
 
     //PRE: -
     //POS: devuelve el siguiente nodo
@@ -51,7 +51,7 @@ void Nodo<T>::cambiar_siguiente(Nodo* pn) {
 }
 
 template <typename T>
-T Nodo<T>::obtener_dato() {
+T& Nodo<T>::obtener_dato() {
     return dato;
 }
 

@@ -109,7 +109,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
             this -> jugadores.consulta(1) -> recuperar_energia(ENERGIA_INICIAL);
             this -> jugadores.consulta(2) -> recuperar_energia(ENERGIA_INICIAL);
             break;
-        case GUARDAR_SALIR:
+        case GUARDAR_SALIR_INICIO:
         	fin = true;
 			cout << "Adios!"<< endl;
 			break;
@@ -147,7 +147,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			this -> empresa_constructora -> mostrar_materiales(this -> jugadores.consulta(this -> jugador_activo));
 			break;
         case OBJETIVOS:
-        	cout << "Implementar mostrar objetivos!" << endl;
+        	this -> objetivos_jugadores.consulta(this -> jugador_activo) -> mostrar_objetivos();
 			break;
         case RECOLECTAR:
 		//FER: Hice recoger_material() en los casilleros

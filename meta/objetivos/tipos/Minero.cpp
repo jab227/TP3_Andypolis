@@ -7,6 +7,6 @@ Minero::Minero(Jugador* jugador) : Objetivo(jugador) {
 Minero::~Minero(){ }
 
 bool Minero::actualizar(){
-	std::cout << "Implementar actualizar letrado" << std::endl;
+	std::cout << "Implementar actualizar minero" << std::endl;
 	return false;
 }

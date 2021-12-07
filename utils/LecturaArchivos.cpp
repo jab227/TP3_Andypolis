@@ -7,7 +7,9 @@
 #include "../edificio/edificios/Escuela.h"
 #include "../edificio/edificios/Obelisco.h"
 #include "../edificio/edificios/PlantaElectrica.h"
-#include "../Casillero/CasilleroTransitable.h"
+#include "../Casillero/casilleros/Betun.h"
+#include "../Casillero/casilleros/Camino.h"
+#include "../Casillero/casilleros/Muelle.h"
 #include "../Casillero/CasilleroConstruible.h"
 #include "../Casillero/CasilleroInaccesible.h"
 
@@ -77,10 +79,14 @@ Casillero* traductor_casillero(char nombre){
     Casillero* casillero;
 	if (nombre == INACCESIBLE)
         casillero = new Casillero_Inaccesible();
-    //else if(nombre == TRANSITABLE)
-        //casillero = new Casillero_Transitable(); Correcion provisoria
+    else if(nombre == BETUN)
+        casillero = new Betun(); //Correcion provisoria
     else if(nombre == CONSTRUIBLE)
         casillero = new Casillero_Construible();
+    else if(nombre == CAMINO)
+        casillero = new Camino();
+    else if(nombre == MUELLE)
+        casillero = new Muelle();
     return casillero;
 }
 

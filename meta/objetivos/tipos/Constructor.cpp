@@ -7,6 +7,6 @@ Constructor::Constructor(Jugador* jugador) : Objetivo(jugador) {
 Constructor::~Constructor(){ }
 
 bool Constructor::actualizar(){
-	std::cout << "Implementar actualizar letrado" << std::endl;
+	std::cout << "Implementar actualizar constructor" << std::endl;
 	return false;
 }

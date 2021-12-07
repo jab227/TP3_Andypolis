@@ -1,5 +1,8 @@
 #include <random>
 #include "Meta.h"
+#include "../utils/colors.h"
+
+const std::string VERDE_META = BGND_GREEN_118, ROJO_META = BGND_RED_196 ;
 
 Meta::Meta(Jugador* jugador) {
 	this -> objetivos = new Lista<Objetivo*>;
@@ -35,8 +38,12 @@ bool Meta::objetivos_cumplidos(){
 
 void Meta::mostrar_objetivos(){
 	std::cout << "Los objetivos son: " << std::endl;
+	std::string color;
 	for(std::size_t i = 1; i <= this -> objetivos -> consulta_largo(); i++){
-		std::cout << "- " << this -> objetivos -> consulta(i) -> obtener_titulo() << std::endl;
+		Objetivo* objetivo = objetivos -> consulta(i);
+		std::cout << "- " << objetivo -> obtener_titulo();
+		(objetivo -> esta_cumplido()) ? color = VERDE_META : color = ROJO_META;
+		std::cout << color << "  " << END_COLOR << std::endl;
 	}
 }
 

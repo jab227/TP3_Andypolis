@@ -217,7 +217,7 @@ class Diccionario {
 		return (search(raiz_, clave) != nullptr);
 	};
 	// Pre: -
-	// Pos: 
+	// Pos: Devuelve una lista con las claves del diccionario.
 	Lista<T> claves() {
 		Lista<T> lista;
 		claves(raiz_, lista);

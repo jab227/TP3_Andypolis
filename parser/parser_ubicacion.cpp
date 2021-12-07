@@ -65,7 +65,7 @@ void ParserUbicacion::parse(
 				break;
 			}
 			case JUGADOR_DOS: {
-				jugador_uno->agregar_ubicacion(
+				jugador_dos->agregar_ubicacion(
 				    edificio(match, mapa, edificios));
 				break;
 			}

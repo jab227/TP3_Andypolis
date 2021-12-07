@@ -11,6 +11,9 @@ Planos::Planos(std::string ruta){
 	this -> cargar_edificios(ruta);
 }
 
+Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
+
+
 Planos::~Planos() {
 	//delete lista_edificios;
 }

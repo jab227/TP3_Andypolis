@@ -11,7 +11,6 @@ private:
 //Evita tener a mano la instancia del diccionario cuando queremos preguntar si existe un edificio.
 	static Diccionario<std::string, Edificio*> lista_edificios;
 public:
-
 	//PRE: -
 	//POST: creo unos planos inicializado en 0;
 	Planos();

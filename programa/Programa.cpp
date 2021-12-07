@@ -28,8 +28,14 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios, std:
 		this -> instancia = JUEGO;
 	srand((unsigned int) time(0)); 						 //Genero una semilla aleatoria
 	this -> jugadores.alta_al_final(new Jugador_Uno());  //arreglo temporal
-	this -> jugadores.alta_al_final(new Jugador_Dos();*/
+	this -> jugadores.alta_al_final(new Jugador_Dos();
 	this -> jugador_activo = rand() % 2 + 1;
+	this -> jugadores.alta_al_final(new Jugador_Uno(new Almacen())); //arreglo temporal
+	this -> jugadores.alta_al_final(new Jugador_Dos(new Almacen()));
+	this -> objetivos_jugadores.alta_al_final(new Meta(this -> jugadores.consulta(1)));
+	this -> objetivos_jugadores.alta_al_final(new Meta(this -> jugadores.consulta(2)));
+	*/
+
 }
 
 Programa::~Programa() {
@@ -108,7 +114,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
             this -> jugadores.consulta(1) -> recuperar_energia(ENERGIA_INICIAL);
             this -> jugadores.consulta(2) -> recuperar_energia(ENERGIA_INICIAL);
             break;
-        case GUARDAR_SALIR:
+        case GUARDAR_SALIR_INICIO:
         	fin = true;
 			cout << "Adios!"<< endl;
 			break;
@@ -146,7 +152,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			this -> empresa_constructora -> mostrar_materiales(this -> jugadores.consulta(this -> jugador_activo));
 			break;
         case OBJETIVOS:
-        	cout << "Implementar mostrar objetivos!" << endl;
+        	this -> objetivos_jugadores.consulta(this -> jugador_activo) -> mostrar_objetivos();
 			break;
         case RECOLECTAR:
 		//FER: Hice recoger_material() en los casilleros
@@ -168,6 +174,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			cout << "Adios!"<< endl;
 			break;
     }
+    this -> objetivos_jugadores.consulta(this -> jugador_activo) -> actualizar_objetivos();
     return fin;
 }
 

@@ -10,6 +10,8 @@ Bombardero::Bombardero(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 	this -> bombas_actuales = bombas.obtener_cantidad();
 }
 
+Bombardero::~Bombardero(){ }
+
 bool Bombardero::actualizar(){
 	if(!this -> cumplido){
 		Material bombas = Material("bombas", 0);

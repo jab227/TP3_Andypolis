@@ -287,7 +287,6 @@ Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
 	std::string cantidad_ingresada;
 	std::cout << "¿Cuantas bombas desea comprar? (Precio: " << COSTO_BOMBAS << "andycoins): ";
 	getline(cin, cantidad_ingresada);
-	
 	return chequeo_bombas(cantidad_ingresada, bombas);
 }
 

@@ -6,6 +6,8 @@ const std::string NOMBRE = "Edad de piedra";
 Piedras::Piedras(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 }
 
+Piedras::~Piedras(){ }
+
 bool Piedras::actualizar(){
 	if(!this -> cumplido){
 		Material piedras("piedras", 0);

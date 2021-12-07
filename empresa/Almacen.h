@@ -34,7 +34,7 @@ public:
 	//POST: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
 	//se realiza ningun cambio. La cantidad puede ser negativa, en tal caso se restara.
 	
-	void sumar_cantidad_material(std::string a_cambiar, int cantidad);
+	void sumar_cantidad_material(std::string a_cambiar, std::size_t cantidad);
 	//Le puse sumar, porque modificar pareciera no suma, sino que reemplaza el valor.
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.

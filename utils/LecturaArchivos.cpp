@@ -12,7 +12,6 @@
 #include "../edificio/edificios/Obelisco.h"
 #include "../edificio/edificios/PlantaElectrica.h"
 
-
 bool es_numero(std::string palabra){
 	bool resultado = true;
 	int i = 0;
@@ -25,6 +24,9 @@ bool es_numero(std::string palabra){
 	return resultado;
 }
 
+//PRE: -
+//POST: parte la linea en el delimitador, devuelve la primera mitad por la salida y la segunda mitad
+//se iguala a linea
 string dividir_linea(string &linea, char delimitador){
 	std::size_t pos = linea.find(delimitador);
 	string dato = linea.substr(0, pos);
@@ -67,12 +69,11 @@ Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t mad
 	return edificio;
 }
 
-
 Casillero* traductor_casillero(char nombre) {
 	Casillero* casillero;
 	if (nombre == BETUN)
 		casillero = new Betun();
-	if (nombre == CAMINO)
+	else if (nombre == CAMINO)
 		casillero = new Camino();
 	else if (nombre == LAGO)
 		casillero = new Casillero_Inaccesible();

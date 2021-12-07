@@ -1,6 +1,7 @@
 #include "Planos.h"
 #include "../edificio/Productor.h"
 #include "../utils/LecturaArchivos.h"
+#include "../parser/parser_edificio.h"
 #include <fstream>
 
 Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
@@ -12,6 +13,9 @@ Planos::Planos() {
 Planos::Planos(std::string ruta){
 	//this -> cargar_edificios(ruta);
 }
+
+Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
+
 
 Planos::~Planos() {
 	//delete lista_edificios;
@@ -28,10 +32,12 @@ void Planos::agregar_edificio(Edificio* edificio){
 void Planos::cargar_edificios(std::string ruta){
 	ifstream archivo(ruta);
 	if (archivo.is_open()){
+		ParserEdificio parser;
 		std::string lectura;
 		Edificio* nuevo_edificio;
 		while(getline(archivo, lectura, ENTER)){
-			nuevo_edificio = procesar_edificio(lectura);
+			//nuevo_edificio = procesar_edificio(lectura); viejo
+			parser.parse(lectura, nuevo_edificio);
 			agregar_edificio(nuevo_edificio);
 		}
 	}

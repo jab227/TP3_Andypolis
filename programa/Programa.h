@@ -4,6 +4,7 @@
 #include "../empresa/EmpresaConstructora.h"
 #include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
+#include "../meta/Meta.h"
 
 enum Instancia {INICIO, JUEGO};
 const int JUGADOR_UNO = 1, JUGADOR_DOS = 2;
@@ -15,6 +16,7 @@ private:
 	Instancia instancia;
 	size_t jugador_activo;
 	Lista<Jugador*> jugadores;
+	Lista<Meta*> objetivos_jugadores;
 //Metodos:
 public:
 	//PRE: las rutas deben ser a archivos existentes y bien formados

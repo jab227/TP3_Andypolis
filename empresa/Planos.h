@@ -9,7 +9,6 @@ class Planos {
 private:
 	static Diccionario<std::string, Edificio*> lista_edificios;
 public:
-
 	//PRE: -
 	//POST: creo unos planos inicializado en 0;
 	Planos();

@@ -16,6 +16,7 @@ const char LAGO = 'L';
 const char MUELLE = 'M';
 const char TERRENO = 'T';
 
+
 class Casillero
 {
 private:

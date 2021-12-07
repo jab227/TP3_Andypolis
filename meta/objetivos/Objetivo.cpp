@@ -6,6 +6,12 @@ Objetivo::Objetivo(std::string titulo, Jugador* jugador) {
 	this -> jugador = jugador;
 }
 
+Objetivo::~Objetivo(){ }
+
 bool Objetivo::esta_cumplido(){
 	return this -> cumplido;
+}
+
+std::string Objetivo::obtener_titulo(){
+	return this -> titulo;
 }

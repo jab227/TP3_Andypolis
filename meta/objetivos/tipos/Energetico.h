@@ -6,6 +6,7 @@
 class Energetico : public Objetivo{
 public:
 	Energetico(Jugador* jugador);
+	~Energetico();
 	bool actualizar();
 };
 

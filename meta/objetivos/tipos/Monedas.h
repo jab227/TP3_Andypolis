@@ -9,6 +9,7 @@ private:
 	std::size_t monedas_actuales;
 public:
 	Monedas(Jugador* jugador);
+	~Monedas();
 	bool actualizar();
 };
 

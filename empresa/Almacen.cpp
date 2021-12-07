@@ -58,11 +58,11 @@ std::size_t Almacen::buscar_material(Material& a_buscar){
 
 //ESTO ES ASUMIENDO QUE LA LISTA EMPIEZA EN 1, ENTONCES 0 ES ERROR.
 //TODO. Adaptar a Material.
-void Almacen::sumar_cantidad_material(std::string a_cambiar, int cantidad){
+void Almacen::sumar_cantidad_material(std::string a_cambiar, std::size_t cantidad){
 	Material material_a_cambiar = Material(a_cambiar,0);
 	//VER: si nos podemos ahorrar ciclos (Eficiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
-	cout << index;
+	//cout << index; Por que habia un print aca?
 	if(index){
 		cout << index;
 		material_a_cambiar.sumar_cantidad(cantidad);
@@ -138,8 +138,8 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas){
 	Resultado_Chequeos resultado = NO_MATERIALES;
 	Material andycoins = Material(NOMBRES_MATERIALES[3],0);
 	buscar_material(andycoins);
-	int gasto = cantidad_bombas * PRECIO_BOMBA;
-	if((int) andycoins.obtener_cantidad() < gasto){
+	std::size_t gasto = cantidad_bombas * PRECIO_BOMBA;
+	if( andycoins.obtener_cantidad() < gasto){
 		cout << "Compraste " << cantidad_bombas << " bombas exitosamente."  << endl;
 		this -> sumar_cantidad_material(NOMBRES_MATERIALES[4], cantidad_bombas);
 		this -> sumar_cantidad_material(NOMBRES_MATERIALES[3], -gasto);

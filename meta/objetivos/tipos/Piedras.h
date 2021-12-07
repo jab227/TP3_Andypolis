@@ -6,6 +6,7 @@
 class Piedras : public Objetivo{
 public:
 	Piedras(Jugador* jugador);
+	~Piedras();
 	bool actualizar();
 };
 

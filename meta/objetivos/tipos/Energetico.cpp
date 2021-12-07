@@ -6,6 +6,8 @@ Energetico::Energetico(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Energetico";
 }
 
+Energetico::~Energetico(){ }
+
 bool Energetico::actualizar(){
 	if(!this -> cumplido)
 		if(this -> jugador -> obtener_energia() >= ENERGIA_A_OBTENER)

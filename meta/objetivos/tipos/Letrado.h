@@ -6,6 +6,7 @@
 class Letrado : public Objetivo{
 public:
 	Letrado(Jugador* jugador);
+	~Letrado();
 	bool actualizar();
 };
 

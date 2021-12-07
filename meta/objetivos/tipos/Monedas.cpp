@@ -10,6 +10,8 @@ Monedas::Monedas(Jugador* jugador) : Objetivo(jugador){
 	this -> titulo = "Comprar andypolis";
 }
 
+Monedas::~Monedas(){ }
+
 bool Monedas::actualizar(){
 	if(!this -> cumplido){
 		Material monedas("andycoins", 0);

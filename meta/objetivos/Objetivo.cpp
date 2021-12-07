@@ -5,6 +5,8 @@ Objetivo::Objetivo(Jugador* jugador) {
 	this -> jugador = jugador;
 }
 
+Objetivo::~Objetivo(){ }
+
 bool Objetivo::esta_cumplido(){
 	return this -> cumplido;
 }

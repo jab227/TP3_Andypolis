@@ -6,6 +6,8 @@ Armado::Armado(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Armado";
 }
 
+Armado::~Armado(){ }
+
 bool Armado::actualizar(){
 	if(!this -> cumplido){
 		Material bombas("bombas", 0);

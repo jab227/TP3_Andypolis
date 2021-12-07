@@ -9,6 +9,7 @@ private:
 	std::size_t bombas_compradas;
 public:
 	Extremista(Jugador* jugador);
+	~Extremista();
 	bool actualizar();
 };
 

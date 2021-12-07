@@ -28,6 +28,9 @@ Programa::Programa(string ruta_materiales, string ruta_edificios, string ruta_ma
 	this -> jugador_activo = rand() % 2 + 1;
 	this -> jugadores.alta_al_final(new Jugador_Uno(new Almacen())); //arreglo temporal
 	this -> jugadores.alta_al_final(new Jugador_Dos(new Almacen()));
+	this -> objetivos_jugadores.alta_al_final(new Meta(this -> jugadores.consulta(1)));
+	this -> objetivos_jugadores.alta_al_final(new Meta(this -> jugadores.consulta(2)));
+
 }
 
 Programa::~Programa() {
@@ -166,6 +169,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			cout << "Adios!"<< endl;
 			break;
     }
+    this -> objetivos_jugadores.consulta(this -> jugador_activo) -> actualizar_objetivos();
     return fin;
 }
 

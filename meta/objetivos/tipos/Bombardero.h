@@ -9,6 +9,7 @@ private:
 	std::size_t bombas_usadas;
 public:
 	Bombardero(Jugador* jugador);
+	~Bombardero();
 	bool actualizar();
 };
 

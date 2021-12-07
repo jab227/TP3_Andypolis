@@ -10,6 +10,8 @@ Extremista::Extremista(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Extremista";
 }
 
+Extremista::~Extremista(){ }
+
 bool Extremista::actualizar(){
 	if(!this -> cumplido){
 		Material bombas("bombas", 0);

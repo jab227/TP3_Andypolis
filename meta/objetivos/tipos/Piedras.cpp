@@ -6,6 +6,8 @@ Piedras::Piedras(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Edad de piedra";
 }
 
+Piedras::~Piedras(){ }
+
 bool Piedras::actualizar(){
 	if(!this -> cumplido){
 		Material piedras("piedras", 0);

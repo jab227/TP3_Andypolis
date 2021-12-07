@@ -1,7 +1,7 @@
 #ifndef OBJETIVO_H_
 #define OBJETIVO_H_
 
-#include "../jugador/Jugador.h"
+#include "../../jugador/Jugador.h"
 
 class Objetivo {
 //Atributos
@@ -16,7 +16,7 @@ public:
 
 	//PRE: -
 	//POST: se destruye el objetivo
-	virtual ~Objetivo(); //{ delete jugador;} lo saque porque es el mismo jugador del programa
+	virtual ~Objetivo() = 0; //{ delete jugador;} lo saque porque es el mismo jugador del programa
 
 	//PRE: -
 	//POST: devuelve si el objetivo esta cumplido o no

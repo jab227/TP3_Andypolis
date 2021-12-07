@@ -6,6 +6,8 @@ Cansado::Cansado(Jugador* jugador) : Objetivo(jugador) {
 	this -> titulo = "Cansado";
 }
 
+Cansado::~Cansado(){ }
+
 bool Cansado::actualizar(){
 	if(!this -> cumplido)
 		if(this -> jugador -> obtener_energia() <= ENERGIA_DESEADA)

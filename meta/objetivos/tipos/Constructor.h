@@ -6,6 +6,7 @@
 class Constructor : public Objetivo{
 public:
 	Constructor(Jugador* jugador);
+	~Constructor();
 	bool actualizar();
 };
 

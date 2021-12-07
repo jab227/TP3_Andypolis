@@ -6,6 +6,7 @@
 class Armado : public Objetivo{
 public:
 	Armado(Jugador* jugador);
+	~Armado();
 	bool actualizar();
 };
 

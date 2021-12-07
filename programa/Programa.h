@@ -4,6 +4,7 @@
 #include "../empresa/EmpresaConstructora.h"
 #include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
+#include "../meta/Meta.h"
 
 enum Instancia {INICIO, JUEGO};
 const int JUGADOR_UNO = 1, JUGADOR_DOS = 2;
@@ -15,11 +16,12 @@ private:
 	Instancia instancia;
 	size_t jugador_activo;
 	Lista<Jugador*> jugadores;
+	Lista<Meta*> objetivos_jugadores;
 //Metodos:
 public:
 	//PRE: las rutas deben ser a archivos existentes y bien formados
 	//POST: se carga el programa con los archivos de las rutas
-	Programa(string ruta_materiales, string ruta_edificios, string ruta_mapa, string ruta_ubicaciones);
+	Programa(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaciones);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada
@@ -35,7 +37,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve si la opcion ingresada es valida segun si es el inicio o dentro del juego
-	bool es_opcion_valida(string opcion);
+	bool es_opcion_valida(std::string opcion);
 
 	//PRE: -
 	//POST: se limpia la pantalla
@@ -43,7 +45,7 @@ public:
 
 	//PRE: las rutas deben ser a archivos existentes
 	//POST: se guardan los cambios modificados
-	void guardar_archivos(string ruta_materiales, string ruta_ubicaciones);
+	void guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones);
 
 private:
 	//PRE: -

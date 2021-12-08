@@ -92,8 +92,7 @@ Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const
 
 }
 
-Resultado_Chequeos Mapa::reparar_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada){
-	edificio = (this -> terreno[coordenada.x()][coordenada.y()]) -> obtener_contenido();
+Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada){
 	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio();
 
 }
@@ -111,10 +110,11 @@ void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* 
 }
 
 //WHY: Se usa?
+//RTA: sep
 std::string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) const{
 	std::string contenido = CONTENIDO_VACIO;
 	//Depende para que lo usemos. Hay una sobrecarga de obtener_contenido. Una para edificios y otra para materiales.
-	//contenido = terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
+	contenido = terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	return contenido;
 }
 

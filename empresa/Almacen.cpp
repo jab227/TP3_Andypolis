@@ -93,16 +93,17 @@ bool Almacen::guardar_materiales(std::string path){
 	return salida;
 }
 
-bool Almacen::hay_material_suficiente(Material material){
+bool Almacen::hay_material_suficiente(Material material, std::size_t porcentaje){
 	bool suficiente = false;
+	std::size_t proporcion = porcentaje/100;
 	Material almacenado = Material(material.obtener_nombre(),0);
 	if(buscar_material(almacenado)){
-		suficiente = almacenado.obtener_cantidad() >= material.obtener_cantidad();
+		suficiente = almacenado.obtener_cantidad() >= material.obtener_cantidad()*proporcion;
 	}
 	return suficiente;
 }
 
-Resultado_Chequeos Almacen::hay_lista_materiales( Lista<Material>* materiales_consultados){
+Resultado_Chequeos Almacen::hay_lista_materiales( Lista<Material>* materiales_consultados, std::size_t porcentaje){
 	bool fin = false;
 	Resultado_Chequeos suficiente = EXITO;
 	std::size_t i = 1;

@@ -66,6 +66,11 @@ Resultado_Chequeos Jugador::tiene_materiales( Lista<Material>* materiales) const
 	return this -> inventario_ -> hay_lista_materiales(materiales);
 }
 
+Resultado_Chequeos Jugador::tiene_materiales_reparar( Lista<Material>* materiales) const{
+	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
+	return this -> inventario_ -> hay_lista_materiales(materiales, 25);
+}
+
 std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const{
 	std::size_t construidos;
 	for(std::size_t i = 1; i < edificios_.consulta_largo() + 1; i++){
@@ -82,7 +87,7 @@ void Jugador::usar_lista_materiales( Lista<Material>* materiales){
 }
 
 void Jugador::cobrar_reparacion( Lista<Material>* materiales){
-	this -> inventario_ -> descontar_lista_materiales(materiales,50);
+	this -> inventario_ -> descontar_lista_materiales(materiales,25);
 }
 
 void Jugador::recuperar_lista_materiales( Lista<Material>* materiales){

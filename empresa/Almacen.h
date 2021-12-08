@@ -52,12 +52,12 @@ public:
 	//PRE: -
 	//POST: devuelve true si hay la cantidad del material ingresado en stock y false si
 	//no la hay o si no se encuentra ese material.
-	bool hay_material_suficiente(Material material);
+	bool hay_material_suficiente(Material material, std::size_t porcentaje = 100);
 
 	//PRE: la lista no debe ser un puntero nulo
 	//POST: devuelve true si se cuentan con toda la lista de los materiales
 	//en stock
-	Resultado_Chequeos hay_lista_materiales( Lista<Material>* materiales_consultados);
+	Resultado_Chequeos hay_lista_materiales( Lista<Material>* materiales_consultados, std::size_t porcentaje = 100);
 
 	//TODO: Agregue porcentaje para que sea multiuso. Puede agregarse un valor default al porcentaje?
 	void descontar_lista_materiales( Lista<Material>* materiales_usados, std::size_t porcentaje);

@@ -88,7 +88,7 @@ public:
 	
 	void atacar_edificio();
 	
-	void ver_objetivos();
+	//void ver_objetivos(); Implementado en jugadores
 
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
@@ -128,6 +128,11 @@ private:
 	//en este ultimo caso, fila = fila_ingresada, columna = columna_ingresada y edificio = el ocupado en el casillero.
 	Resultado_Chequeos chequeo_demoler(std::string fila_ingresada, std::string columna_ingresada, int &fila, int &columna, std::string &edificio);
 
+	//PRE:
+	//POST: devuelve si no alcanzan los materiales o si el edificio no necesita reparacion. En caso de que alcancen y el edificio lo necesite,
+	//se repara el edificio y devuelve exito.
+	Resultado_Chequeos chequeo_reparar_edificio(Jugador* jugador, Lista<Material>* listado_necesario, Coordenada coordenada);
+
 	//PRE: -
 	//POST: se muestra un mensaje por terminal correspondiente al resultado del chequeo
 	bool mostrar_mensaje_chequeo(Resultado_Chequeos chequeo);
@@ -144,7 +149,7 @@ private:
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
 	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);
 
-	Resultado_Chequeos chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada coordenada);
+	Resultado_Chequeos chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada);
 	
 	Resultado_Chequeos pedir_bombas(std::size_t &bombas);
 	

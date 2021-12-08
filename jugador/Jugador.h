@@ -82,12 +82,15 @@ class Jugador {
 
 	Resultado_Chequeos tiene_materiales( Lista<Material>* materiales) const;
 	
+	Resultado_Chequeos tiene_materiales_reparar( Lista<Material>* materiales) const;
+
 	//TODO: Eliminar construidos de edificios.
 	std::size_t cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const;
+	
 
 	void cobrar_reparacion( Lista<Material>* materiales);
 	void usar_lista_materiales( Lista<Material>* materiales);
-	
+
 	void recuperar_lista_materiales( Lista<Material>* materiales);
 	
 	void sumar_lista_materiales( Lista<Material>* materiales);

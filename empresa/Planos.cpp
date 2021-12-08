@@ -23,8 +23,8 @@ void Planos::mostrar_edificios(){
 	TablePrinter printer = TablePrinter();
 	Lista<std::string> header;  //feo pero comodo jaja
 	header.alta_al_final("Edificio");
-	header.alta_al_final("Piedra");
 	header.alta_al_final("Madera");
+	header.alta_al_final("Piedra");
 	header.alta_al_final("Metal");
 	header.alta_al_final("Cantidad permitida");
 	header.alta_al_final("Material producido");
@@ -72,10 +72,9 @@ Lista<Material>* Planos::materiales_necesarios( Edificio* edificio){
 
 
 void Planos::modificar_edificio(std::string nombre, std::size_t madera, std::size_t piedra, std::size_t metal){
-	Edificio* edif = Planos::lista_edificios[nombre];
-	std::size_t max = edif->obtener_max_permitidos();
-	Edificio* edificio_modificado = traductor_edificios(nombre, madera, piedra, metal, max);
-	std::cout << edificio_modificado -> obtener_nombre();
+	Edificio* edificio_modificado = traductor_edificios(nombre, madera, piedra, metal,
+			 Planos::lista_edificios[nombre]->obtener_max_permitidos());
+	Planos::lista_edificios[nombre] = edificio_modificado;
 }
 
 

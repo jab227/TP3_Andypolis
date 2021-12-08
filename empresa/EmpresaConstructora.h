@@ -114,7 +114,7 @@ private:
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
 	//devuelve false
-	Resultado_Chequeos pedir_edificio(std::string edificio);
+	Resultado_Chequeos pedir_edificio(std::string& edificio);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si no existe el edificio, si se llego a la maxima cantidad

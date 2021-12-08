@@ -26,7 +26,7 @@ void TablePrinter::print_row(const Edificio* edificio, std::ostream& stream) con
 	print_table_cell( std::to_string(edificio->obtener_max_permitidos()), stream);
 	print_table_cell(edificio->info_producto(), stream);
 	//TODO: Constante
-	print_row_separator(7, stream);
+	print_row_separator(6, stream);
 
 }
 

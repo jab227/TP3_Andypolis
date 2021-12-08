@@ -43,12 +43,9 @@ void Empresa_Constructora::modificar_edificios(){
 	std::size_t madera, piedra, metal;
 	if(chequeo == EXITO){
 		chequeo = pedir_materiales(madera, piedra, metal);
-		std::cout << "holas1";
 	}
 	if(chequeo == EXITO){
-		std::cout << "holas2";
 		this -> planos -> modificar_edificio(nombre, madera, piedra, metal);
-		std::cout << "holas3";
 	}
 	mostrar_mensaje_chequeo(chequeo);
 }
@@ -169,7 +166,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_edificio(const std::string& edi
 	return resultado;
 }
 
-Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string edificio_ingresado){
+Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string& edificio_ingresado){
 	Printer::print_str("Elegir el edificio. Escribir \"salir\" si así lo desea." , std::cout);
 	getline(cin, edificio_ingresado);
 	return chequeo_edificio(edificio_ingresado);
@@ -191,18 +188,16 @@ Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &madera, 
 	std::string madera_ingresada, piedra_ingresada, metal_ingresada;
 	
 	std::cout << "Elegir cantidad de madera: ";
-	cin >> madera_ingresada;	
+	getline(std::cin, madera_ingresada);	
 	std::cout << "Elegir cantidad de piedra: ";
-	cin >> piedra_ingresada;	
+	getline(std::cin, piedra_ingresada);	
 	std::cout <<"Elegir cantidad de metal: ";
-	cin >> metal_ingresada;
-	
-	std::cout << "holas01";
+	getline(std::cin, metal_ingresada);
+
 
 	madera = std::stoul(madera_ingresada);
 	piedra = std::stoul(piedra_ingresada);
 	metal = std::stoul(metal_ingresada);
-	std::cout << "holas02";
 	return chequeo_materiales(madera_ingresada, piedra_ingresada, metal_ingresada);
 }
 
@@ -235,7 +230,6 @@ Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string madera_i
 	
 	if(madera_ingresada == SALIR_STR || piedra_ingresada == SALIR_STR || metal_ingresada == SALIR_STR ) resultado = SALIR;
 	else if(!es_numero(madera_ingresada) || !es_numero(piedra_ingresada) || !es_numero(metal_ingresada)) resultado = NO_EXISTE;
-	std::cout << "holas03";
 	return resultado;
 }
 

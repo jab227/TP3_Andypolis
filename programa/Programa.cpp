@@ -1,6 +1,7 @@
 #include "Programa.h"
 
 #include "../utils/LecturaArchivos.h"
+#include "../printer/table_printer.h"
 #include "../jugador/jugadores/JugadorUno.h"
 #include "../jugador/jugadores/JugadorDos.h"
 #include "../parser/parser_edificio.h"
@@ -67,7 +68,9 @@ void Programa::mostrar_menu(){
 
 void Programa::mostrar_menu_juego(){
 	this -> empresa_constructora -> mostrar_mapa();
-	cout << "--------------------------------------------------------------" << endl;
+	TablePrinter printer;
+	//cout << "--------------------------------------------------------------" << endl;
+	printer.print_row_separator(4,std::cout);
 	cout << "Elija una de las siguientes opciones ingresando solo el numero" << endl;
     cout << "1. Construir edificio por nombre." << endl;
     cout << "2. Listar mis edificios construidos." << endl;
@@ -82,7 +85,9 @@ void Programa::mostrar_menu_juego(){
 	cout << "11. Moverse a una coordenada." << endl;
 	cout << "12. Finalizar turno." << endl;
 	cout << "13. Guardar y salir." << endl;
-	cout << "--------------------------------------------------------------" << endl;
+	printer.print_row_separator(4,std::cout);
+
+	//cout << "--------------------------------------------------------------" << endl;
 }
 
 void Programa::mostrar_menu_inicio(){
@@ -109,6 +114,7 @@ bool Programa::procesar_opcion(int opcion){
 	}
 	return resultado;
 }
+
 
 bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 	bool fin = false;
@@ -205,8 +211,9 @@ bool Programa::es_opcion_valida(std::string opcion) {
 }
 
 void Programa::limpiar_pantalla(){
-    system("cls||clear");
-    cout << "--------------------------------------------------------------" << endl;
+	TablePrinter printer;
+    printer.clear_screen();
+	printer.print_row_separator(4,std::cout);
 }
 
 void Programa::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){

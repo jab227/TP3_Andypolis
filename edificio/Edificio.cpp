@@ -62,7 +62,7 @@ bool Edificio::vacio(){
 	return this->nombre == EDIFICIO_VACIO;
 }
 
-//Q: Se usa? Podriamos usar una lista de edificios con el atributos construido para cuando contamos construidos.
+//Q: Se usa? 
 void Edificio::modificar_construidos(std::size_t n){
 	if(n <= this->maximo_permitidos)
 		this->construidos = n;

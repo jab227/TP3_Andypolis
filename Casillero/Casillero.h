@@ -8,14 +8,21 @@
 #include "../empresa/Almacen.h"
 #include <string>
 
-const std::string VERDE = BGND_LIGHT_GREEN_46, AZUL = BGND_BLUE_12, GRIS = BGND_GRAY_245, GRIS_OSCURO = BGND_DARK_GRAY_239, FIN_COLOR = END_COLOR, NEGRO = TXT_DARK_GRAY_233, BLANCO = TXT_WHITE_255, MARRON = BGND_BROWN_137;
+const std::string VERDE = BGND_LIGHT_GREEN_46;
+const std::string AZUL = BGND_BLUE_12;
+const std::string GRIS = BGND_GRAY_245;
+const std::string GRIS_OSCURO = BGND_DARK_GRAY_239;
+const std::string FIN_COLOR = END_COLOR;
+const std::string NEGRO = TXT_DARK_GRAY_233;
+const std::string BLANCO = TXT_WHITE_255;
+const std::string ROJO = TXT_RED_196;
+const std::string MARRON = BGND_BROWN_137;
 const std::string CONTENIDO_VACIO = "";
 const char BETUN = 'B';
 const char CAMINO = 'C';
 const char LAGO = 'L';
 const char MUELLE = 'M';
 const char TERRENO = 'T';
-
 
 class Casillero
 {

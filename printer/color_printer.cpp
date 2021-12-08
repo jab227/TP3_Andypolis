@@ -3,5 +3,5 @@
 
 void ColorPrinter::color_msg(const std::string& str, const std::string& color,
  					std::ostream& stream) {
-	stream << color << str << RESET << std::endl;
+	stream << color << str << END_COLOR << std::endl;
 }

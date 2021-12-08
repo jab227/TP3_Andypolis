@@ -22,6 +22,7 @@ std::size_t Material::obtener_cantidad() const{
 void Material::cambiar_nombre(std::string nombre){
 	this -> nombre = nombre;
 }
+
 void Material::cambiar_cantidad(std::size_t cantidad){
 	this -> cantidad = cantidad;
 }

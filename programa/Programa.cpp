@@ -114,7 +114,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 	bool fin = false;
     switch (opcion_elegida) {
         case MODIFICAR_EDIFICIO:
-            cout << "Implementar modificar edificio!" << endl;
+            this -> empresa_constructora -> modificar_edificios();
             break;
         case LISTAR_EDIFICIOS:
             this -> empresa_constructora -> mostrar_edificios();
@@ -130,6 +130,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
             break;
         case GUARDAR_SALIR_INICIO:
         	fin = true;
+            cout << "Implementar guardar y salir!" << endl;
 			cout << "Adios!"<< endl;
 			break;
     }

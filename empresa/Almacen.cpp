@@ -64,7 +64,6 @@ void Almacen::sumar_cantidad_material(std::string a_cambiar, std::size_t cantida
 	Material material_a_cambiar = Material(a_cambiar,0);
 	//VER: si nos podemos ahorrar ciclos (Eficiencia temoporal)
 	std::size_t index = buscar_material(material_a_cambiar);
-	//cout << index; Por que habia un print aca?
 	if(index){
 		cout << index;
 		material_a_cambiar.sumar_cantidad(cantidad);

@@ -1,6 +1,7 @@
 #include "EmpresaConstructora.h"
 #include <fstream>
 #include "../utils/LecturaArchivos.h"
+#include "../printer/color_printer.h"
 
 std::string const SI = "si", NO = "no";
 const int COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
@@ -34,6 +35,22 @@ void Empresa_Constructora::mostrar_materiales(Jugador* jugador){
 
 void Empresa_Constructora::mostrar_edificios(){
 	this -> planos -> mostrar_edificios();
+}
+
+void Empresa_Constructora::modificar_edificios(){
+	std::string nombre;
+	Resultado_Chequeos chequeo = pedir_edificio(nombre);
+	std::size_t madera, piedra, metal;
+	if(chequeo == EXITO){
+		chequeo = pedir_materiales(madera, piedra, metal);
+		std::cout << "holas1";
+	}
+	if(chequeo == EXITO){
+		std::cout << "holas2";
+		this -> planos -> modificar_edificio(nombre, madera, piedra, metal);
+		std::cout << "holas3";
+	}
+	mostrar_mensaje_chequeo(chequeo);
 }
 
 void Empresa_Constructora::mostrar_mapa(){
@@ -106,7 +123,7 @@ void Empresa_Constructora::vaciar_materiales(){
 }
 
 void Empresa_Constructora::construir_edificio( Jugador* jugador){
-	std::string edificio = pedir_edificio(jugador);
+	std::string edificio = pedir_edificio_construir(jugador);
 	if(edificio != EDIFICIO_VACIO){
 		std::cout << "Desea realmente construir el edificio: " << edificio << "? [si/no]" << std::endl;
 		std::string respuesta = pedir_si_no();
@@ -144,42 +161,63 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	mostrar_mensaje_chequeo( resultado );
 }
 
-std::string Empresa_Constructora::pedir_edificio( Jugador* jugador){
+Resultado_Chequeos Empresa_Constructora::chequeo_edificio(const std::string& edificio_ingresado){
+	Resultado_Chequeos resultado = EXITO;
+	if(edificio_ingresado == SALIR_STR) resultado = SALIR;
+	else if(es_numero(edificio_ingresado)) resultado = NO_EXISTE;
+	else resultado = planos -> existe(edificio_ingresado);
+	return resultado;
+}
+
+Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string edificio_ingresado){
+	Printer::print_str("Elegir el edificio. Escribir \"salir\" si así lo desea." , std::cout);
+	getline(cin, edificio_ingresado);
+	return chequeo_edificio(edificio_ingresado);
+}
+
+std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
 	bool fin = false;
 	std::string edificio_ingresado;
 	Resultado_Chequeos chequeo;
-	do{
-		std::cout << "Elegi el edificio que queres construir o salir" << std::endl << "Edificio: ";
-		getline(cin, edificio_ingresado);
-		chequeo = chequeo_construir(edificio_ingresado, jugador);
+	do{	
+		chequeo = pedir_edificio(edificio_ingresado);
+		if( chequeo == EXITO)
+			chequeo = planos -> chequeo_construir(edificio_ingresado, jugador, this -> mapa);
 		fin = mostrar_mensaje_chequeo(chequeo);
-	}
-	while(!fin);
+	}while(!fin);
 	return edificio_ingresado;
 }
+Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &madera, std::size_t &piedra, std::size_t &metal){
+	std::string madera_ingresada, piedra_ingresada, metal_ingresada;
+	
+	std::cout << "Elegir cantidad de madera: ";
+	cin >> madera_ingresada;	
+	std::cout << "Elegir cantidad de piedra: ";
+	cin >> piedra_ingresada;	
+	std::cout <<"Elegir cantidad de metal: ";
+	cin >> metal_ingresada;
+	
+	std::cout << "holas01";
+
+	madera = std::stoul(madera_ingresada);
+	piedra = std::stoul(piedra_ingresada);
+	metal = std::stoul(metal_ingresada);
+	std::cout << "holas02";
+	return chequeo_materiales(madera_ingresada, piedra_ingresada, metal_ingresada);
+}
+
 
 //TODO: Constructo de copia?? Asi no tenemos que pasarle una coordenada creada.
 Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
 	std::string fila_ingresada, columna_ingresada;
 	
-	std::cout << "Elegi las coordenadas del edificio que queres construir o salir" << std::endl << "Fila: ";
+	std::cout << "Elegi las coordenadas del edificio que queres construir o salir \n Fila: " << std::endl;
 	getline(cin, fila_ingresada);
-	std::cout << "Columna: ";
+	std::cout << "Columna: " << std::endl;
 	getline(cin, columna_ingresada);
-	
+
 	coordenada = Coordenada(stoi(fila_ingresada),stoi(columna_ingresada));
-	
 	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
-}
-
-Resultado_Chequeos Empresa_Constructora::chequeo_construir(const std::string& edificio_ingresado, Jugador* jugador){
-	Resultado_Chequeos resultado = EXITO;
-
-	if(edificio_ingresado == SALIR_STR) resultado = SALIR;
-	else if(es_numero(edificio_ingresado)) resultado = NO_EXISTE;
-	else resultado = planos -> permitido_construir(edificio_ingresado, jugador, this -> mapa);
-
-	return resultado;
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada coordenada){
@@ -192,6 +230,16 @@ Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(std::string fila_in
 	return resultado;
 }
 
+Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada){
+	Resultado_Chequeos resultado = EXITO;
+	
+	if(madera_ingresada == SALIR_STR || piedra_ingresada == SALIR_STR || metal_ingresada == SALIR_STR ) resultado = SALIR;
+	else if(!es_numero(madera_ingresada) || !es_numero(piedra_ingresada) || !es_numero(metal_ingresada)) resultado = NO_EXISTE;
+	std::cout << "holas03";
+	return resultado;
+}
+
+
 bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 	bool fin = false;
 	switch(chequeo){
@@ -199,30 +247,30 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 			fin = true;
 			break;
 		case NO_EXISTE:
-			std::cout << "La/s opcion/es ingresada/s no es/son valida/s." << std::endl;
+			ColorPrinter::color_msg("La/s opcion/es ingresada/s no es/son valida/s.", ROJO, std::cout);
 			break;
 		case MAXIMA_CANTIDAD:
-			std::cout <<  "Hay la cantidad maxima permitida construida de este edificio." << std::endl;
+			ColorPrinter::color_msg("Hay la cantidad maxima permitida construida de este edificio.", ROJO, std::cout);
 			break;
 		case NO_MATERIALES:
-			std::cout << "No hay suficientes materiales." << std::endl;
+			ColorPrinter::color_msg("No hay suficientes materiales.", ROJO, std::cout);
 			//TODO: mostrar_materiales_insuficientes(edificio);
 			break;
 		case FUERA_RANGO:
-			std::cout <<  "La ubicacion ingresada excede el rango del mapa." << std::endl;
+			ColorPrinter::color_msg( "La ubicacion ingresada excede el rango del mapa.", ROJO, std::cout);
 			break;
 		case SALIR:
-			std::cout << "No se realizo ninguna accion." << std::endl;
+			ColorPrinter::color_msg( "No se realizo ninguna accion.", ROJO, std::cout);
 			fin = true;
 			break;
 		case CASILLERO_NO_CONSTRUIBLE:
-			cout <<  "La ubicacion ingresada no es construible." << endl;
+			ColorPrinter::color_msg("La ubicacion ingresada no es construible.", ROJO, std::cout);
 			break;
 		case CASILLERO_OCUPADO:
-			cout <<  "Esta ubicacion esta ocupada por otro edificio." << endl;
+			ColorPrinter::color_msg("Esta ubicacion esta ocupada por otro edificio.", ROJO, std::cout);
 			break;
 		case NO_REPARABLE:
-			cout <<  "El edificio no necesita reparación." << endl;
+			ColorPrinter::color_msg("El edificio no necesita reparación.", ROJO, std::cout);
 			break;
 		default:
 			break;
@@ -235,7 +283,7 @@ std::string Empresa_Constructora::pedir_si_no(){
 	std::cout << "Respuesta:   ";
 	getline(cin, respuesta);
 	while(respuesta != SI && respuesta != NO){
-		std::cout << "La respuesta no es valida, solo se acepta si o no." << std::endl;
+		ColorPrinter::color_msg("La respuesta no es valida, solo se acepta si o no.", ROJO, std::cout);
 		std::cout << "Respuesta:   ";
 		getline(cin, respuesta);
 	}

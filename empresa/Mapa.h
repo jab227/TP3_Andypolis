@@ -56,7 +56,7 @@ public:
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
 	//POST: 
-	Resultado_Chequeos reparar_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada);
+	Resultado_Chequeos reparar_edificio_ubicacion(const Coordenada& coordenada);
 
 	//PRE: el material y la posicion debe ser valido, y el casillero estar vacio
 	//POST: se pone el material en la ubicacion ingresda

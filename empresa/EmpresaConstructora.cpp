@@ -4,7 +4,7 @@
 #include "../printer/color_printer.h"
 
 std::string const SI = "si", NO = "no";
-const std::size_t COORDENADA_VACIA = -1, BOMBAS_VACIAS = -1, COSTO_BOMBAS = 100;
+const std::size_t COORDENADA_VACIA = -1, COSTO_BOMBAS = 100;
 
 
 Empresa_Constructora::Empresa_Constructora(){
@@ -194,16 +194,9 @@ Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &piedra, 
 	std::cout <<"Elegir cantidad de metal: ";
 	getline(std::cin, metal_ingresada);
 
-
-	madera = std::stoul(madera_ingresada);
-	piedra = std::stoul(piedra_ingresada);
-	metal = std::stoul(metal_ingresada);
-	return chequeo_materiales( piedra_ingresada, madera_ingresada, metal_ingresada);
+	return chequeo_materiales( piedra_ingresada, madera_ingresada, metal_ingresada, piedra, madera, metal);
 }
 
-
-//TODO: Constructo de copia?? Asi no tenemos que pasarle una coordenada creada.
-//RTA: La coordenada es un parametro de salida, no de entrda, por eso se le pasa una creada
 Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
 	std::string fila_ingresada, columna_ingresada;
 	
@@ -212,7 +205,6 @@ Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenad
 	std::cout << "Columna: " << std::endl;
 	getline(cin, columna_ingresada);
 
-	//coordenada = Coordenada(stoi(fila_ingresada),stoi(columna_ingresada)); No se puede hacer STOI si no sabes si son numeros
 	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
 }
 
@@ -228,11 +220,20 @@ Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(std::string fila_in
 	return resultado;
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string piedra_ingresada, std::string madera_ingresada, std::string metal_ingresada){
+Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string piedra_ingresada, std::string madera_ingresada, std::string metal_ingresada,
+			 std::size_t &piedra, std::size_t &madera, std::size_t &metal){
+
 	Resultado_Chequeos resultado = EXITO;
 	
-	if(madera_ingresada == SALIR_STR || piedra_ingresada == SALIR_STR || metal_ingresada == SALIR_STR ) resultado = SALIR;
-	else if(!es_numero(madera_ingresada) || !es_numero(piedra_ingresada) || !es_numero(metal_ingresada)) resultado = NO_EXISTE;
+	if(madera_ingresada == SALIR_STR || piedra_ingresada == SALIR_STR || metal_ingresada == SALIR_STR )
+		resultado = SALIR;
+	else if(!es_numero(madera_ingresada) || !es_numero(piedra_ingresada) || !es_numero(metal_ingresada))
+		resultado = NO_EXISTE;
+	else{
+		madera = std::stoul(madera_ingresada);
+		piedra = std::stoul(piedra_ingresada);
+		metal = std::stoul(metal_ingresada);
+	}
 	return resultado;
 }
 
@@ -300,12 +301,12 @@ void Empresa_Constructora::edificio_construido_confirmado(const std::string &nom
 }
 
 void Empresa_Constructora::reparar_edificio(Jugador* jugador){
-	Coordenada coordenada = Coordenada(0,0);
+	Coordenada coordenada;
 	Resultado_Chequeos resultado = NO_EXISTE;
 	do resultado = this -> pedir_coordenadas(coordenada);
 	while(!mostrar_mensaje_chequeo(resultado));
 	std::size_t indice = jugador -> existe_ubicacion(coordenada);
-	if(indice && coordenada.x != COORDENADA_VACIA){ //Chequeo que le pertenece y que no se ingreso salir.
+	if(indice && coordenada.x() != COORDENADA_VACIA){ //Chequeo que le pertenece y que no se ingreso salir.
 		std::string nombre_edificio = this -> mapa -> obtener_contenido_ubicacion(coordenada);
 		Edificio* edificio = Planos::buscar(nombre_edificio);
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);

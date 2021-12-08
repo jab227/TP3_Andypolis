@@ -157,7 +157,7 @@ private:
 
 	Resultado_Chequeos pedir_materiales( std::size_t &madera, std::size_t &piedra, std::size_t &metal);
 
-	Resultado_Chequeos chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada);
+	Resultado_Chequeos chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
 
 };
 

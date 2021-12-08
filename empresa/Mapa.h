@@ -102,7 +102,8 @@ private:
 	//se corresponden con un edificio.
 	//POST: se imprime por consola los edificios de la lista junto con la cantidad construidos y sus ubicaciones. tambien se libera la lista
 	//de coordenadas
-	void mostrar_edificios(Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
+	//Q: se usa?
+	//void mostrar_edificios(Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 	//PRE: ruta debe ser a un archivo existente y bien cargado para el mapa
 	//POST: se carga el mapa con los casilleros correspondientes a los datos del archivo

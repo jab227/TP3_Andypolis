@@ -41,7 +41,7 @@ public:
 	//PRE: el edificio debe ser valido
 	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
 	//construir el edificio solicitado.
-	Lista<Material>* materiales_necesarios( Edificio* edificio);
+	Lista<Material> materiales_necesarios( Edificio* edificio);
 
 	//PRE: edificio es valido
 	//POST: aumenta 1 la cantidad del edificio construido
@@ -65,7 +65,7 @@ private:
 	//POST: devuelve en un std::string que cantidad y de que material produce el edificio o "ninguno".
 	std::string material_producido( Edificio* edificio);
 
-	void mostrar_materiales_producidos(Lista<Material>* listado);
+	void mostrar_materiales_producidos(Lista<Material> listado);
 
 };
 

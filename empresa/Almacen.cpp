@@ -103,12 +103,12 @@ bool Almacen::hay_material_suficiente(Material material, std::size_t porcentaje)
 	return suficiente;
 }
 
-Resultado_Chequeos Almacen::hay_lista_materiales( Lista<Material>* materiales_consultados, std::size_t porcentaje){
+Resultado_Chequeos Almacen::hay_lista_materiales( Lista<Material> materiales_consultados, std::size_t porcentaje){
 	bool fin = false;
 	Resultado_Chequeos suficiente = EXITO;
 	std::size_t i = 1;
 	while (i <= this -> lista_materiales.consulta_largo() && !fin){
-		if(!this -> hay_material_suficiente(materiales_consultados -> consulta(i))){
+		if(!this -> hay_material_suficiente(materiales_consultados.consulta(i))){
 			suficiente = NO_MATERIALES;
 			fin = true;
 		}
@@ -118,19 +118,19 @@ Resultado_Chequeos Almacen::hay_lista_materiales( Lista<Material>* materiales_co
 }
 
 
-void Almacen::descontar_lista_materiales( Lista<Material>* materiales_usados, std::size_t porcentaje){
+void Almacen::descontar_lista_materiales( Lista<Material> materiales_usados, std::size_t porcentaje){
 	std::size_t proporcion = porcentaje/100;
-	for(std::size_t i = 1; i <= materiales_usados -> consulta_largo(); i++){
-		Material material = materiales_usados -> consulta(i);
+	for(std::size_t i = 1; i <= materiales_usados.consulta_largo(); i++){
+		Material material = materiales_usados.consulta(i);
 		this -> sumar_cantidad_material(material.obtener_nombre(), -material.obtener_cantidad()*proporcion);
 	}
 }
 
-void Almacen::sumar_lista_materiales( Lista<Material>* materiales_obtenidos, std::size_t porcentaje){
+void Almacen::sumar_lista_materiales( Lista<Material> materiales_obtenidos, std::size_t porcentaje){
 	//TODO: Constantes.
 	std::size_t proporcion = porcentaje/100;
-	for(std::size_t i = 1; i <= materiales_obtenidos -> consulta_largo(); i++){
-		Material material = materiales_obtenidos -> consulta(i);
+	for(std::size_t i = 1; i <= materiales_obtenidos.consulta_largo(); i++){
+		Material material = materiales_obtenidos.consulta(i);
 		this -> sumar_cantidad_material(material.obtener_nombre(), material.obtener_cantidad()*proporcion);
 	}
 }

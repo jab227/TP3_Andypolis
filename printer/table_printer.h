@@ -18,7 +18,7 @@ class TablePrinter: public Printer {
 public: 
 	// Pre: Espera un ostream listo para escribir. 
 	// Pos: Imprime la informacion del material en formato fila en el stream. 
-	void print_row(const Material* material, std::ostream& stream) const;
+	void print_row(const Material material, std::ostream& stream) const;
 	// Pre: Espera un ostream listo para escribir. 
 	// Pos: Imprime la informacion del building en formato fila en el stream. 
 	void print_row(const Edificio* edificio, std::ostream& stream) const;

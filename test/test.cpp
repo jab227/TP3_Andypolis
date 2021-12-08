@@ -13,8 +13,9 @@ Coordenada devolver_coordenada(int x,int y){
 }
 
 int main(){
-    Coordenada coord = devolver_coordenada(1,1);
+    Coordenada coord = devolver_coordenada(1,-1);
 
     cout << coord.x() << endl;
+    cout << coord.y() << endl;
     return 0;
 }

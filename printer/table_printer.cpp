@@ -9,9 +9,9 @@ void TablePrinter::print_row_separator(const std::size_t n_cols, std::ostream& s
 	stream << std::endl << std::string(WIDTH * n_cols, '-') << std::endl;
 }	
 
-void TablePrinter::print_row(const Material*  material, std::ostream& stream) const{
-	print_table_cell( material->obtener_nombre(), stream);
-	print_table_cell( std::to_string(material->obtener_cantidad()), stream);
+void TablePrinter::print_row(const Material  material, std::ostream& stream) const{
+	print_table_cell( material.obtener_nombre(), stream);
+	print_table_cell( std::to_string(material.obtener_cantidad()), stream);
 	//TODO: Constante
 	print_row_separator(2, stream);
 }

@@ -39,8 +39,9 @@ bool Meta::objetivos_cumplidos(){
 void Meta::mostrar_objetivos(){
 	std::cout << "Los objetivos son: " << std::endl;
 	std::string color;
+	Objetivo* objetivo;
 	for(std::size_t i = 1; i <= this -> objetivos -> consulta_largo(); i++){
-		Objetivo* objetivo = objetivos -> consulta(i);
+		objetivo = objetivos -> consulta(i);
 		std::cout << "- " << objetivo -> obtener_titulo();
 		(objetivo -> esta_cumplido()) ? color = VERDE_META : color = ROJO_META;
 		std::cout << color << "  " << END_COLOR << std::endl;

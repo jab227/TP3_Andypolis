@@ -57,11 +57,11 @@ public:
 	//PRE: la lista no debe ser un puntero nulo
 	//POST: devuelve true si se cuentan con toda la lista de los materiales
 	//en stock
-	Resultado_Chequeos hay_lista_materiales( Lista<Material>* materiales_consultados, std::size_t porcentaje = 100);
+	Resultado_Chequeos hay_lista_materiales( Lista<Material> materiales_consultados, std::size_t porcentaje = 100);
 
 	//TODO: Agregue porcentaje para que sea multiuso. Puede agregarse un valor default al porcentaje?
-	void descontar_lista_materiales( Lista<Material>* materiales_usados, std::size_t porcentaje);
-	void sumar_lista_materiales( Lista<Material>* materiales_usados, std::size_t porcentaje);
+	void descontar_lista_materiales( Lista<Material> materiales_usados, std::size_t porcentaje);
+	void sumar_lista_materiales( Lista<Material> materiales_usados, std::size_t porcentaje);
 
 	//PRE:
 	//POST: se compran las bombas pidiendo al usuario la cantidad

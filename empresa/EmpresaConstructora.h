@@ -131,7 +131,7 @@ private:
 	//PRE:
 	//POST: devuelve si no alcanzan los materiales o si el edificio no necesita reparacion. En caso de que alcancen y el edificio lo necesite,
 	//se repara el edificio y devuelve exito.
-	Resultado_Chequeos chequeo_reparar_edificio(Jugador* jugador, Lista<Material>* listado_necesario, Coordenada coordenada);
+	Resultado_Chequeos chequeo_reparar_edificio(Jugador* jugador, Lista<Material> listado_necesario, Coordenada coordenada);
 
 	//PRE: -
 	//POST: se muestra un mensaje por terminal correspondiente al resultado del chequeo

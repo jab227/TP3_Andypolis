@@ -80,25 +80,25 @@ class Jugador {
 
 	void eliminar_ubicacion(const Coordenada& coordenada);
 
-	Resultado_Chequeos tiene_materiales( Lista<Material>* materiales) const;
+	Resultado_Chequeos tiene_materiales( Lista<Material> materiales) const;
 	
-	Resultado_Chequeos tiene_materiales_reparar( Lista<Material>* materiales) const;
+	Resultado_Chequeos tiene_materiales_reparar( Lista<Material> materiales) const;
 
 	//TODO: Eliminar construidos de edificios.
 	std::size_t cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const;
 	
+	void cobrar_reparacion( Lista<Material> materiales);
 
-	void cobrar_reparacion( Lista<Material>* materiales);
-	void usar_lista_materiales( Lista<Material>* materiales);
+	void usar_lista_materiales( Lista<Material> materiales);
 
-	void recuperar_lista_materiales( Lista<Material>* materiales);
+	void recuperar_lista_materiales( Lista<Material> materiales);
 	
-	void sumar_lista_materiales( Lista<Material>* materiales);
+	void sumar_lista_materiales( Lista<Material> materiales);
 	
 	//PRE: -
 	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
 	//por la consola los materiales producidos.
-	Lista<Material>* obtener_recursos_producidos(Mapa* mapa);
+	Lista<Material> obtener_recursos_producidos(Mapa* mapa);
 
 	void mostrar_inventario() const;
 	void recolectar(Mapa* mapa);

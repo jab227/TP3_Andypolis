@@ -44,13 +44,12 @@ Resultado_Chequeos Planos::chequeo_construir(const std::string &nombre_edificio,
 	Resultado_Chequeos resultado = NO_EXISTE;
 	if(existe(nombre_edificio)){
 		Edificio* ptr_edificio = this -> lista_edificios[nombre_edificio];
-		Lista<Material>* materiales = materiales_necesarios(ptr_edificio);
+		Lista<Material> materiales = materiales_necesarios(ptr_edificio);
 		resultado = jugador -> tiene_materiales(materiales);
 		if(resultado != NO_MATERIALES){
 			std::size_t construidos = jugador -> cantidad_edificios(nombre_edificio, mapa);
 			resultado = ptr_edificio -> esta_maxima_capacidad(construidos);
 		}
-		delete materiales;
 	}
 	return resultado;
 }
@@ -61,12 +60,12 @@ Resultado_Chequeos Planos::existe(std::string nombre_edificio){
 	return resultado;
 }
 
-//Liberar vector.
-Lista<Material>* Planos::materiales_necesarios( Edificio* edificio){
-	Lista<Material>* lista_materiales = new Lista<Material>;
+//Al tener el constructor de copia de LIsta, sobrevive el puntero retornado.
+Lista<Material> Planos::materiales_necesarios( Edificio* edificio){
+	Lista<Material> lista_materiales;
 	//Chequear que no haya roto al cambiar alta() por alta_al_final().
 	for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
-		lista_materiales -> alta_al_final(Material(MATERIALES_EDIFICIOS[i], edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[i])));
+		lista_materiales.alta_al_final(Material(MATERIALES_EDIFICIOS[i], edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[i])));
 	return lista_materiales;
 }
 
@@ -108,19 +107,20 @@ void Planos::disminuir_construidos_edificio(const std::string &edificio){
 }
 */
 
-void Planos::mostrar_materiales_producidos(Lista<Material>* listado){
+void Planos::mostrar_materiales_producidos(Lista<Material> listado){
 	//Podria reemplazarse por simple while, pero como aviso cuando no hay edif productor?
-	if(listado -> consulta_largo() > 0){
-		std::cout << "Se produjo: " << std::endl;
-		for(std::size_t i = 1; i <= listado -> consulta_largo(); i++){
-			Material material = listado -> consulta(i);
-			std::cout << "- " << material.obtener_cantidad() << " de " << material.obtener_nombre() << std::endl;
-		}
+	if(listado.consulta_largo() > 0){
+		TablePrinter printer; //Podria ser estatico?
+		Lista<std::string> cabecera;
+		cabecera.alta_al_final("Material producido");
+		cabecera.alta_al_final("Cantidad");
+		printer.print_row(cabecera, std::cout);
+		for(std::size_t i = 1; i <= listado.consulta_largo(); i++)
+			printer.print_row(listado.consulta(i), std::cout);
 	}else
 		std::cout << "No hay edificios construidos que produzcan materiales.\n"
-				"Construyo alguno para empezar a producir!" << std::endl;
+				"Construya alguno para empezar a producir!" << std::endl;
 }
-
 
 Edificio* Planos::buscar(std::string nombre_edificio){
 	return lista_edificios[nombre_edificio];

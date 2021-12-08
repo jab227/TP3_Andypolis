@@ -1,11 +1,10 @@
 #ifndef DICCIONARIO_H_
 #define DICCIONARIO_H_
 
-#include <algorithm>
-
 #include "../utils/Lista.h"
 #include "nodo_diccionario.h"
-// La clave deberia mantenerse en algun tipo basico (incluido std::string).
+#include <algorithm>
+// La clave deberia mantenerse en algun tipo basico (incluido string).
 //        Clave,   Valor
 template <class T, class U>
 class Diccionario {

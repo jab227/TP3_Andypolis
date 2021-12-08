@@ -38,12 +38,13 @@ std::string Casillero_Transitable::obtener_contenido() const{
 	return material;
  }
 
-
+//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
+/*
 Edificio* Casillero_Transitable::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
 	Edificio* edificio = nullptr;
 	return edificio;
 }
-
+*/
 Resultado_Chequeos Casillero_Transitable::construir_edificio(Edificio* edificio){
 	return CASILLERO_NO_CONSTRUIBLE;
 }

@@ -1,8 +1,8 @@
 #include "Planos.h"
+#include "../printer/table_printer.h"
 #include "../edificio/Productor.h"
 #include "../utils/LecturaArchivos.h"
 #include "../parser/parser_edificio.h"
-#include "../printer/table_printer.h"
 #include <fstream>
 
 Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
@@ -20,8 +20,8 @@ Planos::~Planos() {
 
 //EMBELLECER.
 void Planos::mostrar_edificios(){
-	TablePrinter printer;
-	Lista<std::string> header; > //feo pero comodo jaja
+	TablePrinter printer = TablePrinter();
+	Lista<std::string> header;  //feo pero comodo jaja
 	header.alta_al_final("Edificio");
 	header.alta_al_final("Piedra");
 	header.alta_al_final("Madera");

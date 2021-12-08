@@ -4,8 +4,8 @@
 #include "programa/Programa.h"
 
 
-const string RUTA_MATERIALES = "./saves/materiales.txt", RUTA_EDIFICIOS = "./saves/edificios.txt";
-const string RUTA_MAPA = "./saves/mapa.txt", RUTA_UBICACIONES = "./saves/ubicaciones.txt";
+const std::string RUTA_MATERIALES = "./saves/materiales.txt", RUTA_EDIFICIOS = "./saves/edificios.txt";
+const std::string RUTA_MAPA = "./saves/mapa.txt", RUTA_UBICACIONES = "./saves/ubicaciones.txt";
 
 //PRE: programa tiene que ser un objeto bien cargado
 //POST: se pide al usuario una opcion valida
@@ -35,7 +35,7 @@ void mensaje_bienvenida(Programa &programa){
 }
 
 int pedir_opcion_valida(Programa &programa){
-	string opcion;
+	std::string opcion;
 
 	cout << "Opcion:   " ;
 	getline(cin, opcion);

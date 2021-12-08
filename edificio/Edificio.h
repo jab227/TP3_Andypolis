@@ -104,8 +104,8 @@ public:
 
 	//TODO: Hacer a_string() que devuelva la info en formato "tabla";
 	std::string a_string();
-
-	//PRE: -
+	
+		//PRE: -
 	//POST: Devuelve NO_REPARABLE si la vida está al máximo. Devuelve REPARABLE si 0 < vida < MAX_VIDA.
 	virtual Resultado_Chequeos reparar() = 0;
 

@@ -52,10 +52,11 @@ std::string Casillero_Construible::obtener_contenido() const{
 	return edificio;
 }
 
-//Necesario? 
+//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
 //PRE: Comentado porque necesita adaptarse a la lista de coordenadas de cada jugador.
+/*
 Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
-/*	if(this -> esta_ocupado()){
+	if(this -> esta_ocupado()){
 		Edificio* edificio = this -> edificio_; 
 		Planos::existe(edificio -> obtener_nombre());
 		//Necesitamos acceso al diccionario.
@@ -65,9 +66,9 @@ Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada,
 			indice = (int) lista_nombres.consulta_largo();
 		}
 	}
-*/
 	return this -> edificio_;
 }
+*/
 
 //Provisorio
 bool Casillero_Construible::es_casillero_transitable(){return false;}

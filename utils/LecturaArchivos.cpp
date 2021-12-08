@@ -9,6 +9,7 @@
 #include "../edificio/edificios/Escuela.h"
 #include "../edificio/edificios/Fabrica.h"
 #include "../edificio/edificios/Mina.h"
+#include "../edificio/edificios/MinaOro.h"
 #include "../edificio/edificios/Obelisco.h"
 #include "../edificio/edificios/PlantaElectrica.h"
 
@@ -24,35 +25,8 @@ bool es_numero(std::string palabra){
 	return resultado;
 }
 
-//PRE: -
-//POST: parte la linea en el delimitador, devuelve la primera mitad por la salida y la segunda mitad
-//se iguala a linea
-string dividir_linea(string &linea, char delimitador){
-	std::size_t pos = linea.find(delimitador);
-	string dato = linea.substr(0, pos);
-	linea.erase(0, pos+1);
-	return dato;
-}
 
-/* Q: No es mas necesario con el parser?
-Edificio* procesar_edificio(string linea){
-	string nombre = dividir_linea(linea, ESPACIO);
-	string dato_sig;
-	while(!es_numero(dato_sig = dividir_linea(linea, ESPACIO))){
-		nombre += ' ';
-		nombre += dato_sig;
-	}
-	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
-	materiales[0] = stoi(dato_sig);
-	for (std::size_t j = 1; j < CANT_MATERIALES_EDIFICIOS; j++){
-		materiales[j] = stoi(dividir_linea(linea, ESPACIO));
-	}
-	std::size_t max_permitidos = stoi(linea);
-	return traductor_edificios(nombre, materiales[0], materiales[1], materiales[2], max_permitidos);
-}
-*/
-//TODO: Buscar valores defualt para ahorrar poner siempre todos los param.
-Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos){
+Edificio* traductor_edificios(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos){
 	Edificio* edificio = nullptr;
 	if(nombre == "mina")
 		edificio = new Mina(piedra, madera, metal, max_permitidos);
@@ -66,8 +40,31 @@ Edificio* traductor_edificios(string nombre, std::size_t piedra, std::size_t mad
 		edificio = new Obelisco(piedra, madera, metal, max_permitidos);
 	else if(nombre == "planta electrica")
 		edificio = new Planta_Electrica(piedra, madera, metal, max_permitidos);
+	else if(nombre == "mina oro")
+		edificio = new Mina_Oro(piedra, madera, metal, max_permitidos);
 	return edificio;
 }
+
+//Sobrecarga para evitar tener que poner toda la info para crear edificios.
+Edificio* traductor_edificios(std::string nombre){
+	Edificio* edificio = nullptr;
+	if(nombre == "mina")
+		edificio = new Mina();
+	else if (nombre == "aserradero")
+		edificio = new Aserradero();
+	else if(nombre == "fabrica")
+		edificio = new Fabrica();
+	else if(nombre == "escuela")
+		edificio = new Escuela();
+	else if(nombre == "obelisco")
+		edificio = new Obelisco();
+	else if(nombre == "planta electrica")
+		edificio = new Planta_Electrica();
+	else if(nombre == "mina oro")
+		edificio = new Mina_Oro();
+	return edificio;
+}
+
 
 Casillero* traductor_casillero(char nombre) {
 	Casillero* casillero;
@@ -88,12 +85,24 @@ Material* traductor_materiales(std::string nombre, std::size_t cantidad) {
 	return new Material(nombre, cantidad);
 }
 
+/* 
+//Borrar cuando el parser este adaptado
+//PRE: -
+//POST: parte la linea en el delimitador, devuelve la primera mitad por la salida y la segunda mitad
+//se iguala a linea
+string dividir_linea(string &linea, char delimitador){
+	std::size_t pos = linea.find(delimitador);
+	string dato = linea.substr(0, pos);
+	linea.erase(0, pos+1);
+	return dato;
+}
+//Borrar cuando el parser este adaptado
 void cargar_fila_columna(std::string linea, std::size_t& filas,
 			 std::size_t& columnas) {
 	filas = stoi(dividir_linea(linea, ESPACIO));
 	columnas = stoi(dividir_linea(linea, ESPACIO));
 }
-/* Q: No es más necesario con el parser?
+//Borrar cuando el parser este adaptado
 string procesar_ubicacion(string linea, Coordenada& coordenada){
 	string edificio = dividir_linea(linea, DELIMITADOR_UBICACION);
 	edificio.erase(edificio.size()-1, 1); //Le saco el espcio final
@@ -103,18 +112,9 @@ string procesar_ubicacion(string linea, Coordenada& coordenada){
 	return edificio;
 }
 
+//Borrar cuando el parser este adaptado
 std::size_t char_a_int(char c){
 	return (c - '0');
 }
 
-string espaciado(string palabra, std::size_t largo){
-	string espacio = "";
-	std::size_t largo_final = palabra.size();
-	while(largo_final < largo){
-		espacio += "\t";
-		largo_final += 7;
-	}
-	espacio += "|";
-	return espacio;
-}
 */

@@ -34,8 +34,9 @@ public:
 	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
-	//POST: - PROVISORIO
-	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
+	//POST: - 
+	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
+	//Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.

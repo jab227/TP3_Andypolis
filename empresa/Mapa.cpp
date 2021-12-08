@@ -82,7 +82,7 @@ void Mapa::saludar_coordenada(const Coordenada& coordenada){
 
 Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edificio, const Coordenada& coordenada){
 	//TODO: reemplazar por el diccionario o adaptar traductor al diccionario?
-	Edificio* edificio_mapa = traductor_edificios(edificio, 0, 0, 0, 0);
+	Edificio* edificio_mapa = traductor_edificios(edificio);
 	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
 }
 

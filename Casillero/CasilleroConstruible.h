@@ -41,8 +41,9 @@ public:
 	std::string obtener_contenido() const override;
 
 	//PRE: -
-	//POST: SE USA??
-	Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
+	//POST: 
+	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
+	//Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
 
 	//PRE: -
 	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.

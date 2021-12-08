@@ -59,8 +59,8 @@ public:
 
 	// PRE: -
 	// POST: -
-	//Q: Casi seguro que podemos prescindir de este metodo.
-	virtual Edificio *agregar_lista_edificio(Coordenada *coordenada, Lista<Edificio> *&lista_construidos) = 0;
+	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
+	//virtual Edificio *agregar_lista_edificio(Coordenada *coordenada, Lista<Edificio> *&lista_construidos) = 0;
 
 	// PRE: inventario != nullptr;
 	// POST: Lepide al casillero que cargue al inventario el material que posee.

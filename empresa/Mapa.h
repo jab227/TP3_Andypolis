@@ -60,7 +60,11 @@ public:
 
 	//PRE: el material y la posicion debe ser valido, y el casillero estar vacio
 	//POST: se pone el material en la ubicacion ingresda
-	void poner_material_ubicacion(Material* material, const Coordenada& coordenada);
+	void poner_material_ubicacion(std::string material, const Coordenada& coordenada);
+
+	//PRE: -
+	//POST: genera un conjunto del material con su cantidad predeterminada o devuelve nullptr si el material no existe
+	Material* generar_conjunto_material(std::string material);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un material
 	//POST: se elimina el material de esa posicion y se devuelve el material quitado
@@ -131,7 +135,7 @@ private:
 
 	//PRE: material debe ser un material valido y numero_casillero menor a los casilleros libres transitables
 	//POST: se crea y ubica un material en el N-esimo casillero transitable libre.
-	void generar_material(Material material, Coordenada coordenada);
+	void generar_material(std::string material, Coordenada coordenada);
 };
 
 #endif /* MAPA_H_ */

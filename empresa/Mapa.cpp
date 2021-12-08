@@ -16,7 +16,7 @@ const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
 const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
 const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
 const std::size_t ANDYCOINS_MINIMO = 0, ANDYCOINS_MAXIMO = 1;
-const std::size_t CONJUNTO_PIEDRA = 100, CONJUNTO_MADERA = 50, CONJUNTO_METAL = 50, CONJUNTO_ANDYCOINS = 250;
+const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
@@ -100,11 +100,19 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada
 }
 
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
-void Mapa::poner_material_ubicacion(Material* material,const Coordenada& coordenada){
+void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
 	( (Casillero_Transitable*) this -> terreno[coordenada.x()][coordenada.y()] ) ->
-			agregar_material(material);
+			agregar_material(this -> generar_conjunto_material(material));
 }
 
+Material* Mapa::generar_conjunto_material(std::string material){
+	Material* ptr_material = nullptr;
+	for(std::size_t i = 0; i < CANTIDAD_CONJUNTOS; i++){
+		if(NOMBRES_MATERIALES[i] == material)
+			ptr_material = new Material(material, CONJUNTO[i]);
+	}
+	return ptr_material;
+}
 
 //OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
 void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario){
@@ -136,13 +144,13 @@ bool Mapa::generar_materiales_aleatorios(){
 	while(a_generar > 0 && !(casilleros_libres->vacia())){
 		if((piedra_a_generar > 0)){
 			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
-			generar_material(Material(MATERIALES_EDIFICIOS[PIEDRA], CONJUNTO_PIEDRA), casilleros_libres -> consulta(n_casillero));
+			generar_material(NOMBRES_MATERIALES[PIEDRA], casilleros_libres -> consulta(n_casillero));
 			piedra_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
 		if((madera_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
-			generar_material(Material(MATERIALES_EDIFICIOS[MADERA], CONJUNTO_MADERA), casilleros_libres->consulta(n_casillero));
+			generar_material(NOMBRES_MATERIALES[MADERA], casilleros_libres->consulta(n_casillero));
 
 			madera_a_generar--;
 			casilleros_libres -> baja(n_casillero);
@@ -150,14 +158,14 @@ bool Mapa::generar_materiales_aleatorios(){
 		}
 		if((metal_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
-			generar_material(Material(MATERIALES_EDIFICIOS[METAL], CONJUNTO_METAL), casilleros_libres->consulta(n_casillero));
+			generar_material(NOMBRES_MATERIALES[METAL], casilleros_libres->consulta(n_casillero));
 
 			metal_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
 		if((andycoins_a_generar > 0) && !(casilleros_libres->vacia())){
 			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
-			generar_material(Material("andycoins", CONJUNTO_ANDYCOINS), casilleros_libres->consulta(n_casillero));
+			generar_material(NOMBRES_MATERIALES[ANDYCOINS], casilleros_libres->consulta(n_casillero));
 			andycoins_a_generar--;
 			casilleros_libres -> baja(n_casillero);
 		}
@@ -169,10 +177,8 @@ bool Mapa::generar_materiales_aleatorios(){
 }
 
 // Ver si es necesario.
-void Mapa::generar_material(Material material, Coordenada coordenada){
-	Material* ptr_material = new Material; //TODO: se puede copiar de otra forma?
-	*ptr_material = material;
-	this -> poner_material_ubicacion(ptr_material, coordenada);
+void Mapa::generar_material(std::string material, Coordenada coordenada){
+	this -> poner_material_ubicacion(material, coordenada);
 }
 
 std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {

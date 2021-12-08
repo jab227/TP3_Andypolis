@@ -311,7 +311,7 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 	do resultado = this -> pedir_coordenadas(coordenada);
 	while(!mostrar_mensaje_chequeo(resultado));
 	std::size_t indice = jugador -> existe_ubicacion(coordenada);
-	if(indice && coordenada.x != COORDENADA_VACIA){ //Chequeo que le pertenece y que no se ingreso salir.
+	if(indice){ //Chequeo que le pertenece y que no se ingreso salir.
 		std::string nombre_edificio = this -> mapa -> obtener_contenido_ubicacion(coordenada);
 		Edificio* edificio = Planos::buscar(nombre_edificio);
 		Lista<Material>* listado_necesario = planos -> materiales_necesarios(edificio);
@@ -331,7 +331,7 @@ void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jug
 	Resultado_Chequeos resultado = EXITO;
 	Material bombas("bombas", 0);
 	jugador_activo -> obtener_inventario() -> buscar_material(bombas);
-	if(!bombas.obtener_cantidad() > 0)
+	if(!(bombas.obtener_cantidad() > 0))
 		resultado = NO_MATERIALES;
 	this -> mostrar_mensaje_chequeo(resultado);
 	Coordenada coordenada(0, 0);
@@ -353,7 +353,7 @@ void Empresa_Constructora::bombardear_coordenadas(Coordenada coordenada, Jugador
 	bool destruido = this -> mapa -> explota_bomba(edificio, coordenada);
 	if(destruido){
 		jugador -> eliminar_ubicacion(coordenada);
-		ColorPrinter::color_msg(edificio + " destruido en (" + to_string((int) coordenada.x) + ", " + to_string((int) coordenada.y) + ")!", VERDE, std::cout);
+		ColorPrinter::color_msg(edificio + " destruido en (" + to_string((int) coordenada.x()) + ", " + to_string((int) coordenada.y()) + ")!", VERDE, std::cout);
 	}else
 		ColorPrinter::color_msg("El/La " + edificio + " todavia se mantiene en pie.", VERDE, std::cout);
 }

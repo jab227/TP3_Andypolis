@@ -1,7 +1,7 @@
 #include "Programa.h"
 
 #include "../utils/LecturaArchivos.h"
-#include "../printer/table_printer.h"
+#include "../printer/printer.h"
 #include "../jugador/jugadores/JugadorUno.h"
 #include "../jugador/jugadores/JugadorDos.h"
 #include "../parser/parser_edificio.h"
@@ -68,9 +68,7 @@ void Programa::mostrar_menu(){
 
 void Programa::mostrar_menu_juego(){
 	this -> empresa_constructora -> mostrar_mapa();
-	TablePrinter printer;
-	//cout << "--------------------------------------------------------------" << endl;
-	printer.print_row_separator(4,std::cout);
+	cout << "--------------------------------------------------------------" << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero" << endl;
     cout << "1. Construir edificio por nombre." << endl;
     cout << "2. Listar mis edificios construidos." << endl;
@@ -85,9 +83,7 @@ void Programa::mostrar_menu_juego(){
 	cout << "11. Moverse a una coordenada." << endl;
 	cout << "12. Finalizar turno." << endl;
 	cout << "13. Guardar y salir." << endl;
-	printer.print_row_separator(4,std::cout);
-
-	//cout << "--------------------------------------------------------------" << endl;
+	cout << "--------------------------------------------------------------" << endl;
 }
 
 void Programa::mostrar_menu_inicio(){
@@ -121,7 +117,8 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
     switch (opcion_elegida) {
         case MODIFICAR_EDIFICIO:
             this -> empresa_constructora -> modificar_edificios();
-            break;
+			this -> limpiar_pantalla();
+            //break; Para que se listen los edificios post editar.
         case LISTAR_EDIFICIOS:
             this -> empresa_constructora -> mostrar_edificios();
             break;
@@ -211,9 +208,7 @@ bool Programa::es_opcion_valida(std::string opcion) {
 }
 
 void Programa::limpiar_pantalla(){
-	TablePrinter printer;
-    printer.clear_screen();
-	printer.print_row_separator(4,std::cout);
+    Printer::clear_screen();
 }
 
 void Programa::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){

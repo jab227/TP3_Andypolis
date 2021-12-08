@@ -18,7 +18,6 @@ void mensaje_bienvenida(Programa &programa);
 int main() {
 	Programa programa(RUTA_MATERIALES, RUTA_EDIFICIOS, RUTA_MAPA, RUTA_UBICACIONES);
 	int opcion;
-
 	mensaje_bienvenida(programa);
 	do{
 		programa.mostrar_menu();

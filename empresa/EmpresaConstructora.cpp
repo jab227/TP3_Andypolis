@@ -184,13 +184,13 @@ std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
 	}while(!fin);
 	return edificio_ingresado;
 }
-Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &madera, std::size_t &piedra, std::size_t &metal){
-	std::string madera_ingresada, piedra_ingresada, metal_ingresada;
+Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &piedra, std::size_t &madera, std::size_t &metal){
+	std::string piedra_ingresada, madera_ingresada,  metal_ingresada;
 	
-	std::cout << "Elegir cantidad de madera: ";
-	getline(std::cin, madera_ingresada);	
 	std::cout << "Elegir cantidad de piedra: ";
 	getline(std::cin, piedra_ingresada);	
+	std::cout << "Elegir cantidad de madera: ";
+	getline(std::cin, madera_ingresada);	
 	std::cout <<"Elegir cantidad de metal: ";
 	getline(std::cin, metal_ingresada);
 
@@ -198,7 +198,7 @@ Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &madera, 
 	madera = std::stoul(madera_ingresada);
 	piedra = std::stoul(piedra_ingresada);
 	metal = std::stoul(metal_ingresada);
-	return chequeo_materiales(madera_ingresada, piedra_ingresada, metal_ingresada);
+	return chequeo_materiales( piedra_ingresada, madera_ingresada, metal_ingresada);
 }
 
 
@@ -225,7 +225,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(std::string fila_in
 	return resultado;
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada){
+Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string piedra_ingresada, std::string madera_ingresada, std::string metal_ingresada){
 	Resultado_Chequeos resultado = EXITO;
 	
 	if(madera_ingresada == SALIR_STR || piedra_ingresada == SALIR_STR || metal_ingresada == SALIR_STR ) resultado = SALIR;

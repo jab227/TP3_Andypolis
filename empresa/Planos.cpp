@@ -23,8 +23,8 @@ void Planos::mostrar_edificios(){
 	TablePrinter printer = TablePrinter();
 	Lista<std::string> header;  //feo pero comodo jaja
 	header.alta_al_final("Edificio");
-	header.alta_al_final("Madera");
 	header.alta_al_final("Piedra");
+	header.alta_al_final("Madera");
 	header.alta_al_final("Metal");
 	header.alta_al_final("Cantidad permitida");
 	header.alta_al_final("Material producido");

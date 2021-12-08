@@ -43,7 +43,7 @@ public:
 	//POST: imprime un saludo
 	void saludar();
 
-	bool operator==(Material rhs);
+	bool operator==(Material rhs) const;
 
 	void operator=(Material rhs);
 };

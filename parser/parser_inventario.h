@@ -3,6 +3,7 @@
 
 #include "../utils/Lista.h"
 #include "../material/Material.h"
+#include "../empresa/Almacen.h"
 #include "parser.h"
 #include <regex>
 #include <string>
@@ -27,8 +28,9 @@ class ParserInventario final : Parser<Lista<Material*>> {
 	// Pre: -
 	// Pos: Parsea el string input, y devuelve un elemento de tipo T
 	void parse(const std::string& input, Lista<Material*>& inventario) override;
-
-	void parse(const std::string& input, Lista<Material*>& inventario_p1, Lista<Material*>& inventario_p2);
+	// Pre: -
+	// Pos: Parsea el string input, y devuelve por interfaz los almacenes de cada jugador.
+	void parse(const std::string& input, Lista<Material>& inventario_p1, Lista<Material>& inventario_p2);
 };
 
 #endif

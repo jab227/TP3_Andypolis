@@ -35,7 +35,7 @@ void Material::saludar(){
 	std::cout << "Soy el material " << this -> nombre << " y estoy en el casillero consultado." << std::endl;
 }
 
-bool Material::operator==(Material rhs){
+bool Material::operator==(Material rhs) const{
 	return (this -> nombre == rhs.obtener_nombre());
 }
 

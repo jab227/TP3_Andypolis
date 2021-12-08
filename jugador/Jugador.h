@@ -18,7 +18,7 @@ class Jugador {
 	const std::size_t id_;
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
-	Almacen* inventario_;
+	Almacen inventario_;
 	Coordenada posicion_;
 	Lista<Coordenada> edificios_;
 
@@ -26,10 +26,7 @@ class Jugador {
 	// Q: Construimos primero el jugador con las cosas o primero lo ubicamos?
 	Jugador(std::size_t id, const Coordenada& coordenada);
 	// Destructuor
-	virtual ~Jugador() {
-		delete inventario_;
-		inventario_ = nullptr;
-	};
+	virtual ~Jugador() = default; 
 	// Pre: 
 	// Pos:
 	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
@@ -43,7 +40,11 @@ class Jugador {
 
 	// PRE: -
 	// POST: devuelve el inventario del jugador
-	Almacen* obtener_inventario() const;
+	Almacen obtener_inventario() const;
+	
+	// Pre: - 
+	// Pos: Cambia el almacen del jugador
+	void colocar_almacen(const Almacen& inventario);
 	
 	// PRE: -
 	// POST: Devuelve la posicoin del jugador 
@@ -101,6 +102,7 @@ class Jugador {
 	Lista<Material> obtener_recursos_producidos(Mapa* mapa);
 
 	void mostrar_inventario() const;
+	
 	void recolectar(Mapa* mapa);
 };
 

@@ -15,15 +15,14 @@ void ParserInventario::parse(const std::string& input,
 			     Lista<Material*>& inventario) {}
 
 void ParserInventario::parse(const std::string& input,
-			     Lista<Material*>& inventario_p1,
-			     Lista<Material*>& inventario_p2) {
+			     Lista<Material>& inventario_p1,
+			     Lista<Material>& inventario_p2) {
 	std::regex pattern("(\\w+) (\\d+) (\\d+)");
 	std::smatch match;
 	std::regex_search(input, match, pattern);
 
-	Material* aux;
-	aux = new Material(nombre(match), (int)cantidad(match, 1));
-	inventario_p1.alta_al_final(aux);
-	aux = new Material(nombre(match), (int)cantidad(match, 2));
-	inventario_p2.alta_al_final(aux);
+	Material p1 (nombre(match), (int)cantidad(match, 1));
+	inventario_p1.alta_al_final(p1);
+	Material p2 (nombre(match), (int)cantidad(match, 2));
+	inventario_p2.alta_al_final(p2);
 }

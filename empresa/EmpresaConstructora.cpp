@@ -327,7 +327,7 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Resultado_Chequeos resultado = EXITO;
 	Material bombas("bombas", 0);
-	jugador_activo -> obtener_inventario() -> buscar_material(bombas);
+	jugador_activo -> obtener_inventario().buscar_material(bombas);
 	if(!(bombas.obtener_cantidad() > 0))
 		resultado = NO_MATERIALES;
 	this -> mostrar_mensaje_chequeo(resultado);
@@ -338,7 +338,7 @@ void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jug
 		std::size_t indice = jugador_inactivo -> existe_ubicacion(coordenada);
 		if(indice){
 			jugador_activo -> usar_energia(ENERGIA_ATACAR);
-			jugador_activo -> obtener_inventario() -> sumar_cantidad_material(bombas.obtener_nombre(), 1);
+			jugador_activo -> obtener_inventario().sumar_cantidad_material(bombas.obtener_nombre(), 1);
 			this -> bombardear_coordenadas(coordenada, jugador_inactivo);
 		}else
 			ColorPrinter::color_msg("No hay un edificio del otro jugador en estas coordenadas.", ROJO, std::cout);
@@ -368,7 +368,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_reparar_edificio(Jugador* jugad
 void Empresa_Constructora::comprar_bombas(Jugador* jugador){
 	std::size_t cantidad_bombas = 0;
 	mostrar_mensaje_chequeo(pedir_bombas(cantidad_bombas));
-	if(mostrar_mensaje_chequeo(jugador -> obtener_inventario() -> comprar_bombas(cantidad_bombas))){
+	if(mostrar_mensaje_chequeo(jugador -> obtener_inventario().comprar_bombas(cantidad_bombas))){
 		jugador -> usar_energia(ENERGIA_COMPRAR_BOMBAS);
 	}
 }

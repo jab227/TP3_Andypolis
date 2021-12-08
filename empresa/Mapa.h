@@ -62,6 +62,10 @@ public:
 	//POST: se pone el material en la ubicacion ingresda
 	void poner_material_ubicacion(std::string material, const Coordenada& coordenada);
 
+	//PRE: -
+	//POST: genera un conjunto del material con su cantidad predeterminada o devuelve nullptr si el material no existe
+	Material* generar_conjunto_material(std::string material);
+
 	//PRE: la posicion debe ser valida y estar ocupada por un material
 	//POST: se elimina el material de esa posicion y se devuelve el material quitado
 	void recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario);
@@ -91,6 +95,11 @@ public:
 	//PRE: -
 	//POST: se limpia todo el mapa de materiales
 	void vaciar_materiales();
+
+
+	//PRE: las coordenadas deben ser un edificio
+	//POST: se resta 1 de vida al edificio. Si el edificio queda en 0 de vida se destruye y devuelve true.
+	bool explota_bomba(std::string &edificio, Coordenada coordenadas);
 private:
 //WHY: Se usa?
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero

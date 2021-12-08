@@ -4,7 +4,7 @@
 #include "../material/Material.h"
 
 const std::size_t CANT_MATERIALES_EDIFICIOS = 3, NINGUNO = 0;
-const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
+const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2, ANDYCOINS = 3, BOMBAS = 4;
 const std::string MATERIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,

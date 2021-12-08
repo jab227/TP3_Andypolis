@@ -67,6 +67,8 @@ void Programa::mostrar_menu(){
 }
 
 void Programa::mostrar_menu_juego(){
+	cout << "Turno del jugador " << this -> jugador_activo << ". "
+		 << "Tenes " << jugadores.consulta(jugador_activo) -> obtener_energia() << " de energia." << endl;
 	this -> empresa_constructora -> mostrar_mapa();
 	cout << "--------------------------------------------------------------" << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero" << endl;
@@ -130,6 +132,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
             this -> instancia = JUEGO;
             this -> jugadores.consulta(1) -> recuperar_energia(ENERGIA_INICIAL);
             this -> jugadores.consulta(2) -> recuperar_energia(ENERGIA_INICIAL);
+            this -> empresa_constructora -> lluvia_de_recursos();
             break;
         case GUARDAR_SALIR_INICIO:
         	fin = true;
@@ -153,12 +156,10 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
             this -> empresa_constructora -> demoler_edificio(this -> jugadores.consulta((int) this -> jugador_activo));
             break;
         case ATACAR:
-			//TODO: Implementar atacar
-            cout << "Implementar atacar!" << endl;
+			this -> empresa_constructora -> atacar_edificio(jugadores.consulta(jugador_activo), jugadores.consulta(3 - jugador_activo));
             break;
         case REPARAR:
-			//TODO: Implementar reparar
-        	cout << "Implementar reparar!" << endl;
+			this -> empresa_constructora -> reparar_edificio(jugadores.consulta(jugador_activo));
 			break;
         case COMPRAR_BOMBAS:
         	this -> empresa_constructora -> comprar_bombas(this-> jugadores.consulta(jugador_activo));

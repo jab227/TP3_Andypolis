@@ -90,7 +90,7 @@ Resultado_Chequeos Casillero_Construible::reparar_edificio(){
 
 Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 	Resultado_Chequeos resultado = NO_EXISTE;
-	if(this->esta_ocupado())
+	if(this -> esta_ocupado())
 		resultado = this -> edificio_ -> disminuir_vida();
 	return resultado;
 }

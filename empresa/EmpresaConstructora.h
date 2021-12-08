@@ -86,7 +86,7 @@ public:
 
 	void comprar_bombas(Jugador* jugador);
 	
-	void atacar_edificio();
+	void atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo);
 	
 	//void ver_objetivos(); Implementado en jugadores
 
@@ -159,6 +159,7 @@ private:
 
 	Resultado_Chequeos chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
 
+	void bombardear_coordenadas(Coordenada coordenada, Jugador* jugador_inactivo);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

@@ -4,7 +4,6 @@
 
 #include "../utils/LecturaArchivos.h"
 
-const std::string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
 const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = 0;
 

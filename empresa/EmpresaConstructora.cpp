@@ -321,7 +321,38 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 		}
 		mostrar_mensaje_chequeo( resultado );
 	} else // Ojo porque puede querer salir y va a mostrar este msj.
-		std::cout << "No hay un edificio tuyo en estas coordenadas." <<std::endl;
+		ColorPrinter::color_msg("No hay un edificio tuyo en estas coordenadas.", ROJO, std::cout);
+}
+
+void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
+	Resultado_Chequeos resultado = EXITO;
+	Material bombas("bombas", 0);
+	jugador_activo -> obtener_inventario() -> buscar_material(bombas);
+	if(!(bombas.obtener_cantidad() > 0))
+		resultado = NO_MATERIALES;
+	this -> mostrar_mensaje_chequeo(resultado);
+	Coordenada coordenada(0, 0);
+	if(resultado == EXITO){
+		do resultado = this -> pedir_coordenadas(coordenada);
+		while(!mostrar_mensaje_chequeo(resultado));
+		std::size_t indice = jugador_inactivo -> existe_ubicacion(coordenada);
+		if(indice){
+			jugador_activo -> usar_energia(ENERGIA_ATACAR);
+			jugador_activo -> obtener_inventario() -> sumar_cantidad_material(bombas.obtener_nombre(), 1);
+			this -> bombardear_coordenadas(coordenada, jugador_inactivo);
+		}else
+			ColorPrinter::color_msg("No hay un edificio del otro jugador en estas coordenadas.", ROJO, std::cout);
+	}
+}
+
+void Empresa_Constructora::bombardear_coordenadas(Coordenada coordenada, Jugador* jugador){
+	std::string edificio;
+	bool destruido = this -> mapa -> explota_bomba(edificio, coordenada);
+	if(destruido){
+		jugador -> eliminar_ubicacion(coordenada);
+		ColorPrinter::color_msg(edificio + " destruido en (" + to_string((int) coordenada.x()) + ", " + to_string((int) coordenada.y()) + ")!", VERDE, std::cout);
+	}else
+		ColorPrinter::color_msg("El/La " + edificio + " todavia se mantiene en pie.", VERDE, std::cout);
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_reparar_edificio(Jugador* jugador, Lista<Material> listado_necesario, Coordenada coordenada){

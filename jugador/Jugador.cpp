@@ -13,11 +13,10 @@ std::size_t Jugador::obtener_jugador() const { return id_; }
 
 std::size_t Jugador::obtener_energia() const { return energia_; }
 
-Almacen Jugador::obtener_inventario() const { return inventario_; }
+Almacen& Jugador::obtener_inventario() { return inventario_; }
 
 void Jugador::colocar_almacen(const Almacen& inventario) {
-	Almacen copia = inventario;
-	inventario_ = copia;
+	inventario_ = inventario;
 }
 
 bool Jugador::energia_suficiente(const std::size_t& energia_requerida) const {

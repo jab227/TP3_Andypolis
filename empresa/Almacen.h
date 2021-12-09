@@ -22,6 +22,7 @@ public:
 	//POS: creo un almacen inicializado con el archivo en la ruta espesificada.
 	Almacen(const Lista<Material>& lista);
 	Almacen(const Almacen& rhs) = default;
+	Lista<Material>& obtener_materiales();
 	//PRE: -
 	//POS: se libera la memoria utilizada
 	~Almacen() = default;

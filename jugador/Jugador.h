@@ -40,7 +40,7 @@ class Jugador {
 
 	// PRE: -
 	// POST: devuelve el inventario del jugador
-	Almacen obtener_inventario() const;
+	Almacen& obtener_inventario();
 	
 	// Pre: - 
 	// Pos: Cambia el almacen del jugador

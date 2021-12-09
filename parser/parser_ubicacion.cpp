@@ -55,7 +55,6 @@ void ParserUbicacion::parse(const std::string& input, Mapa*& mapa,
 			    new Jugador_Uno(Coordenada(x(match), y(match))));
 			// Busco la siguiente linea
 			getline(ss, aux, '\n');
-			std::cout << aux << std::endl;
 			match = conseguir_coincidencia(aux);
 		}
 		if (nombre(match) == "2") {
@@ -70,19 +69,16 @@ void ParserUbicacion::parse(const std::string& input, Mapa*& mapa,
 
 		switch (ubicacion) {
 			case JUGADOR_UNO: {
-			std::cout << match.str(1) << std::endl;
 				jugadores.consulta(1)->agregar_ubicacion(
 				    edificio(match, mapa));
 				break;
 			}
 			case JUGADOR_DOS: {
-			std::cout << match.str(1) << std::endl;
 				jugadores.consulta(2)->agregar_ubicacion(
 				    edificio(match, mapa));
 				break;
 			}
 			case MATERIAL: {
-			std::cout << match.str(1) << std::endl;
 			material(match, mapa);
 				break;
 			}

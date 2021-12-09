@@ -16,10 +16,9 @@ public:
 	//POST: Se destruye el casillero, se libera el material en caso de estar ocupado
 	~Casillero_Transitable() = default;
 
-	//Q: Limpiar DOWNCAST 
-	//PRE: -
+	//PRE: El material debe estar ubicado en memoria dinamica
 	//POST: Se ocupa el casillero con el material
-	void agregar_material(Material material);
+	void agregar_material(Material material) override;
 
 	//PRE: inventario != nullpointer.
 	//POST: Si esta ocupado, se suma el material al inventario y se deja vacío el casillero, devuelve EXITO. Devuelve NO_MATERIALES si no hay ningun material.

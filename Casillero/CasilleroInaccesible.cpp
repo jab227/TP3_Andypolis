@@ -39,3 +39,5 @@ Resultado_Chequeos Casillero_Inaccesible::recoger_material(Almacen* inventario){
 Resultado_Chequeos Casillero_Inaccesible::reparar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}
 
 Resultado_Chequeos Casillero_Inaccesible::atacar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}
+
+void agregar_material(Material material){}

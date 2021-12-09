@@ -21,7 +21,7 @@ const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
 	this -> cargar_terreno(mapa);
-	this -> mostrar_mapa();
+	//this -> mostrar_mapa();
 }
 
 Mapa::~Mapa() {

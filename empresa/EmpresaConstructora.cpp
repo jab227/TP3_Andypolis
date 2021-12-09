@@ -114,13 +114,14 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 		std::cout << "Desea realmente construir el edificio: " << edificio << "? [si/no]" << std::endl;
 		std::string respuesta = pedir_si_no();
 		if(respuesta == SI){
-			Coordenada coordenada = Coordenada(0,0);
+			mapa -> mostrar_mapa();
+			Coordenada coordenada;
 			Resultado_Chequeos resultado = this -> pedir_coordenadas(coordenada);
 			mostrar_mensaje_chequeo(resultado);
 			if( resultado == EXITO )
 				this -> edificio_construido_confirmado(edificio, coordenada, jugador);
 		}else
-			std::cout << "No se realizó ningún cambio." << std::endl;
+			std::cout << "Se abortó la construicción." << std::endl;
 	}
 }
 
@@ -209,9 +210,9 @@ Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string piedra_i
 Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
 	std::string fila_ingresada, columna_ingresada;
 	
-	std::cout << "Elegi las coordenadas del edificio o salir \n Fila: " << std::endl;
+	std::cout << "Elegi las coordenadas del edificio o salir \nFila: ";
 	getline(cin, fila_ingresada);
-	std::cout << "Columna: " << std::endl;
+	std::cout << "Columna: ";
 	getline(cin, columna_ingresada);
 
 	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);

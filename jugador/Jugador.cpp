@@ -81,11 +81,10 @@ Resultado_Chequeos Jugador::tiene_materiales_reparar( Lista<Material> materiales
 }
 
 std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const{
-	std::size_t construidos;
-	for (std::size_t i = 1; i < edificios_.consulta_largo() + 1; i++) {
+	std::size_t construidos = 0;
+	for (std::size_t i = 1; i <= edificios_.consulta_largo(); i++) {
 		Coordenada ubicacion = this->obtener_ubicacion(i);
-		std::string edificio =
-		    mapa->obtener_contenido_ubicacion(ubicacion);
+		std::string edificio = mapa->obtener_contenido_ubicacion(ubicacion);
 		if (edificio == nombre_edificio) construidos++;
 	}
 	return construidos;

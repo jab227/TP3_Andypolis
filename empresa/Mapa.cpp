@@ -99,10 +99,13 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada
 
 }
 
-//TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
+
 void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
-	( (Casillero_Transitable*) this -> terreno[coordenada.x()][coordenada.y()] ) ->
-			agregar_material(this -> generar_conjunto_material(material));
+	this -> terreno[coordenada.x()][coordenada.y()] -> agregar_material(this -> generar_conjunto_material(material));
+}
+
+void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
+	this -> terreno[coordenada.x()][coordenada.y()] -> agregar_material(this -> generar_conjunto_material(material));
 }
 
 Material Mapa::generar_conjunto_material(std::string material){
@@ -187,7 +190,6 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {
 }
 
 //TODO:Quitarme la dependencia. TellDontAsk.
-//TODO: Constructor de copia?? Asi no lo creamos fuera a la lista.
 void Mapa::casilleros_libres_transitables(Lista<Coordenada>* &lista_desocupados){
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++)

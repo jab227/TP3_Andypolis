@@ -89,6 +89,8 @@ public:
 	// PRE: -
 	// POST: Le pide al casillero destruir un edificio.
 	virtual Resultado_Chequeos demoler_edificio() = 0;
+
+	virtual	void agregar_material(Material material) = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

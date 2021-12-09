@@ -43,7 +43,7 @@ const int ENERGIA[] = {0,
 
 Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 		   std::string ruta_mapa, std::string ruta_ubicaciones) {
-	
+	jugadores = Lista<Jugador*>();
 	Planos* plano = new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
 	Mapa* mapa = leer_de_archivo(ruta_mapa, ParserMapa());
 	leer_de_archivo(ruta_ubicaciones,ParserUbicacion(), mapa, jugadores);
@@ -182,7 +182,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			this -> empresa_constructora -> mostrar_materiales(this -> jugadores.consulta(this -> jugador_activo));
 			break;
         case OBJETIVOS:
-        	this -> objetivos_jugadores.consulta(this -> jugador_activo) -> mostrar_objetivos();
+        	this -> objetivos_jugadores.consulta(this -> jugador_activo).mostrar_objetivos();
 			break;
         case RECOLECTAR:
 		//FER: Hice recoger_material() en los casilleros

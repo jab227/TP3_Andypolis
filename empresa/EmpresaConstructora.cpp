@@ -9,16 +9,13 @@ const std::size_t COORDENADA_VACIA = -1, COSTO_BOMBAS = 100;
 
 
 Empresa_Constructora::Empresa_Constructora(){
-	this -> almacen = nullptr;
 	this -> planos = nullptr;
 	this -> mapa = nullptr;
 }
 
-Empresa_Constructora::Empresa_Constructora(Planos* plano): almacen(nullptr), planos(plano), mapa(nullptr) {}
+Empresa_Constructora::Empresa_Constructora(Planos* plano):planos(plano), mapa(nullptr) {}
 
 Empresa_Constructora::~Empresa_Constructora() {
-	if(almacen != nullptr)
-		delete this -> almacen;
 	if(planos != nullptr)
 		delete this -> planos;
 	if(mapa != nullptr)
@@ -67,8 +64,7 @@ void Empresa_Constructora::consultar_coordenada(){
 }
 
 void Empresa_Constructora::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){
-	this -> almacen -> guardar_materiales(ruta_materiales);
-	this -> guardar_ubicaciones(ruta_ubicaciones);
+	//Implementar.
 }
 
 void Empresa_Constructora::guardar_ubicaciones(std::string ruta){

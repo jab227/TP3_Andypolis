@@ -53,7 +53,7 @@ public:
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos atacar_edificio() override;
 
-	void agregar_material(Material material) override;
+	void agregar_material(Material material) override {};
 
 };
 

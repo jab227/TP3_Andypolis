@@ -51,33 +51,39 @@ void ParserUbicacion::parse(const std::string& input, Mapa*& mapa,
 		std::smatch match = conseguir_coincidencia(aux);
 		if (nombre(match) == "1") {
 			ubicacion = JUGADOR_UNO;
-			jugadores.consulta(1) =
-			    new Jugador_Uno(Coordenada(x(match), y(match)));
+			jugadores.alta_al_final(
+			    new Jugador_Uno(Coordenada(x(match), y(match))));
 			// Busco la siguiente linea
 			getline(ss, aux, '\n');
+			std::cout << aux << std::endl;
+			match = conseguir_coincidencia(aux);
 		}
 		if (nombre(match) == "2") {
 			ubicacion = JUGADOR_DOS;
-			jugadores.consulta(2) =
-			    new Jugador_Dos(Coordenada(x(match), y(match)));
+			jugadores.alta_al_final(
+			    new Jugador_Dos(Coordenada(x(match), y(match))));
 			// Busco la siguiente linea, si llegue al final del
 			// archivo quiero que no haga nada.
 			if (!(getline(ss, aux, '\n'))) ubicacion = VACIO;
+			else match = conseguir_coincidencia(aux);
 		}
 
 		switch (ubicacion) {
 			case JUGADOR_UNO: {
+			std::cout << match.str(1) << std::endl;
 				jugadores.consulta(1)->agregar_ubicacion(
 				    edificio(match, mapa));
 				break;
 			}
 			case JUGADOR_DOS: {
+			std::cout << match.str(1) << std::endl;
 				jugadores.consulta(2)->agregar_ubicacion(
 				    edificio(match, mapa));
 				break;
 			}
 			case MATERIAL: {
-				material(match, mapa);
+			std::cout << match.str(1) << std::endl;
+			material(match, mapa);
 				break;
 			}
 			default:;

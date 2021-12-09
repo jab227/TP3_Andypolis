@@ -19,6 +19,8 @@ public:
 	//POST: se crea un material con los datos ingresados
 	Material(std::string nombre, std::size_t cantidad);
 
+	Material(const Material& rhs) = default;
+
 	//PRE: -
 	//POST: devuelve el nombre del material
 	std::string obtener_nombre() const;

@@ -99,5 +99,3 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 		resultado = this -> edificio_ -> disminuir_vida();
 	return resultado;
 }
-
-void agregar_material(Material material){}

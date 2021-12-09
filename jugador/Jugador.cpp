@@ -16,7 +16,8 @@ std::size_t Jugador::obtener_energia() const { return energia_; }
 Almacen Jugador::obtener_inventario() const { return inventario_; }
 
 void Jugador::colocar_almacen(const Almacen& inventario) {
-	inventario_ = inventario;
+	Almacen copia = inventario;
+	inventario_ = copia;
 }
 
 bool Jugador::energia_suficiente(const std::size_t& energia_requerida) const {

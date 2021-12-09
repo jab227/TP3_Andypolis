@@ -12,7 +12,7 @@ std::size_t ParserInventario::cantidad(const std::smatch& match,
 }
 
 void ParserInventario::parse(const std::string& input,
-			     Lista<Material*>& inventario) {}
+			     Lista<Material>& inventario) {}
 
 void ParserInventario::parse(const std::string& input,
 			     Lista<Material>& inventario_p1,

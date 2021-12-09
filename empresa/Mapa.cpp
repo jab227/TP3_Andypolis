@@ -20,32 +20,32 @@ const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
-	this->cargar_terreno(mapa);
-	srand((unsigned int)time(0));  // Genero una semilla aleatoria
+	this -> cargar_terreno(mapa);
+	this -> mostrar_mapa();
 }
 
 Mapa::~Mapa() {
-	for (std::size_t i = 0; i < this->filas; i++) {
-		for (std::size_t j = 0; j < this->columnas; j++) {
-			delete this->terreno[i][j];
+	for (std::size_t i = 0; i < this -> filas; i++) {
+		for (std::size_t j = 0; j < this -> columnas; j++) {
+			delete this -> terreno[i][j];
 		}
-		delete[] this->terreno[i];
+		delete[] this -> terreno[i];
 	}
-	delete[] this->terreno;
+	delete[] this -> terreno;
 }
 
 void Mapa::cargar_terreno(const std::string& mapa) {
-	this->terreno = new Casillero**[this->filas];
-	for (std::size_t fila = 0; fila < this->filas; fila++) {
-		this->iniciar_filas_casilleros(fila, mapa);
+	this -> terreno = new Casillero**[this -> filas];
+	for (std::size_t fila = 0; fila < this -> filas; fila++) {
+		this -> iniciar_filas_casilleros(fila, mapa);
 	}
 }
 
 void Mapa::iniciar_filas_casilleros(std::size_t fila, const std::string& mapa) {
-	this->terreno[filas] = new Casillero*[this->columnas];
-	for (std::size_t columnas = 0; columnas < this->columnas; columnas++) {
-		this->terreno[filas][columnas] =
-		    traductor_casillero(mapa[columnas]);
+	this -> terreno[fila] = new Casillero*[this -> columnas];
+	for (std::size_t columna = 0; columna < this -> columnas; columna++) {
+		this -> terreno[fila][columna] =
+		    traductor_casillero(mapa[columna + fila * this -> columnas + fila]);
 	}
 }
 

@@ -164,10 +164,12 @@ std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
 	bool fin = false;
 	std::string edificio_ingresado;
 	Resultado_Chequeos chequeo;
-	do{	
+	do{
 		chequeo = pedir_edificio(edificio_ingresado);
-		if( chequeo == EXITO)
+		if( chequeo == EXITO){
+			std::cout << "debug: El nombre ingresado es valido." << std::endl;
 			chequeo = planos -> chequeo_construir(edificio_ingresado, jugador, this -> mapa);
+		}
 		fin = mostrar_mensaje_chequeo(chequeo);
 	}while(!fin);
 	return edificio_ingresado;

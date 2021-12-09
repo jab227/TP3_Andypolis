@@ -100,4 +100,4 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 	return resultado;
 }
 
-void agregar_material(Material material){}
+void Casillero_Construible::agregar_material(Material material){}

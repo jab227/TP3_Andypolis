@@ -73,10 +73,15 @@ Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada,
 //Provisorio
 bool Casillero_Construible::es_casillero_transitable(){return false;}
 
-//En teoria deberia ser impoisble pedirle materiales al obelisco porque termina el juego.
+//Tengo que devolver algun mensaje?
 Resultado_Chequeos Casillero_Construible::recoger_material(Almacen* inventario){
-	Material producto = this -> edificio_ -> producir_material();
-	inventario -> sumar_cantidad_material(producto.obtener_nombre(), producto.obtener_cantidad());
+	if(esta_ocupado()){
+		Material producto = this -> edificio_ -> producir_material();
+		inventario -> sumar_cantidad_material(producto.obtener_nombre(), producto.obtener_cantidad());
+		std::cout << "Ha producido " << producto.obtener_cantidad() 
+		<< " de " << producto.obtener_nombre() << std::endl;
+	
+	}
 	return EXITO;
 }
 

@@ -2,15 +2,11 @@
 #include <iostream>
 
 Casillero_Transitable::Casillero_Transitable(std::string color): Casillero(color) {
-	this -> material = nullptr;
+	this -> material = Material();
 }
 
-Casillero_Transitable::~Casillero_Transitable() {
-	if(this -> esta_ocupado())
-		delete this -> material;
-}
 
-void Casillero_Transitable::agregar_material(Material* material){
+void Casillero_Transitable::agregar_material(Material material){
 	this -> material = material;
 }
 
@@ -27,13 +23,13 @@ Material* Casillero_Transitable::eliminar_material(){
 */
 
 bool Casillero_Transitable::esta_ocupado() const{
-	return !(this -> material == nullptr);
+	return !(this -> material == Material());
 }
 
 std::string Casillero_Transitable::obtener_contenido() const{ 
 	std::string material = MATERIAL_VACIO;
 	if(this -> esta_ocupado())
-		material = this -> material -> obtener_nombre();
+		material = this -> material.obtener_nombre();
 
 	return material;
  }
@@ -65,10 +61,10 @@ Resultado_Chequeos Casillero_Transitable::recoger_material(Almacen* inventario){
 	//Podriamos retornar el material o imprimir por consola lo que recogió acá.
 	if(this->esta_ocupado()){
 	// Q: Adaptar
-		inventario -> sumar_cantidad_material(material -> obtener_nombre(), material -> obtener_cantidad());
-		std::cout << "Ha recogido " << material -> obtener_cantidad() << " de " << material -> obtener_nombre() << std::endl;
-		delete material;
-		material = nullptr;
+		std::cout << "Ha recogido " << material.obtener_cantidad() 
+		<< " de " << material.obtener_nombre() << std::endl;
+		inventario -> sumar_cantidad_material(material.obtener_nombre(), material.obtener_cantidad());
+		material = Material();
 		resultado = EXITO;
 	}
 	return resultado;
@@ -76,6 +72,6 @@ Resultado_Chequeos Casillero_Transitable::recoger_material(Almacen* inventario){
 
 Resultado_Chequeos Casillero_Transitable::reparar_edificio(){ return CASILLERO_NO_CONSTRUIBLE;}
 
-void Casillero_Transitable::saludo_material() const{ this -> material -> saludar();}
+void Casillero_Transitable::saludo_material() const{ this -> material.saludar();}
 
 Resultado_Chequeos Casillero_Transitable::atacar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}

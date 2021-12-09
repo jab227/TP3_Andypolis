@@ -42,6 +42,10 @@ public:
 	void mostrar_edificios();
 
 	//PRE: los archivos deben estar cargados
+	//POST: 
+	void modificar_edificios();
+
+	//PRE: los archivos deben estar cargados
 	//POST: se muestran los materiales disponibles en el stock del almacen
 	void mostrar_materiales(Jugador* jugador);
 
@@ -77,9 +81,9 @@ public:
 
 	void comprar_bombas(Jugador* jugador);
 	
-	//Metodos que faltan.
-	void atacar_edificio();
-	void ver_objetivos();
+	void atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo);
+	
+	//void ver_objetivos(); Implementado en jugadores
 
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
@@ -100,19 +104,29 @@ private:
 	//PRE: -
 	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
 	//devuelve false
-	std::string pedir_edificio( Jugador* jugador);
+	std::string pedir_edificio_construir( Jugador* jugador);
+
+	//PRE: -
+	//POST: se pide un edificio valido al usuario y devuelve true. de no obtener un edificio valido
+	//devuelve false
+	Resultado_Chequeos pedir_edificio(std::string& edificio);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si no existe el edificio, si se llego a la maxima cantidad
 	//permitida del edificio, si no alcanzan los materiales o si no ocurre nada de lo anterior. en este
 	//ultimo caso, edificio se iguala a edificio_ingresado
-	Resultado_Chequeos chequeo_construir(const std::string& edificio_ingresado,  Jugador* jugador);
+	Resultado_Chequeos chequeo_edificio(const std::string& edificio_ingresado);
 
 	//PRE: -
 	//POST: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,
 	//si coresponden a un casillero no construible, si el casillero esta libre o si no ocurre nada de lo anterior.
 	//en este ultimo caso, fila = fila_ingresada, columna = columna_ingresada y edificio = el ocupado en el casillero.
 	Resultado_Chequeos chequeo_demoler(std::string fila_ingresada, std::string columna_ingresada, int &fila, int &columna, std::string &edificio);
+
+	//PRE:
+	//POST: devuelve si no alcanzan los materiales o si el edificio no necesita reparacion. En caso de que alcancen y el edificio lo necesite,
+	//se repara el edificio y devuelve exito.
+	Resultado_Chequeos chequeo_reparar_edificio(Jugador* jugador, Lista<Material> listado_necesario, Coordenada coordenada);
 
 	//PRE: -
 	//POST: se muestra un mensaje por terminal correspondiente al resultado del chequeo
@@ -130,12 +144,17 @@ private:
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
 	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);
 
-	Resultado_Chequeos chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada coordenada);
+	Resultado_Chequeos chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada);
 	
 	Resultado_Chequeos pedir_bombas(std::size_t &bombas);
 	
 	Resultado_Chequeos chequeo_bombas(std::string bombas_ingresadas, std::size_t &bombas);
 
+	Resultado_Chequeos pedir_materiales( std::size_t &madera, std::size_t &piedra, std::size_t &metal);
+
+	Resultado_Chequeos chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
+
+	void bombardear_coordenadas(Coordenada coordenada, Jugador* jugador_inactivo);
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

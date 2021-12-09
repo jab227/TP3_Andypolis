@@ -4,9 +4,8 @@
 #include <iostream>
 
 #include "../utils/LecturaArchivos.h"
+#include "../printer/table_printer.h"
 
-const std::string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal",
-					  "andycoins", "bombas"};
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
 const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = 0;
 
@@ -14,20 +13,18 @@ Almacen::Almacen() : lista_materiales_(Lista<Material>()) {}
 
 Almacen::Almacen(const Lista<Material>& lista) : lista_materiales_(lista) {}
 
-Almacen::~Almacen() {}
-
 void Almacen::agregar_material(const Material& material) {
 	lista_materiales_.alta_al_final(material);
 }
 
-std::size_t Almacen::buscar_material(const Material& material) {
+std::size_t Almacen::buscar_material(const Material& material) const {
 	bool encontrado = false;
 	std::size_t indice;
-	for (indice = 1;
+	for (indice = 0;
 	     indice <= lista_materiales_.consulta_largo() && !encontrado;
 	     ++indice)
-		encontrado = (lista_materiales_.consulta(indice) == material);
-
+			encontrado = (lista_materiales_.consulta(indice+1) == material);
+		 
 	return encontrado ? indice : NO_ENCONTRADO;
 }
 
@@ -38,16 +35,18 @@ void Almacen::sumar_cantidad_material(const std::string& nombre,
 	if (index) {
 		lista_materiales_.consulta(index).sumar_cantidad(
 		    material.obtener_cantidad());
+
 	}
 }
 
-void Almacen::mostrar_materiales() {
-	cout << "Los materiales que hay son:" << endl;
-	for (std::size_t i = 1; i <= lista_materiales_.consulta_largo(); i++) {
-		cout << "- " << lista_materiales_.consulta(i).obtener_cantidad()
-		     << " de " << lista_materiales_.consulta(i).obtener_nombre()
-		     << endl;
-	}
+void Almacen::mostrar_materiales() const{
+	TablePrinter printer;
+	Lista<std::string> cabecera;
+	cabecera.alta_al_final("Material");
+	cabecera.alta_al_final("Cantidad");
+	printer.print_row(cabecera, std::cout);
+	for(std::size_t i = 1; i <= lista_materiales_.consulta_largo(); i++)
+		printer.print_row(lista_materiales_.consulta(i), std::cout);
 }
 
 // TODO: Remover ahora esto no es responsabilidad del almacen
@@ -68,28 +67,30 @@ bool Almacen::guardar_materiales(const std::string& ruta) {
 	return salida;
 }
 
-bool Almacen::hay_material_suficiente(const Material& material) {
+bool Almacen::hay_material_suficiente(const Material& material, std::size_t porcentaje) const{
 	bool suficiente = false;
+	std::size_t proporcion = porcentaje/100;
 	std::size_t indice = buscar_material(material);
 	if (indice) {
 		suficiente =
-		    lista_materiales_.consulta(indice).obtener_cantidad() >=
-		    material.obtener_cantidad();
+		    lista_materiales_.consulta(indice).obtener_cantidad() * proporcion >=
+		    material.obtener_cantidad() ;
 	}
 	return suficiente;
 }
 
-Resultado_Chequeos Almacen::hay_lista_materiales(
-    const Lista<Material>& materiales_consultados) {
+Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material> &materiales_consultados, std::size_t porcentaje) const{
 	bool fin = false;
 	Resultado_Chequeos suficiente = EXITO;
 	std::size_t i = 1;
-	
-	for(std::size_t i = 1; i <= lista_materiales_.consulta_largo() && !fin; ++i) {
-		if (!hay_material_suficiente(
-			materiales_consultados.consulta(i))) {
-			suficiente = NO_MATERIALES;
-			fin = true;
+	if(!this -> hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)){
+		for(std::size_t i = 1; i <= lista_materiales_.consulta_largo() && !fin; ++i){
+		// Es necesario? No es mejor que hay_material_suficiente() devuelva un Resultado_Chequeos?
+			if (!hay_material_suficiente(
+				materiales_consultados.consulta(i), porcentaje)) {
+				suficiente = NO_MATERIALES;
+				fin = true;
+				}
 		}
 	}
 	return suficiente;

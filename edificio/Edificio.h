@@ -4,7 +4,7 @@
 #include "../material/Material.h"
 
 const std::size_t CANT_MATERIALES_EDIFICIOS = 3, NINGUNO = 0;
-const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2;
+const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2, ANDYCOINS = 3, BOMBAS = 4;
 const std::string MATERIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
@@ -75,25 +75,25 @@ public:
 
 	//PRE -
 	//POST: devuelve lo que produce en str.
+	//Q: Se usa?
 	virtual std::string info_producto() const = 0;
 
 	// PRE: -
 	// POST: se modifica el valor de edificios construidos a n
-	void modificar_construidos(std::size_t n);
+	//void modificar_construidos(std::size_t n);
 
 	// PRE: -
 	// POST: Aumenta en 1 el valor de edificios construidos.
-	void aumentar_construidos();
+	//void aumentar_construidos();
 
 	// PRE: -
 	// POST: Disminuye en 1 el valor de edificios construidos.
-	void disminuir_construidos();
+	//void disminuir_construidos();
 
 	// PRE: -
 	// POST: devuelve la cantidad de edificios construidos
-	std::size_t obtener_construidos();
+	//std::size_t obtener_construidos();
 
-	
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.
 	bool operator==(const Edificio &rhs);
@@ -105,7 +105,7 @@ public:
 	//TODO: Hacer a_string() que devuelva la info en formato "tabla";
 	std::string a_string();
 	
-		//PRE: -
+	//PRE: -
 	//POST: Devuelve NO_REPARABLE si la vida está al máximo. Devuelve REPARABLE si 0 < vida < MAX_VIDA.
 	virtual Resultado_Chequeos reparar() = 0;
 

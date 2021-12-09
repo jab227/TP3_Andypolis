@@ -69,14 +69,18 @@ void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 	}
 }
 
-Resultado_Chequeos Jugador::tiene_materiales(
-    Lista<Material>* materiales) const {
-	// Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
-	return this->inventario_.hay_lista_materiales(materiales);
+
+Resultado_Chequeos Jugador::tiene_materiales( Lista<Material> materiales) const{
+	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
+	return this -> inventario_.hay_lista_materiales(materiales);
 }
 
-std::size_t Jugador::cantidad_edificios(const std::string& nombre_edificio,
-					Mapa* mapa) const {
+Resultado_Chequeos Jugador::tiene_materiales_reparar( Lista<Material> materiales) const{
+	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
+	return this -> inventario_.hay_lista_materiales(materiales, 25);
+}
+
+std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const{
 	std::size_t construidos;
 	for (std::size_t i = 1; i < edificios_.consulta_largo() + 1; i++) {
 		Coordenada ubicacion = this->obtener_ubicacion(i);
@@ -87,27 +91,27 @@ std::size_t Jugador::cantidad_edificios(const std::string& nombre_edificio,
 	return construidos;
 }
 
-// TODO: Constantes
-void Jugador::usar_lista_materiales(Lista<Material>* materiales) {
-	this->inventario_.descontar_lista_materiales(materiales, 100);
+//TODO: Constantes
+void Jugador::usar_lista_materiales( Lista<Material> materiales){
+	this -> inventario_.descontar_lista_materiales(materiales,100);
 }
 
-void Jugador::cobrar_reparacion(Lista<Material>* materiales) {
-	this->inventario_.descontar_lista_materiales(materiales, 50);
+void Jugador::cobrar_reparacion( Lista<Material> materiales){
+	this -> inventario_.descontar_lista_materiales(materiales,25);
 }
 
-void Jugador::recuperar_lista_materiales(Lista<Material>* materiales) {
-	this->inventario_.sumar_lista_materiales(materiales, 50);
+void Jugador::recuperar_lista_materiales( Lista<Material> materiales){
+	this -> inventario_.sumar_lista_materiales(materiales,50);
 }
 
-void Jugador::sumar_lista_materiales(Lista<Material>* materiales) {
-	this->inventario_.sumar_lista_materiales(materiales, 100);
+void Jugador::sumar_lista_materiales( Lista<Material> materiales){
+	this -> inventario_.sumar_lista_materiales(materiales,100);
 }
 
-Lista<Material>* Jugador::obtener_recursos_producidos(Mapa* mapa) {
+Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 	std::string nombre_edificio;
 	Edificio* edificio;
-	Lista<Material>* listado = new Lista<Material>;
+	Lista<Material> listado;
 	Material material_producido;
 	std::size_t agregados = 0;
 	Coordenada coordenada;
@@ -124,9 +128,8 @@ Lista<Material>* Jugador::obtener_recursos_producidos(Mapa* mapa) {
 		    material_producido.obtener_cantidad() *
 		    cantidad_edificios(nombre_edificio, mapa));
 		// TODO: Comparador de Material.
-		if (material_producido.obtener_nombre() !=
-		    "ninguno")	// provisorio.
-			listado->alta(material_producido, ++agregados);
+		if (material_producido.obtener_nombre() != "ninguno")	// provisorio.
+			listado.alta(material_producido, ++agregados);
 	}
 	return listado;
 }
@@ -149,8 +152,7 @@ void Jugador::mostrar_inventario() const {
 	this->inventario_.mostrar_materiales();
 }
 
-void Jugador::recolectar(Mapa* mapa) {
-	Lista<Material>* listado = obtener_recursos_producidos(mapa);
+void Jugador::recolectar(Mapa* mapa){
+	Lista<Material> listado = obtener_recursos_producidos(mapa);
 	sumar_lista_materiales(listado);
-	delete listado;
 }

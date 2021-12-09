@@ -61,8 +61,8 @@ std::size_t Edificio::obtener_max_permitidos() const{
 bool Edificio::vacio(){
 	return this->nombre == EDIFICIO_VACIO;
 }
-
-//Q: Se usa? Podriamos usar una lista de edificios con el atributos construido para cuando contamos construidos.
+/*
+//Q: Se usa? 
 void Edificio::modificar_construidos(std::size_t n){
 	if(n <= this->maximo_permitidos)
 		this->construidos = n;
@@ -79,7 +79,7 @@ void Edificio::disminuir_construidos(){
 std::size_t Edificio::obtener_construidos(){
 	return this->construidos;
 }
-
+*/
 Edificio& Edificio::operator=(const Edificio &rhs){
 	this->nombre = rhs.obtener_nombre();
 	this->materiales[PIEDRA] = rhs.obtener_cant_material("piedra");

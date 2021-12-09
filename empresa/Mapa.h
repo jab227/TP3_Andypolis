@@ -56,11 +56,15 @@ public:
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
 	//POST: 
-	Resultado_Chequeos reparar_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada);
+	Resultado_Chequeos reparar_edificio_ubicacion(const Coordenada& coordenada);
 
 	//PRE: el material y la posicion debe ser valido, y el casillero estar vacio
 	//POST: se pone el material en la ubicacion ingresda
 	void poner_material_ubicacion(std::string material, const Coordenada& coordenada);
+
+	//PRE: -
+	//POST: genera un conjunto del material con su cantidad predeterminada o devuelve nullptr si el material no existe
+	Material generar_conjunto_material(std::string material);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un material
 	//POST: se elimina el material de esa posicion y se devuelve el material quitado
@@ -91,6 +95,11 @@ public:
 	//PRE: -
 	//POST: se limpia todo el mapa de materiales
 	void vaciar_materiales();
+
+
+	//PRE: las coordenadas deben ser un edificio
+	//POST: se resta 1 de vida al edificio. Si el edificio queda en 0 de vida se destruye y devuelve true.
+	bool explota_bomba(std::string &edificio, Coordenada coordenadas);
 private:
 //WHY: Se usa?
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero
@@ -102,7 +111,8 @@ private:
 	//se corresponden con un edificio.
 	//POST: se imprime por consola los edificios de la lista junto con la cantidad construidos y sus ubicaciones. tambien se libera la lista
 	//de coordenadas
-	void mostrar_edificios(Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
+	//Q: se usa?
+	//void mostrar_edificios(Lista<std::string> &lista_nombres, Lista<Lista<std::size_t*>*> &lista_coordenadas);
 
 	//PRE: ruta debe ser a un archivo existente y bien cargado para el mapa
 	//POST: se carga el mapa con los casilleros correspondientes a los datos del archivo

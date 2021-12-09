@@ -7,6 +7,7 @@
 
 const int NO_ENCONTRADO = 0;
 std::string const SALIR_STR = "salir";
+const std::string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
 
 class Almacen {
 private:
@@ -23,7 +24,7 @@ public:
 
 	//PRE: -
 	//POS: se libera la memoria utilizada
-	~Almacen();
+	~Almacen() = default;
 
 	//PRE: -
 	//POS: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
@@ -33,7 +34,7 @@ public:
 
 	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
 	//post: muestra todos los materiales por terminal
-	void mostrar_materiales();
+	void mostrar_materiales() const;
 
 	//PRE: almacen debe ser puntero a estructura existente, es decir, != nullptr.
 	//POS: se guardan los datos de los edificios en el archivo de salida en caso
@@ -46,15 +47,17 @@ public:
 	//PRE: -
 	//POS: devuelve true si hay la cantidad del material ingresado en stock y false si
 	//no la hay o si no se encuentra ese material.
-	bool hay_material_suficiente(const Material& material);
+	bool hay_material_suficiente(const Material& material, std::size_t porcentaje = 100) const;
+
 
 	//PRE:  -
 	//POS: devuelve true si se cuentan con toda la lista de los materiales
 	//en stock
-	Resultado_Chequeos hay_lista_materiales(const Lista<Material>& materiales_consultados);
+	Resultado_Chequeos hay_lista_materiales(const Lista<Material>& materiales_consultados, std::size_t porcentaje = 100) const;
 
 	//TODO: Agregue porcentaje para que sea multiuso. Puede agregarse un valor default al porcentaje?
 	void descontar_lista_materiales(const Lista<Material>& materiales_usados, std::size_t porcentaje);
+	
 	void sumar_lista_materiales(const Lista<Material>& materiales_usados, std::size_t porcentaje);
 
 	//PRE:
@@ -64,7 +67,7 @@ public:
 	//PRE: -
 	//POS: devuelve el indice del material en caso de encontrarse o en caso de
 	//no estar en el arreglo, devuelve NO_ENCONTRADO.
-	std::size_t buscar_material(const Material& a_buscar);
+	std::size_t buscar_material(const Material& a_buscar) const;
 
 private:
 	//PRE: 1 <= posicion <= el largo de la lista.

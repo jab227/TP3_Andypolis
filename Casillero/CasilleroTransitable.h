@@ -6,7 +6,7 @@
 
 class Casillero_Transitable: public Casillero{
 private:
-	Material* material;
+	Material material;
 public:
 	//PRE: -
 	//POST: Se crea un casillero transitable vacio con color
@@ -14,12 +14,12 @@ public:
 
 	//PRE: -
 	//POST: Se destruye el casillero, se libera el material en caso de estar ocupado
-	~Casillero_Transitable();
+	~Casillero_Transitable() = default;
 
-	//Q: virtual de la clase base?
+	//Q: Limpiar DOWNCAST 
 	//PRE: El material debe estar ubicado en memoria dinamica
 	//POST: Se ocupa el casillero con el material
-	void agregar_material(Material* material);
+	void agregar_material(Material material);
 
 	//PRE: inventario != nullpointer.
 	//POST: Si esta ocupado, se suma el material al inventario y se deja vacío el casillero, devuelve EXITO. Devuelve NO_MATERIALES si no hay ningun material.

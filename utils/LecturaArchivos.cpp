@@ -29,7 +29,6 @@ bool es_numero(std::string palabra){
 	return resultado;
 }
 
-
 Edificio* traductor_edificios(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t max_permitidos){
 	Edificio* edificio = nullptr;
 	if(nombre == "mina")
@@ -126,10 +125,11 @@ void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jug
 	std::ifstream fin(ruta);
 	std::string input;
 	while (getline(fin, input)) {
-		parser.parse(input, j1_inventario, j2_inventario);
+		// TODO: Emprolijar esto, helpers
+		parser.parse(input, jugadores.consulta(1)->obtener_inventario().obtener_materiales(), jugadores.consulta(2)->obtener_inventario().obtener_materiales());
 	}
-	jugadores.consulta(1)->colocar_almacen(Almacen(j1_inventario));
-	jugadores.consulta(2)->colocar_almacen(Almacen(j2_inventario));
+	//jugadores.consulta(1)->colocar_almacen(Almacen(j1_inventario));
+	//jugadores.consulta(2)->colocar_almacen(Almacen(j2_inventario));
 	fin.close();
 }
 

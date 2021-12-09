@@ -43,14 +43,13 @@ void Planos::mostrar_edificios(){
 
 Resultado_Chequeos Planos::chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa){
 	Resultado_Chequeos resultado = NO_EXISTE;
-	if(existe(nombre_edificio)){
-		Edificio* ptr_edificio = this -> lista_edificios[nombre_edificio];
-		Lista<Material> materiales = materiales_necesarios(ptr_edificio);
-		resultado = jugador -> tiene_materiales(materiales);
-		if(resultado != NO_MATERIALES){
-			std::size_t construidos = jugador -> cantidad_edificios(nombre_edificio, mapa);
-			resultado = ptr_edificio -> esta_maxima_capacidad(construidos);
-		}
+	//Cuando estamos aca ya sabemos que existe.
+	Edificio* ptr_edificio = this -> lista_edificios[nombre_edificio];
+	Lista<Material> materiales = materiales_necesarios(ptr_edificio);
+	resultado = jugador -> tiene_materiales(materiales);
+	if(resultado != NO_MATERIALES){
+		std::size_t construidos = jugador -> cantidad_edificios(nombre_edificio, mapa);
+		resultado = ptr_edificio -> esta_maxima_capacidad(construidos);
 	}
 	return resultado;
 }

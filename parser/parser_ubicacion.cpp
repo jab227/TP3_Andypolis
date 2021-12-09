@@ -20,15 +20,15 @@ void ParserUbicacion::material(const std::smatch& match, Mapa*& mapa) {
 	mapa->poner_material_ubicacion(nombre(match), coordenada);
 }
 
-//Podemos prescindir del diccionario si asumimos que los archivos estan bien formados
-Coordenada ParserUbicacion::edificio(const std::smatch& match, Mapa*& mapa,
-		    const Diccionario<std::string, Edificio*>& edificios) {	
-			Coordenada coordenada = Coordenada(x(match), y(match));
-		    mapa->construir_edificio_ubicacion(nombre(match), coordenada);
-		    return coordenada;
+// Podemos prescindir del diccionario si asumimos que los archivos estan bien
+// formados
+Coordenada ParserUbicacion::edificio(const std::smatch& match, Mapa*& mapa) {
+	Coordenada coordenada = Coordenada(x(match), y(match));
+	mapa->construir_edificio_ubicacion(nombre(match), coordenada);
+	return coordenada;
 }
 
-std::smatch ParserUbicacion::conseguir_coincidencia(const std::string& str) {	
+std::smatch ParserUbicacion::conseguir_coincidencia(const std::string& str) {
 	std::regex pattern("(\\w+|\\w+ \\w+) \\((\\d+), (\\d+)\\)");
 	std::smatch match;
 	std::regex_search(str, match, pattern);
@@ -37,40 +37,43 @@ std::smatch ParserUbicacion::conseguir_coincidencia(const std::string& str) {
 
 void ParserUbicacion::parse(const std::string& input, Mapa*& casillero) {}
 
-void ParserUbicacion::parse(
-    const std::string& input, Mapa*& mapa,
-    const Diccionario<std::string, Edificio*>& edificios, Jugador* jugador_uno,
-    Jugador* jugador_dos) {
+void ParserUbicacion::parse(const std::string& input, Mapa*& mapa,
+			    Lista<Jugador*>& jugadores) {
 	std::string aux;
 	std::stringstream ss(input);
-	enum { JUGADOR_UNO, JUGADOR_DOS, MATERIAL, VACIO } ubicacion = MATERIAL; // Lo primero que leo son materiales
+	enum {
+		JUGADOR_UNO,
+		JUGADOR_DOS,
+		MATERIAL,
+		VACIO
+	} ubicacion = MATERIAL;	 // Lo primero que leo son materiales
 	while (getline(ss, aux, '\n')) {
 		std::smatch match = conseguir_coincidencia(aux);
 		if (nombre(match) == "1") {
 			ubicacion = JUGADOR_UNO;
-			jugador_uno =
+			jugadores.consulta(1) =
 			    new Jugador_Uno(Coordenada(x(match), y(match)));
 			// Busco la siguiente linea
 			getline(ss, aux, '\n');
 		}
 		if (nombre(match) == "2") {
 			ubicacion = JUGADOR_DOS;
-			jugador_dos =
+			jugadores.consulta(2) =
 			    new Jugador_Dos(Coordenada(x(match), y(match)));
-			// Busco la siguiente linea, si llegue al final del archivo
-			// quiero que no haga nada.
+			// Busco la siguiente linea, si llegue al final del
+			// archivo quiero que no haga nada.
 			if (!(getline(ss, aux, '\n'))) ubicacion = VACIO;
 		}
-		
+
 		switch (ubicacion) {
 			case JUGADOR_UNO: {
-				jugador_uno->agregar_ubicacion(
-				    edificio(match, mapa, edificios));
+				jugadores.consulta(1)->agregar_ubicacion(
+				    edificio(match, mapa));
 				break;
 			}
 			case JUGADOR_DOS: {
-				jugador_dos->agregar_ubicacion(
-				    edificio(match, mapa, edificios));
+				jugadores.consulta(2)->agregar_ubicacion(
+				    edificio(match, mapa));
 				break;
 			}
 			case MATERIAL: {

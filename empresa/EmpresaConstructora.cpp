@@ -8,23 +8,15 @@ std::string const SI = "si", NO = "no";
 const std::size_t COORDENADA_VACIA = -1, COSTO_BOMBAS = 100;
 
 
-Empresa_Constructora::Empresa_Constructora(){
-	this -> planos = nullptr;
-	this -> mapa = nullptr;
-}
+Empresa_Constructora::Empresa_Constructora() : planos(nullptr), mapa(nullptr){}
 
-Empresa_Constructora::Empresa_Constructora(Planos* plano):planos(plano), mapa(nullptr) {}
+Empresa_Constructora::Empresa_Constructora(Planos* plano, Mapa* mapa): planos(plano), mapa(mapa) {}
 
 Empresa_Constructora::~Empresa_Constructora() {
 	if(planos != nullptr)
 		delete this -> planos;
 	if(mapa != nullptr)
 		delete this -> mapa;
-}
-
-bool Empresa_Constructora::cargar_archivos(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaciones){
-	//TODO: Poner parsers.
-	return false;
 }
 
 void Empresa_Constructora::mostrar_materiales(Jugador* jugador){

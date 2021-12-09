@@ -99,6 +99,7 @@ Diccionario<std::string, Edificio*> leer_de_archivo(
 		parser.parse(input, edificio);
 		diccionario.insertar(edificio->obtener_nombre(), edificio);
 	}
+	fin.close();
 	return diccionario;
 };
 
@@ -108,6 +109,7 @@ Mapa* leer_de_archivo(const std::string& ruta, ParserMapa parser) {
 	Mapa* mapa;
 	getline(fin, input, '|');
 	parser.parse(input, mapa);
+	fin.close();
 	return mapa;
 }
 
@@ -115,9 +117,9 @@ void leer_de_archivo(const std::string& ruta, ParserUbicacion parser,
 		     Mapa*& mapa, Lista<Jugador*>& jugadores) {
 	std::ifstream fin(ruta);
 	std::string input;
-	while (getline(fin, input)) {
-		parser.parse(input, mapa, jugadores);
-	}
+	getline(fin, input, '|');
+	parser.parse(input, mapa, jugadores);
+	fin.close();
 }
 void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jugador*>& jugadores) {
 	Lista<Material> j1_inventario, j2_inventario;
@@ -127,7 +129,8 @@ void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jug
 		parser.parse(input, j1_inventario, j2_inventario);
 	}
 	jugadores.consulta(1)->colocar_almacen(Almacen(j1_inventario));
-	jugadores.consulta(1)->colocar_almacen(Almacen(j2_inventario));
+	jugadores.consulta(2)->colocar_almacen(Almacen(j2_inventario));
+	fin.close();
 }
 
 /* 

@@ -99,13 +99,8 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada
 
 }
 
-
-void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
-	this -> terreno[coordenada.x()][coordenada.y()] -> agregar_material(this -> generar_conjunto_material(material));
-}
-
-void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
-	this -> terreno[coordenada.x()][coordenada.y()] -> agregar_material(this -> generar_conjunto_material(material));
+void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada) {
+	(this -> terreno[coordenada.x()][coordenada.y()]) -> agregar_material(this -> generar_conjunto_material(material));
 }
 
 Material Mapa::generar_conjunto_material(std::string material){

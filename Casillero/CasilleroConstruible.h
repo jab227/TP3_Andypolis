@@ -17,24 +17,24 @@ public:
 
 	//PRE: El edificio debe estar ubicado en memoria dinamica
 	//POST: se construye el edificio en este casillero, ahor esta ocupado
-	Resultado_Chequeos construir_edificio(Edificio* edificio);
+	Resultado_Chequeos construir_edificio(Edificio* edificio) override;
 
 	//PRE: -
 	//POST: En caso de estar ocupado, liberal el edificio y lo deja en nullptr;
-	Resultado_Chequeos demoler_edificio();
+	Resultado_Chequeos demoler_edificio() override;
 
 	//PRE: -
 	//POST: True si edificio != nullptr, es decir, edificio_ esa inicializado.
 	//Q: Creo que podría ser privado si logramos cambiar el telldontask.
-	bool esta_ocupado() const;
+	bool esta_ocupado() const override;
 
 	//PRE: -
 	//POST: Imprime un saludo del casillero por terminal. Si estaá ocupado, también saludará el edificio; en caso contrario indica que no tiene.
-	void saludar() const;
+	void saludar() const override;
 	
 	//PRE: - PROVISORIO
 	//POST: Devuelve false.
-	bool es_casillero_transitable();
+	bool es_casillero_transitable() override;
 
 	//PRE: -
 	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
@@ -57,7 +57,7 @@ public:
 	//POST: Si esta ocupado, disminuye la vida del edificio. 
 	Resultado_Chequeos atacar_edificio() override;
 
-	void agregar_material(Material material) override;
+	void agregar_material(Material material) override {};
 };
 
 #endif /* CASILLERO_CASILLEROCONSTRUIBLE_H_ */

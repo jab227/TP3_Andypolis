@@ -41,7 +41,7 @@ public:
 
 	//PRE: -
 	//POST: imprime un saludo
-	void saludar();
+	void saludar() const;
 
 	bool operator==(Material rhs) const;
 

@@ -125,13 +125,11 @@ Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 		coordenada = obtener_ubicacion(i);
 		// No necesito chequear si esta construido.
 		nombre_edificio = mapa->obtener_contenido_ubicacion(coordenada);
-		// Error de static.
 		edificio = Planos::buscar(nombre_edificio);
 		material_producido = edificio->producir_material();
-		// Si no tengo construidos, el material que se sume va a ser 0.
+		//Si no tengo construidos, el material que se sume va a ser 0.
 		material_producido.cambiar_cantidad(
-		    material_producido.obtener_cantidad() *
-		    cantidad_edificios(nombre_edificio, mapa));
+		    material_producido.obtener_cantidad());
 		// TODO: Comparador de Material.
 		if (material_producido.obtener_nombre() != "ninguno")	// provisorio.
 			listado.alta(material_producido, ++agregados);

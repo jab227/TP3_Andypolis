@@ -64,8 +64,6 @@ void Almacen::sumar_cantidad_material(const std::string& nombre,
 	}
 }
 
-
-
 void Almacen::mostrar_materiales() const{
 	TablePrinter printer;
 	Lista<std::string> cabecera;

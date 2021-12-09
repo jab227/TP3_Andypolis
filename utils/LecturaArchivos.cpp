@@ -48,7 +48,7 @@ Edificio* traductor_edificios(std::string nombre, std::size_t piedra, std::size_
 	return edificio;
 }
 
-//Sobrecarga para evitar tener que poner toda la info para crear edificios.
+/* Ahora estan los valores por default.
 Edificio* traductor_edificios(std::string nombre){
 	Edificio* edificio = nullptr;
 	if(nombre == "mina")
@@ -67,7 +67,7 @@ Edificio* traductor_edificios(std::string nombre){
 		edificio = new Mina_Oro();
 	return edificio;
 }
-
+*/
 
 Casillero* traductor_casillero(char nombre) {
 	Casillero* casillero;

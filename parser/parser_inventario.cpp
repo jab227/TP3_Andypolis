@@ -20,7 +20,6 @@ void ParserInventario::parse(const std::string& input,
 	std::regex pattern("(\\w+) (\\d+) (\\d+)");
 	std::smatch match;
 	std::regex_search(input, match, pattern);
-
 	Material p1 (nombre(match), cantidad(match, 1));
 	inventario_p1.alta_al_final(p1);
 	Material p2 (nombre(match), cantidad(match, 2));

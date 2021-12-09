@@ -50,6 +50,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       objetivos_jugadores(Lista<Meta>()) {
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
+	plano ->mostrar_edificios();	
 	Mapa* mapa = leer_de_archivo(ruta_mapa, ParserMapa());
 	leer_de_archivo(ruta_ubicaciones, ParserUbicacion(), mapa, jugadores);
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
@@ -59,6 +60,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(2)));
 	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
+	
 }
 
 Programa::~Programa() {

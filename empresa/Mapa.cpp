@@ -54,24 +54,25 @@ bool Mapa::es_cordenada_valida(const Coordenada& coordenada) {
 }
 
 void Mapa::mostrar_mapa() {
-	cout << "Mapa:" << endl;
-	cout << "   ";
+	std::cout << "Mapa:" << endl;
+	std::cout << "   ";
 	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
-		cout << ' ' << columnas / 10 << ' ';
-	cout << endl << "   ";
+		std::cout << ' ' << columnas / 10 << ' ';
+	cout << std::endl << "   ";
 	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
-		cout << ' ' << columnas % 10 << ' ';
-	cout << endl;
+		std::cout << ' ' << columnas % 10 << ' ';
+	std::cout << std::endl;
 	for (std::size_t filas = 0; filas < this->filas; filas++) {
-		cout << filas / 10 << filas % 10 << ' ';
+		std::cout << filas / 10 << filas % 10 << ' ';
 		for (std::size_t columnas = 0; columnas < this->columnas;
 		     columnas++) {
-			cout << this->terreno[filas][columnas]->obtener_color()
+			std::cout << this->terreno[filas][columnas]->obtener_color()
 			     << ' '
 			     << this->identificador_ocupados(
 				    this->terreno[filas][columnas]
 					->obtener_contenido())
 			     << ' ';
+				std::cout << FIN_COLOR;
 		}
 		std::cout << std::endl << FIN_COLOR;
 	}
@@ -99,9 +100,8 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada
 
 }
 
-
 void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada) {
-	this -> terreno[coordenada.x()][coordenada.y()] -> agregar_material(this -> generar_conjunto_material(material));
+	(this -> terreno[coordenada.x()][coordenada.y()]) -> agregar_material(this -> generar_conjunto_material(material));
 }
 
 Material Mapa::generar_conjunto_material(std::string material){

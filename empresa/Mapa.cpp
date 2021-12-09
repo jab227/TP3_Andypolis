@@ -102,7 +102,7 @@ Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada
 //TODO: Si castea es porque antes pregunto que casillero. Rompe el Tell Don't Ask.
 void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada){
 	( (Casillero_Transitable*) this -> terreno[coordenada.x()][coordenada.y()] ) ->
-			agregar_material(this -> generar_conjunto_material(material));
+			agregar_material(Material(material, 1));
 }
 
 Material Mapa::generar_conjunto_material(std::string material){

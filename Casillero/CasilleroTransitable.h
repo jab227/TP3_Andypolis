@@ -17,21 +17,21 @@ public:
 	~Casillero_Transitable() = default;
 
 	//Q: Limpiar DOWNCAST 
-	//PRE: El material debe estar ubicado en memoria dinamica
+	//PRE: -
 	//POST: Se ocupa el casillero con el material
 	void agregar_material(Material material);
 
 	//PRE: inventario != nullpointer.
 	//POST: Si esta ocupado, se suma el material al inventario y se deja vacío el casillero, devuelve EXITO. Devuelve NO_MATERIALES si no hay ningun material.
-	Resultado_Chequeos recoger_material(Almacen* inventario);
+	Resultado_Chequeos recoger_material(Almacen* inventario) override;
 
 	//PRE: -
 	//POST: Devuelve true si el casillero esta ocupado por un material.
-	bool esta_ocupado() const;
+	bool esta_ocupado() const override ;
 
 	//PRE: - PROVISORIO
 	//POST: Devuelve true.
-	bool es_casillero_transitable();
+	bool es_casillero_transitable() override;
 
 	//PRE: -
 	//POST: Devuelve el nombre del material contenido o MATERIAL_VACIO.
@@ -39,11 +39,11 @@ public:
 	
 	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
-	Resultado_Chequeos construir_edificio(Edificio* edificio);
+	Resultado_Chequeos construir_edificio(Edificio* edificio) override;
 
 	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
-	Resultado_Chequeos demoler_edificio();
+	Resultado_Chequeos demoler_edificio() override;
 
 	//PRE: -
 	//POST: -

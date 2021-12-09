@@ -21,7 +21,7 @@ public:
 	//PRE: ruta debe ser una ruta a un archivo bien estructurado.
 	//POS: creo un almacen inicializado con el archivo en la ruta espesificada.
 	Almacen(const Lista<Material>& lista);
-
+	Almacen(const Almacen& rhs) = default;
 	//PRE: -
 	//POS: se libera la memoria utilizada
 	~Almacen() = default;

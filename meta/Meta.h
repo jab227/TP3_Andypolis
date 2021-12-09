@@ -19,6 +19,7 @@ class Meta {
 private:
 	Lista<Objetivo*> objetivos;
 public:
+	Meta() = default;
 	//PRE: jugador debe estar bien cargado
 	//POST: crea una Meta de CANTIDAD_OBJETIVOS objetivos para el jugador.
 	Meta(Jugador* jugador);

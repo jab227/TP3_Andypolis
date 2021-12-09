@@ -1,7 +1,6 @@
 #include "Programa.h"
 
 #include <ctime>
-#include "../printer/printer.h"
 #include <fstream>
 #include <iostream>
 
@@ -12,6 +11,7 @@
 #include "../parser/parser_inventario.h"
 #include "../parser/parser_mapa.h"
 #include "../parser/parser_ubicacion.h"
+#include "../printer/printer.h"
 #include "../utils/LecturaArchivos.h"
 
 const int CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
@@ -42,17 +42,22 @@ const int ENERGIA[] = {0,
 		       ENERGIA_GUARDAR_SALIR};
 
 Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
-		   std::string ruta_mapa, std::string ruta_ubicaciones) {
-	
-	Planos* plano = new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
+		   std::string ruta_mapa, std::string ruta_ubicaciones)
+    : empresa_constructora(nullptr),
+      instancia(INICIO),
+      jugador_activo(0),
+      jugadores(Lista<Jugador*>()),
+      objetivos_jugadores(Lista<Meta>()) {
+	Planos* plano =
+	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
 	Mapa* mapa = leer_de_archivo(ruta_mapa, ParserMapa());
-	leer_de_archivo(ruta_ubicaciones,ParserUbicacion(), mapa, jugadores);
+	leer_de_archivo(ruta_ubicaciones, ParserUbicacion(), mapa, jugadores);
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
 	leer_de_archivo(ruta_materiales, ParserInventario(), jugadores);
 	this->instancia = INICIO;
 	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(1)));
 	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(2)));
-	srand((unsigned int)time(0));  
+	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
 }
 
@@ -68,14 +73,18 @@ void Programa::mostrar_menu() {
 		this->mostrar_menu_juego();
 }
 
-void Programa::mostrar_menu_juego(){
-	cout << "Turno del jugador " << this -> jugador_activo << ". "
-		 << "Tenes " << jugadores.consulta(jugador_activo) -> obtener_energia() << " de energia." << endl;
-	this -> empresa_constructora -> mostrar_mapa();
-	cout << "--------------------------------------------------------------" << endl;
-	cout << "Elija una de las siguientes opciones ingresando solo el numero" << endl;
-  cout << "1. Construir edificio por nombre." << endl;
-  cout << "2. Listar mis edificios construidos." << endl;
+void Programa::mostrar_menu_juego() {
+	cout << "Turno del jugador " << this->jugador_activo << ". "
+	     << "Tenes "
+	     << jugadores.consulta(jugador_activo)->obtener_energia()
+	     << " de energia." << endl;
+	this->empresa_constructora->mostrar_mapa();
+	cout << "--------------------------------------------------------------"
+	     << endl;
+	cout << "Elija una de las siguientes opciones ingresando solo el numero"
+	     << endl;
+	cout << "1. Construir edificio por nombre." << endl;
+	cout << "2. Listar mis edificios construidos." << endl;
 	cout << "3. Demoler un edificio por coordenada." << endl;
 	cout << "4. Atacar un edificio por coordenada." << endl;
 	cout << "5. Reparar un edificio por coordenada." << endl;
@@ -124,74 +133,92 @@ bool Programa::procesar_opcion(int opcion) {
 	return resultado;
 }
 
-
 bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 	bool fin = false;
-    switch (opcion_elegida) {
-        case MODIFICAR_EDIFICIO:
-            this -> empresa_constructora -> modificar_edificios();
-			this -> limpiar_pantalla();
-            //break; Para que se listen los edificios post editar.
-        case LISTAR_EDIFICIOS:
-            this -> empresa_constructora -> mostrar_edificios();
-            break;
-        case MOSTRAR_MAPA:
-            this -> empresa_constructora -> mostrar_mapa();
-            break;
-        case COMENZAR:
-            cout << "Comienza la partida!" << endl;
-            this -> instancia = JUEGO;
-            this -> jugadores.consulta(1) -> recuperar_energia(ENERGIA_INICIAL);
-            this -> jugadores.consulta(2) -> recuperar_energia(ENERGIA_INICIAL);
-            this -> empresa_constructora -> lluvia_de_recursos();
-            break;
-        case GUARDAR_SALIR_INICIO:
-        	fin = true;
-            cout << "Implementar guardar y salir!" << endl;
-			cout << "Adios!"<< endl;
+	switch (opcion_elegida) {
+		case MODIFICAR_EDIFICIO:
+			this->empresa_constructora->modificar_edificios();
+			this->limpiar_pantalla();
+			// break; Para que se listen los edificios post editar.
+		case LISTAR_EDIFICIOS:
+			this->empresa_constructora->mostrar_edificios();
 			break;
-    }
-    return fin;
+		case MOSTRAR_MAPA:
+			this->empresa_constructora->mostrar_mapa();
+			break;
+		case COMENZAR:
+			cout << "Comienza la partida!" << endl;
+			this->instancia = JUEGO;
+			this->jugadores.consulta(1)->recuperar_energia(
+			    ENERGIA_INICIAL);
+			this->jugadores.consulta(2)->recuperar_energia(
+			    ENERGIA_INICIAL);
+			this->empresa_constructora->lluvia_de_recursos();
+			break;
+		case GUARDAR_SALIR_INICIO:
+			fin = true;
+			cout << "Implementar guardar y salir!" << endl;
+			cout << "Adios!" << endl;
+			break;
+	}
+	return fin;
 }
 
 bool Programa::procesar_opcion_juego(int opcion_elegida) {
 	bool fin = false;
-    switch (opcion_elegida) {
-        case CONSTRUIR:
-            this -> empresa_constructora -> construir_edificio(this -> jugadores.consulta((int) this -> jugador_activo));
-            break;
-        case LISTAR_CONSTRUIDOS:
-            this -> empresa_constructora -> mostrar_construidos(this -> jugadores.consulta((int) this -> jugador_activo));
-            break;
-        case DEMOLER:
-            this -> empresa_constructora -> demoler_edificio(this -> jugadores.consulta((int) this -> jugador_activo));
-            break;
-        case ATACAR:
-			this -> empresa_constructora -> atacar_edificio(jugadores.consulta(jugador_activo), jugadores.consulta(3 - jugador_activo));
-            break;
-        case REPARAR:
-			this -> empresa_constructora -> reparar_edificio(jugadores.consulta(jugador_activo));
+	switch (opcion_elegida) {
+		case CONSTRUIR:
+			this->empresa_constructora->construir_edificio(
+			    this->jugadores.consulta(
+				(int)this->jugador_activo));
 			break;
-        case COMPRAR_BOMBAS:
-        	this -> empresa_constructora -> comprar_bombas(this-> jugadores.consulta(jugador_activo));
+		case LISTAR_CONSTRUIDOS:
+			this->empresa_constructora->mostrar_construidos(
+			    this->jugadores.consulta(
+				(int)this->jugador_activo));
 			break;
-        case CONSULTAR:
-        	this -> empresa_constructora -> consultar_coordenada();
+		case DEMOLER:
+			this->empresa_constructora->demoler_edificio(
+			    this->jugadores.consulta(
+				(int)this->jugador_activo));
 			break;
-        case LISTAR_MATERIALES:
-			this -> empresa_constructora -> mostrar_materiales(this -> jugadores.consulta(this -> jugador_activo));
+		case ATACAR:
+			this->empresa_constructora->atacar_edificio(
+			    jugadores.consulta(jugador_activo),
+			    jugadores.consulta(3 - jugador_activo));
 			break;
-        case OBJETIVOS:
-        	this -> objetivos_jugadores.consulta(this -> jugador_activo) -> mostrar_objetivos();
+		case REPARAR:
+			this->empresa_constructora->reparar_edificio(
+			    jugadores.consulta(jugador_activo));
 			break;
-        case RECOLECTAR:
-		//FER: Hice recoger_material() en los casilleros
-		//Este sirve tanto para los edificios como para los materiales.
-		//	Edificios -> El jugador tiene una lista de ubicaciones. Con pasarle el inventario le suma el material producido.
-		//	Materiales -> El jugador al moverse por las celdas recoge_material() del transitable con pasarle el inventario le suma el material del suelo.
-			this -> empresa_constructora -> recolectar_recursos(this -> jugadores.consulta(this -> jugador_activo) );
+		case COMPRAR_BOMBAS:
+			this->empresa_constructora->comprar_bombas(
+			    this->jugadores.consulta(jugador_activo));
 			break;
-        case MOVERSE:
+		case CONSULTAR:
+			this->empresa_constructora->consultar_coordenada();
+			break;
+		case LISTAR_MATERIALES:
+			this->empresa_constructora->mostrar_materiales(
+			    this->jugadores.consulta(this->jugador_activo));
+			break;
+		case OBJETIVOS:
+			this->objetivos_jugadores.consulta(this->jugador_activo)
+			    .mostrar_objetivos();
+			break;
+		case RECOLECTAR:
+			// FER: Hice recoger_material() en los casilleros
+			// Este sirve tanto para los edificios como para los
+			// materiales. 	Edificios -> El jugador tiene una lista de
+			//ubicaciones. Con pasarle el inventario le suma el
+			//material producido. 	Materiales -> El jugador al
+			//moverse por las celdas recoge_material() del
+			//transitable con pasarle el inventario le suma el
+			//material del suelo.
+			this->empresa_constructora->recolectar_recursos(
+			    this->jugadores.consulta(this->jugador_activo));
+			break;
+		case MOVERSE:
 			cout << "Implementar moverse!" << endl;
 			break;
 		case FIN_TURNO:
@@ -226,10 +253,7 @@ bool Programa::es_opcion_valida(std::string opcion) {
 	return valida;
 }
 
-
-void Programa::limpiar_pantalla(){
-    Printer::clear_screen();
-}
+void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 
 void Programa::guardar_archivos(std::string ruta_materiales,
 				std::string ruta_ubicaciones) {

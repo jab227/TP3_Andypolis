@@ -12,7 +12,11 @@
 #include "../edificio/edificios/MinaOro.h"
 #include "../edificio/edificios/Obelisco.h"
 #include "../edificio/edificios/PlantaElectrica.h"
+#include "../jugador/Jugador.h"
+#include "../empresa/Planos.h"
+#include "../empresa/Mapa.h"
 
+#include <fstream>
 bool es_numero(std::string palabra){
 	bool resultado = true;
 	int i = 0;
@@ -83,6 +87,47 @@ Casillero* traductor_casillero(char nombre) {
 
 Material* traductor_materiales(std::string nombre, std::size_t cantidad) {
 	return new Material(nombre, cantidad);
+}
+
+Diccionario<std::string, Edificio*> leer_de_archivo(
+    const std::string& ruta, ParserEdificio parser) {
+	std::ifstream fin(ruta);
+	std::string input;
+	Edificio* edificio;
+	Diccionario<std::string, Edificio*> diccionario;
+	while (getline(fin, input)) {
+		parser.parse(input, edificio);
+		diccionario.insertar(edificio->obtener_nombre(), edificio);
+	}
+	return diccionario;
+};
+
+Mapa* leer_de_archivo(const std::string& ruta, ParserMapa parser) {
+	std::ifstream fin(ruta);
+	std::string input;
+	Mapa* mapa;
+	getline(fin, input, '|');
+	parser.parse(input, mapa);
+	return mapa;
+}
+
+void leer_de_archivo(const std::string& ruta, ParserUbicacion parser,
+		     Mapa*& mapa, Lista<Jugador*>& jugadores) {
+	std::ifstream fin(ruta);
+	std::string input;
+	while (getline(fin, input)) {
+		parser.parse(input, mapa, jugadores);
+	}
+}
+void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jugador*>& jugadores) {
+	Lista<Material> j1_inventario, j2_inventario;
+	std::ifstream fin(ruta);
+	std::string input;
+	while (getline(fin, input)) {
+		parser.parse(input, j1_inventario, j2_inventario);
+	}
+	jugadores.consulta(1)->colocar_almacen(Almacen(j1_inventario));
+	jugadores.consulta(1)->colocar_almacen(Almacen(j2_inventario));
 }
 
 /* 

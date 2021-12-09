@@ -1,6 +1,7 @@
 #include "Jugador.h"
 
 #include "../empresa/Planos.h"
+#include "../printer/table_printer.h"
 
 Jugador::Jugador(std::size_t id, const Coordenada& coordenada)
     : id_(id),
@@ -44,10 +45,15 @@ bool Jugador::recuperar_energia(const std::size_t& valor) {
 
 void Jugador::mostrar_construidos(const Mapa* mapa) const {
 	if (!this->edificios_.vacia()) {
-		// TablePrinter printer = TablePrinter();
-		// printer.print_row( mapa , ubicaciones_.consulta(i),
-		// std::cout); //lo comento por ahora
-	}
+		 TablePrinter printer = TablePrinter();
+		 Lista<std::string> lista = Lista<std::string>();
+		 lista.alta_al_final("Edificio");
+		 lista.alta_al_final("Coordenada");
+		 lista.alta_al_final("Dañado");
+		 printer.print_row(lista, std::cout );
+		 for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++)
+			 printer.print_row( mapa , edificios_.consulta(i), std::cout);
+		}
 }
 
 void Jugador::agregar_ubicacion(const Coordenada& coordenada) {

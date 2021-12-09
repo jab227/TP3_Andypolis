@@ -36,9 +36,10 @@ void Planos::mostrar_edificios(){
 	}
 }
 
-std::string Planos::material_producido( Edificio* edificio){
-	return edificio -> info_producto();
-}
+//Q: Se usa?
+//std::string Planos::material_producido( Edificio* edificio){
+//	return edificio -> info_producto();
+//}
 
 Resultado_Chequeos Planos::chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa){
 	Resultado_Chequeos resultado = NO_EXISTE;

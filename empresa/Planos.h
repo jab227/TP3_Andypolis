@@ -61,11 +61,13 @@ public:
 	Resultado_Chequeos chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa);
 private:
 
+	void mostrar_materiales_producidos(Lista<Material> listado);
+	
 	//PRE: edificio tiene que ser distinto de nullptr
 	//POST: devuelve en un std::string que cantidad y de que material produce el edificio o "ninguno".
-	std::string material_producido( Edificio* edificio);
+	//Q: Se usa?
+	//std::string material_producido( Edificio* edificio);
 
-	void mostrar_materiales_producidos(Lista<Material> listado);
 
 };
 

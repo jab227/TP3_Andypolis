@@ -15,7 +15,6 @@ const int ENERGIA_CONSTRUIR = 15, ENERGIA_LISTAR_CONSTRUIDOS = 0, ENERGIA_DEMOLE
 class Empresa_Constructora {
 //Atributos
 private:
-	Almacen* almacen;
 	Planos* planos;
 	Mapa* mapa;
 //Metodos
@@ -23,11 +22,7 @@ public:
 	//PRE: -
 	//POST: se crea una empresa constructora vacia.
 	Empresa_Constructora();
-	Empresa_Constructora(Planos* plano);
-	//PRE: las rutas del mapa y edificios deben ser a archivos existentes.
-	//POST: se inicializan los atributos con las rutas ingresadas y devuelve true si el archivo de ubicaciones
-	//existe y no esta vacio, devuelve false en caso contrario.
-	bool cargar_archivos(std::string ruta_materiales, std::string ruta_edificios, std::string ruta_mapa, std::string ruta_ubicaiones);
+	Empresa_Constructora(Planos* plano, Mapa* mapa);
 
 	//PRE: -
 	//POST: se libera la memoria utilizada

@@ -315,20 +315,21 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 
 void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Resultado_Chequeos resultado = EXITO;
-	Material bombas("bombas", 0);
-	jugador_activo -> obtener_inventario().buscar_material(bombas);
+	Material bombas = jugador_activo -> obtener_inventario().obtener_material("bombas");
 	if(!(bombas.obtener_cantidad() > 0))
 		resultado = NO_MATERIALES;
 	this -> mostrar_mensaje_chequeo(resultado);
-	Coordenada coordenada(0, 0);
+	Coordenada coordenada(0,0);
 	if(resultado == EXITO){
+		mapa -> mostrar_mapa();
 		do resultado = this -> pedir_coordenadas(coordenada);
 		while(!mostrar_mensaje_chequeo(resultado));
 		std::size_t indice = jugador_inactivo -> existe_ubicacion(coordenada);
 		if(indice){
 			jugador_activo -> usar_energia(ENERGIA_ATACAR);
-			jugador_activo -> obtener_inventario().sumar_cantidad_material(bombas.obtener_nombre(), 1);
+			jugador_activo -> obtener_inventario().restar_cantidad_material(bombas.obtener_nombre(), 1);
 			this -> bombardear_coordenadas(coordenada, jugador_inactivo);
+			mapa -> mostrar_mapa();
 		}else
 			ColorPrinter::color_msg("No hay un edificio del otro jugador en estas coordenadas.", ROJO, std::cout);
 	}

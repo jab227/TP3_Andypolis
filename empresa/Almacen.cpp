@@ -32,6 +32,27 @@ std::size_t Almacen::buscar_material(const Material& material) const {
 	return encontrado ? indice : NO_ENCONTRADO;
 }
 
+Material Almacen::obtener_material(std::string material) const {
+	Material material_buscado = Material(material,0);
+	std::size_t indice = buscar_material(material_buscado);
+	if(indice)
+		material_buscado = lista_materiales_.consulta(indice);
+	// Como chequeo que no estar trabajando con una copia y no la ref? 
+	return material_buscado;
+}
+
+//El material al tener un size_t no puede ser negativo. Entonces debemos usar los metodos restar y sumar.
+void Almacen::restar_cantidad_material(const std::string& nombre,
+				      std::size_t cantidad) {
+	Material material(nombre, cantidad);
+	std::size_t index = buscar_material(material);
+	if (index) {
+		lista_materiales_.consulta(index).restar_cantidad(
+		    material.obtener_cantidad());
+
+	}
+}
+
 void Almacen::sumar_cantidad_material(const std::string& nombre,
 				      std::size_t cantidad) {
 	Material material(nombre, cantidad);
@@ -42,6 +63,8 @@ void Almacen::sumar_cantidad_material(const std::string& nombre,
 
 	}
 }
+
+
 
 void Almacen::mostrar_materiales() const{
 	TablePrinter printer;

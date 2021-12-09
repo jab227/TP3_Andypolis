@@ -140,15 +140,11 @@ Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 }
 
 std::size_t Jugador::existe_ubicacion(Coordenada coordenada) const {
-	std::size_t i = 1;
 	std::size_t indice = 0;
 	Coordenada tmp;
-	while (i <= edificios_.consulta_largo() || !indice) {
+	for(std::size_t i = 1; i <= edificios_.consulta_largo() && !indice; i++) {
 		tmp = obtener_ubicacion(i);
-		if (coordenada == tmp)
-			indice = i;
-		else
-			i++;
+		if (coordenada == tmp) indice = i;
 	}
 	return indice;
 }

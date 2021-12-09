@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../utils/LecturaArchivos.h"
+#include "../printer/table_printer.h"
 
 const int CANTIDAD_MATERIALES_DISTINTOS = 5, CANTIDAD_INICIAL = 0;
 const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = 0;
@@ -12,8 +13,6 @@ Almacen::Almacen() : lista_materiales_(Lista<Material>()) {}
 
 Almacen::Almacen(const Lista<Material>& lista) : lista_materiales_(lista) {}
 
-Almacen::~Almacen() {}
-
 void Almacen::agregar_material(const Material& material) {
 	lista_materiales_.alta_al_final(material);
 }
@@ -21,11 +20,11 @@ void Almacen::agregar_material(const Material& material) {
 std::size_t Almacen::buscar_material(const Material& material) const {
 	bool encontrado = false;
 	std::size_t indice;
-	for (indice = 1;
+	for (indice = 0;
 	     indice <= lista_materiales_.consulta_largo() && !encontrado;
 	     ++indice)
-		encontrado = (lista_materiales_.consulta(indice) == material);
-
+			encontrado = (lista_materiales_.consulta(indice+1) == material);
+		 
 	return encontrado ? indice : NO_ENCONTRADO;
 }
 
@@ -41,12 +40,13 @@ void Almacen::sumar_cantidad_material(const std::string& nombre,
 }
 
 void Almacen::mostrar_materiales() const{
-	cout << "Los materiales que hay son:" << endl;
-	for (std::size_t i = 1; i <= lista_materiales_.consulta_largo(); i++) {
-		cout << "- " << lista_materiales_.consulta(i).obtener_cantidad()
-		     << " de " << lista_materiales_.consulta(i).obtener_nombre()
-		     << endl;
-	}
+	TablePrinter printer;
+	Lista<std::string> cabecera;
+	cabecera.alta_al_final("Material");
+	cabecera.alta_al_final("Cantidad");
+	printer.print_row(cabecera, std::cout);
+	for(std::size_t i = 1; i <= lista_materiales_.consulta_largo(); i++)
+		printer.print_row(lista_materiales_.consulta(i), std::cout);
 }
 
 // TODO: Remover ahora esto no es responsabilidad del almacen

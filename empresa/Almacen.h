@@ -24,7 +24,7 @@ public:
 
 	//PRE: -
 	//POS: se libera la memoria utilizada
-	~Almacen();
+	~Almacen() = default;
 
 	//PRE: -
 	//POS: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no

@@ -64,7 +64,7 @@ public:
 
 	//PRE: -
 	//POST: genera un conjunto del material con su cantidad predeterminada o devuelve nullptr si el material no existe
-	Material* generar_conjunto_material(std::string material);
+	Material generar_conjunto_material(std::string material);
 
 	//PRE: la posicion debe ser valida y estar ocupada por un material
 	//POST: se elimina el material de esa posicion y se devuelve el material quitado

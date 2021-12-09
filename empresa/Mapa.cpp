@@ -105,13 +105,13 @@ void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coord
 			agregar_material(this -> generar_conjunto_material(material));
 }
 
-Material* Mapa::generar_conjunto_material(std::string material){
-	Material* ptr_material = nullptr;
+Material Mapa::generar_conjunto_material(std::string material){
+	Material material_generado;
 	for(std::size_t i = 0; i < CANTIDAD_CONJUNTOS; i++){
 		if(NOMBRES_MATERIALES[i] == material)
-			ptr_material = new Material(material, CONJUNTO[i]);
+			material_generado = Material(material, CONJUNTO[i]);
 	}
-	return ptr_material;
+	return material_generado;
 }
 
 //OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.

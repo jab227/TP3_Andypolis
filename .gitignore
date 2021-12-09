@@ -36,6 +36,3 @@
 build/*
 CMakeLists.txt
 *.json
-
-#Carpeta personal test
-/test/*

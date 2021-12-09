@@ -22,8 +22,8 @@ test_edificios: test/test_edificio/*.cpp edificio/*.cpp edificio/edificios/*.cpp
 test_coordenada: test/test_coordenada/*.cpp utils/coordenada.cpp 
 	$(CC) test/test_coordenada/*.cpp utils/coordenada.cpp  $(CFLAGS) -o test
 
-test_casillero: test/test_casilleros/*.cpp edificio/edificios/*.cpp material/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp utils/*.cpp edificio/*.cpp empresa/Almacen.cpp
-	$(CC) test/test_casilleros/*.cpp edificio/edificios/*.cpp material/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp utils/*.cpp edificio/*.cpp empresa/Almacen.cpp $(CFLAGS) -o test
+test_casillero: test/test_casilleros/*.cpp edificio/edificios/*.cpp material/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp utils/*.cpp edificio/*.cpp empresa/Almacen.cpp printer/table_printer.cpp empresa/mapa.cpp
+	$(CC) test/test_casilleros/*.cpp edificio/edificios/*.cpp material/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp utils/*.cpp edificio/*.cpp empresa/Almacen.cpp printer/table_printer.cpp  empresa/mapa.cpp $(CFLAGS) -o test
 
 test_jugador: test/test_jugador/*.cpp edificio/edificios/*.cpp material/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp utils/*.cpp edificio/*.cpp empresa/Almacen.cpp
 	$(CC) test/test_jugador/*.cpp edificio/edificios/*.cpp material/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp utils/*.cpp edificio/*.cpp empresa/Almacen.cpp $(CFLAGS) -o test

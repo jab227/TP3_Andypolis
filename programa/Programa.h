@@ -16,7 +16,7 @@ private:
 	Instancia instancia;
 	size_t jugador_activo;
 	Lista<Jugador*> jugadores;
-	Lista<Meta> objetivos_jugadores;
+	Lista<Meta*> objetivos_jugadores;
 //Metodos:
 public:
 	//PRE: las rutas deben ser a archivos existentes y bien formados

@@ -176,10 +176,11 @@ bool Jugador::mover(Mapa* mapa){
 			Lista<Coordenada>* pasos = grafo -> caminoMinimo(this -> posicion_, a_moverse);
 			while(!pasos -> vacia())
 				this -> mover_a_coordenada(pasos -> baja(1), mapa);
+			delete pasos;
 		}else
 			ColorPrinter::color_msg("No se realizó ningún cambio.",	 ROJO, std::cout);
 	}
-
+	delete grafo;
 	return exito;
 }
 

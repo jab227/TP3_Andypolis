@@ -95,7 +95,7 @@ int Floyd::energiaCaminoMinimo(int origen, int destino) {
         		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y() << ')';
     }else{
         cout << "El camino minimo que une (" <<  vertices->obtenerNombre(origen + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y()
-        		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y() << ')';
+        		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(destino + 1).y() << ')';
         cout << " tiene un costo de: " << matrizCostos[origen][destino];//<< " y es el siguiente: ";
         /*cout << vertices->obtenerNombre(origen + 1);
         do{
@@ -111,7 +111,7 @@ Lista<Coordenada>* Floyd::caminoMinimo(int origen, int destino) {
 	Lista<Coordenada>* coordenadas = nullptr;
     if(matrizCaminos[origen][destino] == POSICION_NO_ENCONTRADA){
         cout << "No hay un camino que conecte (" <<  vertices->obtenerNombre(origen + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y()
-        		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y() << ')';
+        		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(destino + 1).y() << ')';
     }else{
     	coordenadas = new Lista<Coordenada>;
         coordenadas -> alta_al_final(vertices -> obtenerNombre(origen + 1));

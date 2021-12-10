@@ -30,12 +30,12 @@ void Empresa_Constructora::mostrar_edificios(){
 void Empresa_Constructora::modificar_edificios(){
 	std::string nombre;
 	Resultado_Chequeos chequeo = pedir_edificio(nombre);
-	std::size_t madera, piedra, metal;
+	std::size_t piedra, madera, metal;
 	if(chequeo == EXITO){
-		chequeo = pedir_materiales(madera, piedra, metal);
+		chequeo = pedir_materiales(nombre, piedra, madera, metal);
 	}
 	if(chequeo == EXITO){
-		this -> planos -> modificar_edificio(nombre, madera, piedra, metal);
+		this -> planos -> modificar_edificio(nombre, piedra, madera, metal);
 	}
 	mostrar_mensaje_chequeo(chequeo);
 }
@@ -155,6 +155,7 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 
 Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string& edificio_ingresado){
 	Printer::print_str("Elegir el edificio. Escribir \"salir\" si así lo desea." , std::cout);
+	std::cout << "Edificio: ";
 	getline(cin, edificio_ingresado);
 	return chequeo_edificio(edificio_ingresado);
 }
@@ -162,8 +163,12 @@ Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string& edificio_in
 Resultado_Chequeos Empresa_Constructora::chequeo_edificio(const std::string& edificio_ingresado){
 	Resultado_Chequeos resultado = EXITO;
 	if(edificio_ingresado == SALIR_STR) resultado = SALIR;
-	else if(es_numero(edificio_ingresado)) resultado = NO_EXISTE;
-	else resultado = planos -> existe(edificio_ingresado);
+	else {
+		resultado = planos -> existe(edificio_ingresado);
+		if(resultado == EXITO)
+			if(edificio_ingresado == "obelisco")
+				resultado = OBELISCO;
+	}
 	return resultado;
 }
 
@@ -182,9 +187,9 @@ std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
 	return edificio_ingresado;
 }
 
-Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &piedra, std::size_t &madera, std::size_t &metal){
+Resultado_Chequeos Empresa_Constructora::pedir_materiales(std::string nombre,  std::size_t &piedra, std::size_t &madera, std::size_t &metal){
 	std::string piedra_ingresada, madera_ingresada,  metal_ingresada;
-	
+	std::cout << "Ingrese la cantidad de cada material, salir o para no modificar la cantidad presione enter." << std::endl;
 	std::cout << "Elegir cantidad de piedra: ";
 	getline(std::cin, piedra_ingresada);	
 	std::cout << "Elegir cantidad de madera: ";
@@ -192,14 +197,21 @@ Resultado_Chequeos Empresa_Constructora::pedir_materiales( std::size_t &piedra, 
 	std::cout <<"Elegir cantidad de metal: ";
 	getline(std::cin, metal_ingresada);
 
-	return chequeo_materiales( piedra_ingresada, madera_ingresada, metal_ingresada, piedra, madera, metal);
+	return chequeo_materiales(nombre, piedra_ingresada, madera_ingresada, metal_ingresada, piedra, madera, metal);
 }
 
-Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string piedra_ingresada, std::string madera_ingresada, std::string metal_ingresada,
+Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string nombre, std::string piedra_ingresada, std::string madera_ingresada, std::string metal_ingresada,
 			 std::size_t &piedra, std::size_t &madera, std::size_t &metal){
 
 	Resultado_Chequeos resultado = EXITO;
-	
+	Edificio* edificio = this -> planos -> buscar(nombre);
+	if(piedra_ingresada == "")
+		piedra_ingresada = to_string(edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[PIEDRA]));
+	if(madera_ingresada == "")
+		madera_ingresada = to_string(edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[MADERA]));
+	if(metal_ingresada == "")
+		metal_ingresada = to_string(edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[METAL]));
+
 	if(madera_ingresada == SALIR_STR || piedra_ingresada == SALIR_STR || metal_ingresada == SALIR_STR )
 		resultado = SALIR;
 	else if(!es_numero(madera_ingresada) || !es_numero(piedra_ingresada) || !es_numero(metal_ingresada))
@@ -211,7 +223,6 @@ Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string piedra_i
 	}
 	return resultado;
 }
-
 
 Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
 	std::string fila_ingresada, columna_ingresada;
@@ -267,6 +278,9 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 			break;
 		case NO_REPARABLE:
 			ColorPrinter::color_msg("El edificio no necesita reparación.", ROJO, std::cout);
+			break;
+		case OBELISCO:
+			ColorPrinter::color_msg("Al obelisco no se pueden modificar sus materiales.", ROJO, std::cout);
 			break;
 		default:
 			break;

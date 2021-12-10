@@ -20,8 +20,8 @@ void TablePrinter::print_row(const Edificio* edificio, std::ostream& stream) con
 	std::string name = edificio->obtener_nombre();
 	print_table_cell( name , stream);
 	//for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
-	print_table_cell( std::to_string(edificio->obtener_cant_material("madera")), stream );
 	print_table_cell( std::to_string(edificio->obtener_cant_material("piedra")), stream );
+	print_table_cell( std::to_string(edificio->obtener_cant_material("madera")), stream );
 	print_table_cell( std::to_string(edificio->obtener_cant_material("metal")), stream );
 	print_table_cell( std::to_string(edificio->obtener_max_permitidos()), stream);
 	print_table_cell(edificio->info_producto(), stream);

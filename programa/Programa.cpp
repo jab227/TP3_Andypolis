@@ -140,7 +140,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 	switch (opcion_elegida) {
 		case MODIFICAR_EDIFICIO:
 			this->empresa_constructora->modificar_edificios();
-			this->limpiar_pantalla();
+			//this->limpiar_pantalla(); lo saque porque no se ve que mensaje te devuelve la funcion
 			// break; Para que se listen los edificios post editar.
 		case LISTAR_EDIFICIOS:
 			this->empresa_constructora->mostrar_edificios();

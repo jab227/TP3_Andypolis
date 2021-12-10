@@ -14,8 +14,11 @@ Planos::Planos(Diccionario<std::string, Edificio*> diccionario) {
 }
 
 Planos::~Planos() {
-	//delete lista_edificios;
+	Lista<std::string> claves = lista_edificios.claves();
+	while(!claves.vacia())
+		delete lista_edificios[claves.baja(1)];
 }
+
 
 
 //EMBELLECER.
@@ -70,8 +73,9 @@ Lista<Material> Planos::materiales_necesarios(std::string nombre_edificio){
 }
 
 
-void Planos::modificar_edificio(std::string nombre, std::size_t madera, std::size_t piedra, std::size_t metal){
-	Edificio* edificio_modificado = traductor_edificios(nombre, madera, piedra, metal,
+void Planos::modificar_edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal){
+
+	Edificio* edificio_modificado = traductor_edificios(nombre, piedra, madera, metal,
 			 Planos::lista_edificios[nombre]->obtener_max_permitidos());
 	Planos::lista_edificios[nombre] = edificio_modificado;
 }

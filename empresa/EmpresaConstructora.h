@@ -152,9 +152,9 @@ private:
 	
 	Resultado_Chequeos chequeo_bombas(std::string bombas_ingresadas, std::size_t &bombas);
 
-	Resultado_Chequeos pedir_materiales( std::size_t &madera, std::size_t &piedra, std::size_t &metal);
+	Resultado_Chequeos pedir_materiales(std::string nombre, std::size_t &madera, std::size_t &piedra, std::size_t &metal);
 
-	Resultado_Chequeos chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
+	Resultado_Chequeos chequeo_materiales(std::string nombre, std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
 
 	void bombardear_coordenadas(Coordenada coordenada, Jugador* jugador_inactivo);
 };

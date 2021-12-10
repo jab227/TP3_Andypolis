@@ -16,7 +16,7 @@ public:
 
 	//PRE: -
 	//POST: se destruye el objetivo
-	virtual ~Objetivo() = 0; //{ delete jugador;} lo saque porque es el mismo jugador del programa
+	virtual ~Objetivo(); //{ delete jugador;} lo saque porque es el mismo jugador del programa
 
 	//PRE: -
 	//POST: devuelve si el objetivo esta cumplido o no

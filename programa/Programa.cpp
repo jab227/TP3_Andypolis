@@ -65,6 +65,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 
 Programa::~Programa() {
 	delete this->empresa_constructora;
+	while (!this->objetivos_jugadores.vacia()) delete this->objetivos_jugadores.baja(1);
 	while (!this->jugadores.vacia()) delete this->jugadores.baja(1);
 }
 

@@ -318,7 +318,8 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Resultado_Chequeos resultado = EXITO;
 	Material bombas("bombas", 0);
-	jugador_activo -> obtener_inventario().buscar_material(bombas);
+	jugador_activo -> obtener_inventario().buscar_material(bombas); // Ya no devuelve por interfaz el material.
+
 	if(!(bombas.obtener_cantidad() > 0))
 		resultado = NO_MATERIALES;
 	this -> mostrar_mensaje_chequeo(resultado);

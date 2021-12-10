@@ -213,6 +213,10 @@ bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
 	return (resultado == DESTRUIDO);
 }
 
+char Mapa::obtener_identificador_casillero(Coordenada coordenada){
+	return this -> terreno[coordenada.x()][coordenada.y()] -> obtener_identificador();
+}
+
 //TODO: Modificar la logica para que no sea necesario.
 std::string Mapa::identificador_ocupados(std::string ocupador){
 	std::string identificador = UBICACION_VACIA;

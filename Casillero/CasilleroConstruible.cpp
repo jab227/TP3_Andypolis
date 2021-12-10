@@ -100,5 +100,7 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 	return resultado;
 }
 
+
 void Casillero_Construible::agregar_material(Material material){}
 
+char Casillero_Construible::obtener_identificador(){return TERRENO;}

@@ -9,4 +9,6 @@ class Betun: public Casillero_Transitable{
     //POST: Imprime un saludo por terminal y si esta ocupado pide al material que salude. Si no tiene, avisa por terminal.
     void saludar() const override;
 
+    char obtener_identificador();
+
 };

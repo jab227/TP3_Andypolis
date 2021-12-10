@@ -61,6 +61,8 @@ public:
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos atacar_edificio() override;
 
+	virtual char obtener_identificador() = 0;
+
 };
 
 #endif /* CASILLERO_CASILLEROTRANSITABLE_H_ */

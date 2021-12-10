@@ -11,3 +11,7 @@ void Betun::saludar() const{
 		std::cout << "No tengo ningun material en mi." << std::endl;
 }
 
+char obtener_identificador(){
+	return BETUN;
+}
+

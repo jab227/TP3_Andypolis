@@ -5,7 +5,7 @@
 
 std::string const SI = "si", NO = "no";
 //Ojo que al ser size_t, es un numero muy grande. 
-const std::size_t COORDENADA_VACIA = -1, COSTO_BOMBAS = 100;
+const std::size_t COSTO_BOMBAS = 100;
 
 
 Empresa_Constructora::Empresa_Constructora() : planos(nullptr), mapa(nullptr){}
@@ -46,6 +46,10 @@ void Empresa_Constructora::mostrar_mapa(){
 
 void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
 	jugador -> mostrar_construidos(this -> mapa);
+}
+
+void Empresa_Constructora::mover_jugador(Jugador* jugador){
+	jugador -> mover(this -> mapa);
 }
 
 void Empresa_Constructora::consultar_coordenada(){
@@ -124,7 +128,7 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 			}
 
 		}else
-			std::cout << "Se abortó la construicción." << std::endl;
+			ColorPrinter::color_msg("No se realizó ningún cambio.",	 ROJO, std::cout);
 	}
 }
 

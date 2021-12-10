@@ -83,6 +83,8 @@ public:
 	
 	void atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo);
 	
+	void mover_jugador(Jugador* jugador);
+
 	//void ver_objetivos(); Implementado en jugadores
 
 private:

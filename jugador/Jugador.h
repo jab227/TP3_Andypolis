@@ -2,19 +2,21 @@
 #define JUGADOR_JUGADOR_H_
 
 #include <string>
+#include <iostream>
 
 #include "../diccionario/diccionario.h"
 #include "../empresa/Almacen.h"
 #include "../empresa/Mapa.h"
 #include "../utils/Lista.h"
 #include "../utils/coordenada.h"
+#include "../grafo/Grafo.h"
 
 const std::size_t ENERGIA_COMPRAR_BOMBAS = 5;
 const std::size_t ENERGIA_MAXIMA = 100;
 
 class Jugador {
-	// Atributos
-       private:
+// Atributos
+private:
 	const std::size_t id_;
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
@@ -22,14 +24,14 @@ class Jugador {
 	Coordenada posicion_;
 	Lista<Coordenada> edificios_;
 
-       public:
+public:
 	// Q: Construimos primero el jugador con las cosas o primero lo ubicamos?
 	Jugador(std::size_t id, const Coordenada& coordenada);
 	// Destructuor
 	virtual ~Jugador() = default; 
 	// Pre: 
 	// Pos:
-	virtual bool mover(const Coordenada& coordenada, const Mapa& mapa) = 0;
+	bool mover(Mapa* mapa);
 	// PRE: -
 	// POST: devuelve el numero del jugador
 	std::size_t obtener_jugador() const;
@@ -104,6 +106,20 @@ class Jugador {
 	void mostrar_inventario() const;
 	
 	void recolectar(Mapa* mapa);
-};
 
+protected:
+	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada, Mapa* mapa, Grafo* grafo);
+
+	Resultado_Chequeos chequeo_coordenadas_moverse(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada, Mapa* mapa, Grafo* grafo);
+
+	Grafo* cargar_grafo(Mapa* mapa);
+
+	bool mostrar_mensaje(Resultado_Chequeos resultado);
+
+	std::string pedir_si_no();
+
+	void mover_a_coordenada(Coordenada coordenada, Mapa* mapa);
+
+	virtual std::size_t obtener_costo_terreno(Coordenada coordenada, Mapa* mapa) = 0;
+};
 #endif /* JUGADOR_JUGADOR_H_ */

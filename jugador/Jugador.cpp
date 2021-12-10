@@ -1,6 +1,7 @@
 #include "Jugador.h"
-
 #include "../empresa/Planos.h"
+#include "../utils/LecturaArchivos.h"
+#include "../printer/color_printer.h"
 
 Jugador::Jugador(std::size_t id, const Coordenada& coordenada)
     : id_(id),
@@ -156,4 +157,120 @@ void Jugador::mostrar_inventario() const {
 void Jugador::recolectar(Mapa* mapa){
 	Lista<Material> listado = obtener_recursos_producidos(mapa);
 	sumar_lista_materiales(listado);
+}
+
+//pedir coordenadas -> son validas -> alcanza energia -> seguro? -> mover
+
+bool Jugador::mover(Mapa* mapa){
+	bool exito = true;
+	Coordenada a_moverse;
+	Grafo* grafo = cargar_grafo(mapa);
+	Resultado_Chequeos resultado;
+	do{
+		resultado = this -> pedir_coordenadas(a_moverse, mapa, grafo);
+	}while(this -> mostrar_mensaje(resultado));
+	if(a_moverse.x() != COORDENADA_VACIA){
+		ColorPrinter::color_msg("Seguro que queres moverte a la ubicacion ingresasda? [si/no].", FIN_COLOR, std::cout);
+		if( this -> pedir_si_no() == "si"){
+			this -> usar_energia(grafo -> energiaCaminoMinimo(this -> posicion_, a_moverse));
+			Lista<Coordenada>* pasos = grafo -> caminoMinimo(this -> posicion_, a_moverse);
+			while(!pasos -> vacia())
+				this -> mover_a_coordenada(pasos -> baja(1), mapa);
+		}else
+			ColorPrinter::color_msg("No se realizó ningún cambio.",	 ROJO, std::cout);
+	}
+
+	return exito;
+}
+
+bool Jugador::mostrar_mensaje(Resultado_Chequeos resultado){
+	bool fin = false;
+	switch(resultado){
+	case SALIR:
+		ColorPrinter::color_msg("No se realizo ninguna accion.", ROJO, std::cout); // @suppress("No break at end of case")
+	case EXITO:
+		fin = true;
+		break;
+	case NO_EXISTE:
+		ColorPrinter::color_msg("La/s opcion/es ingresada/s no es/son valida/s.", ROJO, std::cout);
+		break;
+	case FUERA_RANGO:
+		ColorPrinter::color_msg( "La ubicacion ingresada excede el rango del mapa.", ROJO, std::cout);
+		break;
+	case NO_ENERGIA:
+		ColorPrinter::color_msg( "No tenes suficiente energia.", ROJO, std::cout);
+		ColorPrinter::color_msg( "Tenes " + to_string((int) this -> obtener_energia()) + " de energia.", ROJO, std::cout);
+		break;
+	default:
+		break;
+	}
+
+	return fin;
+}
+
+Resultado_Chequeos Jugador::pedir_coordenadas(Coordenada& coordenada, Mapa* mapa, Grafo* grafo){
+	std::string fila_ingresada, columna_ingresada;
+
+	std::cout << "Elegi las coordenadas del edificio o salir \n Fila: " << std::endl;
+	getline(std::cin, fila_ingresada);
+	std::cout << "Columna: " << std::endl;
+	getline(std::cin, columna_ingresada);
+
+	return chequeo_coordenadas_moverse(fila_ingresada, columna_ingresada, coordenada, mapa, grafo);
+}
+
+Resultado_Chequeos Jugador::chequeo_coordenadas_moverse(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada, Mapa* mapa, Grafo* grafo){
+	Resultado_Chequeos resultado = EXITO;
+	coordenada = Coordenada(COORDENADA_VACIA, COORDENADA_VACIA);
+
+	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR) resultado = SALIR;
+	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada)) resultado = NO_EXISTE;
+	else if(!(mapa -> es_cordenada_valida(Coordenada(stoul(fila_ingresada), stoul(columna_ingresada))))) resultado = FUERA_RANGO;
+	else if((int) this -> obtener_energia() < grafo -> energiaCaminoMinimo(posicion_, Coordenada(stoul(fila_ingresada), stoul(columna_ingresada)))) resultado = NO_ENERGIA;
+	else coordenada = Coordenada(stoul(fila_ingresada), stoul(columna_ingresada));
+
+	return resultado;
+}
+
+std::string Jugador::pedir_si_no(){
+	std::string respuesta;
+	std::cout << "Respuesta:   ";
+	getline(cin, respuesta);
+	while(respuesta != "si" && respuesta != "no"){
+		ColorPrinter::color_msg("La respuesta no es valida, solo se acepta si o no.", ROJO, std::cout);
+		std::cout << "Respuesta:   ";
+		getline(cin, respuesta);
+	}
+	return respuesta;
+}
+
+void Jugador::mover_a_coordenada(Coordenada coordenada, Mapa* mapa){
+	this -> posicion_ = coordenada;
+	mapa -> recolectar_material_ubicacion(coordenada, &(this -> inventario_));
+}
+
+Grafo* Jugador::cargar_grafo(Mapa* mapa){
+	Grafo* grafo = new Grafo;
+	std::size_t fila = 0, columna = 0;
+	Coordenada coordenada_actual(fila, columna);
+	while(mapa -> es_cordenada_valida(coordenada_actual)){
+		while(mapa -> es_cordenada_valida(coordenada_actual)){
+			grafo -> agregarVertice(coordenada_actual);
+			if(columna != 0){
+				grafo -> agregarCamino(Coordenada(fila, columna - 1), coordenada_actual, (int) obtener_costo_terreno(coordenada_actual, mapa));
+				grafo -> agregarCamino(coordenada_actual, Coordenada(fila, columna - 1), (int) obtener_costo_terreno(Coordenada(fila, columna - 1), mapa));
+			}
+			if(fila != 0){
+				grafo -> agregarCamino(Coordenada(fila - 1, columna), coordenada_actual, (int) obtener_costo_terreno(coordenada_actual, mapa));
+				grafo -> agregarCamino(coordenada_actual, Coordenada(fila - 1, columna), (int) obtener_costo_terreno(Coordenada(fila - 1, columna), mapa));
+			}
+			columna++;
+			coordenada_actual = Coordenada(fila, columna);
+		}
+		columna = 0;
+		fila++;
+		coordenada_actual = Coordenada(fila, columna);
+	}
+	grafo -> usarFloyd();
+	return grafo;
 }

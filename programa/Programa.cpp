@@ -74,11 +74,11 @@ void Programa::mostrar_menu() {
 }
 
 void Programa::mostrar_menu_juego() {
-	cout << "Turno del jugador " << this->jugador_activo << ". "
+	cout << "Turno del jugador " << this -> jugador_activo << ". "
 	     << "Tenes "
-	     << jugadores.consulta(jugador_activo)->obtener_energia()
+	     << jugadores.consulta(jugador_activo) -> obtener_energia()
 	     << " de energia." << endl;
-	this->empresa_constructora->mostrar_mapa();
+	this -> empresa_constructora -> mostrar_mapa();
 	cout << "--------------------------------------------------------------"
 	     << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero"

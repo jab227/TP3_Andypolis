@@ -8,7 +8,7 @@ Jugador_Dos::~Jugador_Dos() {
 	// Liberar lista de coordenadas
 }
 
-bool Jugador_Dos::mover(const Coordenada& coordenada, const Mapa& mapa){
-	std::cout << "implementar moverse" << std::endl;
-	return true;
+std::size_t Jugador_Dos::obtener_costo_terreno(Coordenada coordenada, Mapa* mapa){
+	std::cout << "Implementar costos" << std::endl;
+	return 5;
 }

@@ -91,6 +91,8 @@ public:
 	virtual Resultado_Chequeos demoler_edificio() = 0;
 
 	virtual	void agregar_material(Material material) = 0;
+
+	virtual char obtener_identificador() = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

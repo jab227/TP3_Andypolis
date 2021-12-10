@@ -40,4 +40,8 @@ Resultado_Chequeos Casillero_Inaccesible::reparar_edificio() {return CASILLERO_N
 
 Resultado_Chequeos Casillero_Inaccesible::atacar_edificio() {return CASILLERO_NO_CONSTRUIBLE;}
 
+char obtener_identificador(){
+	return LAGO;
+}
+
 void agregar_material(Material material){}

@@ -99,3 +99,7 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 		resultado = this -> edificio_ -> disminuir_vida();
 	return resultado;
 }
+
+char Casillero_Construible::obtener_identificador(){
+	return TERRENO;
+}

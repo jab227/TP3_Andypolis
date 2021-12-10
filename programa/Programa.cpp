@@ -219,16 +219,13 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			    this->jugadores.consulta(this->jugador_activo));
 			break;
 		case MOVERSE:
-			cout << "Implementar moverse!" << endl;
+			this -> empresa_constructora -> mover_jugador(this -> jugadores.consulta(this -> jugador_activo));
 			break;
 		case FIN_TURNO:
-			cout << "Turno del jugador " << this->jugador_activo
-			     << " finalizado." << endl;
+			cout << "Turno del jugador " << this->jugador_activo << " finalizado." << endl;
 			this->jugadores.consulta((int)this->jugador_activo)
 			    ->recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
-			this->jugador_activo =
-			    3 -
-			    this->jugador_activo;  // Cambio de jugador activo
+			this->jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
 			break;
 		case GUARDAR_SALIR:
 			fin = true;

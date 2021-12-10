@@ -48,6 +48,10 @@ void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
 	jugador -> mostrar_construidos(this -> mapa);
 }
 
+void Empresa_Constructora::mover_jugador(Jugador* jugador){
+	jugador -> mover(this -> mapa);
+}
+
 void Empresa_Constructora::consultar_coordenada(){
 	Coordenada coordenada = Coordenada(0,0);
 	Resultado_Chequeos resultado = pedir_coordenadas(coordenada);

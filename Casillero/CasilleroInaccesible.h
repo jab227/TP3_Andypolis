@@ -55,6 +55,8 @@ public:
 
 	void agregar_material(Material material) override {};
 
+	char obtener_identificador();
+
 };
 
 #endif /* CASILLERO_CASILLEROINACCESIBLE_H_ */

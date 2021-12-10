@@ -128,41 +128,6 @@ void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jug
 		// TODO: Emprolijar esto, helpers
 		parser.parse(input, jugadores.consulta(1)->obtener_inventario().obtener_materiales(), jugadores.consulta(2)->obtener_inventario().obtener_materiales());
 	}
-	//jugadores.consulta(1)->colocar_almacen(Almacen(j1_inventario));
-	//jugadores.consulta(2)->colocar_almacen(Almacen(j2_inventario));
 	fin.close();
 }
 
-/* 
-//Borrar cuando el parser este adaptado
-//PRE: -
-//POST: parte la linea en el delimitador, devuelve la primera mitad por la salida y la segunda mitad
-//se iguala a linea
-string dividir_linea(string &linea, char delimitador){
-	std::size_t pos = linea.find(delimitador);
-	string dato = linea.substr(0, pos);
-	linea.erase(0, pos+1);
-	return dato;
-}
-//Borrar cuando el parser este adaptado
-void cargar_fila_columna(std::string linea, std::size_t& filas,
-			 std::size_t& columnas) {
-	filas = stoi(dividir_linea(linea, ESPACIO));
-	columnas = stoi(dividir_linea(linea, ESPACIO));
-}
-//Borrar cuando el parser este adaptado
-string procesar_ubicacion(string linea, Coordenada& coordenada){
-	string edificio = dividir_linea(linea, DELIMITADOR_UBICACION);
-	edificio.erase(edificio.size()-1, 1); //Le saco el espcio final
-	std::size_t fila = char_a_int(linea[0]);
-	std::size_t columna = char_a_int(linea[3]);
-	coordenada = Coordenada(fila, columna);
-	return edificio;
-}
-
-//Borrar cuando el parser este adaptado
-std::size_t char_a_int(char c){
-	return (c - '0');
-}
-
-*/

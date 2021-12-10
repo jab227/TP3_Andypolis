@@ -23,7 +23,7 @@ public:
 	//PRE: jugador debe estar bien cargado
 	//POST: crea una Meta de CANTIDAD_OBJETIVOS objetivos para el jugador.
 	Meta(Jugador* jugador);
-
+	
 	//PRE: -
 	//POST: elimina los objetivos
 	~Meta();

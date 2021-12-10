@@ -82,9 +82,8 @@ template <typename T>
 Lista<T>::Lista() : primero_(nullptr), cantidad_(0) {}
 
 template <typename T>
-Lista<T>::Lista(const Lista<T>& rhs) {
+Lista<T>::Lista(const Lista<T>& rhs) : Lista() {
 	Nodo<T>* tmp = rhs.primero_;
-	cantidad_ = 0;
 	while (tmp != nullptr) {
 		alta_al_final(tmp->obtener_dato());
 		tmp = tmp->obtener_siguiente();

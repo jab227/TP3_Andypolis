@@ -40,14 +40,14 @@ const int ENERGIA[] = {0,
 		       ENERGIA_MOVERSE,
 		       ENERGIA_FIN_TURNO,
 		       ENERGIA_GUARDAR_SALIR};
-
+// Limpiar un poco el constructor
 Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 		   std::string ruta_mapa, std::string ruta_ubicaciones)
     : empresa_constructora(nullptr),
       instancia(INICIO),
       jugador_activo(0),
       jugadores(Lista<Jugador*>()),
-      objetivos_jugadores(Lista<Meta>()) {
+      objetivos_jugadores(Lista<Meta*>()) {
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
 	plano ->mostrar_edificios();	
@@ -56,8 +56,8 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
 	leer_de_archivo(ruta_materiales, ParserInventario(), jugadores);
 	this->instancia = INICIO;
-	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(1)));
-	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(2)));
+	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1)));
+	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2)));
 	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
 	
@@ -65,6 +65,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 
 Programa::~Programa() {
 	delete this->empresa_constructora;
+	while (!this->objetivos_jugadores.vacia()) delete this->objetivos_jugadores.baja(1);
 	while (!this->jugadores.vacia()) delete this->jugadores.baja(1);
 }
 
@@ -122,7 +123,7 @@ bool Programa::procesar_opcion(int opcion) {
 		resultado = this->procesar_opcion_inicio(opcion);
 	else {
 		int energia_restante =
-		    this->jugadores.consulta((int)this->jugador_activo)
+		    this->jugadores.consulta(this->jugador_activo)
 			->energia_suficiente(ENERGIA[opcion]);
 		if (energia_restante >= 0)
 			resultado = this->procesar_opcion_juego(opcion);
@@ -172,17 +173,17 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 		case CONSTRUIR:
 			this->empresa_constructora->construir_edificio(
 			    this->jugadores.consulta(
-				(int)this->jugador_activo));
+				this->jugador_activo));
 			break;
 		case LISTAR_CONSTRUIDOS:
 			this->empresa_constructora->mostrar_construidos(
 			    this->jugadores.consulta(
-				(int)this->jugador_activo));
+				this->jugador_activo));
 			break;
 		case DEMOLER:
 			this->empresa_constructora->demoler_edificio(
 			    this->jugadores.consulta(
-				(int)this->jugador_activo));
+				this->jugador_activo));
 			break;
 		case ATACAR:
 			this->empresa_constructora->atacar_edificio(
@@ -206,7 +207,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
 		case OBJETIVOS:
 			this->objetivos_jugadores.consulta(this->jugador_activo)
-			    .mostrar_objetivos();
+			    ->mostrar_objetivos();
 			break;
 		case RECOLECTAR:
 			// FER: Hice recoger_material() en los casilleros
@@ -226,7 +227,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 		case FIN_TURNO:
 			cout << "Turno del jugador " << this->jugador_activo
 			     << " finalizado." << endl;
-			this->jugadores.consulta((int)this->jugador_activo)
+			this->jugadores.consulta(this->jugador_activo)
 			    ->recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
 			this->jugador_activo =
 			    3 -
@@ -238,7 +239,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
 	}
 	this->objetivos_jugadores.consulta(this->jugador_activo)
-	    .actualizar_objetivos();
+	    ->actualizar_objetivos();
 	return fin;
 }
 

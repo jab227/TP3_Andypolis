@@ -57,13 +57,10 @@ public:
 	//POST: Si esta ocupado, disminuye la vida del edificio. 
 	Resultado_Chequeos atacar_edificio() override;
 
-<<<<<<< HEAD
 	void agregar_material(Material material) override;
-=======
-	void agregar_material(Material material) override {};
-
+	
 	char obtener_identificador();
->>>>>>> grafo
+
 };
 
 #endif /* CASILLERO_CASILLEROCONSTRUIBLE_H_ */

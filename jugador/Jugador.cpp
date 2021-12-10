@@ -1,11 +1,8 @@
 #include "Jugador.h"
 #include "../empresa/Planos.h"
-<<<<<<< HEAD
 #include "../printer/table_printer.h"
-=======
 #include "../utils/LecturaArchivos.h"
 #include "../printer/color_printer.h"
->>>>>>> grafo
 
 Jugador::Jugador(std::size_t id, const Coordenada& coordenada)
     : id_(id),

@@ -42,6 +42,10 @@ public:
 	void sumar_cantidad(std::size_t cantidad);
 
 	//PRE: -
+	//POST: se resta cantidad a la cantidad del material
+	void restar_cantidad(std::size_t cantidad);
+	
+	//PRE: -
 	//POST: imprime un saludo
 	void saludar() const;
 

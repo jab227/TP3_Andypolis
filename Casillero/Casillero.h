@@ -12,6 +12,7 @@ const std::string VERDE = BGND_LIGHT_GREEN_46;
 const std::string AZUL = BGND_BLUE_12;
 const std::string GRIS = BGND_GRAY_245;
 const std::string GRIS_OSCURO = BGND_DARK_GRAY_239;
+const std::string TEXTO_VERDE = TXT_GREEN_118;
 const std::string FIN_COLOR = END_COLOR;
 const std::string NEGRO = TXT_DARK_GRAY_233;
 const std::string BLANCO = TXT_WHITE_255;

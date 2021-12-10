@@ -89,9 +89,9 @@ void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coo
 }
 
 void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
-	//TODO: Chequear que tenga construidos.
 	jugador -> recolectar(this -> mapa);
 	jugador -> usar_energia(ENERGIA_RECOLECTAR);
+	//Mensajito con los recursos recolectados.
 	jugador -> mostrar_inventario();
 }
 
@@ -118,8 +118,11 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 			Coordenada coordenada;
 			Resultado_Chequeos resultado = this -> pedir_coordenadas(coordenada);
 			mostrar_mensaje_chequeo(resultado);
-			if( resultado == EXITO )
+			if( resultado == EXITO ){
 				this -> edificio_construido_confirmado(edificio, coordenada, jugador);
+				mapa -> mostrar_mapa();
+			}
+
 		}else
 			std::cout << "Se abortó la construicción." << std::endl;
 	}
@@ -137,8 +140,7 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 		resultado = this -> mapa -> demoler_edificio_ubicacion(nombre_edificio, coordenada);
 		if(resultado == EXITO){
 			//demoler_edificio_confirmado()
-			Edificio* edificio = Planos::buscar(nombre_edificio);
-			Lista<Material> listado_necesario = planos -> materiales_necesarios(edificio);
+			Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
 			jugador -> recuperar_lista_materiales(listado_necesario);
 			jugador -> eliminar_ubicacion(coordenada);
 			jugador -> usar_energia(ENERGIA_DEMOLER);
@@ -283,8 +285,7 @@ std::string Empresa_Constructora::pedir_si_no(){
 void Empresa_Constructora::edificio_construido_confirmado(const std::string &nombre_edificio,const Coordenada& coordenada, Jugador* jugador){
 	Resultado_Chequeos resultado = this -> mapa -> construir_edificio_ubicacion(nombre_edificio, coordenada);
 	if(mostrar_mensaje_chequeo(resultado)){
-		Edificio* edificio = Planos::buscar(nombre_edificio);
-		Lista<Material> listado_necesario = planos -> materiales_necesarios(edificio);
+		Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
 		jugador -> usar_lista_materiales(listado_necesario);
 		jugador -> usar_energia(ENERGIA_CONSTRUIR);
 		jugador -> agregar_ubicacion(coordenada);
@@ -301,9 +302,7 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 	std::size_t indice = jugador -> existe_ubicacion(coordenada);
 	if(indice){ //Chequeo que la coordenada este en la lista de ubicaciones.
 		std::string nombre_edificio = this -> mapa -> obtener_contenido_ubicacion(coordenada);
-		Edificio* edificio = Planos::buscar(nombre_edificio);
-		//Cambiar de puntero a lista normal. Lista tiene constructor de copia.
-		Lista<Material> listado_necesario = planos -> materiales_necesarios(edificio);
+		Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
 		resultado = this -> chequeo_reparar_edificio(jugador, listado_necesario, coordenada);
 		if(resultado == EXITO){
 			//reparar_edificio_confirmado()
@@ -317,20 +316,19 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 
 void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Resultado_Chequeos resultado = EXITO;
-	Material bombas("bombas", 0);
-	jugador_activo -> obtener_inventario().buscar_material(bombas); // Ya no devuelve por interfaz el material.
-
+	Material bombas = jugador_activo -> obtener_inventario().obtener_material("bombas");
 	if(!(bombas.obtener_cantidad() > 0))
 		resultado = NO_MATERIALES;
 	this -> mostrar_mensaje_chequeo(resultado);
-	Coordenada coordenada(0, 0);
+	Coordenada coordenada(0,0);
 	if(resultado == EXITO){
+		mapa -> mostrar_mapa();
 		do resultado = this -> pedir_coordenadas(coordenada);
 		while(!mostrar_mensaje_chequeo(resultado));
 		std::size_t indice = jugador_inactivo -> existe_ubicacion(coordenada);
 		if(indice){
 			jugador_activo -> usar_energia(ENERGIA_ATACAR);
-			jugador_activo -> obtener_inventario().sumar_cantidad_material(bombas.obtener_nombre(), 1);
+			jugador_activo -> obtener_inventario().restar_cantidad_material(bombas.obtener_nombre(), 1);
 			this -> bombardear_coordenadas(coordenada, jugador_inactivo);
 		}else
 			ColorPrinter::color_msg("No hay un edificio del otro jugador en estas coordenadas.", ROJO, std::cout);
@@ -342,9 +340,9 @@ void Empresa_Constructora::bombardear_coordenadas(Coordenada coordenada, Jugador
 	bool destruido = this -> mapa -> explota_bomba(edificio, coordenada);
 	if(destruido){
 		jugador -> eliminar_ubicacion(coordenada);
-		ColorPrinter::color_msg(edificio + " destruido en (" + to_string((int) coordenada.x()) + ", " + to_string((int) coordenada.y()) + ")!", VERDE, std::cout);
+		ColorPrinter::color_msg("Edificio destruido en" + coordenada.a_string() + "!", TEXTO_VERDE, std::cout);
 	}else
-		ColorPrinter::color_msg("El/La " + edificio + " todavia se mantiene en pie.", VERDE, std::cout);
+		ColorPrinter::color_msg("El edificio todavia se mantiene en pie.", TEXTO_VERDE, std::cout);
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_reparar_edificio(Jugador* jugador, Lista<Material> listado_necesario, Coordenada coordenada){

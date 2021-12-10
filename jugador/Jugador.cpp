@@ -125,13 +125,11 @@ Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 		coordenada = obtener_ubicacion(i);
 		// No necesito chequear si esta construido.
 		nombre_edificio = mapa->obtener_contenido_ubicacion(coordenada);
-		// Error de static.
 		edificio = Planos::buscar(nombre_edificio);
 		material_producido = edificio->producir_material();
-		// Si no tengo construidos, el material que se sume va a ser 0.
+		//Si no tengo construidos, el material que se sume va a ser 0.
 		material_producido.cambiar_cantidad(
-		    material_producido.obtener_cantidad() *
-		    cantidad_edificios(nombre_edificio, mapa));
+		    material_producido.obtener_cantidad());
 		// TODO: Comparador de Material.
 		if (material_producido.obtener_nombre() != "ninguno")	// provisorio.
 			listado.alta(material_producido, ++agregados);
@@ -140,15 +138,11 @@ Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 }
 
 std::size_t Jugador::existe_ubicacion(Coordenada coordenada) const {
-	std::size_t i = 1;
 	std::size_t indice = 0;
 	Coordenada tmp;
-	while (i <= edificios_.consulta_largo() || !indice) {
+	for(std::size_t i = 1; i <= edificios_.consulta_largo() && !indice; i++) {
 		tmp = obtener_ubicacion(i);
-		if (coordenada == tmp)
-			indice = i;
-		else
-			i++;
+		if (coordenada == tmp) indice = i;
 	}
 	return indice;
 }

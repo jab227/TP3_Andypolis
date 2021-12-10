@@ -43,11 +43,10 @@ void Planos::mostrar_edificios(){
 
 Resultado_Chequeos Planos::chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa){
 	Resultado_Chequeos resultado = NO_EXISTE;
-	//Cuando estamos aca ya sabemos que existe.
-	Edificio* ptr_edificio = this -> lista_edificios[nombre_edificio];
-	Lista<Material> materiales = materiales_necesarios(ptr_edificio);
+	Lista<Material> materiales = materiales_necesarios(nombre_edificio);
 	resultado = jugador -> tiene_materiales(materiales);
 	if(resultado != NO_MATERIALES){
+		Edificio* ptr_edificio = this -> lista_edificios[nombre_edificio];
 		std::size_t construidos = jugador -> cantidad_edificios(nombre_edificio, mapa);
 		resultado = ptr_edificio -> esta_maxima_capacidad(construidos);
 	}
@@ -61,8 +60,9 @@ Resultado_Chequeos Planos::existe(std::string nombre_edificio){
 }
 
 //Al tener el constructor de copia de LIsta, sobrevive el puntero retornado.
-Lista<Material> Planos::materiales_necesarios( Edificio* edificio){
+Lista<Material> Planos::materiales_necesarios(std::string nombre_edificio){
 	Lista<Material> lista_materiales;
+	Edificio* edificio = Planos::buscar(nombre_edificio);
 	//Chequear que no haya roto al cambiar alta() por alta_al_final().
 	for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
 		lista_materiales.alta_al_final(Material(MATERIALES_EDIFICIOS[i], edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[i])));

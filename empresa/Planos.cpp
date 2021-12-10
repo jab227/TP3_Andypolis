@@ -77,7 +77,9 @@ void Planos::modificar_edificio(std::string nombre, std::size_t piedra, std::siz
 
 	Edificio* edificio_modificado = traductor_edificios(nombre, piedra, madera, metal,
 			 Planos::lista_edificios[nombre]->obtener_max_permitidos());
+	Edificio* aux = lista_edificios[nombre];
 	Planos::lista_edificios[nombre] = edificio_modificado;
+	delete aux;
 }
 
 

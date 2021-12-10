@@ -40,9 +40,10 @@ void TablePrinter::print_row(const Lista<std::string> header, std::ostream& stre
 
 void TablePrinter::print_row(const Mapa* mapa, const Coordenada& coordenada, std::ostream& stream) const{
 	std::string edificio = mapa -> obtener_contenido_ubicacion(coordenada);
+	bool necesita_reparar = (mapa -> reparar_edificio_ubicacion(coordenada, false) == EXITO);
 	print_table_cell( edificio, stream);
 	print_table_cell( coordenada.a_string(), stream);
-	print_table_cell( "Implementar si necesita reparacion", stream);
+	print_table_cell( necesita_reparar? "SI" : "NO", stream);
 	//TODO: Imprimir si es reparable.
 	// Deberiamos hacer un metodo que nos devuelva el edificio del mapa.
 	// El problema es que tmb se puede usar para materiales por la firma.

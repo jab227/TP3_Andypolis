@@ -76,8 +76,9 @@ public:
 	virtual Resultado_Chequeos recoger_material(Almacen *inventario) = 0;
 
 	// PRE: -
-	// POST: Pide al casillero reparar un edficio.
-	virtual Resultado_Chequeos reparar_edificio() = 0;
+	// POST: Pregunta al casillero si necesita reparar un edficio y devuelve el resultado.
+	// repara por defecto el edificio, si reparar vale false, no lo repara.
+	virtual Resultado_Chequeos reparar_edificio(bool reparar = true) = 0;
 
 	// PRE: -
 	// POST: Pide al casillero atacar un edficio.

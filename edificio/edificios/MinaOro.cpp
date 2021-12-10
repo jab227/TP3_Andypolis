@@ -15,4 +15,4 @@ void Mina_Oro::saludar(){
 	std::cout << "Soy la mina de oro y estoy en el casillero consultado, estoy recolectando monedas!" << std::endl;
 }
 
-Resultado_Chequeos Mina_Oro::reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Mina_Oro::reparar(bool reparar_edificio){ return NO_REPARABLE;}

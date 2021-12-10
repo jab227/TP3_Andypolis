@@ -1,6 +1,6 @@
 #include "Letrado.h"
 
-const std::string NOMBRE = "Letrado.h";
+const std::string NOMBRE = "Letrado";
 
 Letrado::Letrado(Jugador* jugador) : Objetivo(NOMBRE,jugador) {
 }

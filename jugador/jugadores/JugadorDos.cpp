@@ -9,11 +9,6 @@ Jugador_Dos::~Jugador_Dos() {
 }
 
 std::size_t Jugador_Dos::obtener_costo_terreno(Coordenada coordenada, Mapa* mapa){
-	std::cout << "Implementar costos" << std::endl;
-	return 5;
-}
-
-std::size_t Jugador_Dos::obtener_costo_terreno(Coordenada coordenada, Mapa* mapa){
 	std::size_t costo;
 	char casillero = mapa -> obtener_identificador_casillero(coordenada);
 	switch(casillero){

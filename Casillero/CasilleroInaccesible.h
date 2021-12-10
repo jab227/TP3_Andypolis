@@ -44,7 +44,7 @@ public:
 
 	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
-	Resultado_Chequeos reparar_edificio() override;
+	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
 
 	//PRE: -
 	//POST: Retorna NO_MATERIALES.

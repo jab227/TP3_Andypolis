@@ -16,5 +16,5 @@ void Aserradero::saludar(){
 	std::cout << "Soy el "+ NOMBRE +" y estoy en el casillero consultado, estoy tranajando duro!" << std::endl;
 }
 
-Resultado_Chequeos Aserradero::reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Aserradero::reparar(bool reparar_edificio){ return NO_REPARABLE;}
 

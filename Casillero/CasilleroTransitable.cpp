@@ -70,7 +70,7 @@ Resultado_Chequeos Casillero_Transitable::recoger_material(Almacen* inventario){
 	return resultado;
 }
 
-Resultado_Chequeos Casillero_Transitable::reparar_edificio(){ return CASILLERO_NO_CONSTRUIBLE;}
+Resultado_Chequeos Casillero_Transitable::reparar_edificio(bool reparar){ return CASILLERO_NO_CONSTRUIBLE;}
 
 void Casillero_Transitable::saludo_material() const{ this -> material.saludar();}
 

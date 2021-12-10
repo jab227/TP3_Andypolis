@@ -51,7 +51,7 @@ public:
 
 	//PRE: -
 	//POST: Si esta ocupado, pide al edificio de repararse. Devuelve NO_REPARABLE o EXITO.
-	Resultado_Chequeos reparar_edificio() override;
+	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
 	
 	//PRE: -
 	//POST: Si esta ocupado, disminuye la vida del edificio. 

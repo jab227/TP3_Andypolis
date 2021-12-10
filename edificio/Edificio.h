@@ -108,7 +108,8 @@ public:
 	
 	//PRE: -
 	//POST: Devuelve NO_REPARABLE si la vida está al máximo. Devuelve REPARABLE si 0 < vida < MAX_VIDA.
-	virtual Resultado_Chequeos reparar() = 0;
+	//se puede elegir si reparar o no el edificio con true o false, por defecto los edificios se reparan
+	virtual Resultado_Chequeos reparar(bool reparar_edificio = true) = 0;
 
 	//PRE: -
 	//POST: Resta 1 de vida al edificio. Devuelve DESTRUIDO si el edificio tiene 0 de vida. Devuelve REPARABLE si aún tiene.

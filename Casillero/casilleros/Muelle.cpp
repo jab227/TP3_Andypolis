@@ -11,6 +11,6 @@ void Muelle::saludar() const{
 		std::cout << "No tengo ningun material en mi." << std::endl;
 }
 
-char obtener_identificador(){
+char Muelle::obtener_identificador(){
 	return MUELLE;
 }

@@ -47,7 +47,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       instancia(INICIO),
       jugador_activo(0),
       jugadores(Lista<Jugador*>()),
-      objetivos_jugadores(Lista<Meta>()) {
+      objetivos_jugadores(Lista<Meta*>()) {
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
 	plano ->mostrar_edificios();	
@@ -56,16 +56,16 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
 	leer_de_archivo(ruta_materiales, ParserInventario(), jugadores);
 	this->instancia = INICIO;
-	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(1)));
-	objetivos_jugadores.alta_al_final(Meta(jugadores.consulta(2)));
+	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1)));
+	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2)));
 	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
-	
 }
 
 Programa::~Programa() {
 	delete this->empresa_constructora;
 	while (!this->jugadores.vacia()) delete this->jugadores.baja(1);
+	while (!this->objetivos_jugadores.vacia()) delete this->objetivos_jugadores.baja(1);
 }
 
 void Programa::mostrar_menu() {
@@ -206,7 +206,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
 		case OBJETIVOS:
 			this->objetivos_jugadores.consulta(this->jugador_activo)
-			    .mostrar_objetivos();
+			    ->mostrar_objetivos();
 			break;
 		case RECOLECTAR:
 			// FER: Hice recoger_material() en los casilleros
@@ -235,7 +235,7 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			break;
 	}
 	this->objetivos_jugadores.consulta(this->jugador_activo)
-	    .actualizar_objetivos();
+	    ->actualizar_objetivos();
 	return fin;
 }
 

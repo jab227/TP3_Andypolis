@@ -95,8 +95,8 @@ Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const
 
 }
 
-Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada){
-	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio();
+Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada, bool reparar) const{
+	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio(reparar);
 
 }
 
@@ -240,5 +240,7 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 		identificador = "I";
 	else if (ocupador == "mina oro")
 		identificador = "G";
+	else if(ocupador == "andycoins")
+		identificador = "C";
 	return identificador;
 }

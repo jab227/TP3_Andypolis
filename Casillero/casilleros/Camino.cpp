@@ -11,6 +11,6 @@ void Camino::saludar() const{
 		std::cout << "No tengo ningun material en mi." << std::endl;
 }
 
-char obtener_identificador(){
+char Camino::obtener_identificador(){
 	return CAMINO;
 }

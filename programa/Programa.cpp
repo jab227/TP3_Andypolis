@@ -122,7 +122,7 @@ bool Programa::procesar_opcion(std::size_t opcion) {
 	if (this->instancia == INICIO)
 		resultado = this -> procesar_opcion_inicio(opcion);
 	else {
-		int energia_restante =
+		std::size_t energia_restante =
 		    this->jugadores.consulta(this->jugador_activo)
 			->energia_suficiente(ENERGIA[opcion]);
 		if (energia_restante >= 0)
@@ -252,11 +252,11 @@ bool Programa::es_opcion_valida(std::string opcion) {
 	if (!es_numero(opcion))
 		valida = false;
 	else if (this->instancia == INICIO)
-		valida = (stoi(opcion) >= OPCION_MINIMA_INICIO &&
-			  stoi(opcion) <= OPCION_MAXIMA_INICIO);
+		valida = (stoul(opcion) >= OPCION_MINIMA_INICIO &&
+			  stoul(opcion) <= OPCION_MAXIMA_INICIO);
 	else
-		valida = (stoi(opcion) >= OPCION_MINIMA_JUEGO &&
-			  stoi(opcion) <= OPCION_MAXIMA_JUEGO);
+		valida = (stoul(opcion) >= OPCION_MINIMA_JUEGO &&
+			  stoul(opcion) <= OPCION_MAXIMA_JUEGO);
 	return valida;
 }
 

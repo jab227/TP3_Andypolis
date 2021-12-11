@@ -5,17 +5,15 @@ const std::string NOMBRE = "Comprar andypolis";
 
 Monedas::Monedas(Jugador* jugador) : Objetivo(NOMBRE, jugador){
 	this -> monedas_juntadas = 0;
-	Material monedas = Material("andycoins", 0);
-	this -> jugador -> obtener_inventario().buscar_material(monedas);
+	Material monedas = this -> jugador -> obtener_inventario().obtener_material("andycoins");
 	this -> monedas_actuales = monedas.obtener_cantidad();
 }
 
 Monedas::~Monedas(){ }
 
 bool Monedas::actualizar(){
-	if(!this -> cumplido){
-		Material monedas("andycoins", 0);
-		this -> jugador -> obtener_inventario().buscar_material(monedas);
+	if(!this -> cumplido){ 
+		Material monedas = this -> jugador -> obtener_inventario().obtener_material("andycoins");
 		if(monedas.obtener_cantidad() > this -> monedas_actuales)
 			this -> monedas_juntadas += monedas.obtener_cantidad() - this -> monedas_actuales;
 

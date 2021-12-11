@@ -10,8 +10,7 @@ Armado::~Armado(){ }
 
 bool Armado::actualizar(){
 	if(!this -> cumplido){
-		Material bombas("bombas", 0);
-		this -> jugador -> obtener_inventario().buscar_material(bombas);
+		Material bombas = this -> jugador -> obtener_inventario().obtener_material("bombas");
 		if(bombas.obtener_cantidad() >= BOMBAS_A_OBTENER)
 			this -> cumplido = true;
 	}

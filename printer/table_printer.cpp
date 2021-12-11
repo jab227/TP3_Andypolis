@@ -44,11 +44,6 @@ void TablePrinter::print_row(const Mapa* mapa, const Coordenada& coordenada, std
 	print_table_cell( edificio, stream);
 	print_table_cell( coordenada.a_string(), stream);
 	print_table_cell( necesita_reparar? "SI" : "NO", stream);
-	//TODO: Imprimir si es reparable.
-	// Deberiamos hacer un metodo que nos devuelva el edificio del mapa.
-	// El problema es que tmb se puede usar para materiales por la firma.
-	// Creo que los mas comodo va a hacer que el metodo reciba el puntero a edificio y la coordenada.
-	// Asi podemos diferenciarnos si queremos imprimir coordenada y material (por alguna razon)
 	//TODO: Constante
 	print_row_separator(3, stream);
 }

@@ -146,7 +146,7 @@ void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos
 // Se puede mejorar pero es lo mas comodo.
 Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 	Resultado_Chequeos resultado = NO_MATERIALES;
-	Material andycoins  = obtener_material(NOMBRES_MATERIALES[3]);
+	Material andycoins  = obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);
 	std::size_t gasto = cantidad_bombas * PRECIO_BOMBA;
 	if (gasto <= andycoins.obtener_cantidad()) {
 		cout << "Compraste " << cantidad_bombas
@@ -154,7 +154,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 		sumar_cantidad_material(NOMBRES_MATERIALES[BOMBAS], cantidad_bombas);
 		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
-		Material bombas = obtener_material(NOMBRES_MATERIALES[4]);
+		Material bombas = obtener_material(NOMBRES_MATERIALES[BOMBAS]]);
 		std::cout << "Cantidad de bombas: "
 			  << bombas.obtener_cantidad() << std::endl;
 		std::cout << "Andycoins restantes: "

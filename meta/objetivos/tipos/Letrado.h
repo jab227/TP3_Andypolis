@@ -4,8 +4,9 @@
 #include "../Objetivo.h"
 
 class Letrado : public Objetivo{
+	const Mapa* mapa;
 public:
-	Letrado(Jugador* jugador);
+	Letrado(Jugador* jugador, Mapa* mapa);
 	~Letrado();
 	bool actualizar();
 };

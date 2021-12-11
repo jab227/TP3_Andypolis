@@ -6,12 +6,12 @@
 
 const std::string VERDE_META = BGND_GREEN_118, ROJO_META = BGND_RED_196;
 
-Meta::Meta(Jugador* jugador) : objetivos(new Lista<Objetivo*>) {
-	Lista<Objetivo*>* listado = crear_listado(jugador);
+Meta::Meta(Jugador* jugador, Mapa* mapa) : objetivos(Lista<Objetivo*>()) {
+	Lista<Objetivo*> listado = crear_listado(jugador, mapa);
 	std::size_t n;
 	for (int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
-		n = (rand() % (listado->consulta_largo())) + 1;
-		this->objetivos->alta_al_final(listado->baja(n));
+		n = (rand() % (listado.consulta_largo())) + 1;
+		this->objetivos.alta_al_final(listado.baja(n));
 	}
 	this->eliminar_listado(listado);
 }
@@ -20,27 +20,27 @@ Meta::~Meta() { eliminar_listado(this->objetivos); }
 
 bool Meta::actualizar_objetivos() {
 	bool cumplidos = true;
-	for (std::size_t i = 1; i <= this->objetivos->consulta_largo(); i++){
-		cumplidos = (this->objetivos->consulta(i)->actualizar() && cumplidos);
+	for (std::size_t i = 1; i <= this->objetivos.consulta_largo(); i++) {
+		cumplidos = (cumplidos && this->objetivos.consulta(i)->actualizar());
 	}
-
 	return cumplidos;
 }
 
 bool Meta::objetivos_cumplidos() {
 	bool cumplidos = true;
-	for (std::size_t i = 1; i <= this->objetivos->consulta_largo(); i++)
-		cumplidos = ( cumplidos && this->objetivos->consulta(i)->esta_cumplido());
+	for (std::size_t i = 1; i <= this->objetivos.consulta_largo(); i++)
+		cumplidos = (cumplidos && this->objetivos.consulta(i)->esta_cumplido());
 
 	return cumplidos;
 }
 
 void Meta::mostrar_objetivos() {
 	std::cout << "Los objetivos son: " << std::endl;
-	std::string color = "  ";
+	std::string color;
   Objetivo* objetivo;
-	for (std::size_t i = 1; i <= this -> objetivos->consulta_largo(); i++) {
-		objetivo = this->objetivos->consulta(i);
+	for (std::size_t i = 1; i <= this -> objetivos.consulta_largo(); i++) {
+		color = "  ";
+		objetivo = this->objetivos.consulta(i);
 		std::cout << "- " << objetivo -> obtener_titulo();
 		(objetivo->esta_cumplido()) ? color += VERDE_META
 					    : color += ROJO_META;
@@ -48,24 +48,22 @@ void Meta::mostrar_objetivos() {
 	}
 }
 
-Lista<Objetivo*>* Meta::crear_listado(Jugador* jugador) {
-	Lista<Objetivo*>* listado = new Lista<Objetivo*>;
-	listado->alta_al_final(new Armado(jugador));
-	listado->alta_al_final(new Bombardero(jugador));
-	listado->alta_al_final(new Cansado(jugador));
-	listado->alta_al_final(new Constructor(jugador));//---- //1
-	listado->alta_al_final(new Energetico(jugador));
-	listado->alta_al_final(new Extremista(jugador));
-	listado->alta_al_final(new Letrado(jugador));
-	listado->alta_al_final(new Minero(jugador));
-	listado->alta_al_final(new Monedas(jugador));//--- //1
-	listado->alta_al_final(new Piedras(jugador));//-- //1
-	//1048498
+Lista<Objetivo*> Meta::crear_listado(Jugador* jugador, Mapa* mapa) {
+	Lista<Objetivo*> listado;
+	listado.alta_al_final(new Armado(jugador));
+	listado.alta_al_final(new Bombardero(jugador));
+	listado.alta_al_final(new Cansado(jugador));
+	listado.alta_al_final(new Constructor(jugador, mapa));
+	listado.alta_al_final(new Energetico(jugador));
+	listado.alta_al_final(new Extremista(jugador));
+	listado.alta_al_final(new Letrado(jugador, mapa));
+	listado.alta_al_final(new Minero(jugador, mapa));
+	listado.alta_al_final(new Monedas(jugador));
+	listado.alta_al_final(new Piedras(jugador));
+
 	return listado;
 }
 
-void Meta::eliminar_listado(Lista<Objetivo*>*& listado) {
-	while (!listado->vacia()) delete listado->baja(1);
-	delete listado;
-	listado = nullptr;
+void Meta::eliminar_listado(Lista<Objetivo*>& listado) {
+	while (!listado.vacia()) delete listado.baja(1);
 }

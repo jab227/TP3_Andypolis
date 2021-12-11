@@ -14,19 +14,19 @@
 #include "../printer/printer.h"
 #include "../utils/LecturaArchivos.h"
 
-const int CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
+const std::size_t CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
 	  REPARAR = 5, COMPRAR_BOMBAS = 6, CONSULTAR = 7, LISTAR_MATERIALES = 8,
 	  OBJETIVOS = 9, RECOLECTAR = 10, MOVERSE = 11, FIN_TURNO = 12,
 	  GUARDAR_SALIR = 13;
-const int OPCION_MINIMA_JUEGO = CONSTRUIR, OPCION_MAXIMA_JUEGO = GUARDAR_SALIR;
+const std::size_t OPCION_MINIMA_JUEGO = CONSTRUIR, OPCION_MAXIMA_JUEGO = GUARDAR_SALIR;
 
-const int MODIFICAR_EDIFICIO = 1, LISTAR_EDIFICIOS = 2, MOSTRAR_MAPA = 3,
+const std::size_t MODIFICAR_EDIFICIO = 1, LISTAR_EDIFICIOS = 2, MOSTRAR_MAPA = 3,
 	  COMENZAR = 4, GUARDAR_SALIR_INICIO = 5;
-const int OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO,
+const std::size_t OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO,
 	  OPCION_MAXIMA_INICIO = GUARDAR_SALIR_INICIO;
 
-const int ENERGIA_INICIAL = 50, ENERGIA_SUMADA_FIN_TURNO = 20;
-const int ENERGIA[] = {0,
+const std::size_t ENERGIA_INICIAL = 50, ENERGIA_SUMADA_FIN_TURNO = 20;
+const std::size_t ENERGIA[] = {0,
 		       ENERGIA_CONSTRUIR,
 		       ENERGIA_LISTAR_CONSTRUIDOS,
 		       ENERGIA_DEMOLER,
@@ -117,7 +117,7 @@ void Programa::mostrar_menu_inicio() {
 	     << endl;
 }
 
-bool Programa::procesar_opcion(int opcion) {
+bool Programa::procesar_opcion(std::size_t opcion) {
 	bool resultado;
 	if (this->instancia == INICIO)
 		resultado = this -> procesar_opcion_inicio(opcion);
@@ -136,7 +136,7 @@ bool Programa::procesar_opcion(int opcion) {
 	return resultado;
 }
 
-bool Programa::procesar_opcion_inicio(int opcion_elegida) {
+bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
 	bool fin = false;
 	switch (opcion_elegida) {
 		case MODIFICAR_EDIFICIO:
@@ -161,7 +161,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 	return fin;
 }
 
-bool Programa::procesar_opcion_juego(int opcion_elegida) {
+bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 	bool fin = false;
 	switch (opcion_elegida) {
 		case CONSTRUIR:

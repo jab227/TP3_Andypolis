@@ -154,7 +154,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 		sumar_cantidad_material(NOMBRES_MATERIALES[BOMBAS], cantidad_bombas);
 		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
-		Material bombas = obtener_material(NOMBRES_MATERIALES[BOMBAS]]);
+		Material bombas = obtener_material(NOMBRES_MATERIALES[BOMBAS]);
 		std::cout << "Cantidad de bombas: "
 			  << bombas.obtener_cantidad() << std::endl;
 		std::cout << "Andycoins restantes: "

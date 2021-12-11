@@ -33,7 +33,7 @@ public:
 
 	//PRE: la opcion debe ser valida
 	//POST: se pocesa la opcion ingresada segun si es el inicio o en el juego
-	bool procesar_opcion(int opcion_elegida);
+	bool procesar_opcion(std::size_t opcion_elegida);
 
 	//PRE: -
 	//POST: devuelve si la opcion ingresada es valida segun si es el inicio o dentro del juego
@@ -58,11 +58,11 @@ private:
 
 	//PRE: la opcion debe ser valida
 	//POST: se pocesa la opcion ingresada
-	bool procesar_opcion_juego(int opcion_elegida);
+	bool procesar_opcion_juego(std::size_t opcion_elegida);
 
 	//PRE: la opcion debe ser valida
 	//POST: se pocesa la opcion ingresada
-	bool procesar_opcion_inicio(int opcion_elegida);
+	bool procesar_opcion_inicio(std::size_t opcion_elegida);
 
 	//PRE: -
 	//POST: se realizan inicializaciones del juego antes de iniciar por primera vez

@@ -29,6 +29,8 @@ public:
 	//POST: Deevuelve el puntero Edificio*.
 	static Resultado_Chequeos existe(std::string nombre_edificio);
 
+	static std::size_t cantidad_permitida(const std::string& edificio);
+
 	//PRE: -
 	//POST: muestra por terminal la cantidad de edificios construidos de cada tipo,
 	//los que se pueden construir y los materiales necesarios para construirlos.

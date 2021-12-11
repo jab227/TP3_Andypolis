@@ -125,15 +125,12 @@ Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 	for (std::size_t i = 1; i <= this->edificios_.consulta_largo(); i++) {
 
 		coordenada = obtener_ubicacion(i);
-		// No necesito chequear si esta construido.
 		nombre_edificio = mapa->obtener_contenido_ubicacion(coordenada);
 		edificio = Planos::buscar(nombre_edificio);
-		material_producido = edificio->producir_material(); //crash
-		//Si no tengo construidos, el material que se sume va a ser 0.
+		material_producido = edificio -> producir_material();
 		material_producido.cambiar_cantidad(
 		    material_producido.obtener_cantidad());
-		// TODO: Comparador de Material.
-		if (material_producido.obtener_nombre() != "ninguno")	// provisorio.
+		if (material_producido.obtener_nombre() != "ninguno")	// Es por si consultamos al Obelisco, pero tiene sentido?
 			listado.alta(material_producido, ++agregados);
 	}
 	return listado;

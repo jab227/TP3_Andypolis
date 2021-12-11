@@ -4,10 +4,12 @@
 #include "../Objetivo.h"
 
 class Minero : public Objetivo{
-public:
-	Minero(Jugador* jugador);
-	~Minero();
-	bool actualizar();
+	private:
+	 const Mapa* mapa;
+	public:
+	 Minero(Jugador* jugador, Mapa* mapa);
+	 ~Minero();
+	 bool actualizar();
 };
 
 #endif /* OBJETIVOS_TIPOS_MINERO_H_ */

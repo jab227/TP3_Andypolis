@@ -53,11 +53,11 @@ Lista<Objetivo*> Meta::crear_listado(Jugador* jugador, Mapa* mapa) {
 	listado.alta_al_final(new Armado(jugador));
 	listado.alta_al_final(new Bombardero(jugador));
 	listado.alta_al_final(new Cansado(jugador));
-	listado.alta_al_final(new Constructor(jugador));
+	listado.alta_al_final(new Constructor(jugador, mapa));
 	listado.alta_al_final(new Energetico(jugador));
 	listado.alta_al_final(new Extremista(jugador));
 	listado.alta_al_final(new Letrado(jugador, mapa));
-	listado.alta_al_final(new Minero(jugador));
+	listado.alta_al_final(new Minero(jugador, mapa));
 	listado.alta_al_final(new Monedas(jugador));
 	listado.alta_al_final(new Piedras(jugador));
 

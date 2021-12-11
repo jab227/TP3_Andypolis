@@ -42,6 +42,7 @@ class Jugador {
 	// POST: devuelve el inventario del jugador
 	Almacen& obtener_inventario();
 	
+	const Lista<Coordenada>& obtener_edificios() const;
 	// Pre: - 
 	// Pos: Cambia el almacen del jugador
 	void colocar_almacen(const Almacen& inventario);

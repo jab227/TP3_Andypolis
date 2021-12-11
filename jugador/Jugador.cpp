@@ -58,6 +58,10 @@ std::size_t Jugador::cantidad_ubicaciones() const {
 	return edificios_.consulta_largo();
 }
 
+const Lista<Coordenada>& Jugador::obtener_edificios() const {
+	return edificios_;
+}
+
 Coordenada Jugador::obtener_ubicacion(const std::size_t indice) const {
 	return edificios_.consulta(indice);
 }

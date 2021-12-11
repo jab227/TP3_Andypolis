@@ -148,13 +148,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 			this->empresa_constructora->mostrar_mapa();
 			break;
 		case COMENZAR:
-			cout << "Comienza la partida!" << endl;
-			this->instancia = JUEGO;
-			this->jugadores.consulta(1)->recuperar_energia(
-			    ENERGIA_INICIAL);
-			this->jugadores.consulta(2)->recuperar_energia(
-			    ENERGIA_INICIAL);
-			this->empresa_constructora->lluvia_de_recursos();
+			this -> comenzar_partida();
 			break;
 		case GUARDAR_SALIR_INICIO:
 			fin = true;
@@ -236,6 +230,18 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 	this->objetivos_jugadores.consulta(this->jugador_activo)
 	    ->actualizar_objetivos();
 	return fin;
+}
+
+void Programa::comenzar_partida(){
+	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
+	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
+	cout << "Comienza la partida!" << endl;
+	this -> instancia = JUEGO;
+	this -> jugadores.consulta(1) -> recuperar_energia(
+	    ENERGIA_INICIAL);
+	this -> jugadores.consulta(2) -> recuperar_energia(
+	    ENERGIA_INICIAL);
+	this -> empresa_constructora -> lluvia_de_recursos();
 }
 
 bool Programa::es_opcion_valida(std::string opcion) {

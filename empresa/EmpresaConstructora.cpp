@@ -69,7 +69,7 @@ void Empresa_Constructora::iniciar_coordenadas_jugador(Jugador* jugador){
 		if(resultado == SALIR)
 			ColorPrinter::color_msg("No se puede salir, se deben ingresar coordenadas",  ROJO, std::cout);
 	}while(!mostrar_mensaje_chequeo(resultado) || resultado == SALIR);
-
+	jugador -> mover_a_coordenada(coordenada, mapa);
 }
 
 void Empresa_Constructora::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){

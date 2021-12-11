@@ -48,6 +48,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       jugador_activo(0),
       jugadores(Lista<Jugador*>()),
       objetivos_jugadores(Lista<Meta*>()) {
+	srand((unsigned int)time(0));
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
 	plano ->mostrar_edificios();	
@@ -58,7 +59,6 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	this->instancia = INICIO;
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1)));
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2)));
-	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
 }
 
@@ -119,13 +119,12 @@ void Programa::mostrar_menu_inicio() {
 bool Programa::procesar_opcion(int opcion) {
 	bool resultado;
 	if (this->instancia == INICIO)
-		resultado = this->procesar_opcion_inicio(opcion);
+		resultado = this -> procesar_opcion_inicio(opcion);
 	else {
-		int energia_restante =
-		    this->jugadores.consulta((int)this->jugador_activo)
-			->energia_suficiente(ENERGIA[opcion]);
-		if (energia_restante >= 0)
-			resultado = this->procesar_opcion_juego(opcion);
+		std::size_t energia_restante =
+		    this -> jugadores.consulta(this -> jugador_activo) -> energia_suficiente(ENERGIA[opcion]);
+		if (energia_restante <= 100)
+			resultado = this -> procesar_opcion_juego(opcion);
 		else
 			cout << "Energia insuficiente, te faltan "
 			     << -energia_restante
@@ -149,13 +148,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 			this->empresa_constructora->mostrar_mapa();
 			break;
 		case COMENZAR:
-			cout << "Comienza la partida!" << endl;
-			this->instancia = JUEGO;
-			this->jugadores.consulta(1)->recuperar_energia(
-			    ENERGIA_INICIAL);
-			this->jugadores.consulta(2)->recuperar_energia(
-			    ENERGIA_INICIAL);
-			this->empresa_constructora->lluvia_de_recursos();
+			this -> comenzar_partida();
 			break;
 		case GUARDAR_SALIR_INICIO:
 			fin = true;
@@ -237,6 +230,18 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 	this->objetivos_jugadores.consulta(this->jugador_activo)
 	    ->actualizar_objetivos();
 	return fin;
+}
+
+void Programa::comenzar_partida(){
+	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
+	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
+	cout << "Comienza la partida!" << endl;
+	this -> instancia = JUEGO;
+	this -> jugadores.consulta(1) -> recuperar_energia(
+	    ENERGIA_INICIAL);
+	this -> jugadores.consulta(2) -> recuperar_energia(
+	    ENERGIA_INICIAL);
+	this -> empresa_constructora -> lluvia_de_recursos();
 }
 
 bool Programa::es_opcion_valida(std::string opcion) {

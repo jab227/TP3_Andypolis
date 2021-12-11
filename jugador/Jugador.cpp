@@ -21,12 +21,12 @@ void Jugador::colocar_almacen(const Almacen& inventario) {
 	inventario_ = inventario;
 }
 
-bool Jugador::energia_suficiente(const std::size_t& energia_requerida) const {
-	return (energia_ >= energia_requerida);
+std::size_t Jugador::energia_suficiente(const std::size_t& energia_requerida) const {
+	return (energia_ - energia_requerida);
 }
 
 bool Jugador::usar_energia(const std::size_t& valor) {
-	bool es_suficiente = energia_suficiente(valor);
+	std::size_t es_suficiente = (energia_suficiente(valor) <= 100);
 	if (es_suficiente) energia_ -= valor;
 	return es_suficiente;
 }
@@ -123,10 +123,12 @@ Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
 	Coordenada coordenada;
 
 	for (std::size_t i = 1; i <= this->edificios_.consulta_largo(); i++) {
+
 		coordenada = obtener_ubicacion(i);
 		nombre_edificio = mapa->obtener_contenido_ubicacion(coordenada);
 		edificio = Planos::buscar(nombre_edificio);
 		material_producido = edificio->producir_material();
+		material_producido = edificio->producir_material(); //crash
 		material_producido.cambiar_cantidad(
 		    material_producido.obtener_cantidad());
 		if (material_producido.obtener_nombre() != "ninguno")	// Es por si consultamos al Obelisco, pero tiene sentido?
@@ -154,14 +156,13 @@ void Jugador::recolectar(Mapa* mapa){
 	sumar_lista_materiales(listado);
 }
 
-//pedir coordenadas -> son validas -> alcanza energia -> seguro? -> mover
-
 bool Jugador::mover(Mapa* mapa){
 	bool exito = true;
 	Coordenada a_moverse;
 	Grafo* grafo = cargar_grafo(mapa);
 	Resultado_Chequeos resultado;
 	do{
+		std::cout << "Elegi las coordenadas a donde moverse o salir \n Fila: " << std::endl;
 		resultado = this -> pedir_coordenadas(a_moverse, mapa, grafo);
 	}while(this -> mostrar_mensaje(resultado));
 	if(a_moverse.x() != COORDENADA_VACIA){
@@ -207,7 +208,6 @@ bool Jugador::mostrar_mensaje(Resultado_Chequeos resultado){
 Resultado_Chequeos Jugador::pedir_coordenadas(Coordenada& coordenada, Mapa* mapa, Grafo* grafo){
 	std::string fila_ingresada, columna_ingresada;
 
-	std::cout << "Elegi las coordenadas del edificio o salir \n Fila: " << std::endl;
 	getline(std::cin, fila_ingresada);
 	std::cout << "Columna: " << std::endl;
 	getline(std::cin, columna_ingresada);

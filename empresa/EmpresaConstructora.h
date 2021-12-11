@@ -57,6 +57,11 @@ public:
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
 	void consultar_coordenada();
 
+	//PRE: el juegador y el mapa deben estar bien cargados
+	//POST: se pide al usuario que ingrese coordenadas validas y se cambia la posicion del jugador
+	//a las coordenadas ingresadas (no se mueve por recorrido)
+	void iniciar_coordenadas_jugador(Jugador* jugador);
+
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
 	void mostrar_construidos(Jugador* jugador);

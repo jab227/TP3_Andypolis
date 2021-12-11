@@ -10,6 +10,7 @@
 #include "../utils/Lista.h"
 #include "../utils/coordenada.h"
 #include "../grafo/Grafo.h"
+#include "../edificio/Edificio.h"
 
 const std::size_t ENERGIA_COMPRAR_BOMBAS = 5;
 const std::size_t ENERGIA_MAXIMA = 100;
@@ -54,10 +55,10 @@ public:
 	// POST: Devuelve la posicoin del jugador 
 	Coordenada obtener_posicion() const;
 	// PRE: -
-	// POST: si hay energia suficiente, devuelve un numero >= 0
+	// POST: si hay energia suficiente, devuelve un numero entre 0 y 100
 	// representando la energia que sobra. Si no alcanza devuelve un numero
-	// negativo representando la energia que falta.
-	bool energia_suficiente(const std::size_t& energia_requerida) const;
+	// muy grande, el numero que devuelve cambiado de signo es la energia que falta.
+	std::size_t energia_suficiente(const std::size_t& energia_requerida) const;
 
 	// PRE: el valor tiene que ser mayor o igual a la energia cambiada de
 	// signo. POST: se modifica el valor de la energia, si el numero es
@@ -109,6 +110,11 @@ public:
 	
 	void recolectar(Mapa* mapa);
 
+	void iniciar_coordenadas(Mapa* mapa);
+
+	//PRE: el mapa debe estar cargado y la coordenada ser valida
+	//POST: se mueve el jugador a la coordenada y se recolecta el material en ella
+	void mover_a_coordenada(Coordenada coordenada, Mapa* mapa);
 protected:
 	//PRE: el mapa y el grafo debe estar cargado
 	//POST: devuelve el resultado de las coordenadas ingresadas por el usuario. si estas son validas, las guarda en
@@ -130,10 +136,6 @@ protected:
 	//PRE: -
 	//POST: se pide al usuario que ingrese si o no
 	std::string pedir_si_no();
-
-	//PRE: el mapa debe estar cargado y la coordenada ser valida
-	//POST: se mueve el jugador a la coordenada y se recolecta el material en ella
-	void mover_a_coordenada(Coordenada coordenada, Mapa* mapa);
 
 	//PRE: el mapa debe estar cargado y la coordenada ser valida
 	//POST: devuelve el costo para cada jugador a moverse a ese casillero

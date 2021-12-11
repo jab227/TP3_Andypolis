@@ -24,10 +24,8 @@ void Almacen::agregar_material(const Material& material) {
 std::size_t Almacen::buscar_material(const Material& material) const {
 	bool encontrado = false;
 	std::size_t indice;
-	for (indice = 0;
-	     indice <= lista_materiales_.consulta_largo() && !encontrado;
-	     ++indice)
-			encontrado = (lista_materiales_.consulta(indice+1) == material);
+	for (indice = 0; indice < lista_materiales_.consulta_largo() && !encontrado; indice++)
+			encontrado = (lista_materiales_.consulta(indice + 1) == material);
 		 
 	return encontrado ? indice : NO_ENCONTRADO;
 }
@@ -148,15 +146,29 @@ void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos
 // Se puede mejorar pero es lo mas comodo.
 Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 	Resultado_Chequeos resultado = NO_MATERIALES;
+<<<<<<< HEAD
 	Material andycoins  = obtener_material(NOMBRES_MATERIALES[3]);
+=======
+	Material andycoins = Material(NOMBRES_MATERIALES[ANDYCOINS], 0);
+	//Ver si tiene sentido recibir el Material o un std::string. (1)
+	std::size_t indice = buscar_material(andycoins);
+	andycoins = lista_materiales_.consulta(indice);
+>>>>>>> arreglos
 	std::size_t gasto = cantidad_bombas * PRECIO_BOMBA;
 	if (gasto <= andycoins.obtener_cantidad()) {
 		cout << "Compraste " << cantidad_bombas
 		     << " bombas exitosamente." << endl;
-		sumar_cantidad_material(NOMBRES_MATERIALES[4], cantidad_bombas);
-		restar_cantidad_material(NOMBRES_MATERIALES[3], gasto);
+		sumar_cantidad_material(NOMBRES_MATERIALES[BOMBAS], cantidad_bombas);
+		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
+<<<<<<< HEAD
 		Material bombas = obtener_material(NOMBRES_MATERIALES[4]);
+=======
+		Material bombas = Material(NOMBRES_MATERIALES[BOMBAS], 0);
+		//Ver si tiene sentido recibir el Material o un std::string.(2)
+		std::size_t indice = buscar_material(bombas);
+		bombas = lista_materiales_.consulta(indice);  
+>>>>>>> arreglos
 		std::cout << "Cantidad de bombas: "
 			  << bombas.obtener_cantidad() << std::endl;
 		std::cout << "Andycoins restantes: "

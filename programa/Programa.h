@@ -63,6 +63,10 @@ private:
 	//PRE: la opcion debe ser valida
 	//POST: se pocesa la opcion ingresada
 	bool procesar_opcion_inicio(int opcion_elegida);
+
+	//PRE: -
+	//POST: se realizan inicializaciones del juego antes de iniciar por primera vez
+	void comenzar_partida();
 };
 
 #endif /* PROGRAMA_H_ */

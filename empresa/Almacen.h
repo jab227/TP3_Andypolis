@@ -7,7 +7,7 @@
 
 const int NO_ENCONTRADO = 0;
 std::string const SALIR_STR = "salir";
-const std::string NOMBRES_MATERIALES[] = {"madera", "piedra", "metal", "andycoins", "bombas"};
+const std::string NOMBRES_MATERIALES[] = {"piedra", "madera", "metal", "andycoins", "bombas"};
 
 class Almacen {
 private:

@@ -48,6 +48,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       jugador_activo(0),
       jugadores(Lista<Jugador*>()),
       objetivos_jugadores(Lista<Meta*>()) {
+	srand((unsigned int)time(0));
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
 	plano ->mostrar_edificios();	
@@ -58,7 +59,6 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	this->instancia = INICIO;
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1)));
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2)));
-	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
 }
 
@@ -119,13 +119,12 @@ void Programa::mostrar_menu_inicio() {
 bool Programa::procesar_opcion(int opcion) {
 	bool resultado;
 	if (this->instancia == INICIO)
-		resultado = this->procesar_opcion_inicio(opcion);
+		resultado = this -> procesar_opcion_inicio(opcion);
 	else {
-		int energia_restante =
-		    this->jugadores.consulta((int)this->jugador_activo)
-			->energia_suficiente(ENERGIA[opcion]);
-		if (energia_restante >= 0)
-			resultado = this->procesar_opcion_juego(opcion);
+		std::size_t energia_restante =
+		    this -> jugadores.consulta(this -> jugador_activo) -> energia_suficiente(ENERGIA[opcion]);
+		if (energia_restante <= 100)
+			resultado = this -> procesar_opcion_juego(opcion);
 		else
 			cout << "Energia insuficiente, te faltan "
 			     << -energia_restante

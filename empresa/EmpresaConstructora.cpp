@@ -53,10 +53,23 @@ void Empresa_Constructora::mover_jugador(Jugador* jugador){
 }
 
 void Empresa_Constructora::consultar_coordenada(){
-	Coordenada coordenada = Coordenada(0,0);
+	Coordenada coordenada;
+	std::cout << "Elegi las coordenadas a consultar o salir." << std::endl;
 	Resultado_Chequeos resultado = pedir_coordenadas(coordenada);
 	if(resultado == EXITO) this -> mapa -> saludar_coordenada(coordenada);
 	mostrar_mensaje_chequeo(resultado);
+}
+
+void Empresa_Constructora::iniciar_coordenadas_jugador(Jugador* jugador){
+	Coordenada coordenada;
+	Resultado_Chequeos resultado;
+	do{
+		std::cout << "Jugador "<< jugador -> obtener_jugador() << ": Eliga las coordenadas donde empezar el juego:" << endl;
+		resultado = pedir_coordenadas(coordenada);
+		if(resultado == SALIR)
+			ColorPrinter::color_msg("No se puede salir, se deben ingresar coordenadas",  ROJO, std::cout);
+	}while(!mostrar_mensaje_chequeo(resultado) || resultado == SALIR);
+
 }
 
 void Empresa_Constructora::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){
@@ -120,6 +133,7 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 		if(respuesta == SI){
 			mapa -> mostrar_mapa();
 			Coordenada coordenada;
+			std::cout << "Elegi las coordenadas del edificio a construir o salir." << std::endl;
 			Resultado_Chequeos resultado = this -> pedir_coordenadas(coordenada);
 			mostrar_mensaje_chequeo(resultado);
 			if( resultado == EXITO ){
@@ -136,6 +150,7 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	Coordenada coordenada = Coordenada(0,0);
 	Resultado_Chequeos resultado = NO_EXISTE;
+	std::cout << "Elegi las coordenadas del edificio a demoler o salir." << std::endl;
 	do resultado = this -> pedir_coordenadas(coordenada);
 	while(!mostrar_mensaje_chequeo(resultado));
 	std::size_t indice = jugador -> existe_ubicacion(coordenada);
@@ -227,7 +242,7 @@ Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string nombre, 
 Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
 	std::string fila_ingresada, columna_ingresada;
 	
-	std::cout << "Elegi las coordenadas del edificio o salir \nFila: ";
+	std::cout << "Fila: ";
 	getline(cin, fila_ingresada);
 	std::cout << "Columna: ";
 	getline(cin, columna_ingresada);
@@ -314,6 +329,7 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 	Coordenada coordenada;
 	Resultado_Chequeos resultado = NO_EXISTE;
 
+	std::cout << "Elegi las coordenadas del edificio a reparar o salir." << std::endl;
 	do resultado = this -> pedir_coordenadas(coordenada);
 	while(!mostrar_mensaje_chequeo(resultado));
 	//Va a buscar el indice a pesar de pedir salir, no coincide e imprime el msj de las coordenadas.
@@ -341,6 +357,7 @@ void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jug
 	Coordenada coordenada(0,0);
 	if(resultado == EXITO){
 		mapa -> mostrar_mapa();
+		std::cout << "Elegi las coordenadas del edificio a atacar o salir." << std::endl;
 		do resultado = this -> pedir_coordenadas(coordenada);
 		while(!mostrar_mensaje_chequeo(resultado));
 		std::size_t indice = jugador_inactivo -> existe_ubicacion(coordenada);
@@ -383,7 +400,7 @@ void Empresa_Constructora::comprar_bombas(Jugador* jugador){
 
 Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
 	std::string cantidad_ingresada;
-	std::cout << "¿Cuantas bombas desea comprar? (Precio: " << COSTO_BOMBAS << "andycoins): ";
+	std::cout << "¿Cuantas bombas desea comprar? (Precio: " << COSTO_BOMBAS << " andycoins): ";
 	getline(cin, cantidad_ingresada);
 	return chequeo_bombas(cantidad_ingresada, bombas);
 }

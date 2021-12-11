@@ -50,7 +50,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       objetivos_jugadores(Lista<Meta*>()) {
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
-	plano ->mostrar_edificios();	
+	//plano ->mostrar_edificios();	
 	Mapa* mapa = leer_de_archivo(ruta_mapa, ParserMapa());
 	leer_de_archivo(ruta_ubicaciones, ParserUbicacion(), mapa, jugadores);
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
@@ -95,7 +95,7 @@ void Programa::mostrar_menu_juego() {
 	cout << "7. Consultar coordenada." << endl;
 	cout << "8. Mostrar inventario." << endl;
 	cout << "9. Mostrar objetivos." << endl;
-	cout << "10. Reclectar recursos producidos." << endl;
+	cout << "10. Recolectar recursos producidos." << endl;
 	cout << "11. Moverse a una coordenada." << endl;
 	cout << "12. Finalizar turno." << endl;
 	cout << "13. Guardar y salir." << endl;
@@ -236,6 +236,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 }
 
 void Programa::comenzar_partida(){
+	this -> empresa_constructora -> mostrar_mapa();
 	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
 	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
 	cout << "Comienza la partida!" << endl;

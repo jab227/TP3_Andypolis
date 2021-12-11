@@ -41,10 +41,10 @@ void Meta::mostrar_objetivos() {
 	for (std::size_t i = 1; i <= this -> objetivos.consulta_largo(); i++) {
 		color = "  ";
 		objetivo = this->objetivos.consulta(i);
-		std::cout << "- " << objetivo -> obtener_titulo();
 		(objetivo->esta_cumplido()) ? color += VERDE_META
 					    : color += ROJO_META;
 		std::cout << color << "  " << END_COLOR << std::endl;
+		std::cout << "  " << objetivo -> obtener_titulo();
 	}
 }
 

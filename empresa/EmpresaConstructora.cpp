@@ -358,9 +358,9 @@ void Empresa_Constructora::bombardear_coordenadas(Coordenada coordenada, Jugador
 	bool destruido = this -> mapa -> explota_bomba(edificio, coordenada);
 	if(destruido){
 		jugador -> eliminar_ubicacion(coordenada);
-		ColorPrinter::color_msg("Edificio destruido en" + coordenada.a_string() + "!", TEXTO_VERDE, std::cout);
+		ColorPrinter::color_msg( coordenada.a_string() + ": ¡Destruido!", TEXTO_VERDE, std::cout);
 	}else
-		ColorPrinter::color_msg("El edificio todavia se mantiene en pie.", TEXTO_VERDE, std::cout);
+		ColorPrinter::color_msg(coordenada.a_string() + ": Todavia se mantiene en pie.", TEXTO_VERDE, std::cout);
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_reparar_edificio(Jugador* jugador, Lista<Material> listado_necesario, Coordenada coordenada){

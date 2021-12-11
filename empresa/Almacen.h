@@ -52,6 +52,7 @@ public:
 
 	//Si no encuentra nada, devuelve el Material con el nombre material y vacio.
 	Material obtener_material(std::string material) const;
+
 	void restar_cantidad_material(const std::string& nombre, std::size_t cantidad);
 	//PRE:  -
 	//POS: devuelve true si se cuentan con toda la lista de los materiales

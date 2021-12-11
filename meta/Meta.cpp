@@ -6,8 +6,8 @@
 
 const std::string VERDE_META = BGND_GREEN_118, ROJO_META = BGND_RED_196;
 
-Meta::Meta(Jugador* jugador) : objetivos(Lista<Objetivo*>()) {
-	Lista<Objetivo*> listado = crear_listado(jugador);
+Meta::Meta(Jugador* jugador, Mapa* mapa) : objetivos(Lista<Objetivo*>()) {
+	Lista<Objetivo*> listado = crear_listado(jugador, mapa);
 	std::size_t n;
 	for (int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
 		n = rand() % (listado.consulta_largo()) + 1;
@@ -48,7 +48,7 @@ void Meta::mostrar_objetivos() {
 	}
 }
 
-Lista<Objetivo*> Meta::crear_listado(Jugador* jugador) {
+Lista<Objetivo*> Meta::crear_listado(Jugador* jugador, Mapa* mapa) {
 	Lista<Objetivo*> listado;
 	listado.alta_al_final(new Armado(jugador));
 	listado.alta_al_final(new Bombardero(jugador));
@@ -56,7 +56,7 @@ Lista<Objetivo*> Meta::crear_listado(Jugador* jugador) {
 	listado.alta_al_final(new Constructor(jugador));
 	listado.alta_al_final(new Energetico(jugador));
 	listado.alta_al_final(new Extremista(jugador));
-	listado.alta_al_final(new Letrado(jugador));
+	listado.alta_al_final(new Letrado(jugador, mapa));
 	listado.alta_al_final(new Minero(jugador));
 	listado.alta_al_final(new Monedas(jugador));
 	listado.alta_al_final(new Piedras(jugador));

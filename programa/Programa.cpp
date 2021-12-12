@@ -284,7 +284,7 @@ std::size_t Programa::generar_numero_aleatorio(std::size_t a, std::size_t b) {
 void Programa::inicializar_objetivos_jugadores(Mapa* mapa) {
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1), mapa));
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2), mapa));
-
+}	
 void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios) {
 	std::ofstream fout_1(ruta_ubicaciones);
 	if(fout_1.is_open()){
@@ -305,7 +305,6 @@ void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_m
 	fout_2.close();
 	fout_3.close();
 }
-
 
 std::string Programa::estado_actual_materiales_jugadores(){
 	std::string texto = "";

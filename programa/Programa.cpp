@@ -1,6 +1,5 @@
 #include "Programa.h"
 
-#include <ctime>
 #include <fstream>
 #include <iostream>
 
@@ -58,7 +57,6 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	this->instancia = INICIO;
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1), mapa));
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2), mapa));
-	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
 }
 

@@ -2,6 +2,8 @@
 #define PROGRAMA_H_
 
 #include "../empresa/EmpresaConstructora.h"
+#include "../utils/LecturaArchivos.h"
+
 #include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
 #include "../meta/Meta.h"
@@ -14,6 +16,7 @@ class Programa {
 private:
 	Empresa_Constructora* empresa_constructora;
 	Instancia instancia;
+	Partida partida;
 	size_t jugador_activo;
 	Lista<Jugador*> jugadores;
 	Lista<Meta*> objetivos_jugadores;
@@ -67,6 +70,19 @@ private:
 	//PRE: -
 	//POST: se realizan inicializaciones del juego antes de iniciar por primera vez
 	void comenzar_partida();
+
+	//PRE: -
+	//POS: True si se cumple alguna de las condiciones de victoria, False en otro
+	//caso.
+	bool victoria();
+
+	//PRE: a > 0
+	//POS: devuelve un numero aleatorio en el intervalo (a,b)
+	std::size_t generar_numero_aleatorio(std::size_t a, std::size_t b);
+
+	//PRE: -
+	//POS: Inicializa los objetivo de cada jugador con 3 objetivos al azar.
+	void inicializar_objetivos_jugadores(Mapa* mapa);
 
 	std::string estado_actual_materiales_jugadores();
 };

@@ -22,7 +22,6 @@ bool Bombardero::actualizar(){
 
 		this -> bombas_actuales = bombas.obtener_cantidad();
 	}
-
 	return this -> cumplido;
 }
 

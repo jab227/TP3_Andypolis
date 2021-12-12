@@ -3,9 +3,10 @@
 const std::size_t MONEDAS_A_OBTENER = 100e3;
 const std::string NOMBRE = "Comprar andypolis";
 
-Monedas::Monedas(Jugador* jugador) : Objetivo(NOMBRE, jugador){
-	this -> monedas_juntadas = 0;
+Monedas::Monedas(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 	Material monedas = this -> jugador -> obtener_inventario().obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);
+	// Tiene que ser justas
+	this -> monedas_juntadas = monedas.obtener_cantidad();
 	this -> monedas_actuales = monedas.obtener_cantidad();
 }
 

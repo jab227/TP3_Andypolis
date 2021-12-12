@@ -46,7 +46,7 @@ public:
     void agregarVertice(Coordenada nuevoVertice);
 
     //pre: se debe tener un algortimo para calcular el camino mínimo previamente elegido
-    //post: muestra por terminal el camino mínimo desde un origen a un destino
+    //post: devuelve las coordenadas a seguir hasta el destino
     Lista<Coordenada>* caminoMinimo(Coordenada origen, Coordenada destino);
 
     //pre: se debe tener un algortimo para calcular el camino mínimo previamente elegido

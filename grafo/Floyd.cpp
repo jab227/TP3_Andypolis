@@ -83,27 +83,10 @@ void Floyd::calcularMatrices() {
                 }
             }
         }
-        //cout << endl << "Iteracion numero: " << verticeIntermedio << endl;
-        //mostrarMatrices();
     }
 }
 
 int Floyd::energiaCaminoMinimo(int origen, int destino) {
-
-    if(matrizCaminos[origen][destino] == POSICION_NO_ENCONTRADA){
-        cout << "No hay un camino que conecte (" <<  vertices->obtenerNombre(origen + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y()
-        		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y() << ')';
-    }else{
-        cout << "El camino minimo que une (" <<  vertices->obtenerNombre(origen + 1).x() << ", " << vertices->obtenerNombre(origen + 1).y()
-        		<< ") con (" << vertices->obtenerNombre(destino + 1).x() << ", " << vertices->obtenerNombre(destino + 1).y() << ')';
-        cout << " tiene un costo de: " << matrizCostos[origen][destino];//<< " y es el siguiente: ";
-        /*cout << vertices->obtenerNombre(origen + 1);
-        do{
-            origen = matrizCaminos[origen][destino];
-            cout << " -> " << vertices->obtenerNombre(origen + 1);
-        }while(origen != destino);*/
-    }
-    cout << endl;
     return matrizCostos[origen][destino];
 }
 

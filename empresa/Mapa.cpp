@@ -224,6 +224,7 @@ void Mapa::vaciar_materiales(){
 
 bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
 	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> atacar_edificio();
+	edificio = this -> terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	if(resultado == DESTRUIDO)
 		this -> demoler_edificio_ubicacion(edificio, coordenada);
 	return (resultado == DESTRUIDO);

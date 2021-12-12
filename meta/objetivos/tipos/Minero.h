@@ -6,6 +6,13 @@
 class Minero : public Objetivo{
 	private:
 	 const Mapa* mapa;
+	 bool mina;
+	 bool mina_oro;
+
+	 // Pre: -
+	 // Pos: True si tanto mina oro como mina estan construidos,
+	 // False en otro caso
+	 bool estan_construidos(const Lista<Coordenada>& edificios);
 	public:
 	 Minero(Jugador* jugador, Mapa* mapa);
 	 ~Minero();

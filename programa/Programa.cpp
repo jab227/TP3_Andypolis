@@ -221,9 +221,10 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 		case FIN_TURNO:
 			cout << "Turno del jugador " << this->jugador_activo
 			     << " finalizado." << endl;
-			this->jugadores.consulta(this->jugador_activo)
+			this -> jugadores.consulta(this->jugador_activo)
 			    ->recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
-			this->jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
+			this -> empresa_constructora -> producir_materiales(jugadores.consulta(jugador_activo));
+			this -> jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
 			break;
 		case GUARDAR_SALIR:
 			fin = true;
@@ -231,7 +232,6 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 	}
 	this->objetivos_jugadores.consulta(this->jugador_activo)
 	    ->actualizar_objetivos();
-	this -> empresa_constructora -> producir_materiales(jugadores.consulta(jugador_activo));
 	return fin;
 }
 

@@ -45,7 +45,7 @@ public:
 
 	//PRE: las rutas deben ser a archivos existentes
 	//POST: se guardan los cambios modificados
-	void guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones);
+	void guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios);
 
 private:
 	//PRE: -

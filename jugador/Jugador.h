@@ -103,7 +103,7 @@ public:
 	
 	void sumar_lista_materiales( Lista<Material> materiales);
 	
-	void recolectar_reservas();
+	bool recolectar_reservas();
 	//PRE: -
 	//POST: -
 	void producir_materiales(Mapa* mapa);

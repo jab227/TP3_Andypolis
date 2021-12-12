@@ -117,7 +117,8 @@ void Jugador::sumar_lista_materiales( Lista<Material> materiales){
 	this -> inventario_.sumar_lista_materiales(materiales,100);
 }
 
-void Jugador::recolectar_reservas(){
+bool Jugador::recolectar_reservas(){
+	bool recolectado = false;
 	TablePrinter printer;
 	Material producto;
 	printer.print_str("Materiales recolectados", std::cout);
@@ -126,9 +127,11 @@ void Jugador::recolectar_reservas(){
 		reservas_.baja(i);
 		printer.print_row(producto, std::cout);
 		if(producto.obtener_nombre() == "energia") energia_ += producto.obtener_cantidad();
+		recolectado = true;
 	}
 	this -> inventario_.sumar_lista_materiales(reservas_,100);
 	reservas_ = Lista<Material>();
+	return recolectado;
 }
 
 //Recorrer la lista ubicaciones, producir el material, fijarme si el material ya esta dado de alta

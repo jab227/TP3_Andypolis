@@ -119,10 +119,6 @@ void Empresa_Constructora::iniciar_coordenadas_jugador(Jugador* jugador){
 	jugador -> mover_a_coordenada(coordenada, mapa);
 }
 
-void Empresa_Constructora::guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones){
-	//Implementar.
-}
-
 void Empresa_Constructora::guardar_ubicaciones(std::string ruta){
 	ofstream archivo(ruta);
 	std::string contenido;
@@ -153,8 +149,9 @@ void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coo
 }
 
 void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
-	jugador -> recolectar_reservas();
-	jugador -> usar_energia(ENERGIA_RECOLECTAR);
+	if(jugador -> recolectar_reservas()) 
+		jugador -> usar_energia(ENERGIA_RECOLECTAR);
+	else std::cout << "No hay reservas para recolectar." << std::endl;
 }
 
 void Empresa_Constructora::lluvia_de_recursos(){

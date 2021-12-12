@@ -144,9 +144,8 @@ void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coo
 }
 
 void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
-	jugador -> recolectar(this -> mapa);
+	jugador -> recolectar_reservas();
 	jugador -> usar_energia(ENERGIA_RECOLECTAR);
-	//Mensajito con los recursos recolectados.
 	jugador -> mostrar_inventario();
 }
 

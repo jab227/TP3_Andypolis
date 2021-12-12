@@ -118,6 +118,10 @@ void Jugador::sumar_lista_materiales( Lista<Material> materiales){
 }
 
 void Jugador::recolectar_reservas(){
+	TablePrinter printer;
+	printer.print_str("Materiales recolectados", std::cout);
+	for(std::size_t i = 1; i <= reservas_.consulta_largo(); i++)
+		printer.print_row(reservas_.consulta(i), std::cout);
 	this -> inventario_.sumar_lista_materiales(reservas_,100);
 	reservas_ = Lista<Material>();
 }

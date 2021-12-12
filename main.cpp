@@ -24,8 +24,8 @@ int main() {
 		programa.mostrar_menu();
 		opcion = pedir_opcion_valida(programa);
 		programa.limpiar_pantalla();
-	}while(!programa.procesar_opcion(opcion));
-	programa.guardar_archivos(RUTA_MATERIALES, RUTA_UBICACIONES);
+	}while(!programa.procesar_opcion(opcion)); //Ojo que si salgo en iniciar partida, no tengo jugadores!!
+	programa.guardar_archivos(RUTA_UBICACIONES, RUTA_MATERIALES, RUTA_EDIFICIOS);
 	return 0;
 }
 

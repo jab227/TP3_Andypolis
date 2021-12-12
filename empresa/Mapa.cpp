@@ -21,7 +21,6 @@ const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
 	this -> cargar_terreno(mapa);
-	//this -> mostrar_mapa();
 }
 
 Mapa::~Mapa() {
@@ -49,10 +48,17 @@ void Mapa::iniciar_filas_casilleros(std::size_t fila, const std::string& mapa) {
 	}
 }
 
-bool Mapa::es_cordenada_valida(const Coordenada& coordenada) {
+bool Mapa::es_coordenada_valida(const Coordenada& coordenada) {
 	return (coordenada.x() < this->filas && coordenada.y() < this->columnas);
 }
 
+void Mapa::mostrar_casillero(Coordenada coordenada, std::string contenido){
+	std::cout << this->terreno[coordenada.x()][coordenada.y()]->obtener_color();
+	std::cout << ' ' << this->identificador_ocupados( contenido )<< ' ';
+	std::cout << FIN_COLOR;	
+}
+
+/*
 void Mapa::mostrar_mapa() {
 	std::cout << "Mapa:" << endl;
 	std::cout << "   ";
@@ -62,23 +68,32 @@ void Mapa::mostrar_mapa() {
 	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
 		std::cout << ' ' << columnas % 10 << ' ';
 	std::cout << std::endl;
+
+	Coordenada coordenada;
+	std::string contenido;
 	for (std::size_t filas = 0; filas < this->filas; filas++) {
 		std::cout << filas / 10 << filas % 10 << ' ';
 		for (std::size_t columnas = 0; columnas < this->columnas;
 		     columnas++) {
-			std::cout << this->terreno[filas][columnas]->obtener_color()
-			     << ' '
-			     << this->identificador_ocupados(
-				    this->terreno[filas][columnas]
-					->obtener_contenido())
-			     << ' ';
-				std::cout << FIN_COLOR;
+			coordenada = Coordenada(filas,columnas);
+			
+			std::cout << this->terreno[filas][columnas]->obtener_color();
+			
+			if(jugadores.consulta(1).obtener_posicion() == coordenada)
+				contenido = "jugador1";
+			else if(jugadores.consulta(2).obtener_posicion() == coordenada)
+				contenido = "jugador2";
+			else
+				contenido = this->terreno[filas][columnas]->obtener_contenido();
+			
+			std::cout << ' ' << this->identificador_ocupados( contenido )<< ' ';
+			std::cout << FIN_COLOR;
 		}
 		std::cout << std::endl << FIN_COLOR;
 	}
 	std::cout << FIN_COLOR;
 }
-
+*/
 void Mapa::saludar_coordenada(const Coordenada& coordenada){
 	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
 }
@@ -113,6 +128,7 @@ Material Mapa::generar_conjunto_material(std::string material){
 	return material_generado;
 }
 
+//OBS: Ahora es inutil porque no recogemos direcamente del edificio, debemos producir primero!
 //OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
 void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario){
 	 this -> terreno[coordenada.x()][coordenada.y()] -> recoger_material(inventario);
@@ -210,6 +226,7 @@ void Mapa::vaciar_materiales(){
 
 bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
 	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> atacar_edificio();
+	edificio = this -> terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	if(resultado == DESTRUIDO)
 		this -> demoler_edificio_ubicacion(edificio, coordenada);
 	return (resultado == DESTRUIDO);
@@ -244,5 +261,24 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 		identificador = "G";
 	else if(ocupador == "andycoins")
 		identificador = "C";
+	else if(ocupador == "jugador1")
+		identificador = "J";
+	else if(ocupador == "jugador2")
+		identificador = "U";
 	return identificador;
+}
+
+
+std::string Mapa::estado_actual_materiales(){
+	std::string texto, linea; 
+	for (std::size_t filas = 0; filas < this->filas; filas++){
+		for (std::size_t columnas = 0; columnas < this->columnas; columnas++){
+	     	if(this->terreno[filas][columnas] -> es_casillero_transitable() 
+	     				&& this->terreno[filas][columnas]->obtener_contenido() != ""){
+	     		linea = this->terreno[filas][columnas]->obtener_contenido() + " " + Coordenada(filas, columnas).a_string() + "\n";
+				texto += linea;
+			}
+		}
+	}
+	return texto;
 }

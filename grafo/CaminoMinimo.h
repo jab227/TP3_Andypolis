@@ -20,9 +20,11 @@ protected:
 public:
     CaminoMinimo(Lista_Grafo<Vertice> * vertices, int** matrizAdyacencia);
 
-    //post: muestra por pantalla el camino mínimo entre el origen y el destino, detallando su recorrido y peso
+    //post: devuelve una lista de las coordenadas a seguir hasta el destino en caso de que exista el recorido.
+    //Si no existe manda un mensaje por terminal
     virtual Lista<Coordenada>* caminoMinimo(int origen, int destino) = 0;
 
+    //post: devuelve la energia que cuesta ir del origen al destino, incluyendo INFINITO
     virtual int energiaCaminoMinimo(int origen, int destino) = 0;
 
     virtual ~CaminoMinimo() = default;

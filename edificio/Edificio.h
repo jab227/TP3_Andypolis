@@ -9,7 +9,7 @@ const std::string MATERIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
 	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE,
-	SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO, NO_ENERGIA, OBELISCO};
+	SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO, NO_ENERGIA, OBELISCO, NO_PERTENECE, NO_PERTENECE_OPONENTE};
 
 
 class Edificio {
@@ -103,7 +103,7 @@ public:
 	//POST: Devuelve true si el nombre es el mimso.
 	bool operator!=(const Edificio &rhs);
 
-	//TODO: Hacer a_string() que devuelva la info en formato "tabla";
+	//TODO: Hacer a_string() que devuelva la info para guardar.
 	std::string a_string();
 	
 	//PRE: -

@@ -5,6 +5,7 @@
 #include "Planos.h"
 #include "Mapa.h"
 #include "../utils/Lista.h"
+#include "../jugador/Jugador.h"
 #include "../jugador/jugadores/JugadorUno.h"
 #include "../jugador/jugadores/JugadorDos.h"
 
@@ -51,7 +52,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestra el mapa de terrenos y el de los edificios/materiales ubicados en mapa
-	void mostrar_mapa();
+	void mostrar_mapa(Lista<Jugador*> jugadores);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
@@ -91,6 +92,14 @@ public:
 	void mover_jugador(Jugador* jugador);
 
 	//void ver_objetivos(); Implementado en jugadores
+
+	//La idea es que devuelven en string lo que hay que imprimir en el archivo de salida.
+
+	std::string estado_actual_planos(); // por si modifican el archivo al comenzar la partida.
+	
+	std::string estado_actual_ubicaciones(Lista<Jugador*> jugadores);
+
+	void producir_materiales(Jugador* jugador);
 
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
@@ -147,6 +156,10 @@ private:
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
 	void edificio_construido_confirmado(const std::string &edificio, const Coordenada& coordenada, Jugador* jugador);
 
+	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
+	//POST: se realizan las acciones al demoler un edificio en la fila y columna.
+	void edificio_demolido_confirmado(const std::string &edificio, const Coordenada& coordenada, Jugador* jugador);
+
 	//PRE: -
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
 	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);
@@ -162,6 +175,12 @@ private:
 	Resultado_Chequeos chequeo_materiales(std::string nombre, std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
 
 	void bombardear_coordenadas(Coordenada coordenada, Jugador* jugador_inactivo);
+
+	//La idea es que resuelven en string lo que hay que imprimir en el archivo de salida.
+	std::string estado_actual_materiales_mapa();
+
+	std::string estado_actual_edificios_mapa(Jugador* jugador);
+
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

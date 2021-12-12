@@ -48,7 +48,7 @@ public:
 
 	//PRE: las rutas deben ser a archivos existentes
 	//POST: se guardan los cambios modificados
-	void guardar_archivos(std::string ruta_materiales, std::string ruta_ubicaciones);
+	void guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios);
 
 private:
 	//PRE: -
@@ -83,6 +83,8 @@ private:
 	//PRE: -
 	//POS: Inicializa los objetivo de cada jugador con 3 objetivos al azar.
 	void inicializar_objetivos_jugadores(Mapa* mapa);
+
+	std::string estado_actual_materiales_jugadores();
 };
 
 #endif /* PROGRAMA_H_ */

@@ -266,3 +266,12 @@ void Programa::guardar_archivos(std::string ruta_materiales,
 	this->empresa_constructora->guardar_archivos(ruta_materiales,
 						     ruta_ubicaciones);
 }
+
+bool Programa::victoria() {
+	auto chequear = [] (bool a, bool b, bool c) {
+		return (a && b || a && c || b && c);
+	};
+	Lista <Objetivo*> objetivos = objetivos_jugadores.consulta(jugador_activo)->obtener_objetivos();
+	bool objetivos_cumplidos = chequear(objetivos.consulta(1), objetivos.consulta(2), objetivos.consulta(3));
+	return objetivos_cumplidos;
+}

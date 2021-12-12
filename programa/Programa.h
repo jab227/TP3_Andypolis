@@ -67,6 +67,11 @@ private:
 	//PRE: -
 	//POST: se realizan inicializaciones del juego antes de iniciar por primera vez
 	void comenzar_partida();
+
+	//PRE: -
+	//POS: True si se cumple alguna de las condiciones de victoria, False en otro
+	//caso.
+	bool victoria();
 };
 
 #endif /* PROGRAMA_H_ */

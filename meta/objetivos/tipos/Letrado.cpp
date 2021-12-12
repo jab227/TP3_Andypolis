@@ -16,7 +16,12 @@ bool Letrado::actualizar() {
 	std::string nombre_edificio;
 	for (std::size_t i = 1; i <= coord.consulta_largo(); ++i) {
 		nombre_edificio = mapa->obtener_contenido_ubicacion(coord.consulta(i));
-		if(nombre_edificio == "escuela") contador++;
+		std::cout << nombre_edificio << endl;
+		if(nombre_edificio == "escuela") {
+		contador++;
+				//DEBUG
+			std::cout << contador << std::endl;
+		}
 	}
 	cumplido = (contador == Planos::cantidad_permitida("escuela"));
 	return cumplido;

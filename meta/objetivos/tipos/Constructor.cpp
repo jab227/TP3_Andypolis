@@ -19,6 +19,7 @@ bool Constructor::actualizar() {
 		for(std::size_t j = 1; j <= claves.consulta_largo() && !encontrado; ++j) {
 			nombre_edificio = mapa->obtener_contenido_ubicacion(coordenadas.consulta(i));
 			if(nombre_edificio == claves.consulta(j)) {
+		
 				coincidencias++;
 				encontrado = true;
 			}

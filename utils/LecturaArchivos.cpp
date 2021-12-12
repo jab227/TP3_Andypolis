@@ -15,7 +15,8 @@
 #include "../jugador/Jugador.h"
 #include "../empresa/Planos.h"
 #include "../empresa/Mapa.h"
-
+#include "../jugador/jugadores/JugadorDos.h"
+#include "../jugador/jugadores/JugadorUno.h"
 #include <fstream>
 bool es_numero(std::string palabra){
 	bool resultado = true;
@@ -112,22 +113,47 @@ Mapa* leer_de_archivo(const std::string& ruta, ParserMapa parser) {
 	return mapa;
 }
 
-void leer_de_archivo(const std::string& ruta, ParserUbicacion parser,
+// Necesito una manera de avisarle al programa el comienzo de una nueva partida
+Partida leer_de_archivo(const std::string& ruta, ParserUbicacion parser,
 		     Mapa*& mapa, Lista<Jugador*>& jugadores) {
 	std::ifstream fin(ruta);
-	std::string input;
-	getline(fin, input, '|');
-	parser.parse(input, mapa, jugadores);
-	fin.close();
+	Partida partida = NUEVA;
+	if (fin.is_open()) {
+		std::string input;
+		getline(fin, input, '|');
+		if (input == "") {
+			jugadores.alta_al_final(
+			    new Jugador_Uno(Coordenada(0, 0)));
+			jugadores.alta_al_final(
+			    new Jugador_Dos(Coordenada(1, 1)));
+			fin.close();
+		} else {
+			parser.parse(input, mapa, jugadores);
+			partida = CONTINUACION;
+			fin.close();
+		}
+	}
+	return partida;
 }
-void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jugador*>& jugadores) {
-	Lista<Material> j1_inventario, j2_inventario;
+
+void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jugador*>& jugadores, Partida partida) {
 	std::ifstream fin(ruta);
 	std::string input;
-	while (getline(fin, input)) {
-		// TODO: Emprolijar esto, helpers
-		parser.parse(input, jugadores.consulta(1)->obtener_inventario().obtener_materiales(), jugadores.consulta(2)->obtener_inventario().obtener_materiales());
+	if (partida != NUEVA) {
+		while (getline(fin, input)) {
+			parser.parse(input, jugadores.consulta(1)->obtener_inventario().obtener_materiales(), jugadores.consulta(2)->obtener_inventario().obtener_materiales());
+		}
+	} else {
+		inicializar_inventario_nueva_partida(jugadores.consulta(1));
+		inicializar_inventario_nueva_partida(jugadores.consulta(1));
 	}
 	fin.close();
 }
 
+void inicializar_inventario_nueva_partida(Jugador* jugador) {
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("piedra", 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("madera", 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("metal", 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("bombas", 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("andycoins", 0));
+}

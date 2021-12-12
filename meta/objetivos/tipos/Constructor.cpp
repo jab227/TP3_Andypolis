@@ -25,5 +25,7 @@ bool Constructor::actualizar() {
 		}
 	}
 
-	return (coincidencias == claves.consulta_largo());
+	cumplido = (coincidencias == claves.consulta_largo());
+	return cumplido;
 }
+	

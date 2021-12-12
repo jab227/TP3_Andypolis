@@ -15,5 +15,6 @@ bool Minero::actualizar() {
 		if(!mina) mina = (nombre_edificio == "mina");
 		if(!mina_oro) mina_oro = (nombre_edificio == "mina_oro");
 	}
-	return (mina && mina_oro);
+	cumplido = (mina && mina_oro);
+	return cumplido;
 }

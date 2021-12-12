@@ -18,6 +18,7 @@ bool Letrado::actualizar() {
 		nombre_edificio = mapa->obtener_contenido_ubicacion(coord.consulta(i));
 		if(nombre_edificio == "escuela") contador++;
 	}
-	return (contador == Planos::cantidad_permitida("escuela"));
+	cumplido = (contador == Planos::cantidad_permitida("escuela"));
+	return cumplido;
 }
 

@@ -93,12 +93,19 @@ void Empresa_Constructora::mover_jugador(Jugador* jugador){
 	jugador -> mover(this -> mapa);
 }
 
-void Empresa_Constructora::consultar_coordenada(){
+void Empresa_Constructora::consultar_coordenada(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Coordenada coordenada;
 	std::cout << "Elegi las coordenadas a consultar o salir." << std::endl;
-	Resultado_Chequeos resultado = pedir_coordenadas(coordenada);
-	if(resultado == EXITO) this -> mapa -> saludar_coordenada(coordenada);
-	mostrar_mensaje_chequeo(resultado);
+	Resultado_Chequeos resultado;
+	do{
+		resultado = pedir_coordenadas(coordenada);
+		if(resultado == EXITO) this -> mapa -> saludar_coordenada(coordenada);
+	}while(!mostrar_mensaje_chequeo(resultado));
+	if(jugador_activo -> existe_ubicacion(coordenada))
+		Printer::print_str("El edificio te pertenece.", std::cout);
+	else if(jugador_inactivo -> existe_ubicacion(coordenada))
+		Printer::print_str("El edificio le pertenece al otro jugador.", std::cout);
+
 }
 
 void Empresa_Constructora::iniciar_coordenadas_jugador(Jugador* jugador){
@@ -159,11 +166,11 @@ void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
 	jugador -> mostrar_inventario();
 }
 
-void Empresa_Constructora::lluvia_de_recursos(){
-	if(!this -> mapa -> generar_materiales_aleatorios())
+void Empresa_Constructora::lluvia_de_recursos(Coordenada jugador1, Coordenada jugador2){
+	if(!this -> mapa -> generar_materiales_aleatorios(jugador1, jugador2))
 		std::cout << "Materiales generados por el mapa!" << std::endl;
 	else
-		std::cout << "No hay espacio disponible para generar materiales. Eliminalos antes." << std::endl;
+		std::cout << "No hay espacio disponible para generar materiales." << std::endl;
 }
 
 void Empresa_Constructora::vaciar_materiales(){
@@ -201,8 +208,7 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	do{
 		resultado = this -> pedir_coordenadas(coordenada);
 		if(resultado == EXITO){
-			std::size_t indice = jugador -> existe_ubicacion(coordenada);
-			if(!indice)
+			if(!jugador -> existe_ubicacion(coordenada))
 				resultado = NO_PERTENECE;
 		}
 	}
@@ -385,11 +391,13 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 	Resultado_Chequeos resultado = NO_EXISTE;
 
 	std::cout << "Elegi las coordenadas del edificio a reparar o salir." << std::endl;
-	do resultado = this -> pedir_coordenadas(coordenada);
-	while(!mostrar_mensaje_chequeo(resultado));
-	//Va a buscar el indice a pesar de pedir salir, no coincide e imprime el msj de las coordenadas.
-	std::size_t indice = jugador -> existe_ubicacion(coordenada);
-	if(indice){ //Chequeo que la coordenada este en la lista de ubicaciones.
+	do{
+		resultado = this -> pedir_coordenadas(coordenada);
+		if(resultado == EXITO)
+			if(!jugador -> existe_ubicacion(coordenada))
+				resultado = NO_PERTENECE;
+	}while(!mostrar_mensaje_chequeo(resultado));
+	if(resultado == EXITO){
 		std::string nombre_edificio = this -> mapa -> obtener_contenido_ubicacion(coordenada);
 		Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
 		resultado = this -> chequeo_reparar_edificio(jugador, listado_necesario, coordenada);
@@ -397,10 +405,10 @@ void Empresa_Constructora::reparar_edificio(Jugador* jugador){
 			//reparar_edificio_confirmado()
 			jugador -> cobrar_reparacion(listado_necesario);
 			jugador -> usar_energia(ENERGIA_REPARAR);
+			ColorPrinter::color_msg("Edificio reparado exitosamente!", TEXTO_VERDE, std::cout);
 		}
 		mostrar_mensaje_chequeo( resultado );
-	} else // Ojo porque puede querer salir y va a mostrar este msj.
-		ColorPrinter::color_msg("No hay un edificio tuyo en estas coordenadas.", ROJO, std::cout);
+	}
 }
 
 void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
@@ -414,11 +422,9 @@ void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jug
 		std::cout << "Elegi las coordenadas del edificio a atacar o salir." << std::endl;
 		do{
 			resultado = this -> pedir_coordenadas(coordenada);
-			if(resultado == EXITO){
-				std::size_t indice = jugador_inactivo -> existe_ubicacion(coordenada);
-				if(!indice)
+			if(resultado == EXITO)
+				if(!jugador_inactivo -> existe_ubicacion(coordenada))
 					resultado = NO_PERTENECE_OPONENTE;
-			}
 		}
 		while(!mostrar_mensaje_chequeo(resultado));
 		if(resultado == EXITO){

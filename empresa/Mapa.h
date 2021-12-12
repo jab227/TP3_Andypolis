@@ -91,7 +91,7 @@ public:
 	//PRE: -
 	//POST: se generan materiales aleatorios por el mapa. devuelve true si no se genero ningun material, y
 	//false si se genero al menos 1 material de alguno
-	bool generar_materiales_aleatorios();
+	bool generar_materiales_aleatorios(Coordenada jugador1, Coordenada jugador2);
 
 	//PRE: -
 	//POST: se limpia todo el mapa de materiales
@@ -136,7 +136,7 @@ private:
 
 	//PRE: el mapa debe estar bien cargado
 	//POST: Devuelve una lista de los casilleros transitables libres en el mapa
-	void casilleros_libres_transitables(Lista<Coordenada>*& lista_desocupados);
+	void casilleros_libres_transitables(Lista<Coordenada>*& lista_desocupados, Coordenada jugador1, Coordenada jugador2);
 
 	//PRE: minimo <= maximo
 	//POST: se genera un numero aleatorio que puede ir desde minimo hasta maximo incluido

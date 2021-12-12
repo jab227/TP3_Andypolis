@@ -21,7 +21,7 @@ Meta::~Meta() { eliminar_listado(this->objetivos); }
 bool Meta::actualizar_objetivos() {
 	bool cumplidos = true;
 	for (std::size_t i = 1; i <= this->objetivos.consulta_largo(); i++) {
-		cumplidos = (cumplidos && this->objetivos.consulta(i)->actualizar());
+		cumplidos = (this->objetivos.consulta(i)->actualizar() && cumplidos);
 	}
 	return cumplidos;
 }
@@ -29,7 +29,7 @@ bool Meta::actualizar_objetivos() {
 bool Meta::objetivos_cumplidos() {
 	bool cumplidos = true;
 	for (std::size_t i = 1; i <= this->objetivos.consulta_largo(); i++)
-		cumplidos = (cumplidos && this->objetivos.consulta(i)->esta_cumplido());
+		cumplidos = (this->objetivos.consulta(i)->esta_cumplido() && cumplidos);
 
 	return cumplidos;
 }

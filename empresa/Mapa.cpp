@@ -143,10 +143,10 @@ std::string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) cons
 }
 
 //TODO: REVISAR que no haya hecho cagadas con la logica.
-bool Mapa::generar_materiales_aleatorios(){
+bool Mapa::generar_materiales_aleatorios(Coordenada jugador1, Coordenada jugador2){
 	//Chequea cuando casilleros libres y transitables hay. Hace una lista.
 	Lista<Coordenada>* casilleros_libres = new Lista<Coordenada>;
-	casilleros_libres_transitables(casilleros_libres);
+	casilleros_libres_transitables(casilleros_libres, jugador1, jugador2);
 	//Genera los numeros aleatorios dentro de los rangos [MINIMO,MAXIMO]
 	std::size_t piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
 	std::size_t madera_a_generar = this -> numero_aleatorio(MADERA_MINIMO, MADERA_MAXIMO);
@@ -201,10 +201,11 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {
 }
 
 //TODO:Quitarme la dependencia. TellDontAsk.
-void Mapa::casilleros_libres_transitables(Lista<Coordenada>* &lista_desocupados){
+void Mapa::casilleros_libres_transitables(Lista<Coordenada>* &lista_desocupados, Coordenada jugador1, Coordenada jugador2){
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++)
-			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
+			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado() &&
+					Coordenada(fila, columna) != jugador1 && Coordenada(fila, columna) != jugador2)
 				lista_desocupados -> alta_al_final(Coordenada(fila, columna));
 }
 

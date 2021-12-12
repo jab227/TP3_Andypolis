@@ -116,6 +116,7 @@ public:
 	//PRE: el mapa debe estar cargado y la coordenada ser valida
 	//POST: se mueve el jugador a la coordenada y se recolecta el material en ella
 	void mover_a_coordenada(Coordenada coordenada, Mapa* mapa);
+
 protected:
 	//PRE: el mapa y el grafo debe estar cargado
 	//POST: devuelve el resultado de las coordenadas ingresadas por el usuario. si estas son validas, las guarda en

@@ -281,7 +281,7 @@ void Programa::guardar_archivos() {
 }
 
 
-void Programa::estado_actual_materiales_jugadores(){
+std::string Programa::estado_actual_materiales_jugadores(){
 	std::string texto = "";
 	Lista<Material> inventario = jugadores.consulta(1)->obtener_inventario();
 	Material material;

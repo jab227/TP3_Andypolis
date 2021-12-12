@@ -67,6 +67,8 @@ private:
 	//PRE: -
 	//POST: se realizan inicializaciones del juego antes de iniciar por primera vez
 	void comenzar_partida();
+
+	std::string estado_actual_materiales_jugadores();
 };
 
 #endif /* PROGRAMA_H_ */

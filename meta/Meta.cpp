@@ -10,7 +10,7 @@ Meta::Meta(Jugador* jugador, Mapa* mapa) : objetivos(Lista<Objetivo*>()) {
 	Lista<Objetivo*> listado = crear_listado(jugador, mapa);
 	std::size_t n;
 	for (int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
-		n = (rand() % (listado.consulta_largo())) + 1;
+		n = generar_numero_aleatorio(1,listado.consulta_largo());
 		this->objetivos.alta_al_final(listado.baja(n));
 	}
 	this->eliminar_listado(listado);
@@ -66,4 +66,11 @@ Lista<Objetivo*> Meta::crear_listado(Jugador* jugador, Mapa* mapa) {
 
 void Meta::eliminar_listado(Lista<Objetivo*>& listado) {
 	while (!listado.vacia()) delete listado.baja(1);
+}
+
+std::size_t Meta::generar_numero_aleatorio(std::size_t a, std::size_t b) {
+	std::random_device device;
+	std::mt19937 rng(device());
+	std::uniform_int_distribution<std::mt19937::result_type> rango(a, b);
+	return rango(rng);
 }

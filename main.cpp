@@ -25,7 +25,7 @@ int main() {
 		opcion = pedir_opcion_valida(programa);
 		programa.limpiar_pantalla();
 	}while(!programa.procesar_opcion(opcion));
-	programa.guardar_archivos(RUTA_MATERIALES, RUTA_UBICACIONES);
+	programa.guardar_archivos(RUTA_MATERIALES, RUTA_UBICACIONES, RUTA_EDIFICIOS);
 	return 0;
 }
 

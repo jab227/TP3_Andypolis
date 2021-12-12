@@ -263,33 +263,33 @@ bool Programa::es_opcion_valida(std::string opcion) {
 
 void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 
-void Programa::guardar_archivos() {
-	std::ofstream fout_1(RUTA_UBICACIONES);
+void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios) {
+	std::ofstream fout_1(ruta_ubicaciones);
 	if(!fout_1.is_open()){
-		Printer::print_str(empresa -> estado_actual_ubicaciones(), fout_1);
+		Printer::print_str(empresa_constructora -> estado_actual_ubicaciones(), fout_1);
 	}
 
-	std::ofstream fout_2(RUTA_MATERIALES);
+	std::ofstream fout_2(ruta_materiales);
 	if(!fout_2.is_open()){
 		Printer::print_str(estado_actual_materiales_jugadores(), fout_2);
 	}
 
-	std::ofstream fout_3(RUTA_EDIFICIOS);
+	std::ofstream fout_3(ruta_edificios);
 	if(!fout_3.is_open()){
-		Printer::print_str(empresa -> estado_actual_planos(), fout_3);
+		Printer::print_str(empresa_constructora -> estado_actual_planos(), fout_3);
 	}
 }
 
 
-void Programa::estado_actual_materiales_jugadores(){
+std::string Programa::estado_actual_materiales_jugadores(){
 	std::string texto = "";
-	Lista<Material> inventario = jugadores.consulta(1)->obtener_inventario();
+	Lista<Material> inventario = jugadores.consulta(1)->obtener_inventario().obtener_materiales();
 	Material material;
-	for(std::size_t i = 1; i <= inventario.consulta_largo(i); i++){
-		material = inventario.consulta(i)
+	for(std::size_t i = 1; i <= inventario.consulta_largo(); i++){
+		material = inventario.consulta(i);
 		texto += material.obtener_nombre() + "\n";
-		for(std::size_t j = 1; j <= jugadores.consulta_largo(j); j++){
-				inventario = jugadores.consulta(j)->obtener_inventario();
+		for(std::size_t j = 1; j <= jugadores.consulta_largo(); j++){
+				inventario = jugadores.consulta(j)->obtener_inventario().obtener_materiales();
 				texto += inventario.consulta(i).obtener_cantidad() + "\n";
 		}
 	}

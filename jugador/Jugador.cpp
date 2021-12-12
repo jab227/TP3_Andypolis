@@ -224,7 +224,7 @@ Resultado_Chequeos Jugador::chequeo_coordenadas_moverse(std::string fila_ingresa
 
 	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR) resultado = SALIR;
 	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada)) resultado = NO_EXISTE;
-	else if(!(mapa -> es_cordenada_valida(Coordenada(stoul(fila_ingresada), stoul(columna_ingresada))))) resultado = FUERA_RANGO;
+	else if(!(mapa -> es_coordenada_valida(Coordenada(stoul(fila_ingresada), stoul(columna_ingresada))))) resultado = FUERA_RANGO;
 	else if((int) this -> obtener_energia() < grafo -> energiaCaminoMinimo(posicion_, Coordenada(stoul(fila_ingresada), stoul(columna_ingresada)))) resultado = NO_ENERGIA;
 	else coordenada = Coordenada(stoul(fila_ingresada), stoul(columna_ingresada));
 
@@ -252,8 +252,8 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	Grafo* grafo = new Grafo;
 	std::size_t fila = 0, columna = 0;
 	Coordenada coordenada_actual(fila, columna);
-	while(mapa -> es_cordenada_valida(coordenada_actual)){
-		while(mapa -> es_cordenada_valida(coordenada_actual)){
+	while(mapa -> es_coordenada_valida(coordenada_actual)){
+		while(mapa -> es_coordenada_valida(coordenada_actual)){
 			grafo -> agregarVertice(coordenada_actual);
 			if(columna != 0){
 				grafo -> agregarCamino(Coordenada(fila, columna - 1), coordenada_actual, (int) obtener_costo_terreno(coordenada_actual, mapa));
@@ -277,3 +277,8 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 std::string Jugador::a_string(){
 	return std::to_string(id_) + " " + posicion_.a_string();
 }
+
+
+Coordenada Jugador::obtener_posicion() const{
+		return posicion_;
+	}

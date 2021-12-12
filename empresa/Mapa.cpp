@@ -48,11 +48,18 @@ void Mapa::iniciar_filas_casilleros(std::size_t fila, const std::string& mapa) {
 	}
 }
 
-bool Mapa::es_cordenada_valida(const Coordenada& coordenada) {
+bool Mapa::es_coordenada_valida(const Coordenada& coordenada) {
 	return (coordenada.x() < this->filas && coordenada.y() < this->columnas);
 }
 
-void Mapa::mostrar_mapa(Lista<Jugador*> jugadores) {
+void Mapa::mostrar_casillero(Coordenada coordenada, std::string contenido){
+	std::cout << this->terreno[coordenada.x()][coordenada.y()]->obtener_color();
+	std::cout << ' ' << this->identificador_ocupados( contenido )<< ' ';
+	std::cout << FIN_COLOR;	
+}
+
+/*
+void Mapa::mostrar_mapa() {
 	std::cout << "Mapa:" << endl;
 	std::cout << "   ";
 	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
@@ -68,14 +75,14 @@ void Mapa::mostrar_mapa(Lista<Jugador*> jugadores) {
 		std::cout << filas / 10 << filas % 10 << ' ';
 		for (std::size_t columnas = 0; columnas < this->columnas;
 		     columnas++) {
-			coordenada = Coordenada(filas,columnas)
+			coordenada = Coordenada(filas,columnas);
 			
 			std::cout << this->terreno[filas][columnas]->obtener_color();
 			
 			if(jugadores.consulta(1).obtener_posicion() == coordenada)
-				contenido = "jugador1"
+				contenido = "jugador1";
 			else if(jugadores.consulta(2).obtener_posicion() == coordenada)
-				contenido = "jugador2"
+				contenido = "jugador2";
 			else
 				contenido = this->terreno[filas][columnas]->obtener_contenido();
 			
@@ -86,7 +93,7 @@ void Mapa::mostrar_mapa(Lista<Jugador*> jugadores) {
 	}
 	std::cout << FIN_COLOR;
 }
-
+*/
 void Mapa::saludar_coordenada(const Coordenada& coordenada){
 	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
 }

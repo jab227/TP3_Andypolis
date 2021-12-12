@@ -5,7 +5,6 @@
 #include "../material/Material.h"
 #include "../Casillero/Casillero.h"
 #include "../Casillero/Casillero.h"
-#include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
 #include "../utils/coordenada.h"
 
@@ -26,7 +25,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve true si las coordenadas se encuentran en el rango del mapa y false de lo contrario
-	bool es_cordenada_valida(const Coordenada& coordenada);
+	bool es_coordenada_valida(const Coordenada& coordenada);
 
 	//PRE: -
 	//POST: se chequea que la ubicacion sea disponible para construir un edificio. devuelve si las coordenadas estan
@@ -41,7 +40,8 @@ public:
 
 	//PRE: el mapa debe estar cargado
 	//POST: se muestra el mapa de los edificios con los terrenos en colores
-	void mostrar_mapa(Lista<Jugador*> jugadores);
+	//void mostrar_mapa();
+	void mostrar_casillero(Coordenada coordenada, std::string contenido);
 
 	//PRE: la posicion debe ser valida
 	//POST: se muestra informacion sobre la ubicacion consultada

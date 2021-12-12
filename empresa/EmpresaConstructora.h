@@ -5,6 +5,7 @@
 #include "Planos.h"
 #include "Mapa.h"
 #include "../utils/Lista.h"
+#include "../jugador/Jugador.h"
 #include "../jugador/jugadores/JugadorUno.h"
 #include "../jugador/jugadores/JugadorDos.h"
 

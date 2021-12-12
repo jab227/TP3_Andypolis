@@ -19,7 +19,7 @@ bool Monedas::actualizar(){
 			this -> monedas_juntadas += monedas.obtener_cantidad() - this -> monedas_actuales;
 
 		if(this -> monedas_juntadas >= MONEDAS_A_OBTENER)
-			this -> cumplido = true;
+			this -> cumplido = true;\
 
 		this -> monedas_actuales = monedas.obtener_cantidad();
 	}

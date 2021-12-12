@@ -266,7 +266,17 @@ void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 void Programa::guardar_archivos() {
 	std::ofstream fout_1(RUTA_UBICACIONES);
 	if(!fout_1.is_open()){
-		Printer::print_str(, fout_1);
+		Printer::print_str(empresa -> estado_actual_ubicaciones(), fout_1);
+	}
+
+	std::ofstream fout_2(RUTA_MATERIALES);
+	if(!fout_2.is_open()){
+		Printer::print_str(estado_actual_materiales_jugadores(), fout_2);
+	}
+
+	std::ofstream fout_3(RUTA_EDIFICIOS);
+	if(!fout_3.is_open()){
+		Printer::print_str(empresa -> estado_actual_planos(), fout_3);
 	}
 }
 

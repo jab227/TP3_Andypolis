@@ -274,6 +274,6 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	return grafo;
 }
 
-std::string a_string(){
+std::string Jugador::a_string(){
 	return id + " " + posicion_.a_string();
 }

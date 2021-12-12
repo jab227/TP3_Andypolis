@@ -19,6 +19,7 @@ int main() {
 	Programa programa(RUTA_MATERIALES, RUTA_EDIFICIOS, RUTA_MAPA, RUTA_UBICACIONES);
 	int opcion;
 	mensaje_bienvenida(programa);
+	
 	do{
 		programa.mostrar_menu();
 		opcion = pedir_opcion_valida(programa);
@@ -29,7 +30,7 @@ int main() {
 }
 
 void mensaje_bienvenida(Programa &programa){
-	programa.limpiar_pantalla();
+	//programa.limpiar_pantalla();
 	cout << "Bienvenido!" << endl;
 }
 

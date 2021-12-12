@@ -51,13 +51,16 @@ public:
 
 	//PRE: -
 	//POST: Si esta ocupado, pide al edificio de repararse. Devuelve NO_REPARABLE o EXITO.
-	Resultado_Chequeos reparar_edificio() override;
+	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
 	
 	//PRE: -
 	//POST: Si esta ocupado, disminuye la vida del edificio. 
 	Resultado_Chequeos atacar_edificio() override;
 
 	void agregar_material(Material material) override;
+	
+	char obtener_identificador();
+
 };
 
 #endif /* CASILLERO_CASILLEROCONSTRUIBLE_H_ */

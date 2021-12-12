@@ -14,19 +14,19 @@
 #include "../printer/printer.h"
 #include "../utils/LecturaArchivos.h"
 
-const int CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
+const std::size_t CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
 	  REPARAR = 5, COMPRAR_BOMBAS = 6, CONSULTAR = 7, LISTAR_MATERIALES = 8,
 	  OBJETIVOS = 9, RECOLECTAR = 10, MOVERSE = 11, FIN_TURNO = 12,
 	  GUARDAR_SALIR = 13;
-const int OPCION_MINIMA_JUEGO = CONSTRUIR, OPCION_MAXIMA_JUEGO = GUARDAR_SALIR;
+const std::size_t OPCION_MINIMA_JUEGO = CONSTRUIR, OPCION_MAXIMA_JUEGO = GUARDAR_SALIR;
 
-const int MODIFICAR_EDIFICIO = 1, LISTAR_EDIFICIOS = 2, MOSTRAR_MAPA = 3,
+const std::size_t MODIFICAR_EDIFICIO = 1, LISTAR_EDIFICIOS = 2, MOSTRAR_MAPA = 3,
 	  COMENZAR = 4, GUARDAR_SALIR_INICIO = 5;
-const int OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO,
+const std::size_t OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO,
 	  OPCION_MAXIMA_INICIO = GUARDAR_SALIR_INICIO;
 
-const int ENERGIA_INICIAL = 50, ENERGIA_SUMADA_FIN_TURNO = 20;
-const int ENERGIA[] = {0,
+const std::size_t ENERGIA_INICIAL = 50, ENERGIA_SUMADA_FIN_TURNO = 20;
+const std::size_t ENERGIA[] = {0,
 		       ENERGIA_CONSTRUIR,
 		       ENERGIA_LISTAR_CONSTRUIDOS,
 		       ENERGIA_DEMOLER,
@@ -50,7 +50,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       objetivos_jugadores(Lista<Meta*>()) {
 	Planos* plano =
 	    new Planos(leer_de_archivo(ruta_edificios, ParserEdificio()));
-	plano ->mostrar_edificios();	
+	//plano ->mostrar_edificios();	
 	Mapa* mapa = leer_de_archivo(ruta_mapa, ParserMapa());
 	leer_de_archivo(ruta_ubicaciones, ParserUbicacion(), mapa, jugadores);
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
@@ -60,13 +60,13 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2), mapa));
 	srand((unsigned int)time(0));
 	this->jugador_activo = rand() % 2 + 1;
-	
 }
 
 Programa::~Programa() {
 	delete this->empresa_constructora;
 	while (!this->objetivos_jugadores.vacia()) delete this->objetivos_jugadores.baja(1);
 	while (!this->jugadores.vacia()) delete this->jugadores.baja(1);
+	while (!this->objetivos_jugadores.vacia()) delete this->objetivos_jugadores.baja(1);
 }
 
 void Programa::mostrar_menu() {
@@ -77,11 +77,11 @@ void Programa::mostrar_menu() {
 }
 
 void Programa::mostrar_menu_juego() {
-	cout << "Turno del jugador " << this->jugador_activo << ". "
+	cout << "Turno del jugador " << this -> jugador_activo << ". "
 	     << "Tenes "
-	     << jugadores.consulta(jugador_activo)->obtener_energia()
+	     << jugadores.consulta(jugador_activo) -> obtener_energia()
 	     << " de energia." << endl;
-	this->empresa_constructora->mostrar_mapa();
+	this -> empresa_constructora -> mostrar_mapa();
 	cout << "--------------------------------------------------------------"
 	     << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero"
@@ -95,7 +95,7 @@ void Programa::mostrar_menu_juego() {
 	cout << "7. Consultar coordenada." << endl;
 	cout << "8. Mostrar inventario." << endl;
 	cout << "9. Mostrar objetivos." << endl;
-	cout << "10. Reclectar recursos producidos." << endl;
+	cout << "10. Recolectar recursos producidos." << endl;
 	cout << "11. Moverse a una coordenada." << endl;
 	cout << "12. Finalizar turno." << endl;
 	cout << "13. Guardar y salir." << endl;
@@ -117,12 +117,12 @@ void Programa::mostrar_menu_inicio() {
 	     << endl;
 }
 
-bool Programa::procesar_opcion(int opcion) {
+bool Programa::procesar_opcion(std::size_t opcion) {
 	bool resultado;
 	if (this->instancia == INICIO)
-		resultado = this->procesar_opcion_inicio(opcion);
+		resultado = this -> procesar_opcion_inicio(opcion);
 	else {
-		int energia_restante =
+		std::size_t energia_restante =
 		    this->jugadores.consulta(this->jugador_activo)
 			->energia_suficiente(ENERGIA[opcion]);
 		if (energia_restante >= 0)
@@ -136,12 +136,12 @@ bool Programa::procesar_opcion(int opcion) {
 	return resultado;
 }
 
-bool Programa::procesar_opcion_inicio(int opcion_elegida) {
+bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
 	bool fin = false;
 	switch (opcion_elegida) {
 		case MODIFICAR_EDIFICIO:
 			this->empresa_constructora->modificar_edificios();
-			this->limpiar_pantalla();
+			//this->limpiar_pantalla(); lo saque porque no se ve que mensaje te devuelve la funcion
 			// break; Para que se listen los edificios post editar.
 		case LISTAR_EDIFICIOS:
 			this->empresa_constructora->mostrar_edificios();
@@ -150,13 +150,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 			this->empresa_constructora->mostrar_mapa();
 			break;
 		case COMENZAR:
-			cout << "Comienza la partida!" << endl;
-			this->instancia = JUEGO;
-			this->jugadores.consulta(1)->recuperar_energia(
-			    ENERGIA_INICIAL);
-			this->jugadores.consulta(2)->recuperar_energia(
-			    ENERGIA_INICIAL);
-			this->empresa_constructora->lluvia_de_recursos();
+			this -> comenzar_partida();
 			break;
 		case GUARDAR_SALIR_INICIO:
 			fin = true;
@@ -167,7 +161,7 @@ bool Programa::procesar_opcion_inicio(int opcion_elegida) {
 	return fin;
 }
 
-bool Programa::procesar_opcion_juego(int opcion_elegida) {
+bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 	bool fin = false;
 	switch (opcion_elegida) {
 		case CONSTRUIR:
@@ -222,16 +216,14 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 			    this->jugadores.consulta(this->jugador_activo));
 			break;
 		case MOVERSE:
-			cout << "Implementar moverse!" << endl;
+			this -> empresa_constructora -> mover_jugador(this -> jugadores.consulta(this -> jugador_activo));
 			break;
 		case FIN_TURNO:
 			cout << "Turno del jugador " << this->jugador_activo
 			     << " finalizado." << endl;
 			this->jugadores.consulta(this->jugador_activo)
 			    ->recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
-			this->jugador_activo =
-			    3 -
-			    this->jugador_activo;  // Cambio de jugador activo
+			this->jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
 			break;
 		case GUARDAR_SALIR:
 			fin = true;
@@ -243,16 +235,29 @@ bool Programa::procesar_opcion_juego(int opcion_elegida) {
 	return fin;
 }
 
+void Programa::comenzar_partida(){
+	this -> empresa_constructora -> mostrar_mapa();
+	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
+	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
+	cout << "Comienza la partida!" << endl;
+	this -> instancia = JUEGO;
+	this -> jugadores.consulta(1) -> recuperar_energia(
+	    ENERGIA_INICIAL);
+	this -> jugadores.consulta(2) -> recuperar_energia(
+	    ENERGIA_INICIAL);
+	this -> empresa_constructora -> lluvia_de_recursos();
+}
+
 bool Programa::es_opcion_valida(std::string opcion) {
 	bool valida = true;
 	if (!es_numero(opcion))
 		valida = false;
 	else if (this->instancia == INICIO)
-		valida = (stoi(opcion) >= OPCION_MINIMA_INICIO &&
-			  stoi(opcion) <= OPCION_MAXIMA_INICIO);
+		valida = (stoul(opcion) >= OPCION_MINIMA_INICIO &&
+			  stoul(opcion) <= OPCION_MAXIMA_INICIO);
 	else
-		valida = (stoi(opcion) >= OPCION_MINIMA_JUEGO &&
-			  stoi(opcion) <= OPCION_MAXIMA_JUEGO);
+		valida = (stoul(opcion) >= OPCION_MINIMA_JUEGO &&
+			  stoul(opcion) <= OPCION_MAXIMA_JUEGO);
 	return valida;
 }
 

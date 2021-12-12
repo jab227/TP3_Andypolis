@@ -56,7 +56,7 @@ public:
 
 	//PRE: la posicion debe ser valida y estar ocupada por un edificio
 	//POST: 
-	Resultado_Chequeos reparar_edificio_ubicacion(const Coordenada& coordenada);
+	Resultado_Chequeos reparar_edificio_ubicacion(const Coordenada& coordenada, bool reparar = true) const;
 
 	//PRE: el material y la posicion debe ser valido, y el casillero estar vacio
 	//POST: se pone el material en la ubicacion ingresda
@@ -100,6 +100,10 @@ public:
 	//PRE: las coordenadas deben ser un edificio
 	//POST: se resta 1 de vida al edificio. Si el edificio queda en 0 de vida se destruye y devuelve true.
 	bool explota_bomba(std::string &edificio, Coordenada coordenadas);
+
+	//PRE: la coordenada debe ser valida
+	//POST: devuelve el identificador del casillero en la coordenada
+	char obtener_identificador_casillero(Coordenada coordenada);
 private:
 //WHY: Se usa?
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero

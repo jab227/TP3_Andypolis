@@ -8,7 +8,8 @@ const std::size_t PIEDRA = 0, MADERA = 1, METAL = 2, ANDYCOINS = 3, BOMBAS = 4;
 const std::string MATERIALES_EDIFICIOS[] = {"piedra", "madera", "metal"};
 const std::string EDIFICIO_VACIO = "";
 enum Resultado_Chequeos {EXITO, NO_EXISTE, MAXIMA_CANTIDAD, NO_MATERIALES, FUERA_RANGO,
-	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE, SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO};
+	CASILLERO_NO_CONSTRUIBLE, CASILLERO_NO_TRANSITABLE, CASILLERO_OCUPADO, CASILLERO_LIBRE,
+	SALIR, NO_REPARABLE, REPARABLE, DESTRUIDO, NO_ENERGIA, OBELISCO};
 
 
 class Edificio {
@@ -107,7 +108,8 @@ public:
 	
 	//PRE: -
 	//POST: Devuelve NO_REPARABLE si la vida está al máximo. Devuelve REPARABLE si 0 < vida < MAX_VIDA.
-	virtual Resultado_Chequeos reparar() = 0;
+	//se puede elegir si reparar o no el edificio con true o false, por defecto los edificios se reparan
+	virtual Resultado_Chequeos reparar(bool reparar_edificio = true) = 0;
 
 	//PRE: -
 	//POST: Resta 1 de vida al edificio. Devuelve DESTRUIDO si el edificio tiene 0 de vida. Devuelve REPARABLE si aún tiene.

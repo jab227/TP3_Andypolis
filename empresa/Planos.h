@@ -49,7 +49,7 @@ public:
 	//PRE: el edificio debe ser valido
 	//POS: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
 	//construir el edificio solicitado.
-	Lista<Material> materiales_necesarios( Edificio* edificio);
+	Lista<Material> materiales_necesarios( std::string edificio);
 
 	//PRE: edificio es valido
 	//POS: aumenta 1 la cantidad del edificio construido

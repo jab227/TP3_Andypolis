@@ -19,7 +19,7 @@ public:
 	
 	//PRE: -
 	//POST: Devuelve NO_REPARABLE en caso de que vida = MAX_VIDA. Devuelve REPARABLE y suma 1 de vida.en caso contrario.
-	Resultado_Chequeos reparar() override;
+	Resultado_Chequeos reparar(bool reparar_edificio = true) override;
 };
 
 #endif /* EDIFICIOS_MINA_H_ */

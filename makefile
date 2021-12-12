@@ -9,8 +9,8 @@ NOMBRE = TP3
 
 all: $(NOMBRE)
 
-$(NOMBRE):  *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp meta/*.cpp meta/objetivos/*.cpp meta/objetivos/tipos/*.cpp parser/*.cpp 
-	$(CC) *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp meta/*.cpp meta/objetivos/*.cpp meta/objetivos/tipos/*.cpp  parser/*.cpp $(CFLAGS) -o $(NOMBRE)
+$(NOMBRE):  *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp meta/*.cpp meta/objetivos/*.cpp meta/objetivos/tipos/*.cpp parser/*.cpp grafo/*.cpp
+	$(CC) *.cpp edificio/*.cpp edificio/edificios/*.cpp Casillero/*.cpp Casillero/casilleros/*.cpp empresa/*.cpp programa/*.cpp material/*.cpp utils/*.cpp printer/*.cpp jugador/*.cpp jugador/jugadores/*.cpp meta/*.cpp meta/objetivos/*.cpp meta/objetivos/tipos/*.cpp  parser/*.cpp grafo/*.cpp $(CFLAGS) -o $(NOMBRE)
 
 # Para compilar mas facil los test unitarios.
 test_material:  test/test_material/*.cpp material/*.cpp 

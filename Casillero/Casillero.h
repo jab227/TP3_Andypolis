@@ -12,6 +12,7 @@ const std::string VERDE = BGND_LIGHT_GREEN_46;
 const std::string AZUL = BGND_BLUE_12;
 const std::string GRIS = BGND_GRAY_245;
 const std::string GRIS_OSCURO = BGND_DARK_GRAY_239;
+const std::string TEXTO_VERDE = TXT_GREEN_118;
 const std::string FIN_COLOR = END_COLOR;
 const std::string NEGRO = TXT_DARK_GRAY_233;
 const std::string BLANCO = TXT_WHITE_255;
@@ -75,8 +76,9 @@ public:
 	virtual Resultado_Chequeos recoger_material(Almacen *inventario) = 0;
 
 	// PRE: -
-	// POST: Pide al casillero reparar un edficio.
-	virtual Resultado_Chequeos reparar_edificio() = 0;
+	// POST: Pregunta al casillero si necesita reparar un edficio y devuelve el resultado.
+	// repara por defecto el edificio, si reparar vale false, no lo repara.
+	virtual Resultado_Chequeos reparar_edificio(bool reparar = true) = 0;
 
 	// PRE: -
 	// POST: Pide al casillero atacar un edficio.
@@ -91,6 +93,8 @@ public:
 	virtual Resultado_Chequeos demoler_edificio() = 0;
 
 	virtual	void agregar_material(Material material) = 0;
+
+	virtual char obtener_identificador() = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

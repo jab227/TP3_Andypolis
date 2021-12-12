@@ -16,4 +16,4 @@ void Escuela::saludar(){
 }
 
 
-Resultado_Chequeos Escuela::reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Escuela::reparar(bool reparar_edificio){ return NO_REPARABLE;}

@@ -20,8 +20,8 @@ void TablePrinter::print_row(const Edificio* edificio, std::ostream& stream) con
 	std::string name = edificio->obtener_nombre();
 	print_table_cell( name , stream);
 	//for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
-	print_table_cell( std::to_string(edificio->obtener_cant_material("madera")), stream );
 	print_table_cell( std::to_string(edificio->obtener_cant_material("piedra")), stream );
+	print_table_cell( std::to_string(edificio->obtener_cant_material("madera")), stream );
 	print_table_cell( std::to_string(edificio->obtener_cant_material("metal")), stream );
 	print_table_cell( std::to_string(edificio->obtener_max_permitidos()), stream);
 	print_table_cell(edificio->info_producto(), stream);
@@ -40,9 +40,10 @@ void TablePrinter::print_row(const Lista<std::string> header, std::ostream& stre
 
 void TablePrinter::print_row(const Mapa* mapa, const Coordenada& coordenada, std::ostream& stream) const{
 	std::string edificio = mapa -> obtener_contenido_ubicacion(coordenada);
+	bool necesita_reparar = (mapa -> reparar_edificio_ubicacion(coordenada, false) == EXITO);
 	print_table_cell( edificio, stream);
 	print_table_cell( coordenada.a_string(), stream);
-	//TODO: Imprimir si es reparable.
+	print_table_cell( necesita_reparar? "SI" : "NO", stream);
 	//TODO: Constante
 	print_row_separator(3, stream);
 }

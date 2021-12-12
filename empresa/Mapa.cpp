@@ -21,7 +21,7 @@ const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
 	this -> cargar_terreno(mapa);
-	this -> mostrar_mapa();
+	//this -> mostrar_mapa();
 }
 
 Mapa::~Mapa() {
@@ -95,8 +95,8 @@ Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const
 
 }
 
-Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada){
-	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio();
+Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada, bool reparar) const{
+	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio(reparar);
 
 }
 
@@ -213,6 +213,10 @@ bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
 	return (resultado == DESTRUIDO);
 }
 
+char Mapa::obtener_identificador_casillero(Coordenada coordenada){
+	return this -> terreno[coordenada.x()][coordenada.y()] -> obtener_identificador();
+}
+
 //TODO: Modificar la logica para que no sea necesario.
 std::string Mapa::identificador_ocupados(std::string ocupador){
 	std::string identificador = UBICACION_VACIA;
@@ -236,5 +240,7 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 		identificador = "I";
 	else if (ocupador == "mina oro")
 		identificador = "G";
+	else if(ocupador == "andycoins")
+		identificador = "C";
 	return identificador;
 }

@@ -86,10 +86,10 @@ Resultado_Chequeos Casillero_Construible::recoger_material(Almacen* inventario){
 }
 
 
-Resultado_Chequeos Casillero_Construible::reparar_edificio(){
+Resultado_Chequeos Casillero_Construible::reparar_edificio(bool reparar){
 	Resultado_Chequeos resultado = NO_EXISTE;
 	if(this->esta_ocupado())
-		resultado = this -> edificio_ -> reparar();
+		resultado = this -> edificio_ -> reparar(reparar);
 	return resultado;
 }
 
@@ -100,5 +100,7 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 	return resultado;
 }
 
+
 void Casillero_Construible::agregar_material(Material material){}
 
+char Casillero_Construible::obtener_identificador(){return TERRENO;}

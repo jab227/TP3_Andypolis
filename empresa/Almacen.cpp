@@ -24,12 +24,31 @@ void Almacen::agregar_material(const Material& material) {
 std::size_t Almacen::buscar_material(const Material& material) const {
 	bool encontrado = false;
 	std::size_t indice;
-	for (indice = 0;
-	     indice <= lista_materiales_.consulta_largo() && !encontrado;
-	     ++indice)
-			encontrado = (lista_materiales_.consulta(indice+1) == material);
+	for (indice = 0; indice < lista_materiales_.consulta_largo() && !encontrado; indice++)
+			encontrado = (lista_materiales_.consulta(indice + 1) == material);
 		 
 	return encontrado ? indice : NO_ENCONTRADO;
+}
+
+Material Almacen::obtener_material(std::string material) const {
+	Material material_buscado = Material(material,0);
+	std::size_t indice = buscar_material(material_buscado);
+	if(indice)
+		material_buscado = lista_materiales_.consulta(indice);
+	// Como chequeo que no estar trabajando con una copia y no la ref? 
+	return material_buscado;
+}
+
+//El material al tener un size_t no puede ser negativo. Entonces debemos usar los metodos restar y sumar.
+void Almacen::restar_cantidad_material(const std::string& nombre,
+				      std::size_t cantidad) {
+	Material material(nombre, cantidad);
+	std::size_t index = buscar_material(material);
+	if (index) {
+		lista_materiales_.consulta(index).restar_cantidad(
+		    material.obtener_cantidad());
+
+	}
 }
 
 void Almacen::sumar_cantidad_material(const std::string& nombre,
@@ -127,22 +146,19 @@ void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos
 // Se puede mejorar pero es lo mas comodo.
 Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 	Resultado_Chequeos resultado = NO_MATERIALES;
-	Material andycoins = Material(NOMBRES_MATERIALES[3], 0);
-	buscar_material(andycoins);
+	Material andycoins  = obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);
 	std::size_t gasto = cantidad_bombas * PRECIO_BOMBA;
-	if (andycoins.obtener_cantidad() < gasto) {
+	if (gasto <= andycoins.obtener_cantidad()) {
 		cout << "Compraste " << cantidad_bombas
 		     << " bombas exitosamente." << endl;
-		sumar_cantidad_material(NOMBRES_MATERIALES[4], cantidad_bombas);
-		sumar_cantidad_material(NOMBRES_MATERIALES[3], -gasto);
+		sumar_cantidad_material(NOMBRES_MATERIALES[BOMBAS], cantidad_bombas);
+		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
-		Material bombas = Material(NOMBRES_MATERIALES[4], 0);
-		buscar_material(bombas);  // Busca y devuelve por interfaz la
-					  // cantidad de bombas.
+		Material bombas = obtener_material(NOMBRES_MATERIALES[BOMBAS]);
 		std::cout << "Cantidad de bombas: "
-			  << andycoins.obtener_cantidad() << std::endl;
-		std::cout << "Andycoins restantes: "
 			  << bombas.obtener_cantidad() << std::endl;
+		std::cout << "Andycoins restantes: "
+			  << andycoins.obtener_cantidad() << std::endl;
 	}
 	return resultado;
 }

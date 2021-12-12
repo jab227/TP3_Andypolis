@@ -10,7 +10,7 @@ Meta::Meta(Jugador* jugador, Mapa* mapa) : objetivos(Lista<Objetivo*>()) {
 	Lista<Objetivo*> listado = crear_listado(jugador, mapa);
 	std::size_t n;
 	for (int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
-		n = rand() % (listado.consulta_largo()) + 1;
+		n = (rand() % (listado.consulta_largo())) + 1;
 		this->objetivos.alta_al_final(listado.baja(n));
 	}
 	this->eliminar_listado(listado);
@@ -37,14 +37,14 @@ bool Meta::objetivos_cumplidos() {
 void Meta::mostrar_objetivos() {
 	std::cout << "Los objetivos son: " << std::endl;
 	std::string color;
-	Objetivo* objetivo;
-
-	for (std::size_t i = 1; i <= this->objetivos.consulta_largo(); i++) {
-		objetivo = objetivos.consulta(i);
-		std::cout << "- " << objetivo->obtener_titulo();
-		(objetivo->esta_cumplido()) ? color = VERDE_META
-					    : color = ROJO_META;
-		std::cout << color << "  " << END_COLOR << std::endl;
+  Objetivo* objetivo;
+	for (std::size_t i = 1; i <= this -> objetivos.consulta_largo(); i++) {
+		color = "  ";
+		objetivo = this->objetivos.consulta(i);
+		(objetivo->esta_cumplido()) ? color += VERDE_META
+					    : color += ROJO_META;
+		std::cout << color << "  " << END_COLOR
+		<< "  " << objetivo -> obtener_titulo() << std::endl;
 	}
 }
 

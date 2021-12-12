@@ -57,6 +57,11 @@ public:
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
 	void consultar_coordenada();
 
+	//PRE: el juegador y el mapa deben estar bien cargados
+	//POST: se pide al usuario que ingrese coordenadas validas y se cambia la posicion del jugador
+	//a las coordenadas ingresadas (no se mueve por recorrido)
+	void iniciar_coordenadas_jugador(Jugador* jugador);
+
 	//PRE: los archivos deben estar cargados
 	//POST: se muestran los edificios que hay construidos junto con sus coordenadas
 	void mostrar_construidos(Jugador* jugador);
@@ -83,6 +88,8 @@ public:
 	
 	void atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo);
 	
+	void mover_jugador(Jugador* jugador);
+
 	//void ver_objetivos(); Implementado en jugadores
 
 private:
@@ -150,9 +157,9 @@ private:
 	
 	Resultado_Chequeos chequeo_bombas(std::string bombas_ingresadas, std::size_t &bombas);
 
-	Resultado_Chequeos pedir_materiales( std::size_t &madera, std::size_t &piedra, std::size_t &metal);
+	Resultado_Chequeos pedir_materiales(std::string nombre, std::size_t &madera, std::size_t &piedra, std::size_t &metal);
 
-	Resultado_Chequeos chequeo_materiales(std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
+	Resultado_Chequeos chequeo_materiales(std::string nombre, std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
 
 	void bombardear_coordenadas(Coordenada coordenada, Jugador* jugador_inactivo);
 };

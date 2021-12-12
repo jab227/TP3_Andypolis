@@ -20,4 +20,4 @@ void Planta_Electrica::saludar(){
 	std::cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy para que la electricidad no se corte!" << std::endl;
 }
 
-Resultado_Chequeos Planta_Electrica::reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Planta_Electrica::reparar(bool reparar_edificio){ return NO_REPARABLE;}

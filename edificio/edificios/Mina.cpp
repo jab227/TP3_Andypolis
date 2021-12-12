@@ -17,11 +17,12 @@ void Mina::saludar(){
 }
 
 
-Resultado_Chequeos Mina::reparar(){ 
+Resultado_Chequeos Mina::reparar(bool reparar_edificio){
 	Resultado_Chequeos resultado = NO_REPARABLE;
 	if(this -> obtener_vida() < MAX_VIDA){
-		this -> recuperar_vida();
 		resultado = EXITO;
+		if(reparar_edificio)
+			this -> recuperar_vida();
 	}
 	return resultado;
 }

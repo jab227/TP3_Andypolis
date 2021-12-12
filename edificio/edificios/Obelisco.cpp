@@ -14,5 +14,5 @@ void Obelisco::saludar(){
 	std::cout << "Soy el "+NOMBRE+" y estoy en el casillero consultado, estoy luciendome a lo alto!" << std::endl;
 }
 
-Resultado_Chequeos Obelisco::reparar(){ return NO_REPARABLE;}
+Resultado_Chequeos Obelisco::reparar(bool reparr_edificio){ return NO_REPARABLE;}
 

@@ -3,6 +3,8 @@
 
 #include <string>
 
+const std::size_t COORDENADA_VACIA = -1;
+
 class Coordenada {
        private:
 	std::size_t x_;

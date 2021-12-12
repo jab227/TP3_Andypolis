@@ -11,10 +11,11 @@ class Jugador_Dos final : public Jugador {
 	static const std::size_t costo_muelle = 2;
 	static const std::size_t costo_terreno = 25;
 
-       public:
+public:
 	Jugador_Dos(const Coordenada& coordenada);
 	~Jugador_Dos() override;
-	bool mover(const Coordenada& destino, const Mapa& mapa) override;
+private:
+	std::size_t obtener_costo_terreno(Coordenada coordenada, Mapa* mapa);
 };
 
 #endif /* JUGADOR_JUGADORES_JUGADORDOS_H_ */

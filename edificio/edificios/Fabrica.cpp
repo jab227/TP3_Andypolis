@@ -16,11 +16,13 @@ void Fabrica::saludar(){
 	std::cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy funcionando para vos!" << std::endl;
 }
 
-Resultado_Chequeos Fabrica::reparar(){ 
+Resultado_Chequeos Fabrica::reparar(bool reparar_edificio){
 	Resultado_Chequeos resultado = NO_REPARABLE;
 	if(this -> obtener_vida() < MAX_VIDA){
-		this -> recuperar_vida();
 		resultado = EXITO;
+		if(reparar_edificio)
+			this -> recuperar_vida();
+
 	}
 	return resultado;
 }

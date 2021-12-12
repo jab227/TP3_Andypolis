@@ -10,3 +10,7 @@ void Muelle::saludar() const{
 	else
 		std::cout << "No tengo ningun material en mi." << std::endl;
 }
+
+char Muelle::obtener_identificador(){
+	return MUELLE;
+}

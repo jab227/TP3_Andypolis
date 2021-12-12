@@ -31,6 +31,10 @@ void Material::sumar_cantidad(std::size_t cantidad){
 	this -> cantidad += cantidad;
 }
 
+void Material::restar_cantidad(std::size_t cantidad){
+	this -> cantidad -= cantidad;
+}
+
 void Material::saludar() const{
 	std::cout << "Soy el material " << this -> nombre << " y estoy en el casillero consultado." << std::endl;
 }

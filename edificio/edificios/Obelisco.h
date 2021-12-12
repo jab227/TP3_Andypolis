@@ -19,6 +19,6 @@ public:
 
 	//PRE: -
 	//POST: Devuelve NO_REPARABLE
-	Resultado_Chequeos reparar() override;
+	Resultado_Chequeos reparar(bool reparar_edificio = true) override;
 };
 #endif /* EDIFICIOS_OBELISCO_H_ */

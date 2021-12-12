@@ -5,4 +5,3 @@ escuela 45 125 140 2
 planta electrica 100 40 220 3
 mina oro 100 150 100 3
 obelisco 1000 1000 1000 1
-

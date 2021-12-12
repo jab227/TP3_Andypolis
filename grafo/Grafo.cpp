@@ -22,10 +22,10 @@ void Grafo::agregarCamino(Coordenada origen, Coordenada destino, int peso) {
     int posicionDestino = vertices -> obtenerPosicion(destino);
 
     if(posicionOrigen == POSICION_NO_ENCONTRADA){
-        cout << "La coordenada (" << origen.x() << " ," << origen.y() << ") no existe en el grafo" << endl;
+        cout << "La coordenada (" << origen.x() << " ," << origen.y() << ") no existe en el mapa" << endl;
     }
     if(posicionDestino == POSICION_NO_ENCONTRADA){
-    	cout << "La coordenada (" << destino.x() << " ," << destino.y() << ") no existe en el grafo" << endl;
+    	cout << "La coordenada (" << destino.x() << " ," << destino.y() << ") no existe en el mapa" << endl;
     }
 
     if(!(posicionDestino == POSICION_NO_ENCONTRADA || posicionOrigen == POSICION_NO_ENCONTRADA)) {
@@ -52,10 +52,10 @@ int Grafo::energiaCaminoMinimo(Coordenada origen, Coordenada destino) {
     int posicionDestino = vertices ->obtenerPosicion(destino);
 
     if(posicionOrigen == POSICION_NO_ENCONTRADA){
-    	cout << "La coordenada (" << origen.x() << " ," << origen.y() << ") no existe en el grafo" << endl;
+    	cout << "La coordenada (" << origen.x() << " ," << origen.y() << ") no existe en el mapa" << endl;
     }
     if(posicionDestino == POSICION_NO_ENCONTRADA){
-    	cout << "La coordenada (" << destino.x() << " ," << destino.y() << ") no existe en el grafo" << endl;
+    	cout << "La coordenada (" << destino.x() << " ," << destino.y() << ") no existe en el mapa" << endl;
     }
 
     return this -> algoritmoCaminoMinimo -> energiaCaminoMinimo(posicionOrigen, posicionDestino);

@@ -67,6 +67,8 @@ public:
 	//POS: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
 	//por interfaz carga un puntero a Edificio con el edificio de la lista.
 	Resultado_Chequeos chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa);
+
+	std::string estado_actual_edificios();
 private:
 
 	void mostrar_materiales_producidos(Lista<Material> listado);

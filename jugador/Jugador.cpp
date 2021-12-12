@@ -80,7 +80,6 @@ void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 	}
 }
 
-
 Resultado_Chequeos Jugador::tiene_materiales( Lista<Material> materiales) const{
 	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
 	return this -> inventario_.hay_lista_materiales(materiales);
@@ -118,26 +117,45 @@ void Jugador::sumar_lista_materiales( Lista<Material> materiales){
 	this -> inventario_.sumar_lista_materiales(materiales,100);
 }
 
-Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
-	std::string nombre_edificio;
-	Edificio* edificio;
-	Lista<Material> listado;
-	Material material_producido;
-	std::size_t agregados = 0;
-	Coordenada coordenada;
-
-	for (std::size_t i = 1; i <= this->edificios_.consulta_largo(); i++) {
-
-		coordenada = obtener_ubicacion(i);
-		nombre_edificio = mapa->obtener_contenido_ubicacion(coordenada);
-		edificio = Planos::buscar(nombre_edificio);
-		material_producido = edificio -> producir_material();
-		material_producido.cambiar_cantidad(
-		    material_producido.obtener_cantidad());
-		if (material_producido.obtener_nombre() != "ninguno")	// Es por si consultamos al Obelisco, pero tiene sentido?
-			listado.alta(material_producido, ++agregados);
+bool Jugador::recolectar_reservas(){
+	bool recolectado = false;
+	TablePrinter printer;
+	Material producto;
+	printer.print_str("Materiales recolectados", std::cout);
+	for(std::size_t i = 1; i <= reservas_.consulta_largo(); i++){
+		producto = reservas_.consulta(i);
+		reservas_.baja(i);
+		printer.print_row(producto, std::cout);
+		if(producto.obtener_nombre() == "energia") energia_ += producto.obtener_cantidad();
+		recolectado = true;
 	}
-	return listado;
+	this -> inventario_.sumar_lista_materiales(reservas_,100);
+	reservas_ = Lista<Material>();
+	return recolectado;
+}
+
+//Recorrer la lista ubicaciones, producir el material, fijarme si el material ya esta dado de alta
+//en reservas_. Si esta, dejo sumarle el producido sino darle de alta
+void Jugador::producir_materiales( Mapa* mapa){
+	Material producto;
+	Edificio* edificio;
+	Coordenada coordenada;
+	bool listado;
+	std::size_t j = 0;
+	for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++){
+		coordenada = edificios_.consulta(i);
+		edificio = Planos::buscar(mapa -> obtener_contenido_ubicacion(coordenada));
+		producto = edificio -> producir_material();
+		listado = false;
+		while(j < reservas_.consulta_largo() && !listado){
+			if(reservas_.consulta(++j) == producto){
+				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
+				listado = true;
+			} 
+		}
+		j=0;
+		if(!listado) reservas_.alta_al_final(producto);
+	}
 }
 
 std::size_t Jugador::existe_ubicacion(Coordenada coordenada) const {
@@ -154,27 +172,27 @@ void Jugador::mostrar_inventario() const {
 	this->inventario_.mostrar_materiales();
 }
 
-void Jugador::recolectar(Mapa* mapa){
-	Lista<Material> listado = obtener_recursos_producidos(mapa);
-	sumar_lista_materiales(listado);
-}
-
 bool Jugador::mover(Mapa* mapa){
 	bool exito = true;
 	Coordenada a_moverse;
 	Grafo* grafo = cargar_grafo(mapa);
 	Resultado_Chequeos resultado;
 	do{
-		std::cout << "Elegi las coordenadas a donde moverse o salir \n Fila: " << std::endl;
+		std::cout << "Elegi las coordenadas a donde moverse o salir." << std::endl;
 		resultado = this -> pedir_coordenadas(a_moverse, mapa, grafo);
-	}while(this -> mostrar_mensaje(resultado));
+	}while(!this -> mostrar_mensaje(resultado));
 	if(a_moverse.x() != COORDENADA_VACIA){
 		ColorPrinter::color_msg("Seguro que queres moverte a la ubicacion ingresasda? [si/no].", FIN_COLOR, std::cout);
 		if( this -> pedir_si_no() == "si"){
 			this -> usar_energia(grafo -> energiaCaminoMinimo(this -> posicion_, a_moverse));
 			Lista<Coordenada>* pasos = grafo -> caminoMinimo(this -> posicion_, a_moverse);
-			while(!pasos -> vacia())
+			while(!pasos -> vacia()){
+				std::cout << pasos -> consulta(1).a_string() << " ";
 				this -> mover_a_coordenada(pasos -> baja(1), mapa);
+				if(pasos -> consulta_largo() != 0)
+									std::cout << " -> ";
+			}
+			std::cout << std::endl;
 			delete pasos;
 		}else
 			ColorPrinter::color_msg("No se realizó ningún cambio.",	 ROJO, std::cout);
@@ -211,8 +229,9 @@ bool Jugador::mostrar_mensaje(Resultado_Chequeos resultado){
 Resultado_Chequeos Jugador::pedir_coordenadas(Coordenada& coordenada, Mapa* mapa, Grafo* grafo){
 	std::string fila_ingresada, columna_ingresada;
 
+	std::cout << "Fila: ";
 	getline(std::cin, fila_ingresada);
-	std::cout << "Columna: " << std::endl;
+	std::cout << "Columna: ";
 	getline(std::cin, columna_ingresada);
 
 	return chequeo_coordenadas_moverse(fila_ingresada, columna_ingresada, coordenada, mapa, grafo);
@@ -221,13 +240,19 @@ Resultado_Chequeos Jugador::pedir_coordenadas(Coordenada& coordenada, Mapa* mapa
 Resultado_Chequeos Jugador::chequeo_coordenadas_moverse(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada, Mapa* mapa, Grafo* grafo){
 	Resultado_Chequeos resultado = EXITO;
 	coordenada = Coordenada(COORDENADA_VACIA, COORDENADA_VACIA);
+	Coordenada coordenada_ingresada;
 
 	if(fila_ingresada == SALIR_STR || columna_ingresada == SALIR_STR) resultado = SALIR;
 	else if(!es_numero(fila_ingresada) || !es_numero(columna_ingresada)) resultado = NO_EXISTE;
-	else if(!(mapa -> es_cordenada_valida(Coordenada(stoul(fila_ingresada), stoul(columna_ingresada))))) resultado = FUERA_RANGO;
-	else if((int) this -> obtener_energia() < grafo -> energiaCaminoMinimo(posicion_, Coordenada(stoul(fila_ingresada), stoul(columna_ingresada)))) resultado = NO_ENERGIA;
-	else coordenada = Coordenada(stoul(fila_ingresada), stoul(columna_ingresada));
-
+	else {
+		coordenada_ingresada = Coordenada(stoul(fila_ingresada), stoul(columna_ingresada));
+		if(!(mapa -> es_coordenada_valida(coordenada_ingresada))) resultado = FUERA_RANGO;
+		else {
+			std::cout << "La energia necesaria para moverte hasta " << coordenada_ingresada.a_string() << " es de " << grafo -> energiaCaminoMinimo(posicion_, coordenada_ingresada) << std::endl;
+			if((int) this -> obtener_energia() < grafo -> energiaCaminoMinimo(posicion_, coordenada_ingresada)) resultado = NO_ENERGIA;
+			else coordenada = coordenada_ingresada;
+		}
+	}
 	return resultado;
 }
 
@@ -252,8 +277,8 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	Grafo* grafo = new Grafo;
 	std::size_t fila = 0, columna = 0;
 	Coordenada coordenada_actual(fila, columna);
-	while(mapa -> es_cordenada_valida(coordenada_actual)){
-		while(mapa -> es_cordenada_valida(coordenada_actual)){
+	while(mapa -> es_coordenada_valida(coordenada_actual)){
+		while(mapa -> es_coordenada_valida(coordenada_actual)){
 			grafo -> agregarVertice(coordenada_actual);
 			if(columna != 0){
 				grafo -> agregarCamino(Coordenada(fila, columna - 1), coordenada_actual, (int) obtener_costo_terreno(coordenada_actual, mapa));
@@ -273,3 +298,12 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	grafo -> usarFloyd();
 	return grafo;
 }
+
+std::string Jugador::a_string(){
+	return std::to_string(id_) + " " + posicion_.a_string();
+}
+
+
+Coordenada Jugador::obtener_posicion() const{
+		return posicion_;
+	}

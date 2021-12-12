@@ -132,10 +132,22 @@ Edificio* Planos::buscar(std::string nombre_edificio){
 	return lista_edificios[nombre_edificio];
 }
 
-std::size_t Planos::cantidad_permitida(const std::string& edificio) {
+std::size_t Planos::cantidad_permitida(const std::string& edificio){
 	return lista_edificios[edificio]->obtener_max_permitidos();
 }
 
-Lista<std::string> Planos::edificios_disponibles() {
+Lista<std::string> Planos::edificios_disponibles(){
 	return lista_edificios.claves();
+}
+
+std::string Planos::estado_actual_edificios(){
+	Lista<std::string> claves = lista_edificios.claves();
+	Edificio* edificio;
+	std::string texto;
+	for(std::size_t i = 1; i <= claves.consulta_largo(); i++){
+		edificio = lista_edificios[claves.consulta(i)];
+		texto += edificio -> a_string();
+		if(i != claves.consulta_largo()) texto += "\n"; //Para evitar el salto de linea en la ult linea.
+	}
+	return texto;
 }

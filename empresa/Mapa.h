@@ -25,7 +25,7 @@ public:
 
 	//PRE: -
 	//POST: devuelve true si las coordenadas se encuentran en el rango del mapa y false de lo contrario
-	bool es_cordenada_valida(const Coordenada& coordenada);
+	bool es_coordenada_valida(const Coordenada& coordenada);
 
 	//PRE: -
 	//POST: se chequea que la ubicacion sea disponible para construir un edificio. devuelve si las coordenadas estan
@@ -40,7 +40,8 @@ public:
 
 	//PRE: el mapa debe estar cargado
 	//POST: se muestra el mapa de los edificios con los terrenos en colores
-	void mostrar_mapa();
+	//void mostrar_mapa();
+	void mostrar_casillero(Coordenada coordenada, std::string contenido);
 
 	//PRE: la posicion debe ser valida
 	//POST: se muestra informacion sobre la ubicacion consultada
@@ -104,6 +105,9 @@ public:
 	//PRE: la coordenada debe ser valida
 	//POST: devuelve el identificador del casillero en la coordenada
 	char obtener_identificador_casillero(Coordenada coordenada);
+
+	
+	std::string estado_actual_materiales();
 private:
 //WHY: Se usa?
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero
@@ -141,6 +145,7 @@ private:
 	//PRE: material debe ser un material valido y numero_casillero menor a los casilleros libres transitables
 	//POST: se crea y ubica un material en el N-esimo casillero transitable libre.
 	void generar_material(std::string material, Coordenada coordenada);
+
 };
 
 #endif /* MAPA_H_ */

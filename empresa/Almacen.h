@@ -12,7 +12,6 @@ const std::string NOMBRES_MATERIALES[] = {"piedra", "madera", "metal", "andycoin
 class Almacen {
 private:
 	Lista<Material> lista_materiales_;
-
 public:
 	//PRE: -
 	//POS: creo un almacen inicializado en 0;

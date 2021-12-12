@@ -25,6 +25,7 @@ Resultado_Chequeos Casillero_Construible::demoler_edificio(){
 	// Reveer.
 	Resultado_Chequeos resultado = SALIR;
 	if(this -> esta_ocupado()){
+		delete this -> edificio_;
 		this -> edificio_ = nullptr;
 		resultado = EXITO;
 	}

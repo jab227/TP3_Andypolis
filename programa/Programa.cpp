@@ -81,7 +81,7 @@ void Programa::mostrar_menu_juego() {
 	     << "Tenes "
 	     << jugadores.consulta(jugador_activo) -> obtener_energia()
 	     << " de energia." << endl;
-	this -> empresa_constructora -> mostrar_mapa();
+	this -> empresa_constructora -> mostrar_mapa(jugadores);
 	cout << "--------------------------------------------------------------"
 	     << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero"
@@ -147,14 +147,13 @@ bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
 			this->empresa_constructora->mostrar_edificios();
 			break;
 		case MOSTRAR_MAPA:
-			this->empresa_constructora->mostrar_mapa();
+			this->empresa_constructora->mostrar_mapa(jugadores);
 			break;
 		case COMENZAR:
 			this -> comenzar_partida();
 			break;
 		case GUARDAR_SALIR_INICIO:
 			fin = true;
-			cout << "Implementar guardar y salir!" << endl;
 			cout << "Adios!" << endl;
 			break;
 	}
@@ -221,13 +220,13 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 		case FIN_TURNO:
 			cout << "Turno del jugador " << this->jugador_activo
 			     << " finalizado." << endl;
-			this->jugadores.consulta(this->jugador_activo)
+			this -> jugadores.consulta(this->jugador_activo)
 			    ->recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
-			this->jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
+			this -> empresa_constructora -> producir_materiales(jugadores.consulta(jugador_activo));
+			this -> jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
 			break;
 		case GUARDAR_SALIR:
 			fin = true;
-			cout << "Adios!" << endl;
 			break;
 	}
 	this->objetivos_jugadores.consulta(this->jugador_activo)
@@ -236,7 +235,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 }
 
 void Programa::comenzar_partida(){
-	this -> empresa_constructora -> mostrar_mapa();
+	this -> empresa_constructora -> mostrar_mapa(jugadores);
 	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
 	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
 	cout << "Comienza la partida!" << endl;
@@ -263,8 +262,42 @@ bool Programa::es_opcion_valida(std::string opcion) {
 
 void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 
-void Programa::guardar_archivos(std::string ruta_materiales,
-				std::string ruta_ubicaciones) {
-	this->empresa_constructora->guardar_archivos(ruta_materiales,
-						     ruta_ubicaciones);
+void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios) {
+	std::ofstream fout_1(ruta_ubicaciones);
+	if(fout_1.is_open()){
+		fout_1 << empresa_constructora -> estado_actual_ubicaciones(jugadores);
+	}else	std::cout << "Ubicacion error" << std::endl;
+
+	std::ofstream fout_2(ruta_materiales);
+	if(fout_2.is_open()){
+		fout_2 << estado_actual_materiales_jugadores();
+	}else	std::cout << "materiales error" << std::endl;
+	
+	std::ofstream fout_3(ruta_edificios);
+	if(fout_3.is_open()){
+		fout_3 << empresa_constructora -> estado_actual_planos();
+	}else	std::cout << "planos error" << std::endl;
+	
+	fout_1.close();
+	fout_2.close();
+	fout_3.close();
+}
+
+
+std::string Programa::estado_actual_materiales_jugadores(){
+	std::string texto = "";
+	Lista<Material> inventario = jugadores.consulta(1)->obtener_inventario().obtener_materiales();
+	Material material;
+	for(std::size_t i = 1; i <= inventario.consulta_largo(); i++){
+		material = inventario.consulta(i);
+		texto += material.obtener_nombre();
+		texto += " ";
+		for(std::size_t j = 1; j <= jugadores.consulta_largo(); j++){
+				inventario = jugadores.consulta(j)->obtener_inventario().obtener_materiales();
+				texto += std::to_string(inventario.consulta(i).obtener_cantidad());
+				texto += " ";
+		}
+		if(i != inventario.consulta_largo()) texto += "\n";
+	}
+	return texto;
 }

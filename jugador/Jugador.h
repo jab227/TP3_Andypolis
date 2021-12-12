@@ -22,6 +22,7 @@ private:
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
 	Almacen inventario_;
+	Lista<Material> reservas_;
 	Coordenada posicion_;
 	Lista<Coordenada> edificios_;
 
@@ -102,20 +103,22 @@ public:
 	
 	void sumar_lista_materiales( Lista<Material> materiales);
 	
+	bool recolectar_reservas();
 	//PRE: -
-	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
-	//por la consola los materiales producidos.
-	Lista<Material> obtener_recursos_producidos(Mapa* mapa);
+	//POST: -
+	void producir_materiales(Mapa* mapa);
 
 	void mostrar_inventario() const;
 	
-	void recolectar(Mapa* mapa);
+	//void recolectar(Mapa* mapa);
 
 	void iniciar_coordenadas(Mapa* mapa);
 
 	//PRE: el mapa debe estar cargado y la coordenada ser valida
 	//POST: se mueve el jugador a la coordenada y se recolecta el material en ella
 	void mover_a_coordenada(Coordenada coordenada, Mapa* mapa);
+
+	std::string a_string();
 protected:
 	//PRE: el mapa y el grafo debe estar cargado
 	//POST: devuelve el resultado de las coordenadas ingresadas por el usuario. si estas son validas, las guarda en
@@ -141,5 +144,7 @@ protected:
 	//PRE: el mapa debe estar cargado y la coordenada ser valida
 	//POST: devuelve el costo para cada jugador a moverse a ese casillero
 	virtual std::size_t obtener_costo_terreno(Coordenada coordenada, Mapa* mapa) = 0;
+
+	std::string estado_actual_inventario();
 };
 #endif /* JUGADOR_JUGADOR_H_ */

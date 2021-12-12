@@ -151,8 +151,8 @@ class Diccionario {
 	// Pos:
 	void claves(NodoDiccionario<T, U>* nodo, Lista<T>& lista) { 
 		if (nodo != nullptr) {			
-			lista.alta_al_final(nodo->clave());
 			claves(nodo->izquierda(), lista);
+			lista.alta_al_final(nodo->clave());
 			claves(nodo->derecha(), lista);
 		}
 	};

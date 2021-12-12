@@ -49,27 +49,6 @@ Edificio* traductor_edificios(std::string nombre, std::size_t piedra, std::size_
 	return edificio;
 }
 
-/* Ahora estan los valores por default.
-Edificio* traductor_edificios(std::string nombre){
-	Edificio* edificio = nullptr;
-	if(nombre == "mina")
-		edificio = new Mina();
-	else if (nombre == "aserradero")
-		edificio = new Aserradero();
-	else if(nombre == "fabrica")
-		edificio = new Fabrica();
-	else if(nombre == "escuela")
-		edificio = new Escuela();
-	else if(nombre == "obelisco")
-		edificio = new Obelisco();
-	else if(nombre == "planta electrica")
-		edificio = new Planta_Electrica();
-	else if(nombre == "mina oro")
-		edificio = new Mina_Oro();
-	return edificio;
-}
-*/
-
 Casillero* traductor_casillero(char nombre) {
 	Casillero* casillero;
 	if (nombre == BETUN)

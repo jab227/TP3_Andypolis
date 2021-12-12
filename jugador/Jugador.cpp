@@ -119,9 +119,14 @@ void Jugador::sumar_lista_materiales( Lista<Material> materiales){
 
 void Jugador::recolectar_reservas(){
 	TablePrinter printer;
+	Material producto;
 	printer.print_str("Materiales recolectados", std::cout);
-	for(std::size_t i = 1; i <= reservas_.consulta_largo(); i++)
-		printer.print_row(reservas_.consulta(i), std::cout);
+	for(std::size_t i = 1; i <= reservas_.consulta_largo(); i++){
+		producto = reservas_.consulta(i);
+		reservas_.baja(i);
+		printer.print_row(producto, std::cout);
+		if(producto.obtener_nombre() == "energia") energia_ += producto.obtener_cantidad();
+	}
 	this -> inventario_.sumar_lista_materiales(reservas_,100);
 	reservas_ = Lista<Material>();
 }
@@ -132,19 +137,20 @@ void Jugador::producir_materiales( Mapa* mapa){
 	Material producto;
 	Edificio* edificio;
 	Coordenada coordenada;
-	bool listado = false;
+	bool listado;
 	std::size_t j = 0;
 	for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++){
 		coordenada = edificios_.consulta(i);
 		edificio = Planos::buscar(mapa -> obtener_contenido_ubicacion(coordenada));
 		producto = edificio -> producir_material();
-		std::cout << "debug: Producto del edificio."<< producto.obtener_nombre() << std::endl;
+		listado = false;
 		while(j < reservas_.consulta_largo() && !listado){
 			if(reservas_.consulta(++j) == producto){
 				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
 				listado = true;
 			} 
 		}
+		j=0;
 		if(!listado) reservas_.alta_al_final(producto);
 	}
 }

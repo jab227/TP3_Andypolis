@@ -269,7 +269,6 @@ void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_m
 		fout_1 << empresa_constructora -> estado_actual_ubicaciones(jugadores);
 	}else	std::cout << "Ubicacion error" << std::endl;
 
-
 	std::ofstream fout_2(ruta_materiales);
 	if(fout_2.is_open()){
 		fout_2 << estado_actual_materiales_jugadores();
@@ -280,6 +279,9 @@ void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_m
 		fout_3 << empresa_constructora -> estado_actual_planos();
 	}else	std::cout << "planos error" << std::endl;
 	
+	fout_1.close();
+	fout_2.close();
+	fout_3.close();
 }
 
 

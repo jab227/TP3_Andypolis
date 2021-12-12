@@ -146,7 +146,6 @@ void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coo
 void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
 	jugador -> recolectar_reservas();
 	jugador -> usar_energia(ENERGIA_RECOLECTAR);
-	jugador -> mostrar_inventario();
 }
 
 //TODO: Adaptar a las bolsitas de recursos.
@@ -230,10 +229,8 @@ std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
 	Resultado_Chequeos chequeo;
 	do{
 		chequeo = pedir_edificio(edificio_ingresado);
-		if( chequeo == EXITO){
-			std::cout << "debug: El nombre ingresado es valido." << std::endl;
+		if( chequeo == EXITO)
 			chequeo = planos -> chequeo_construir(edificio_ingresado, jugador, this -> mapa);
-		}
 		fin = mostrar_mensaje_chequeo(chequeo);
 	}while(!fin);
 	return edificio_ingresado;

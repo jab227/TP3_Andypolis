@@ -5,7 +5,6 @@
 
 class Letrado : public Objetivo{
 	const Mapa* mapa;
-	std::size_t contador;
 public:
 	Letrado(Jugador* jugador, Mapa* mapa);
 	~Letrado();

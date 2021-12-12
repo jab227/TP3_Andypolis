@@ -6,7 +6,7 @@
 class Constructor : public Objetivo {
 	private:
 	 const Mapa* mapa;
-	 std::size_t coincidencias = 0;
+	 Lista<std::string> claves;
 	public:
 	 Constructor(Jugador *jugador, Mapa* mapa);
 	 ~Constructor();

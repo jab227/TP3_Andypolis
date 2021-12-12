@@ -154,7 +154,6 @@ bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
 			break;
 		case GUARDAR_SALIR_INICIO:
 			fin = true;
-			cout << "Implementar guardar y salir!" << endl;
 			cout << "Adios!" << endl;
 			break;
 	}

@@ -244,3 +244,18 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 		identificador = "C";
 	return identificador;
 }
+
+
+std::string estado_actual_materiales(){
+	std::string texto;
+	for (std::size_t filas = 0; filas < this->filas; filas++) {
+		for (std::size_t columnas = 0; columnas < this->columnas;
+	     columnas++) {
+	     	if(this->terreno[filas][columnas] -> es_casillero_transitable()){
+	     		texto += this->terreno[filas][columnas]->obtener_contenido();
+	     		texto += Coordenada(filas, columnas).a_string();
+	     		texto += "\n"
+	     	}
+	}
+	return texto;
+}

@@ -141,6 +141,9 @@ private:
 	//PRE: material debe ser un material valido y numero_casillero menor a los casilleros libres transitables
 	//POST: se crea y ubica un material en el N-esimo casillero transitable libre.
 	void generar_material(std::string material, Coordenada coordenada);
+
+
+	std::string estado_actual_materiales();
 };
 
 #endif /* MAPA_H_ */

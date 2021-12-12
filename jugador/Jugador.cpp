@@ -273,3 +273,7 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	grafo -> usarFloyd();
 	return grafo;
 }
+
+std::string a_string(){
+	return id + " " + posicion_.a_string();
+}

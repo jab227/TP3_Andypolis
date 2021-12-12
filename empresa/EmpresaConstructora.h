@@ -92,6 +92,13 @@ public:
 
 	//void ver_objetivos(); Implementado en jugadores
 
+	//La idea es que devuelven en string lo que hay que imprimir en el archivo de salida.
+
+	std::string estado_actual_planos(); // por si modifican el archivo al comenzar la partida.
+	
+	std::string estado_actual_ubicaciones();
+
+
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.
 	//POST: se cargan las ubicaciones en el mapa.
@@ -162,6 +169,12 @@ private:
 	Resultado_Chequeos chequeo_materiales(std::string nombre, std::string madera_ingresada, std::string piedra_ingresada, std::string metal_ingresada, std::size_t &piedra, std::size_t &madera, std::size_t &metal);
 
 	void bombardear_coordenadas(Coordenada coordenada, Jugador* jugador_inactivo);
+
+	//La idea es que resuelven en string lo que hay que imprimir en el archivo de salida.
+	std::string estado_actual_materiales_mapa();
+
+	std::string estado_actual_edificios_mapa(Jugador* jugador);
+
 };
 
 #endif /* EMPRESACONSTRUCTORA_H_ */

@@ -139,3 +139,7 @@ std::size_t Planos::cantidad_permitida(const std::string& edificio) {
 Lista<std::string> Planos::edificios_disponibles() {
 	return lista_edificios.claves();
 }
+
+std::string Planos::estado_actual_edificios(){
+	return lista_edificios -> imprimir_inorden();
+}

@@ -105,10 +105,13 @@ bool Edificio::operator!=(const Edificio &rhs){
 }
 
 std::string Edificio::a_string(){
-	//VER: devolver string con formato.
-	//¿Necesario para imprimir cuando recorremos el diccionario?
-	// Si tenemos la lista de claves, podriamos ahorrarnos imprmir dentro del diccionario.
-	return "";
+	std::string texto;
+	texto += this->nombre + " ";
+	texto += this->materiales[PIEDRA] + " ";
+	texto += this->materiales[MADERA] + " ";
+	texto += this->materiales[MADERA] + " ";
+	texto += this->maximo_permitidos + " ";
+	return texto;
 }
 
 std::size_t Edificio::obtener_vida() const{

@@ -4,7 +4,6 @@
 #include "../printer/color_printer.h"
 
 std::string const SI = "si", NO = "no";
-//Ojo que al ser size_t, es un numero muy grande. 
 const std::size_t COSTO_BOMBAS = 100;
 
 
@@ -411,4 +410,30 @@ Resultado_Chequeos Empresa_Constructora::chequeo_bombas(std::string bombas_ingre
 	else if(!es_numero(bombas_ingresadas)) resultado = NO_EXISTE;
 	else bombas = stoul(bombas_ingresadas);
 	return resultado;
+}
+
+std::string Empresa_Constructora::estado_actual_materiales_mapa(){
+	return mapa -> estado_actual_materiales();
+}
+
+std::string Empresa_Constructora::estado_actual_planos(){
+	return planos -> estado_actual_edificios();
+}
+
+std::string Empresa_Constructora::estado_actual_edificios_mapa(Jugador* jugador){
+	std::string texto = jugador.a_string() + "\n";
+	Lista<Coordenada> coordenadas = jugador.obtener_edificios();
+	for(std::size_t i = 1; i <= coordenadas.consulta_largo(); i++){
+		texto += mapa -> obtener_contenido_ubicacion();
+		texto += coordenadas.consulta(i).a_string();
+		texto += "\n";
+	}
+}
+
+std::string Empresa_Constructora::estado_actual_ubicaciones(Lista<Jugador*> jugadores){
+	std::string texto;
+	texto = estado_actual_materiales_mapa();
+	for(std::size_t i = 1; jugadores.consulta_largo(); i++)
+		texto += estado_actual_edificios_mapajugadores.consulta(i));
+	return texto;
 }

@@ -123,7 +123,6 @@ class Diccionario {
 	T* imprimir_inorder(NodoDiccionario<T, U>* nodo){
 		if(nodo != nullptr){
 			imprimir_inorder(nodo->izquierda());
-			//No pongo el printer porque generaria una dependencia que no se si estan de acuerdo.
 			nodo->imprimir_dato(); 
 			imprimir_inorder(nodo->derecha());
 		}

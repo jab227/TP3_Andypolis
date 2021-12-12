@@ -103,7 +103,7 @@ public:
 	//POST: Devuelve true si el nombre es el mimso.
 	bool operator!=(const Edificio &rhs);
 
-	//TODO: Hacer a_string() que devuelva la info en formato "tabla";
+	//TODO: Hacer a_string() que devuelva la info para guardar.
 	std::string a_string();
 	
 	//PRE: -

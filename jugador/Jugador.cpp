@@ -138,7 +138,8 @@ void Jugador::producir_materiales( Mapa* mapa){
 		coordenada = edificios_.consulta(i);
 		edificio = Planos::buscar(mapa -> obtener_contenido_ubicacion(coordenada));
 		producto = edificio -> producir_material();
-		while(j <= reservas_.consulta_largo() && !listado){
+		std::cout << "debug: Producto del edificio."<< producto.obtener_nombre() << std::endl;
+		while(j < reservas_.consulta_largo() && !listado){
 			if(reservas_.consulta(++j) == producto){
 				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
 				listado = true;

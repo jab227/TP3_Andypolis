@@ -99,6 +99,7 @@ public:
 	
 	std::string estado_actual_ubicaciones(Lista<Jugador*> jugadores);
 
+	void producir_materiales(Jugador* jugador);
 
 private:
 	//PRE: ruta debe ser la ruta a un archivo existente y bien formado. el mapa debe estar cargado.

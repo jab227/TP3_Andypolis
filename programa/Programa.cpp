@@ -231,6 +231,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 	}
 	this->objetivos_jugadores.consulta(this->jugador_activo)
 	    ->actualizar_objetivos();
+	this -> empresa_constructora -> producir_materiales(jugadores.consulta(jugador_activo));
 	return fin;
 }
 

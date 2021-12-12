@@ -481,3 +481,7 @@ std::string Empresa_Constructora::estado_actual_ubicaciones(Lista<Jugador*> juga
 		}
 	return texto;
 }
+
+void Empresa_Constructora::producir_materiales(Jugador* jugador){
+	jugador -> producir_materiales(this -> mapa);
+}

@@ -128,6 +128,7 @@ Material Mapa::generar_conjunto_material(std::string material){
 	return material_generado;
 }
 
+//OBS: Ahora es inutil porque no recogemos direcamente del edificio, debemos producir primero!
 //OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
 void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario){
 	 this -> terreno[coordenada.x()][coordenada.y()] -> recoger_material(inventario);

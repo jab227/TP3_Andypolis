@@ -155,6 +155,10 @@ private:
 	//POST: se realizan las acciones al construir un edificio en la fila y columna.
 	void edificio_construido_confirmado(const std::string &edificio, const Coordenada& coordenada, Jugador* jugador);
 
+	//PRE: edificio debe ser valido y fila y columna estar en el rango del mapa.
+	//POST: se realizan las acciones al demoler un edificio en la fila y columna.
+	void edificio_demolido_confirmado(const std::string &edificio, const Coordenada& coordenada, Jugador* jugador);
+
 	//PRE: -
 	//POST: Pide la fila y la columna. Lo devuelve por coordenada.
 	Resultado_Chequeos pedir_coordenadas(Coordenada& coordenada);

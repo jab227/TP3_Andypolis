@@ -80,7 +80,6 @@ void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 	}
 }
 
-
 Resultado_Chequeos Jugador::tiene_materiales( Lista<Material> materiales) const{
 	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
 	return this -> inventario_.hay_lista_materiales(materiales);
@@ -114,30 +113,39 @@ void Jugador::recuperar_lista_materiales( Lista<Material> materiales){
 	this -> inventario_.sumar_lista_materiales(materiales,50);
 }
 
+void Jugador::acumular_materiales_producidos( Lista<Material> materiales){
+	if(reservas_ == nullptr) reservas_ = materiales;
+	else{
+		for(std::size_t i = 0; i <= reservas_.consulta_largo(i);)
+	}
+}
+
 void Jugador::sumar_lista_materiales( Lista<Material> materiales){
 	this -> inventario_.sumar_lista_materiales(materiales,100);
 }
 
-Lista<Material> Jugador::obtener_recursos_producidos( Mapa* mapa){
-	std::string nombre_edificio;
-	Edificio* edificio;
-	Lista<Material> listado;
-	Material material_producido;
-	std::size_t agregados = 0;
-	Coordenada coordenada;
+void Jugador::recolectar_reservas(){
+	this -> inventario_.sumar_lista_materiales(reservas_,100);
+	delete reservas_;
+	reservas_ = Lista<Material>();
+}
 
-	for (std::size_t i = 1; i <= this->edificios_.consulta_largo(); i++) {
-
-		coordenada = obtener_ubicacion(i);
-		nombre_edificio = mapa->obtener_contenido_ubicacion(coordenada);
-		edificio = Planos::buscar(nombre_edificio);
-		material_producido = edificio -> producir_material();
-		material_producido.cambiar_cantidad(
-		    material_producido.obtener_cantidad());
-		if (material_producido.obtener_nombre() != "ninguno")	// Es por si consultamos al Obelisco, pero tiene sentido?
-			listado.alta(material_producido, ++agregados);
+//Recorrer la lista ubicaciones, producir el material, fijarme si el material ya esta dado de alta
+//en reservas_. Si esta, dejo sumarle el producido sino darle de alta
+void Jugador::producir_materiales( Mapa* mapa){
+	Material producto;
+	bool listado = false;
+	std::size_t j = 0;
+	for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++){
+		producto = edificios_.consulta(i) -> producir_material();
+		while(j <= reserva_.consulta_largo() && !listado){
+			if(reservas_.consulta(++j) == producto){
+				reserva_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
+				listado = true;
+			} 
+		}
+		if(!listado) lista.alta_al_final(producto);
 	}
-	return listado;
 }
 
 std::size_t Jugador::existe_ubicacion(Coordenada coordenada) const {
@@ -154,9 +162,9 @@ void Jugador::mostrar_inventario() const {
 	this->inventario_.mostrar_materiales();
 }
 
-void Jugador::recolectar(Mapa* mapa){
+void Jugador::producir_materiales(Mapa* mapa){
 	Lista<Material> listado = obtener_recursos_producidos(mapa);
-	sumar_lista_materiales(listado);
+	acumular_materiales_producidos(listado);
 }
 
 bool Jugador::mover(Mapa* mapa){

@@ -22,6 +22,7 @@ private:
 	//TODO: Cuando los construimos, sabemos que energía tienen?
 	std::size_t energia_;
 	Almacen inventario_;
+	Lista<Material> reservas_;
 	Coordenada posicion_;
 	Lista<Coordenada> edificios_;
 
@@ -102,14 +103,14 @@ public:
 	
 	void sumar_lista_materiales( Lista<Material> materiales);
 	
+	void recolectar_reservas();
 	//PRE: -
-	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
-	//por la consola los materiales producidos.
-	Lista<Material> obtener_recursos_producidos(Mapa* mapa);
+	//POST: -
+	void producir_materiales(Mapa* mapa);
 
 	void mostrar_inventario() const;
 	
-	void recolectar(Mapa* mapa);
+	//void recolectar(Mapa* mapa);
 
 	void iniciar_coordenadas(Mapa* mapa);
 

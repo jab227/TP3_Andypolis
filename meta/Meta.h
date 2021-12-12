@@ -22,7 +22,7 @@ public:
 	Meta() = default;
 	//PRE: jugador debe estar bien cargado
 	//POST: crea una Meta de CANTIDAD_OBJETIVOS objetivos para el jugador.
-	Meta(Jugador* jugador);
+	Meta(Jugador* jugador, Mapa* mapa);
 	
 	//PRE: -
 	//POST: elimina los objetivos
@@ -43,7 +43,7 @@ public:
 private:
 	//PRE: jugador debe estar bien cargado
 	//POST: devuelve una lista con todos los objetivos disponibles en el juego
-	Lista<Objetivo*> crear_listado(Jugador* jugador);
+	Lista<Objetivo*> crear_listado(Jugador* jugador, Mapa* mapa);
 
 	//PRE: -
 	//POST: libera los objetivos contenidos en la lista asi como tambien la lista.

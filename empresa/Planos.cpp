@@ -126,3 +126,11 @@ void Planos::mostrar_materiales_producidos(Lista<Material> listado){
 Edificio* Planos::buscar(std::string nombre_edificio){
 	return lista_edificios[nombre_edificio];
 }
+
+std::size_t Planos::cantidad_permitida(const std::string& edificio) {
+	return lista_edificios[edificio]->obtener_max_permitidos();
+}
+
+Lista<std::string> Planos::edificios_disponibles() {
+	return lista_edificios.claves();
+}

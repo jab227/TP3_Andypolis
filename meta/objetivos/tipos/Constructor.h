@@ -3,11 +3,13 @@
 
 #include "../Objetivo.h"
 
-class Constructor : public Objetivo{
-public:
-	Constructor(Jugador* jugador);
-	~Constructor();
-	bool actualizar();
+class Constructor : public Objetivo {
+	private:
+	 const Mapa* mapa;
+	public:
+	 Constructor(Jugador *jugador, Mapa* mapa);
+	 ~Constructor();
+	 bool actualizar();
 };
 
 #endif /* OBJETIVOS_TIPOS_CONSTRUCTOR_H_ */

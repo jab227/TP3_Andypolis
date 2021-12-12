@@ -26,13 +26,9 @@ bool Meta::actualizar_objetivos() {
 	return cumplidos;
 }
 
-// bool Meta::objetivos_cumplidos() {
-// 	bool cumplidos = true;
-// 	for (std::size_t i = 1; i <= this->objetivos.consulta_largo(); i++)
-// 		cumplidos = (cumplidos && this->objetivos.consulta(i)->esta_cumplido());
-
-// 	return cumplidos;
-// }
+const Lista<Objetivo*>& Meta::obtener_objetivos() const {
+	return objetivos;
+}
 
 void Meta::mostrar_objetivos() {
 	std::cout << "Los objetivos son: " << std::endl;

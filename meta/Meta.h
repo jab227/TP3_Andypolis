@@ -34,8 +34,8 @@ public:
 	bool actualizar_objetivos();
 
 	//PRE: -
-	//POST: devuelve true si se cumplieron los 3 objetivos
-	bool objetivos_cumplidos();
+	//POST: Devuelve una lista con los objetivos asignados.
+	const Lista<Objetivo*>& obtener_objetivos() const;
 
 	//PRE: -
 	//POST: muestra los objetivos por pantalla.

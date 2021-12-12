@@ -113,20 +113,12 @@ void Jugador::recuperar_lista_materiales( Lista<Material> materiales){
 	this -> inventario_.sumar_lista_materiales(materiales,50);
 }
 
-void Jugador::acumular_materiales_producidos( Lista<Material> materiales){
-	if(reservas_ == nullptr) reservas_ = materiales;
-	else{
-		for(std::size_t i = 0; i <= reservas_.consulta_largo(i);)
-	}
-}
-
 void Jugador::sumar_lista_materiales( Lista<Material> materiales){
 	this -> inventario_.sumar_lista_materiales(materiales,100);
 }
 
 void Jugador::recolectar_reservas(){
 	this -> inventario_.sumar_lista_materiales(reservas_,100);
-	delete reservas_;
 	reservas_ = Lista<Material>();
 }
 
@@ -134,17 +126,21 @@ void Jugador::recolectar_reservas(){
 //en reservas_. Si esta, dejo sumarle el producido sino darle de alta
 void Jugador::producir_materiales( Mapa* mapa){
 	Material producto;
+	Edificio* edificio;
+	Coordenada coordenada;
 	bool listado = false;
 	std::size_t j = 0;
 	for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++){
-		producto = edificios_.consulta(i) -> producir_material();
-		while(j <= reserva_.consulta_largo() && !listado){
+		coordenada = edificios_.consulta(i);
+		edificio = Planos::buscar(mapa -> obtener_contenido_ubicacion(coordenada));
+		producto = edificio -> producir_material();
+		while(j <= reservas_.consulta_largo() && !listado){
 			if(reservas_.consulta(++j) == producto){
-				reserva_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
+				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
 				listado = true;
 			} 
 		}
-		if(!listado) lista.alta_al_final(producto);
+		if(!listado) reservas_.alta_al_final(producto);
 	}
 }
 
@@ -160,11 +156,6 @@ std::size_t Jugador::existe_ubicacion(Coordenada coordenada) const {
 
 void Jugador::mostrar_inventario() const {
 	this->inventario_.mostrar_materiales();
-}
-
-void Jugador::producir_materiales(Mapa* mapa){
-	Lista<Material> listado = obtener_recursos_producidos(mapa);
-	acumular_materiales_producidos(listado);
 }
 
 bool Jugador::mover(Mapa* mapa){

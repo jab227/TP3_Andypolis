@@ -280,11 +280,11 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	while(mapa -> es_coordenada_valida(coordenada_actual)){
 		while(mapa -> es_coordenada_valida(coordenada_actual)){
 			grafo -> agregarVertice(coordenada_actual);
-			if(columna != 0){
+			if(columna != 0) {
 				grafo -> agregarCamino(Coordenada(fila, columna - 1), coordenada_actual, (int) obtener_costo_terreno(coordenada_actual, mapa));
 				grafo -> agregarCamino(coordenada_actual, Coordenada(fila, columna - 1), (int) obtener_costo_terreno(Coordenada(fila, columna - 1), mapa));
 			}
-			if(fila != 0){
+			if(fila != 0) {
 				grafo -> agregarCamino(Coordenada(fila - 1, columna), coordenada_actual, (int) obtener_costo_terreno(coordenada_actual, mapa));
 				grafo -> agregarCamino(coordenada_actual, Coordenada(fila - 1, columna), (int) obtener_costo_terreno(Coordenada(fila - 1, columna), mapa));
 			}

@@ -119,6 +119,7 @@ public:
 	void mover_a_coordenada(Coordenada coordenada, Mapa* mapa);
 
 	std::string a_string();
+
 protected:
 	//PRE: el mapa y el grafo debe estar cargado
 	//POST: devuelve el resultado de las coordenadas ingresadas por el usuario. si estas son validas, las guarda en

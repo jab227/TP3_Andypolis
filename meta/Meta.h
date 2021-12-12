@@ -34,8 +34,8 @@ public:
 	bool actualizar_objetivos();
 
 	//PRE: -
-	//POST: devuelve true si se cumplieron los 3 objetivos
-	bool objetivos_cumplidos();
+	//POST: Devuelve una lista con los objetivos asignados.
+	const Lista<Objetivo*>& obtener_objetivos() const;
 
 	//PRE: -
 	//POST: muestra los objetivos por pantalla.
@@ -49,6 +49,9 @@ private:
 	//PRE: -
 	//POST: libera los objetivos contenidos en la lista asi como tambien la lista.
 	void eliminar_listado(Lista<Objetivo*>& listado);
+	//PRE: a > 0
+	//POS: devuelve un numero aleatorio en el intervalo (a,b)
+	std::size_t generar_numero_aleatorio(std::size_t a, std::size_t b);
 };
 
 #endif /* META_META_H_ */

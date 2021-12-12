@@ -9,6 +9,7 @@ public:
 	Letrado(Jugador* jugador, Mapa* mapa);
 	~Letrado();
 	bool actualizar();
+	bool estan_construidos(const Lista<Coordenada>& edificios);
 };
 
 #endif /* OBJETIVOS_TIPOS_LETRADO_H_ */

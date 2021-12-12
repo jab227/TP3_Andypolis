@@ -197,8 +197,10 @@ void Mapa::generar_material(std::string material, Coordenada coordenada){
 }
 
 std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {
-	std::size_t numero = rand() % (maximo - minimo + 1) + minimo;
-	return numero;
+	std::random_device device;
+	std::mt19937 rng(device());
+	std::uniform_int_distribution<std::mt19937::result_type> rango(minimo, maximo);
+	return rango(rng);
 }
 
 //TODO:Quitarme la dependencia. TellDontAsk.

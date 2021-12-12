@@ -146,7 +146,8 @@ std::string Planos::estado_actual_edificios(){
 	std::string texto;
 	for(std::size_t i = 1; i <= claves.consulta_largo(); i++){
 		edificio = lista_edificios[claves.consulta(i)];
-		texto += edificio -> a_string() + "\n";
+		texto += edificio -> a_string();
+		if(i != claves.consulta_largo()) texto += "\n"; //Para evitar el salto de linea en la ult linea.
 	}
 	return texto;
 }

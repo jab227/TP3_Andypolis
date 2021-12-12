@@ -227,7 +227,6 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			break;
 		case GUARDAR_SALIR:
 			fin = true;
-			cout << "Adios!" << endl;
 			break;
 	}
 	this->objetivos_jugadores.consulta(this->jugador_activo)
@@ -266,18 +265,18 @@ void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios) {
 	std::ofstream fout_1(ruta_ubicaciones);
 	if(fout_1.is_open()){
-		Printer::print_str(empresa_constructora -> estado_actual_ubicaciones(jugadores), fout_1);
+		fout_1 << empresa_constructora -> estado_actual_ubicaciones(jugadores);
 	}else	std::cout << "Ubicacion error" << std::endl;
 
 
 	std::ofstream fout_2(ruta_materiales);
 	if(fout_2.is_open()){
-		Printer::print_str(estado_actual_materiales_jugadores(), fout_2);
+		fout_2 << estado_actual_materiales_jugadores();
 	}else	std::cout << "materiales error" << std::endl;
 	
 	std::ofstream fout_3(ruta_edificios);
 	if(fout_3.is_open()){
-		Printer::print_str(empresa_constructora -> estado_actual_planos(), fout_3);
+		fout_3 << empresa_constructora -> estado_actual_planos();
 	}else	std::cout << "planos error" << std::endl;
 	
 }
@@ -296,7 +295,7 @@ std::string Programa::estado_actual_materiales_jugadores(){
 				texto += std::to_string(inventario.consulta(i).obtener_cantidad());
 				texto += " ";
 		}
-		texto += "\n";
+		if(i != inventario.consulta_largo()) texto += "\n";
 	}
 	return texto;
 }

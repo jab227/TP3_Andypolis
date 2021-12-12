@@ -56,7 +56,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella
-	void consultar_coordenada();
+	void consultar_coordenada(Jugador* jugador_activo, Jugador* jugador_inactivo);
 
 	//PRE: el juegador y el mapa deben estar bien cargados
 	//POST: se pide al usuario que ingrese coordenadas validas y se cambia la posicion del jugador
@@ -77,7 +77,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se generan materiales aleatorios en caminos aleatorios del mapa
-	void lluvia_de_recursos();
+	void lluvia_de_recursos(Coordenada jugador1, Coordenada jugador2);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se vacian los materiales del mapa

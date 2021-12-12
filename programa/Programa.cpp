@@ -179,9 +179,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 				this->jugador_activo));
 			break;
 		case ATACAR:
-			this->empresa_constructora->atacar_edificio(
-			    jugadores.consulta(jugador_activo),
-			    jugadores.consulta(3 - jugador_activo));
+			this->empresa_constructora->atacar_edificio(jugadores.consulta(jugador_activo), jugadores.consulta(3 - jugador_activo));
 			break;
 		case REPARAR:
 			this->empresa_constructora->reparar_edificio(
@@ -192,7 +190,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			    this->jugadores.consulta(jugador_activo));
 			break;
 		case CONSULTAR:
-			this->empresa_constructora->consultar_coordenada();
+			this->empresa_constructora->consultar_coordenada(jugadores.consulta(jugador_activo), jugadores.consulta(3 - jugador_activo));
 			break;
 		case LISTAR_MATERIALES:
 			this->empresa_constructora->mostrar_materiales(
@@ -244,7 +242,7 @@ void Programa::comenzar_partida(){
 	    ENERGIA_INICIAL);
 	this -> jugadores.consulta(2) -> recuperar_energia(
 	    ENERGIA_INICIAL);
-	this -> empresa_constructora -> lluvia_de_recursos();
+	this -> empresa_constructora -> lluvia_de_recursos(jugadores.consulta(1) -> obtener_posicion(), jugadores.consulta(2) -> obtener_posicion());
 }
 
 bool Programa::es_opcion_valida(std::string opcion) {

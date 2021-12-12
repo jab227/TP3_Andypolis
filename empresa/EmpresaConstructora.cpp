@@ -39,8 +39,8 @@ void Empresa_Constructora::modificar_edificios(){
 	mostrar_mensaje_chequeo(chequeo);
 }
 
-void Empresa_Constructora::mostrar_mapa(){
-	this -> mapa -> mostrar_mapa();
+void Empresa_Constructora::mostrar_mapa(Lista<Jugador*> jugadores){
+	this -> mapa -> mostrar_mapa(jugadores);
 }
 
 void Empresa_Constructora::mostrar_construidos(Jugador* jugador){

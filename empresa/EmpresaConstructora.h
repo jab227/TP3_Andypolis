@@ -51,7 +51,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se muestra el mapa de terrenos y el de los edificios/materiales ubicados en mapa
-	void mostrar_mapa();
+	void mostrar_mapa(Lista<Jugador*> jugadores);
 
 	//PRE: los archivos deben estar cargados
 	//POST: se pide al usuario una coordenada y se muestra informacion sobre lo que hay en ella

@@ -81,7 +81,7 @@ void Programa::mostrar_menu_juego() {
 	     << "Tenes "
 	     << jugadores.consulta(jugador_activo) -> obtener_energia()
 	     << " de energia." << endl;
-	this -> empresa_constructora -> mostrar_mapa();
+	this -> empresa_constructora -> mostrar_mapa(jugadores);
 	cout << "--------------------------------------------------------------"
 	     << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero"
@@ -147,7 +147,7 @@ bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
 			this->empresa_constructora->mostrar_edificios();
 			break;
 		case MOSTRAR_MAPA:
-			this->empresa_constructora->mostrar_mapa();
+			this->empresa_constructora->mostrar_mapa(jugadores);
 			break;
 		case COMENZAR:
 			this -> comenzar_partida();
@@ -235,7 +235,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 }
 
 void Programa::comenzar_partida(){
-	this -> empresa_constructora -> mostrar_mapa();
+	this -> empresa_constructora -> mostrar_mapa(jugadores);
 	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
 	this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
 	cout << "Comienza la partida!" << endl;

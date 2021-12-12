@@ -5,6 +5,7 @@
 #include "../material/Material.h"
 #include "../Casillero/Casillero.h"
 #include "../Casillero/Casillero.h"
+#include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
 #include "../utils/coordenada.h"
 
@@ -40,7 +41,7 @@ public:
 
 	//PRE: el mapa debe estar cargado
 	//POST: se muestra el mapa de los edificios con los terrenos en colores
-	void mostrar_mapa();
+	void mostrar_mapa(Lista<Jugador*> jugadores);
 
 	//PRE: la posicion debe ser valida
 	//POST: se muestra informacion sobre la ubicacion consultada

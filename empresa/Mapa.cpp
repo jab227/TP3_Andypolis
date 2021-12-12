@@ -21,7 +21,6 @@ const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
 	this -> cargar_terreno(mapa);
-	//this -> mostrar_mapa();
 }
 
 Mapa::~Mapa() {
@@ -53,7 +52,7 @@ bool Mapa::es_cordenada_valida(const Coordenada& coordenada) {
 	return (coordenada.x() < this->filas && coordenada.y() < this->columnas);
 }
 
-void Mapa::mostrar_mapa() {
+void Mapa::mostrar_mapa(Lista<Jugador*> jugadores) {
 	std::cout << "Mapa:" << endl;
 	std::cout << "   ";
 	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
@@ -62,17 +61,26 @@ void Mapa::mostrar_mapa() {
 	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
 		std::cout << ' ' << columnas % 10 << ' ';
 	std::cout << std::endl;
+
+	Coordenada coordenada;
+	std::string contenido;
 	for (std::size_t filas = 0; filas < this->filas; filas++) {
 		std::cout << filas / 10 << filas % 10 << ' ';
 		for (std::size_t columnas = 0; columnas < this->columnas;
 		     columnas++) {
-			std::cout << this->terreno[filas][columnas]->obtener_color()
-			     << ' '
-			     << this->identificador_ocupados(
-				    this->terreno[filas][columnas]
-					->obtener_contenido())
-			     << ' ';
-				std::cout << FIN_COLOR;
+			coordenada = Coordenada(filas,columnas)
+			
+			std::cout << this->terreno[filas][columnas]->obtener_color();
+			
+			if(jugadores.consulta(1).obtener_posicion() == coordenada)
+				contenido = "jugador1"
+			else if(jugadores.consulta(2).obtener_posicion() == coordenada)
+				contenido = "jugador2"
+			else
+				contenido = this->terreno[filas][columnas]->obtener_contenido();
+			
+			std::cout << ' ' << this->identificador_ocupados( contenido )<< ' ';
+			std::cout << FIN_COLOR;
 		}
 		std::cout << std::endl << FIN_COLOR;
 	}
@@ -242,13 +250,16 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 		identificador = "G";
 	else if(ocupador == "andycoins")
 		identificador = "C";
+	else if(ocupador == "jugador1")
+		identificador = "J";
+	else if(ocupador == "jugador2")
+		identificador = "U";
 	return identificador;
 }
 
 
 std::string Mapa::estado_actual_materiales(){
-	std::string texto; //Desanidar.
-	std::string linea; //Desanidar.
+	std::string texto, linea; 
 	for (std::size_t filas = 0; filas < this->filas; filas++){
 		for (std::size_t columnas = 0; columnas < this->columnas; columnas++){
 	     	if(this->terreno[filas][columnas] -> es_casillero_transitable() 

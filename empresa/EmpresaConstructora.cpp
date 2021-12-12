@@ -107,13 +107,13 @@ void Empresa_Constructora::iniciar_coordenadas_jugador(Jugador* jugador){
 		std::cout << "Jugador "<< jugador -> obtener_jugador() << ": Eliga las coordenadas donde empezar el juego:" << endl;
 		resultado = pedir_coordenadas(coordenada);
 		if(resultado == SALIR)
-			ColorPrinter::color_msg("No se puede salir, se deben ingresar coordenadas",  ROJO, std::cout);
-		else{
+			resultado = NO_EXISTE;
+		else if(resultado == EXITO){
 			hay_edificio = this -> planos -> existe(this -> mapa -> obtener_contenido_ubicacion(coordenada)) == EXITO;
 			if(hay_edificio)
-			ColorPrinter::color_msg("Esta coordenada esta ocupada por un edificio.",  ROJO, std::cout);
+				resultado = CASILLERO_OCUPADO;
 		}
-	}while(!mostrar_mensaje_chequeo(resultado) || resultado == SALIR || hay_edificio);
+	}while(!mostrar_mensaje_chequeo(resultado));
 	jugador -> mover_a_coordenada(coordenada, mapa);
 }
 

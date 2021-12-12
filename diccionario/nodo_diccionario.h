@@ -30,9 +30,6 @@ class NodoDiccionario {
 	// Pre: -
 	// Pos: Devuelve el dato guardado en el nodo.
 	U dato() const { return dato_; };
-	// Pre: U debe tener implementado el metodo a_string().
-	// Pos: Devuelve el dato guardado en el nodo.
-	void imprimir_dato() const { std::cout << dato_ -> a_string() << std::endl;}; //WHY: Esta ok que incluya <iostream>?
 	// Pre: -
 	// Pos: Devuelve el dato guardado en el nodo por referencia.
 	U& dato() { return dato_; };

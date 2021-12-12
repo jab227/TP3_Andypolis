@@ -96,7 +96,7 @@ public:
 
 	std::string estado_actual_planos(); // por si modifican el archivo al comenzar la partida.
 	
-	std::string estado_actual_ubicaciones();
+	std::string estado_actual_ubicaciones(Lista<Jugador*> jugadores);
 
 
 private:

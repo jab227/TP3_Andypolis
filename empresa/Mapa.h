@@ -104,6 +104,9 @@ public:
 	//PRE: la coordenada debe ser valida
 	//POST: devuelve el identificador del casillero en la coordenada
 	char obtener_identificador_casillero(Coordenada coordenada);
+
+	
+	std::string estado_actual_materiales();
 private:
 //WHY: Se usa?
 	//PRE: casillero uno del mapa ocupado por un edificio, coordenadas deben corresponder al casillero
@@ -142,8 +145,6 @@ private:
 	//POST: se crea y ubica un material en el N-esimo casillero transitable libre.
 	void generar_material(std::string material, Coordenada coordenada);
 
-
-	std::string estado_actual_materiales();
 };
 
 #endif /* MAPA_H_ */

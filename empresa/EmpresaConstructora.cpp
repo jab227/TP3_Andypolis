@@ -421,19 +421,22 @@ std::string Empresa_Constructora::estado_actual_planos(){
 }
 
 std::string Empresa_Constructora::estado_actual_edificios_mapa(Jugador* jugador){
-	std::string texto = jugador.a_string() + "\n";
-	Lista<Coordenada> coordenadas = jugador.obtener_edificios();
+	std::string texto = jugador -> a_string() + "\n";
+	Lista<Coordenada> coordenadas = jugador -> obtener_edificios();
+	Coordenada coordenada;
 	for(std::size_t i = 1; i <= coordenadas.consulta_largo(); i++){
-		texto += mapa -> obtener_contenido_ubicacion();
-		texto += coordenadas.consulta(i).a_string();
+		coordenada = coordenadas.consulta(i);
+		texto += mapa -> obtener_contenido_ubicacion(coordenada) + " ";
+		texto += coordenada.a_string(); 
 		texto += "\n";
 	}
+	return texto;
 }
 
 std::string Empresa_Constructora::estado_actual_ubicaciones(Lista<Jugador*> jugadores){
 	std::string texto;
 	texto = estado_actual_materiales_mapa();
-	for(std::size_t i = 1; jugadores.consulta_largo(); i++)
-		texto += estado_actual_edificios_mapajugadores.consulta(i));
+	for(std::size_t i = 1; i <= jugadores.consulta_largo(); i++)
+			texto += estado_actual_edificios_mapa(jugadores.consulta(i));
 	return texto;
 }

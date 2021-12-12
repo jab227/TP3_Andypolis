@@ -246,16 +246,17 @@ std::string Mapa::identificador_ocupados(std::string ocupador){
 }
 
 
-std::string estado_actual_materiales(){
-	std::string texto;
-	for (std::size_t filas = 0; filas < this->filas; filas++) {
-		for (std::size_t columnas = 0; columnas < this->columnas;
-	     columnas++) {
-	     	if(this->terreno[filas][columnas] -> es_casillero_transitable()){
-	     		texto += this->terreno[filas][columnas]->obtener_contenido();
-	     		texto += Coordenada(filas, columnas).a_string();
-	     		texto += "\n"
-	     	}
+std::string Mapa::estado_actual_materiales(){
+	std::string texto; //Desanidar.
+	std::string linea; //Desanidar.
+	for (std::size_t filas = 0; filas < this->filas; filas++){
+		for (std::size_t columnas = 0; columnas < this->columnas; columnas++){
+	     	if(this->terreno[filas][columnas] -> es_casillero_transitable() 
+	     				&& this->terreno[filas][columnas]->obtener_contenido() != ""){
+	     		linea = this->terreno[filas][columnas]->obtener_contenido() + " " + Coordenada(filas, columnas).a_string() + "\n";
+				texto += linea;
+			}
+		}
 	}
 	return texto;
 }

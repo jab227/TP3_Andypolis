@@ -106,11 +106,7 @@ bool Edificio::operator!=(const Edificio &rhs){
 
 std::string Edificio::a_string(){
 	std::string texto;
-	texto += this->nombre + " ";
-	texto += this->materiales[PIEDRA] + " ";
-	texto += this->materiales[MADERA] + " ";
-	texto += this->materiales[MADERA] + " ";
-	texto += this->maximo_permitidos + " ";
+	texto = this->nombre + " " + std::to_string(this->materiales[PIEDRA]) + " " + std::to_string(this->materiales[MADERA]) + " " + std::to_string(this->materiales[METAL]) + " " + std::to_string(this->maximo_permitidos);
 	return texto;
 }
 

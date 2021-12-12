@@ -118,15 +118,6 @@ class Diccionario {
 		return true;
 	};
 
-	// Pre: 
-	// Pos: Si el nodo no es null pointer, imprime el nodo.
-	T* imprimir_inorder(NodoDiccionario<T, U>* nodo){
-		if(nodo != nullptr){
-			imprimir_inorder(nodo->izquierda());
-			nodo->imprimir_dato(); 
-			imprimir_inorder(nodo->derecha());
-		}
-	};
 	// Pre: -
 	// Pos: Copia recursivamente los pares clave-dato del nodo "nodo"
 	// en el objeto sobre el cual se llama.
@@ -221,9 +212,6 @@ class Diccionario {
 	// Pos: True si esta vacio, False en otro caso.
 	bool vacio() const { return (raiz_ == nullptr); };
 
-	void imprimir_inorden() const {
-			this -> imprimir_inorden(this -> raiz_);
-	};
 	// Pre: -
 	// Pos: True si existe la clave, False en otro caso.
 	bool existe(const T& clave) {

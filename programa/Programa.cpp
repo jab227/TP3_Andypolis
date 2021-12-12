@@ -265,19 +265,21 @@ void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 
 void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios) {
 	std::ofstream fout_1(ruta_ubicaciones);
-	if(!fout_1.is_open()){
-		Printer::print_str(empresa_constructora -> estado_actual_ubicaciones(), fout_1);
-	}
+	if(fout_1.is_open()){
+		Printer::print_str(empresa_constructora -> estado_actual_ubicaciones(jugadores), fout_1);
+	}else	std::cout << "Ubicacion error" << std::endl;
+
 
 	std::ofstream fout_2(ruta_materiales);
-	if(!fout_2.is_open()){
+	if(fout_2.is_open()){
 		Printer::print_str(estado_actual_materiales_jugadores(), fout_2);
-	}
-
+	}else	std::cout << "materiales error" << std::endl;
+	
 	std::ofstream fout_3(ruta_edificios);
-	if(!fout_3.is_open()){
+	if(fout_3.is_open()){
 		Printer::print_str(empresa_constructora -> estado_actual_planos(), fout_3);
-	}
+	}else	std::cout << "planos error" << std::endl;
+	
 }
 
 
@@ -287,11 +289,14 @@ std::string Programa::estado_actual_materiales_jugadores(){
 	Material material;
 	for(std::size_t i = 1; i <= inventario.consulta_largo(); i++){
 		material = inventario.consulta(i);
-		texto += material.obtener_nombre() + "\n";
+		texto += material.obtener_nombre();
+		texto += " ";
 		for(std::size_t j = 1; j <= jugadores.consulta_largo(); j++){
 				inventario = jugadores.consulta(j)->obtener_inventario().obtener_materiales();
-				texto += inventario.consulta(i).obtener_cantidad() + "\n";
+				texto += std::to_string(inventario.consulta(i).obtener_cantidad());
+				texto += " ";
 		}
+		texto += "\n";
 	}
 	return texto;
 }

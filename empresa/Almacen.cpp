@@ -60,12 +60,14 @@ void Almacen::mostrar_materiales() const{
 Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material> &materiales_consultados, std::size_t porcentaje) const{
 	bool fin = false;
 	Resultado_Chequeos suficiente = EXITO;
-		for(std::size_t i = 1; i <= materiales_consultados.consulta_largo() && !fin; ++i){
-			if (!hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)) {
-					suficiente = NO_MATERIALES;
-					fin = true;
-				}
+	for(std::size_t i = 1; i <= materiales_consultados.consulta_largo() && !fin; ++i){
+	// Es necesario? No es mejor que hay_material_suficiente() devuelva un Resultado_Chequeos?
+		if (!hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)) {
+			suficiente = NO_MATERIALES;
+			fin = true;
 		}
+	}
+
 	return suficiente;
 }
 

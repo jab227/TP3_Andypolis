@@ -6,7 +6,6 @@
 std::string const SI = "si", NO = "no";
 const std::size_t COSTO_BOMBAS = 100;
 
-
 Empresa_Constructora::Empresa_Constructora() : planos(nullptr), mapa(nullptr){}
 
 Empresa_Constructora::Empresa_Constructora(Planos* plano, Mapa* mapa): planos(plano), mapa(mapa) {}
@@ -71,6 +70,7 @@ void Empresa_Constructora::mostrar_mapa(Lista<Jugador*> jugadores){
 			columnas++;
 			coordenada = Coordenada(filas,columnas);
 		}
+		this -> mapa -> mostrar_referencias(filas);
 		std::cout << std::endl << FIN_COLOR;
 		filas++; columnas = 0;
 		coordenada = Coordenada(filas,columnas);

@@ -78,6 +78,10 @@ public:
 	//POST: Retorna en un string los materiales que se encuentran en el mapa con sus coordenadas.
 	std::string estado_actual_materiales();
 
+	//PRE: -
+	//POST: muestra las referencias de tantas columnas como sea necesario para no superar al mapa.
+	void mostrar_referencias(std::size_t fila_mostrada);
+
 private:
 	//PRE: ruta debe ser a un archivo existente y bien cargado para el mapa
 	//POST: se carga el mapa con los casilleros correspondientes a los datos del archivo

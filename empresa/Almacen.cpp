@@ -124,9 +124,9 @@ void Almacen::descontar_lista_materiales(const Lista<Material>& materiales_usado
 	std::size_t proporcion = porcentaje / 100;
 	for (std::size_t i = 1; i <= materiales_usados.consulta_largo(); i++) {
 		Material material = materiales_usados.consulta(i);
-		sumar_cantidad_material(
+		restar_cantidad_material(
 		    material.obtener_nombre(),
-		    -material.obtener_cantidad() * proporcion);
+		    material.obtener_cantidad() * proporcion);
 	}
 }
 

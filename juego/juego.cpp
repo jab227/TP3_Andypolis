@@ -22,7 +22,7 @@ Salida Juego::comenzar_juego() {
 
 Salida Juego::jugar() {
     std::size_t opcion;
-    Salida salida = CONTINUAR;
+    Salida salida;
     if (!programa_.victoria())
     {
         do

@@ -10,8 +10,6 @@ Monedas::Monedas(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 	this -> monedas_actuales = monedas.obtener_cantidad();
 }
 
-Monedas::~Monedas(){ }
-
 bool Monedas::actualizar(){
 	if(!this -> cumplido){
 		Material monedas = this -> jugador -> obtener_inventario().obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);

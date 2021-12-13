@@ -5,8 +5,6 @@ Minero::Minero(Jugador* jugador, Mapa* mapa) : Objetivo(NOMBRE,jugador), mapa(ma
 	cumplido = estan_construidos(jugador->obtener_edificios());
 }
 
-Minero::~Minero(){ }
-
 bool Minero::actualizar() {
 	if (!cumplido) {
 		cumplido = estan_construidos(jugador->obtener_edificios());

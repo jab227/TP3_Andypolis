@@ -7,8 +7,6 @@ Piedras::Piedras(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 	this -> actualizar();
 }
 
-Piedras::~Piedras(){ }
-
 bool Piedras::actualizar(){
 	if(!this -> cumplido){
 		Material piedras_obtenidas = this -> jugador -> obtener_inventario().obtener_material(NOMBRES_MATERIALES[PIEDRA]);

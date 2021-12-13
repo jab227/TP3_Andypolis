@@ -12,47 +12,48 @@ private:
 
 public:
 	//PRE: -
-	//POST: se crea un material vacio
+	//POS: se crea un material vacio
 	Material();
 
 	//PRE: -
-	//POST: se crea un material con los datos ingresados
+	//POS: se crea un material con los datos ingresados
 	Material(std::string nombre, std::size_t cantidad);
 
 	Material(const Material& rhs) = default;
 
 	//PRE: -
-	//POST: devuelve el nombre del material
+	//POS: devuelve el nombre del material
 	std::string obtener_nombre() const;
 
 	//PRE: -
-	//POST: devuelve la cantidad del material
+	//POS: devuelve la cantidad del material
 	std::size_t obtener_cantidad() const;
 
 	//PRE: -
-	//POST: se cambia el nombre del material
+	//POS: se cambia el nombre del material
 	void cambiar_nombre(std::string nombre);
 
 	//PRE: -
-	//POST: se cmbia la cantidad del material
+	//POS: se cmbia la cantidad del material
 	void cambiar_cantidad(std::size_t cantidad);
 
 	//PRE: -
-	//POST: se suma cantidad a la cantidad del material
+	//POS: se suma cantidad a la cantidad del material
 	void sumar_cantidad(std::size_t cantidad);
 
 	//PRE: -
-	//POST: se resta cantidad a la cantidad del material
+	//POS: se resta cantidad a la cantidad del material
 	void restar_cantidad(std::size_t cantidad);
 	
 	//PRE: -
-	//POST: imprime un saludo
+	//POS: imprime un saludo
 	void saludar() const;
 
 	// PRE: -
 	// POS: True si los materiales son iguales, False
 	// en otro caso.
 	bool operator==(const Material& rhs) const;
+
 	// Operador de asignacion del material
 	void operator=(const Material& rhs);
 };

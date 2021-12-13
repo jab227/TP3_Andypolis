@@ -37,10 +37,8 @@ bool Jugador::es_energia_maxima(const std::size_t& energia_recuperada) const {
 
 bool Jugador::recuperar_energia(const std::size_t& valor) {
 	bool es_maxima = es_energia_maxima(valor);
-	if (es_maxima)
-		energia_ = ENERGIA_MAXIMA;
-	else
-		energia_ += valor;
+	if (es_maxima) energia_ = ENERGIA_MAXIMA;
+	else energia_ += valor;
 	return es_maxima;
 }
 
@@ -86,7 +84,6 @@ Resultado_Chequeos Jugador::tiene_materiales( Lista<Material> materiales) const{
 }
 
 Resultado_Chequeos Jugador::tiene_materiales_reparar( Lista<Material> materiales) const{
-	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
 	return this -> inventario_.hay_lista_materiales(materiales, 25);
 }
 
@@ -303,7 +300,6 @@ Grafo* Jugador::cargar_grafo(Mapa* mapa){
 std::string Jugador::a_string(){
 	return std::to_string(id_) + " " + posicion_.a_string();
 }
-
 
 Coordenada Jugador::obtener_posicion() const{
 		return posicion_;

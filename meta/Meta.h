@@ -12,6 +12,7 @@
 #include "objetivos/tipos/Minero.h"
 #include "objetivos/tipos/Monedas.h"
 #include "objetivos/tipos/Piedras.h"
+#include "objetivos/tipos/BatallaObelisco.h"
 
 const int CANTIDAD_OBJETIVOS = 3;
 
@@ -19,8 +20,6 @@ class Meta {
 private:
 	Lista<Objetivo*> objetivos;
 public:
-	//Meta() = default;
-
 	//PRE: jugador debe estar bien cargado
 	//POST: crea una Meta de CANTIDAD_OBJETIVOS objetivos para el jugador.
 	Meta(Jugador* jugador, Mapa* mapa);

@@ -49,9 +49,12 @@ public:
 	//POST: imprime un saludo
 	void saludar() const;
 
-	bool operator==(Material rhs) const;
-
-	void operator=(Material rhs);
+	// PRE: -
+	// POS: True si los materiales son iguales, False
+	// en otro caso.
+	bool operator==(const Material& rhs) const;
+	// Operador de asignacion del material
+	void operator=(const Material& rhs);
 };
 
 #endif /* MATERIAL_H_ */

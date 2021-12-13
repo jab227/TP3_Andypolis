@@ -60,7 +60,7 @@ public:
 	// POST: si hay energia suficiente, devuelve un numero entre 0 y 100
 	// representando la energia que sobra. Si no alcanza devuelve un numero
 	// muy grande, el numero que devuelve cambiado de signo es la energia que falta.
-	std::size_t energia_suficiente(const std::size_t& energia_requerida) const;
+	bool es_energia_suficiente(const std::size_t& energia_requerida) const;
 
 	// PRE: el valor tiene que ser mayor o igual a la energia cambiada de
 	// signo. POST: se modifica el valor de la energia, si el numero es

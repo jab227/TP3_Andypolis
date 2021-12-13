@@ -20,8 +20,6 @@ void ParserUbicacion::material(const std::smatch& match, Mapa*& mapa) {
 	mapa->poner_material_ubicacion(nombre(match), coordenada);
 }
 
-// Podemos prescindir del diccionario si asumimos que los archivos estan bien
-// formados
 Coordenada ParserUbicacion::edificio(const std::smatch& match, Mapa*& mapa) {
 	Coordenada coordenada = Coordenada(x(match), y(match));
 	mapa->construir_edificio_ubicacion(nombre(match), coordenada);

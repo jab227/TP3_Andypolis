@@ -13,20 +13,35 @@
 #include "../parser/parser_ubicacion.h"
 #include "../printer/printer.h"
 
-
-const std::size_t CONSTRUIR = 1, LISTAR_CONSTRUIDOS = 2, DEMOLER = 3, ATACAR = 4,
-	  REPARAR = 5, COMPRAR_BOMBAS = 6, CONSULTAR = 7, LISTAR_MATERIALES = 8,
-	  OBJETIVOS = 9, RECOLECTAR = 10, MOVERSE = 11, FIN_TURNO = 12,
-	  GUARDAR_SALIR = 13;
-const std::size_t OPCION_MINIMA_JUEGO = CONSTRUIR, OPCION_MAXIMA_JUEGO = GUARDAR_SALIR;
-
-const std::size_t MODIFICAR_EDIFICIO = 1, LISTAR_EDIFICIOS = 2, MOSTRAR_MAPA = 3,
-	  COMENZAR = 4, GUARDAR_SALIR_INICIO = 5;
-const std::size_t OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO,
-	  OPCION_MAXIMA_INICIO = GUARDAR_SALIR_INICIO;
-
-const std::size_t ENERGIA_INICIAL = 50, ENERGIA_SUMADA_FIN_TURNO = 20;
-const std::size_t ENERGIA[] = {0,
+// Opciones Menu de juego.
+const std::size_t CONSTRUIR = 1; 
+const std::size_t LISTAR_CONSTRUIDOS = 2;
+const std::size_t DEMOLER = 3; 
+const std::size_t ATACAR = 4;
+const std::size_t REPARAR = 5;
+const std::size_t COMPRAR_BOMBAS = 6; 
+const std::size_t CONSULTAR = 7; 
+const std::size_t LISTAR_MATERIALES = 8;
+const std::size_t OBJETIVOS = 9; 
+const std::size_t RECOLECTAR = 10; 
+const std::size_t MOVERSE = 11; 
+const std::size_t FIN_TURNO = 12;
+const std::size_t GUARDAR_SALIR = 13;
+const std::size_t OPCION_MINIMA_JUEGO = CONSTRUIR;
+const std::size_t OPCION_MAXIMA_JUEGO = GUARDAR_SALIR;
+// Opciones Menu de inicio
+const std::size_t MODIFICAR_EDIFICIO = 1; 
+const std::size_t LISTAR_EDIFICIOS = 2; 
+const std::size_t MOSTRAR_MAPA = 3;
+const std::size_t COMENZAR = 4; 
+const std::size_t GUARDAR_SALIR_INICIO = 5;
+const std::size_t OPCION_MINIMA_INICIO = MODIFICAR_EDIFICIO;
+const std::size_t OPCION_MAXIMA_INICIO = GUARDAR_SALIR_INICIO;
+// Valores iniciales energia
+const std::size_t ENERGIA_INICIAL = 50;
+const std::size_t ENERGIA_SUMADA_FIN_TURNO = 20;
+const std::size_t ENERGIA[] = {
+				0,
 		       ENERGIA_CONSTRUIR,
 		       ENERGIA_LISTAR_CONSTRUIDOS,
 		       ENERGIA_DEMOLER,
@@ -39,12 +54,12 @@ const std::size_t ENERGIA[] = {0,
 		       ENERGIA_RECOLECTAR,
 		       ENERGIA_MOVERSE,
 		       ENERGIA_FIN_TURNO,
-		       ENERGIA_GUARDAR_SALIR};
-// Limpiar un poco el constructor
+		       ENERGIA_GUARDAR_SALIR
+	};
+
 Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 		   std::string ruta_mapa, std::string ruta_ubicaciones)
     : empresa_constructora(nullptr),
-      instancia(INICIO),
 	  partida(NUEVA),
       jugador_activo(0),
       fin_ronda(false),
@@ -56,7 +71,6 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
 	partida = leer_de_archivo(ruta_ubicaciones, ParserUbicacion(), mapa, jugadores);
 	empresa_constructora = new Empresa_Constructora(plano, mapa);
 	leer_de_archivo(ruta_materiales, ParserInventario(), jugadores, partida);
-	instancia = INICIO;
 	inicializar_objetivos_jugadores(mapa);
 	jugador_activo = generar_numero_aleatorio(1, 2);
 }
@@ -67,14 +81,7 @@ Programa::~Programa() {
 	while (!jugadores.vacia()) delete jugadores.baja(1);
 }
 
-void Programa::mostrar_menu() {
-	if (instancia == INICIO)
-		mostrar_menu_inicio();
-	else
-		mostrar_menu_juego();
-}
-
-void Programa::mostrar_menu_juego() {
+void Programa::mostrar_menu_juego() const {
 	cout << "Turno del jugador " << this -> jugador_activo << ". "
 	     << "Tenes "
 	     << jugadores.consulta(jugador_activo) -> obtener_energia()
@@ -101,7 +108,7 @@ void Programa::mostrar_menu_juego() {
 	     << endl;
 }
 
-void Programa::mostrar_menu_inicio() {
+void Programa::mostrar_menu_inicio() const {
 	cout << "--------------------------------------------------------------"
 	     << endl;
 	cout << "Elija una de las siguientes opciones ingresando solo el numero"
@@ -118,32 +125,16 @@ void Programa::mostrar_menu_inicio() {
 	     << endl;
 }
 
-bool Programa::procesar_opcion(std::size_t opcion) {
-	bool resultado;
-	if (instancia == INICIO)
-		resultado = this -> procesar_opcion_inicio(opcion);
-	else {
-		std::size_t energia_restante =
-		    jugadores.consulta(jugador_activo)
-			->energia_suficiente(ENERGIA[opcion]);
-		if (energia_restante >= 0)
-			resultado = procesar_opcion_juego(opcion);
-		else
-			cout << "Energia insuficiente, te faltan "
-			     << -energia_restante
-			     << " de energia para realizar esta accion."
-			     << endl;
-	}
-	return resultado;
+bool Programa::es_energia_suficiente(std::size_t opcion) const {
+	return jugadores.consulta(jugador_activo)->es_energia_suficiente(ENERGIA[opcion]);
 }
 
-bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
-	bool fin = false;
+Salida Programa::procesar_opcion_inicio(std::size_t opcion_elegida) const {
+	Salida salida = CONTINUAR;
 	switch (opcion_elegida) {
 		case MODIFICAR_EDIFICIO:
+			limpiar_pantalla();
 			empresa_constructora->modificar_edificios();
-			//limpiar_pantalla(); lo saque porque no se ve que mensaje te devuelve la funcion
-			// break; Para que se listen los edificios post editar.
 		case LISTAR_EDIFICIOS:
 			empresa_constructora->mostrar_edificios();
 			break;
@@ -152,17 +143,17 @@ bool Programa::procesar_opcion_inicio(std::size_t opcion_elegida) {
 			break;
 		case COMENZAR:
 			this -> comenzar_partida();
+			salida = COMENZAR_JUEGO;
 			break;
 		case GUARDAR_SALIR_INICIO:
-			fin = true;
-			cout << "Adios!" << endl;
+			salida = GUARDAR_Y_SALIR;
 			break;
 	}
-	return fin;
+	return salida;
 }
 
-bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
-	bool fin = false;
+Salida Programa::procesar_opcion_juego(std::size_t opcion_elegida)  {
+	Salida salida = CONTINUAR;
 	switch (opcion_elegida) {
 		case CONSTRUIR:
 			empresa_constructora->construir_edificio(
@@ -216,23 +207,21 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			fin_ronda = !fin_ronda;
 			break;
 		case GUARDAR_SALIR:
-			fin = true;
+			salida = GUARDAR_Y_SALIR;
 			break;
 	}
 	objetivos_jugadores.consulta(jugador_activo)
 	    ->actualizar_objetivos();
-	return fin;
+	return victoria() ? VICTORIA : salida;
 }
 
-void Programa::comenzar_partida(){
+void Programa::comenzar_partida() const {
   this -> empresa_constructora -> mostrar_mapa(jugadores);
 	if (partida == NUEVA) {
 		this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(1));
 		this -> empresa_constructora -> iniciar_coordenadas_jugador(this -> jugadores.consulta(2));
 	}
-
 	cout << "Comienza la partida!" << endl;
-	this -> instancia = JUEGO;
 	this -> jugadores.consulta(1) -> recuperar_energia(
 	    ENERGIA_INICIAL);
 	this -> jugadores.consulta(2) -> recuperar_energia(
@@ -240,28 +229,39 @@ void Programa::comenzar_partida(){
 	this -> empresa_constructora -> lluvia_de_recursos(jugadores.consulta(1) -> obtener_posicion(), jugadores.consulta(2) -> obtener_posicion());
 }
 
-bool Programa::es_opcion_valida(std::string opcion) {
+bool Programa::es_opcion_valida_inicio(std::string opcion) const {
 	bool valida = true;
 	if (!es_numero(opcion))
 		valida = false;
-	else if (instancia == INICIO)
+	else
 		valida = (stoul(opcion) >= OPCION_MINIMA_INICIO &&
 			  stoul(opcion) <= OPCION_MAXIMA_INICIO);
+	return valida;
+}
+bool Programa::es_opcion_valida_juego(std::string opcion) const {
+	bool valida = true;
+	if (!es_numero(opcion))
+		valida = false;
 	else
 		valida = (stoul(opcion) >= OPCION_MINIMA_JUEGO &&
 			  stoul(opcion) <= OPCION_MAXIMA_JUEGO);
 	return valida;
 }
 
-void Programa::limpiar_pantalla() { Printer::clear_screen(); }
+void Programa::limpiar_pantalla() const { Printer::clear_screen(); }
 
 bool Programa::victoria() {
+	// Es muy chico para ser un metodo, es solo para facilitar
+	// lectura.
 	auto chequear = [] (bool a, bool b, bool c) {
 		return ((a && b) || (a && c) || (b && c));
 	};
 	Lista <Objetivo*> objetivos = objetivos_jugadores.consulta(jugador_activo)->obtener_objetivos();
-	bool objetivos_cumplidos = chequear(objetivos.consulta(1), objetivos.consulta(2), objetivos.consulta(3));
-	return objetivos_cumplidos;
+	bool objetivos_cumplidos = chequear(objetivos.consulta(1)->esta_cumplido(), 
+										objetivos.consulta(2)->esta_cumplido(), 
+										objetivos.consulta(3)->esta_cumplido());
+	bool obelisco_construido = objetivos.consulta(4)->esta_cumplido();
+	return (objetivos_cumplidos || obelisco_construido);
 }
 
 std::size_t Programa::generar_numero_aleatorio(std::size_t a, std::size_t b) {
@@ -274,7 +274,8 @@ std::size_t Programa::generar_numero_aleatorio(std::size_t a, std::size_t b) {
 void Programa::inicializar_objetivos_jugadores(Mapa* mapa) {
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(1), mapa));
 	objetivos_jugadores.alta_al_final(new Meta(jugadores.consulta(2), mapa));
-}	
+}
+
 void Programa::guardar_archivos(std::string ruta_ubicaciones, std::string ruta_materiales, std::string ruta_edificios) {
 	std::ofstream fout_1(ruta_ubicaciones);
 	if(fout_1.is_open()){

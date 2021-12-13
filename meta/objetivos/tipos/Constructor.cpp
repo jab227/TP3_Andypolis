@@ -9,8 +9,6 @@ Constructor::Constructor(Jugador* jugador, Mapa* mapa) : Objetivo(NOMBRE, jugado
 	cumplido = estan_construidos(jugador->obtener_edificios());
 }
 
-Constructor::~Constructor(){ }
-
 bool Constructor::actualizar() {
 	if(!cumplido) {
 		cumplido = estan_construidos(jugador->obtener_edificios());

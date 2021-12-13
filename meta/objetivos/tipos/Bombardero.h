@@ -8,9 +8,15 @@ private:
 	std::size_t bombas_actuales;
 	std::size_t bombas_usadas;
 public:
+	// Pre: jugador != nullptr
+	// Pos: Construye el objetivo Bombardero.
 	Bombardero(Jugador* jugador);
-	~Bombardero();
-	bool actualizar();
+	// Destructor por defecto.
+	~Bombardero() =  default;
+	// Pre:  -
+    // Pos: se actualiza el objetivo, True si esta
+	// cumplido, false en otro caso.
+	bool actualizar() override;
 };
 
 #endif /* OBJETIVO_OBJETIVOS_TIPOS_BOMBARDERO_H_ */

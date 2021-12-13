@@ -4,10 +4,16 @@
 #include "../Objetivo.h"
 
 class Armado : public Objetivo{
-public:
-	Armado(Jugador* jugador);
-	~Armado();
-	bool actualizar();
+	public:
+		// Pre: jugador != nullptr
+		// Pos: Construye el objetivo Armado.
+		Armado(Jugador* jugador);
+		// Destructor por defecto.
+		~Armado() = default;
+		// Pre:  -
+    	// Pos: se actualiza el objetivo, True si esta
+		// cumplido, false en otro caso.
+		bool actualizar() override;
 };
 
 #endif /* OBJETIVOS_TIPOS_ARMADO_H_ */

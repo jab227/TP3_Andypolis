@@ -147,12 +147,6 @@ private:
 	// En caso contrario devuelve Coordenada(COORDENADA_VACIA,COORDENADA_VACIA).
 	Resultado_Chequeos chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada);
 	
-	//PRE: -
-	//POS: devuelve si se ingreso salir, si lo ingresado no es valido, si las coordenadas estan fuera de rango,
-	//si coresponden a un casillero no construible, si el casillero esta libre o si no ocurre nada de lo anterior.
-	//en este ultimo caso, fila = fila_ingresada, columna = columna_ingresada y edificio = el ocupado en el casillero.
-	Resultado_Chequeos chequeo_demoler(std::string fila_ingresada, std::string columna_ingresada, int &fila, int &columna, std::string &edificio);
-
 	//PRE:
 	//POS: devuelve si no alcanzan los materiales o si el edificio no necesita reparacion. En caso de que alcancen y el edificio lo necesite,
 	//se repara el edificio y devuelve exito.

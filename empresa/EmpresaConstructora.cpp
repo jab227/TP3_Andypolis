@@ -419,10 +419,8 @@ void Empresa_Constructora::bombardear_coordenadas(Coordenada coordenada, Jugador
 
 Resultado_Chequeos Empresa_Constructora::chequeo_reparar_edificio(Jugador* jugador, Lista<Material> listado_necesario, Coordenada coordenada){
 	Resultado_Chequeos resultado = EXITO;
-	if(!jugador -> tiene_materiales_reparar(listado_necesario))
-		resultado = NO_MATERIALES;
-	else
-		resultado = this -> mapa -> reparar_edificio_ubicacion(coordenada);
+	if(!jugador -> tiene_materiales_reparar(listado_necesario))	resultado = NO_MATERIALES;
+	else resultado = mapa -> reparar_edificio_ubicacion(coordenada);
 	return resultado;
 }
 

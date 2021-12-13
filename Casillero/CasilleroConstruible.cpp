@@ -44,7 +44,6 @@ void Casillero_Construible::saludar() const{
 		std::cout << "No tengo ningun edificio construido." << std::endl;
 }
 
-//Necesario?
 std::string Casillero_Construible::obtener_contenido() const{
 	std::string edificio = EDIFICIO_VACIO; 
 	if( this -> esta_ocupado()){
@@ -53,28 +52,8 @@ std::string Casillero_Construible::obtener_contenido() const{
 	return edificio;
 }
 
-//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-//PRE: Comentado porque necesita adaptarse a la lista de coordenadas de cada jugador.
-/*
-Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
-	if(this -> esta_ocupado()){
-		Edificio* edificio = this -> edificio_; 
-		Planos::existe(edificio -> obtener_nombre());
-		//Necesitamos acceso al diccionario.
-		//TODO: Agregar que necesitan reparacion. (!)
-		if(indice == NO_ESTA){
-			lista_nombres.alta_al_final(edificio);
-			indice = (int) lista_nombres.consulta_largo();
-		}
-	}
-	return this -> edificio_;
-}
-*/
-
-//Provisorio
 bool Casillero_Construible::es_casillero_transitable(){return false;}
 
-//Tengo que devolver algun mensaje?
 Resultado_Chequeos Casillero_Construible::recoger_material(Material& material_recogido){
 	if(esta_ocupado()) material_recogido = edificio_ -> producir_material();
 	return EXITO;
@@ -94,7 +73,6 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 		resultado = this -> edificio_ -> disminuir_vida();
 	return resultado;
 }
-
 
 void Casillero_Construible::agregar_material(Material material){}
 

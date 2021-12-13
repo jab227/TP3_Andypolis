@@ -45,11 +45,6 @@ public:
 	Resultado_Chequeos demoler_edificio() override;
 
 	//PRE: -
-	//POST: -
-	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-	//Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
-
-	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
 
@@ -61,6 +56,8 @@ public:
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos atacar_edificio() override;
 
+	//PRE:
+	//POS: Retorna el identificador de casillero transitable correspondiente.
 	virtual char obtener_identificador() = 0;
 
 };

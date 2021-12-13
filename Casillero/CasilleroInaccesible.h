@@ -25,7 +25,7 @@ public:
 	//POST: Devuelve CONTENIDO_VACIO.
 	std::string obtener_contenido() const override;
 	
-	//PRE: - PROVISORIO
+	//PRE: - 
 	//POST: Devuelve false.
 	bool es_casillero_transitable();
 	
@@ -53,8 +53,12 @@ public:
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos atacar_edificio() override;
 
+	//PRE: -
+	//POS: no hace nada.
 	void agregar_material(Material material) override;
-
+	
+	//PRE: -
+	//POS: Retorna LAGO
 	char obtener_identificador();
 
 };

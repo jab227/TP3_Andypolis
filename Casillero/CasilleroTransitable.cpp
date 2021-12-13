@@ -10,18 +10,6 @@ void Casillero_Transitable::agregar_material(Material material){
 	this -> material = material;
 }
 
-//WHY: Potencialmente borrable.
-/*
-Material* Casillero_Transitable::eliminar_material(){
-	Material* material = nullptr;
-	if(this -> esta_ocupado()){
-		material = this -> material;
-		this -> material = nullptr;
-	}
-	return material;
-}
-*/
-
 bool Casillero_Transitable::esta_ocupado() const{
 	return !(this -> material == Material());
 }
@@ -34,19 +22,10 @@ std::string Casillero_Transitable::obtener_contenido() const{
 	return material;
  }
 
-//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-/*
-Edificio* Casillero_Transitable::agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos){
-	Edificio* edificio = nullptr;
-	return edificio;
-}
-*/
 Resultado_Chequeos Casillero_Transitable::construir_edificio(Edificio* edificio){
 	return CASILLERO_NO_CONSTRUIBLE;
 }
 
-	
-//Provisorio
 bool Casillero_Transitable::es_casillero_transitable(){
 	return true;
 }
@@ -57,8 +36,6 @@ Resultado_Chequeos Casillero_Transitable::demoler_edificio(){
 
 Resultado_Chequeos Casillero_Transitable::recoger_material(Material& material_recogido){
 	Resultado_Chequeos resultado = NO_MATERIALES;	// No mostrar con mostrar_mensaje_chequeo(). 
-	//Es por si por fuera necesitamos saber si agarro algo.
-	//Podriamos retornar el material o imprimir por consola lo que recogió acá.
 	if(this->esta_ocupado()){
 		std::cout << "Ha recogido " << material.obtener_cantidad() 
 		<< " de " << material.obtener_nombre() << std::endl;

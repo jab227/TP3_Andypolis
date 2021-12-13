@@ -92,8 +92,13 @@ public:
 	// POST: Le pide al casillero destruir un edificio.
 	virtual Resultado_Chequeos demoler_edificio() = 0;
 
+	// PRE: -
+	// POST: De ser posible, agrega un material al casillero.
 	virtual	void agregar_material(Material material) = 0;
 
+
+	// PRE: -
+	// POST: Retorna un char del identificador del casillero.
 	virtual char obtener_identificador() = 0;
 };
 

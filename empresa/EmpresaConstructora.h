@@ -73,7 +73,7 @@ public:
 
 	//PRE: jugador != nullptr
 	//POS: se construye un edificio pidiendo al usuario en nombre y las coordenadas
-	void construir_edificio(Jugador* jugador);
+	void construir_edificio(const Lista<Jugador*>& jugadores, std::size_t activo);
 
 	//PRE:  jugador != nullptr; mapa != nullptr;
 	//POS: se destruye un edificio pidiendo al usuario las cordenadas

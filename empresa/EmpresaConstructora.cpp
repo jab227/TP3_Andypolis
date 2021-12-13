@@ -131,22 +131,26 @@ void Empresa_Constructora::lluvia_de_recursos(Coordenada jugador1, Coordenada ju
 		std::cout << "No hay espacio disponible para generar materiales." << std::endl;
 }
 
-void Empresa_Constructora::construir_edificio( Jugador* jugador){
-	std::string edificio = pedir_edificio_construir(jugador);
+void Empresa_Constructora::construir_edificio(const Lista<Jugador*>& jugadores, std::size_t activo){
+	std::string edificio = pedir_edificio_construir(jugadores.consulta(activo));
 	if(edificio != EDIFICIO_VACIO && edificio != SALIR_STR){
 			std::cout << "Desea realmente construir el edificio: " << edificio << "? [si/no]" << std::endl;
 			std::string respuesta = pedir_si_no();
 			if(respuesta == SI){
 				Coordenada coordenada;
+				Coordenada j1 = jugadores.consulta(1)->obtener_posicion();
+				Coordenada j2 = jugadores.consulta(2)->obtener_posicion();
 				std::cout << "Elegi las coordenadas del edificio a construir o salir." << std::endl;
 				Resultado_Chequeos resultado;
 				do{
 					resultado = this -> pedir_coordenadas(coordenada);
+					if(coordenada == j1 || coordenada == j2)
+						resultado = CASILLERO_OCUPADO_JUGADOR;
 					if(resultado == EXITO)
 						resultado = this -> mapa -> construir_edificio_ubicacion(edificio, coordenada);
 				}while(!mostrar_mensaje_chequeo(resultado));
 				if( resultado == EXITO )
-					this -> edificio_construido_confirmado(edificio, coordenada, jugador);
+					this -> edificio_construido_confirmado(edificio, coordenada, jugadores.consulta(activo));
 			}else
 				ColorPrinter::color_msg("No se realizó ningún cambio.",	 ROJO, std::cout);
 	}
@@ -391,6 +395,9 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 			break;
 		case NO_PERTENECE_OPONENTE:
 			ColorPrinter::color_msg("No hay un edificio del otro jugador en estas coordenadas.", ROJO, std::cout);
+			break;
+		case CASILLERO_OCUPADO_JUGADOR:
+			ColorPrinter::color_msg("Esta ubicacion esta ocupada por un jugador.", ROJO, std::cout);
 			break;
 		default:
 			break;

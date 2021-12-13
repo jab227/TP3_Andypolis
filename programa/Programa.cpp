@@ -156,9 +156,7 @@ Salida Programa::procesar_opcion_juego(std::size_t opcion_elegida)  {
 	Salida salida = CONTINUAR;
 	switch (opcion_elegida) {
 		case CONSTRUIR:
-			empresa_constructora->construir_edificio(
-			    jugadores.consulta(
-				jugador_activo));
+			empresa_constructora->construir_edificio(jugadores, jugador_activo);
 			break;
 		case LISTAR_CONSTRUIDOS:
 			empresa_constructora->mostrar_construidos(

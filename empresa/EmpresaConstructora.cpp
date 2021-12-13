@@ -167,12 +167,12 @@ void Empresa_Constructora::lluvia_de_recursos(Coordenada jugador1, Coordenada ju
 	else
 		std::cout << "No hay espacio disponible para generar materiales." << std::endl;
 }
-
+/*
 void Empresa_Constructora::vaciar_materiales(){
 	this -> mapa -> vaciar_materiales();
 	std::cout << "Mapa limpiado de materiales!" << std::endl;
 }
-
+*/
 void Empresa_Constructora::construir_edificio( Jugador* jugador){
 	std::string edificio = pedir_edificio_construir(jugador);
 	if(edificio != EDIFICIO_VACIO && edificio != SALIR_STR){

@@ -81,7 +81,7 @@ public:
 
 	//PRE: los archivos deben estar cargados
 	//POST: se vacian los materiales del mapa
-	void vaciar_materiales();
+	//void vaciar_materiales();
 
 	void reparar_edificio(Jugador* jugador);
 

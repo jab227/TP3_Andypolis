@@ -69,7 +69,7 @@ public:
 
 	//PRE: la posicion debe ser valida y estar ocupada por un material
 	//POST: se elimina el material de esa posicion y se devuelve el material quitado
-	void recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario);
+	void recolectar_material_ubicacion(const Coordenada& coordenada, Material& material);
 
 	//PRE: -
 	//POST: se chequea si se puede poner un material en el casillero ingresado. devuelve si las coordenadas
@@ -95,7 +95,7 @@ public:
 
 	//PRE: -
 	//POST: se limpia todo el mapa de materiales
-	void vaciar_materiales();
+	//void vaciar_materiales();
 
 
 	//PRE: las coordenadas deben ser un edificio

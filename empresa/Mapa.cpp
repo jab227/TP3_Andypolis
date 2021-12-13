@@ -58,48 +58,11 @@ void Mapa::mostrar_casillero(Coordenada coordenada, std::string contenido){
 	std::cout << FIN_COLOR;	
 }
 
-/*
-void Mapa::mostrar_mapa() {
-	std::cout << "Mapa:" << endl;
-	std::cout << "   ";
-	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
-		std::cout << ' ' << columnas / 10 << ' ';
-	cout << std::endl << "   ";
-	for (std::size_t columnas = 0; columnas < this->columnas; columnas++)
-		std::cout << ' ' << columnas % 10 << ' ';
-	std::cout << std::endl;
-
-	Coordenada coordenada;
-	std::string contenido;
-	for (std::size_t filas = 0; filas < this->filas; filas++) {
-		std::cout << filas / 10 << filas % 10 << ' ';
-		for (std::size_t columnas = 0; columnas < this->columnas;
-		     columnas++) {
-			coordenada = Coordenada(filas,columnas);
-			
-			std::cout << this->terreno[filas][columnas]->obtener_color();
-			
-			if(jugadores.consulta(1).obtener_posicion() == coordenada)
-				contenido = "jugador1";
-			else if(jugadores.consulta(2).obtener_posicion() == coordenada)
-				contenido = "jugador2";
-			else
-				contenido = this->terreno[filas][columnas]->obtener_contenido();
-			
-			std::cout << ' ' << this->identificador_ocupados( contenido )<< ' ';
-			std::cout << FIN_COLOR;
-		}
-		std::cout << std::endl << FIN_COLOR;
-	}
-	std::cout << FIN_COLOR;
-}
-*/
 void Mapa::saludar_coordenada(const Coordenada& coordenada){
 	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
 }
 
 Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edificio, const Coordenada& coordenada){
-	//TODO: reemplazar por el diccionario o adaptar traductor al diccionario?
 	Edificio* edificio_mapa = traductor_edificios(edificio);
 	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
 }
@@ -107,12 +70,10 @@ Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edifici
 Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada){
 	edificio = (this -> terreno[coordenada.x()][coordenada.y()]) -> obtener_contenido();
 	return (this -> terreno[coordenada.x()][coordenada.y()]) -> demoler_edificio();
-
 }
 
 Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada, bool reparar) const{
 	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio(reparar);
-
 }
 
 void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada) {
@@ -128,11 +89,11 @@ Material Mapa::generar_conjunto_material(std::string material){
 	return material_generado;
 }
 
-//OBS: Ahora es inutil porque no recogemos direcamente del edificio, debemos producir primero!
 //OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
-void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Almacen* inventario){
-	 this -> terreno[coordenada.x()][coordenada.y()] -> recoger_material(inventario);
+void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Material & material){
+	terreno[coordenada.x()][coordenada.y()] -> recoger_material(material);
 }
+
 
 //WHY: Se usa?
 //RTA: sep
@@ -212,6 +173,7 @@ void Mapa::casilleros_libres_transitables(Lista<Coordenada>* &lista_desocupados,
 				lista_desocupados -> alta_al_final(Coordenada(fila, columna));
 }
 
+/*
 //OBS: Va a juntar todos los materiales del piso pero tmb los productos. 
 //OBS2: solamente estaba para sacar los materiales si el mapa se llenaba, es inutil en este tp
 void Mapa::vaciar_materiales(){
@@ -224,7 +186,7 @@ void Mapa::vaciar_materiales(){
 		}
 	delete materiales_basura;
 }
-
+*/
 bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
 	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> atacar_edificio();
 	edificio = this -> terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();

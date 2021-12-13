@@ -39,3 +39,4 @@ CMakeLists.txt
 
 Saves Files
 saves/*
+*.txt

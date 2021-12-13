@@ -64,7 +64,10 @@ void Mapa::saludar_coordenada(const Coordenada& coordenada){
 
 Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edificio, const Coordenada& coordenada){
 	Edificio* edificio_mapa = traductor_edificios(edificio);
-	return this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
+	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
+	if(resultado != EXITO)
+		delete edificio_mapa;
+	return resultado;
 }
 
 Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada){

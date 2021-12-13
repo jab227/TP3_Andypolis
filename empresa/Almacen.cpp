@@ -85,13 +85,12 @@ void Almacen::descontar_lista_materiales(const Lista<Material>& materiales_usado
 void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos,
 				     std::size_t porcentaje) {
 	// TODO: Constantes.
-	std::size_t proporcion = porcentaje / 100;
-	for (std::size_t i = 1; i <= materiales_obtenidos.consulta_largo();
-	     i++) {
+	float proporcion = (float) porcentaje / 100;
+	for (std::size_t i = 1; i <= materiales_obtenidos.consulta_largo(); i++) {
 		Material material = materiales_obtenidos.consulta(i);
 		sumar_cantidad_material(
 		    material.obtener_nombre(),
-		    material.obtener_cantidad() * proporcion);
+		   (int) ((float) material.obtener_cantidad() * proporcion));
 	}
 }
 

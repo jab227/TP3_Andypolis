@@ -7,6 +7,7 @@ Extremista::Extremista(Jugador* jugador) : Objetivo(NOMBRE,jugador) {
 	this -> bombas_compradas = 0;
 	Material bombas = this -> jugador -> obtener_inventario().obtener_material(NOMBRES_MATERIALES[BOMBAS]);
 	this -> bombas_actuales = bombas.obtener_cantidad();
+	cumplido = (bombas_actuales >= BOMBAS_A_COMPRAR);
 }
 
 bool Extremista::actualizar(){

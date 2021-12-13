@@ -111,6 +111,9 @@ Partida leer_de_archivo(const std::string& ruta, ParserUbicacion parser,
 			partida = CONTINUACION;
 			fin.close();
 		}
+	}else{
+		jugadores.alta_al_final(new Jugador_Uno(Coordenada(0, 0)));
+		jugadores.alta_al_final(new Jugador_Dos(Coordenada(0, 1)));
 	}
 	return partida;
 }
@@ -124,15 +127,15 @@ void leer_de_archivo(const std::string& ruta, ParserInventario parser, Lista<Jug
 		}
 	} else {
 		inicializar_inventario_nueva_partida(jugadores.consulta(1));
-		inicializar_inventario_nueva_partida(jugadores.consulta(1));
+		inicializar_inventario_nueva_partida(jugadores.consulta(2));
 	}
 	fin.close();
 }
 
 void inicializar_inventario_nueva_partida(Jugador* jugador) {
-	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("piedra", 0));
-	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("madera", 0));
-	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("metal", 0));
-	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("bombas", 0));
-	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material("andycoins", 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material(NOMBRES_MATERIALES[PIEDRA], 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material(NOMBRES_MATERIALES[MADERA], 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material(NOMBRES_MATERIALES[METAL], 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material(NOMBRES_MATERIALES[ANDYCOINS], 0));
+	jugador->obtener_inventario().obtener_materiales().alta_al_final(Material(NOMBRES_MATERIALES[BOMBAS], 0));
 }

@@ -58,7 +58,6 @@ public:
 
 	// PRE: -
 	// POST: Devuelve el nombre del material o edificio contenido;
-	//Q: Es correcto que CasilleroInaccesible devuelve un string vacio? (Dependerá de como usemos, obviamente)
 	virtual std::string obtener_contenido() const = 0;
 
 	// PRE: -
@@ -70,9 +69,8 @@ public:
 	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
 	//virtual Edificio *agregar_lista_edificio(Coordenada *coordenada, Lista<Edificio> *&lista_construidos) = 0;
 
-	// PRE: inventario != nullptr;
-	// POST: Lepide al casillero que cargue al inventario el material que posee.
-	//Q: Le pasamos el jugador o el inventario del jugador o devolvemos el material y que el jugador se haga cargo de sumarlo.
+	// PRE: -
+	// POST: pide al casillero recoger el material que cotntiene
 	virtual Resultado_Chequeos recoger_material(Material& material_recogido) = 0;
 
 	// PRE: -

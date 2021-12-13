@@ -34,11 +34,6 @@ public:
 	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
-	//POST: - 
-	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-	//Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
-
-	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos demoler_edificio();
 
@@ -54,7 +49,7 @@ public:
 	Resultado_Chequeos atacar_edificio() override;
 
 	//PRE: -
-	//POS: no hace nada.
+	//POS: dado que no puede contener un material no hace nada.
 	void agregar_material(Material material) override;
 	
 	//PRE: -

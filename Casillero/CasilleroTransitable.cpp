@@ -20,7 +20,7 @@ std::string Casillero_Transitable::obtener_contenido() const{
 		material = this -> material.obtener_nombre();
 
 	return material;
- }
+}
 
 Resultado_Chequeos Casillero_Transitable::construir_edificio(Edificio* edificio){
 	return CASILLERO_NO_CONSTRUIBLE;

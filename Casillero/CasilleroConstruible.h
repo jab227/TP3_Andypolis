@@ -53,7 +53,7 @@ public:
 	Resultado_Chequeos atacar_edificio() override;
 
 	//PRE: -
-	//POS: no hace nada.
+	//POST: dado que no se puede agregar un material, no hace nada.
 	void agregar_material(Material material) override;
 	
 	//PRE: -

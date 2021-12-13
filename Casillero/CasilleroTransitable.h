@@ -28,7 +28,7 @@ public:
 	//POST: Devuelve true si el casillero esta ocupado por un material.
 	bool esta_ocupado() const override ;
 
-	//PRE: - PROVISORIO
+	//PRE: -
 	//POST: Devuelve true.
 	bool es_casillero_transitable() override;
 

@@ -191,11 +191,10 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			    jugadores.consulta(jugador_activo));
 			break;
 		case CONSULTAR:
-			this->empresa_constructora->consultar_coordenada(jugadores.consulta(jugador_activo), jugadores.consulta(3 - jugador_activo));
+			empresa_constructora->consultar_coordenada(jugadores.consulta(jugador_activo), jugadores.consulta(3 - jugador_activo));
 			break;
 		case LISTAR_MATERIALES:
-			empresa_constructora->mostrar_materiales(
-			    jugadores.consulta(jugador_activo));
+			jugadores.consulta(jugador_activo) -> mostrar_inventario();
 			break;
 		case OBJETIVOS:
 			objetivos_jugadores.consulta(jugador_activo)

@@ -43,8 +43,8 @@ bool Jugador::recuperar_energia(const std::size_t& valor) {
 }
 
 void Jugador::mostrar_construidos(const Mapa* mapa) const {
+	TablePrinter printer = TablePrinter();
 	if (!this->edificios_.vacia()) {
-		 TablePrinter printer = TablePrinter();
 		 Lista<std::string> lista = Lista<std::string>();
 		 lista.alta_al_final("Edificio");
 		 lista.alta_al_final("Coordenada");
@@ -52,7 +52,7 @@ void Jugador::mostrar_construidos(const Mapa* mapa) const {
 		 printer.print_row(lista, std::cout );
 		 for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++)
 			 printer.print_row( mapa , edificios_.consulta(i), std::cout);
-		}
+	}else printer.print_str("El jugador" + std::to_string(id_)+ "No tenes edificios construidos.", std::cout);
 }
 
 void Jugador::agregar_ubicacion(const Coordenada& coordenada) {

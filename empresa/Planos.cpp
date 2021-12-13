@@ -57,7 +57,6 @@ Resultado_Chequeos Planos::existe(std::string nombre_edificio){
 	return resultado;
 }
 
-//Al tener el constructor de copia de LIsta, sobrevive el puntero retornado.
 Lista<Material> Planos::materiales_necesarios(std::string nombre_edificio){
 	Lista<Material> lista_materiales;
 	Edificio* edificio = Planos::buscar(nombre_edificio);

@@ -11,8 +11,6 @@ public:
 	// Pre: jugador != nullptr
 	// Pos: Construye el objetivo Bombardero.
 	Bombardero(Jugador* jugador);
-	// Destructor por defecto.
-	~Bombardero() =  default;
 	// Pre:  -
     // Pos: se actualiza el objetivo, True si esta
 	// cumplido, false en otro caso.

@@ -9,8 +9,6 @@ class Letrado : public Objetivo{
 public:
 
 	Letrado(Jugador* jugador, Mapa* mapa);
-	// Destructor por defecto.
-	//~Letrado() = default;
 	bool actualizar() override;
 };
 

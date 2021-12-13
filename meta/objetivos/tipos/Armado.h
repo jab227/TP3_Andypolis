@@ -8,8 +8,6 @@ class Armado : public Objetivo{
 		// Pre: jugador != nullptr
 		// Pos: Construye el objetivo Armado.
 		Armado(Jugador* jugador);
-		// Destructor por defecto.
-		~Armado() = default;
 		// Pre:  -
     	// Pos: se actualiza el objetivo, True si esta
 		// cumplido, false en otro caso.

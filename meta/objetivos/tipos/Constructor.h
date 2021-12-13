@@ -15,8 +15,6 @@ class Constructor : public Objetivo {
      // Pre: jugador != nullptr y mapa != nullptr
      // Pos: Construye el objetivo Constructor.
 	 Constructor(Jugador *jugador, Mapa* mapa);
-	 // Destructor por defecto.
-	// ~Constructor() = default;
 	 // Pre: -
      // Pos: se actualiza el objetivo, True si esta
 	 // cumplido, false en otro caso.

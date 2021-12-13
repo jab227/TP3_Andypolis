@@ -8,8 +8,6 @@ class Energetico : public Objetivo{
 		// Pre: jugador != nullptr
 		// Pos: Construye el objetivo Energetico.
 		Energetico(Jugador* jugador);
-		// Destructor por defecto.
-		~Energetico() = default;
 		// Pre:  -
     	// Pos: se actualiza el objetivo, True si esta
 		// cumplido, false en otro caso.

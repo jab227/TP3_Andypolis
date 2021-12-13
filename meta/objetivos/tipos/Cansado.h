@@ -8,8 +8,6 @@ public:
 	// Pre: jugador != nullptr
 	// Pos: Construye el objetivo Cansado.
 	Cansado(Jugador* jugador);
-	// Destructor por defecto.
-	~Cansado() = default;
 	// Pre:  -
     // Pos: se actualiza el objetivo, True si esta
 	// cumplido, false en otro caso.

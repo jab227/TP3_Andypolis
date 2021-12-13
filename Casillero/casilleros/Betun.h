@@ -12,5 +12,4 @@ class Betun: public Casillero_Transitable{
 	//PRE:
 	//POS: Retorna BETUN.
     char obtener_identificador();
-
 };

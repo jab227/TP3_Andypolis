@@ -29,7 +29,7 @@ class ParserInventario final : Parser<Lista<Material>> {
 	// Pos: Parsea el string input, y devuelve un elemento de tipo T
 	void parse(const std::string& input, Lista<Material>& inventario) override;
 	// Pre: -
-	// Pos: Parsea el string input, y devuelve por interfaz los almacenes de cada jugador.
+	// Pos: Parsea el string input, y devuelve por interfaz los inventarios de cada jugador.
 	void parse(const std::string& input, Lista<Material>& inventario_p1, Lista<Material>& inventario_p2);
 };
 

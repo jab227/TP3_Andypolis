@@ -26,7 +26,8 @@ class ParserMapa final : public Parser<Mapa*> {
 	// Destructor por defecto
 	~ParserMapa() = default;
 	// Pre: -
-	// Pos: Parsea el string input, y devuelve un CityMap*
+	// Pos: Parsea el string input, y devuelve un puntero a
+	// Mapa por referencia.
 	void parse(const std::string& input, Mapa*&) override;
 };
 

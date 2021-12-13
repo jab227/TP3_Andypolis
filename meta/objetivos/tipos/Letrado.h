@@ -5,11 +5,13 @@
 
 class Letrado : public Objetivo{
 	const Mapa* mapa;
-public:
-	Letrado(Jugador* jugador, Mapa* mapa);
-	~Letrado();
-	bool actualizar();
 	bool estan_construidos(const Lista<Coordenada>& edificios);
+public:
+
+	Letrado(Jugador* jugador, Mapa* mapa);
+	// Destructor por defecto.
+	~Letrado() = default;
+	bool actualizar() override;
 };
 
 #endif /* OBJETIVOS_TIPOS_LETRADO_H_ */

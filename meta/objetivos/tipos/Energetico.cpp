@@ -6,8 +6,6 @@ const std::string NOMBRE = "Energetico";
 Energetico::Energetico(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 }
 
-Energetico::~Energetico(){ }
-
 bool Energetico::actualizar(){
 	if(!this -> cumplido)
 		if(this -> jugador -> obtener_energia() >= ENERGIA_A_OBTENER)

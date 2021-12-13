@@ -39,11 +39,11 @@ void Material::saludar() const{
 	std::cout << "Soy el material " << this -> nombre << " y estoy en el casillero consultado." << std::endl;
 }
 
-bool Material::operator==(Material rhs) const{
+bool Material::operator==(const Material& rhs) const{
 	return (this -> nombre == rhs.obtener_nombre());
 }
 
-void Material::operator=(Material rhs){
+void Material::operator=(const Material& rhs){
 	this -> nombre = rhs.obtener_nombre();
 	this -> cantidad = rhs.obtener_cantidad();
 }

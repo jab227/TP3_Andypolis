@@ -49,8 +49,18 @@ class Juego {
         Juego();
         // Destructor default
         ~Juego() = default;
+        // Pre: -
+        // Pos: Muestra menu de inicio, le permite a los jugadores ver el mapa
+        // ver y modificar los edificos disponibles, comenzar/ continuar una 
+        // partida y guardar los cambios hechos.
         Salida comenzar_juego();
+        // Pre: -
+        // Pos: Chequea condiciones de victoria, y se muestra la interfaz principal
+        // del juego.
         Salida jugar();
+        // Pre: -
+        // Pos: Dependiendo de la salida que se le pase, se despedira de los jugadores o
+        // les mostrara la pantalla de victoria.
         void finalizar_juego(Salida salida);
 };
 

@@ -8,9 +8,14 @@ private:
 	std::size_t bombas_actuales;
 	std::size_t bombas_compradas;
 public:
+	// Pre: jugador != nullptr
+	// Pos: Construye el objetivo Energetico.
 	Extremista(Jugador* jugador);
+	// Destructor por defecto.
 	~Extremista();
-	bool actualizar();
+	// Pos: se actualiza el objetivo, True si esta
+	// cumplido, false en otro caso.
+	bool actualizar() override;
 };
 
 #endif /* OBJETIVOS_TIPOS_EXTREMISTA_H_ */

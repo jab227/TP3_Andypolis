@@ -9,8 +9,6 @@ Letrado::Letrado(Jugador* jugador, Mapa* mapa) : Objetivo(NOMBRE,jugador), mapa(
 	cumplido = estan_construidos(jugador->obtener_edificios());
 }
 
-Letrado::~Letrado(){ }
-
 // Haber construido el maximo de escuelas
 bool Letrado::actualizar() {
 	if(!cumplido) {

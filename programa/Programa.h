@@ -77,8 +77,6 @@ public:
 
 private:
 
-
-
 	//PRE: -
 	//POST: se realizan inicializaciones del juego antes de iniciar por primera vez
 	void comenzar_partida() const;

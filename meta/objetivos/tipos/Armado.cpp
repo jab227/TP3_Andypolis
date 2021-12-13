@@ -7,8 +7,6 @@ Armado::Armado(Jugador* jugador) : Objetivo(NOMBRE, jugador) {
 	this -> actualizar();
 }
 
-Armado::~Armado(){ }
-
 bool Armado::actualizar(){
 	if(!this -> cumplido){
 		Material bombas = this -> jugador -> obtener_inventario().obtener_material(NOMBRES_MATERIALES[BOMBAS]);

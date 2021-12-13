@@ -99,7 +99,7 @@ std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Map
 
 //TODO: Constantes
 void Jugador::usar_lista_materiales( Lista<Material> materiales){
-	this -> inventario_.descontar_lista_materiales(materiales,100);
+	this -> inventario_.descontar_lista_materiales(materiales);
 }
 
 void Jugador::cobrar_reparacion( Lista<Material> materiales){
@@ -111,7 +111,7 @@ void Jugador::recuperar_lista_materiales( Lista<Material> materiales){
 }
 
 void Jugador::sumar_lista_materiales( Lista<Material> materiales){
-	this -> inventario_.sumar_lista_materiales(materiales,100);
+	this -> inventario_.sumar_lista_materiales(materiales);
 }
 
 bool Jugador::recolectar_reservas(){
@@ -126,7 +126,7 @@ bool Jugador::recolectar_reservas(){
 		if(producto.obtener_nombre() == "energia") energia_ += producto.obtener_cantidad();
 		recolectado = true;
 	}
-	this -> inventario_.sumar_lista_materiales(reservas_,100);
+	this -> inventario_.sumar_lista_materiales(reservas_);
 	reservas_ = Lista<Material>();
 	return recolectado;
 }

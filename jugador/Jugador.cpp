@@ -138,15 +138,14 @@ bool Jugador::recolectar_reservas(){
 //en reservas_. Si esta, dejo sumarle el producido sino darle de alta
 void Jugador::producir_materiales( Mapa* mapa){
 	Material producto;
-	Edificio* edificio;
 	Coordenada coordenada;
 	bool listado;
 	std::size_t j = 0;
 	for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++){
 		coordenada = edificios_.consulta(i);
-		edificio = Planos::buscar(mapa -> obtener_contenido_ubicacion(coordenada));
-		producto = edificio -> producir_material();
+		mapa -> recolectar_material_ubicacion(coordenada, producto);
 		listado = false;
+		std::cout << "debug: " << producto.obtener_nombre() << " " << producto.obtener_cantidad() << std::endl;
 		while(j < reservas_.consulta_largo() && !listado){
 			if(reservas_.consulta(++j) == producto){
 				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
@@ -270,8 +269,11 @@ std::string Jugador::pedir_si_no(){
 
 void Jugador::mover_a_coordenada(Coordenada coordenada, Mapa* mapa){
 	this -> posicion_ = coordenada;
-	mapa -> recolectar_material_ubicacion(coordenada, &(this -> inventario_));
+	Material material;
+	mapa -> recolectar_material_ubicacion(coordenada, material);
+	inventario_.sumar_cantidad_material(material.obtener_nombre(),material.obtener_cantidad());
 }
+
 
 Grafo* Jugador::cargar_grafo(Mapa* mapa){
 	Grafo* grafo = new Grafo;

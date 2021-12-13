@@ -73,12 +73,12 @@ Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material> &material
 
 void Almacen::descontar_lista_materiales(const Lista<Material>& materiales_usados,
 					 std::size_t porcentaje) {
-	std::size_t proporcion = porcentaje / 100;
+	float proporcion = (float) porcentaje / 100;
 	for (std::size_t i = 1; i <= materiales_usados.consulta_largo(); i++) {
 		Material material = materiales_usados.consulta(i);
 		restar_cantidad_material(
 		    material.obtener_nombre(),
-		    material.obtener_cantidad() * proporcion);
+		    (std::size_t) ((float) material.obtener_cantidad() * proporcion) );
 	}
 }
 
@@ -90,7 +90,7 @@ void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos
 		Material material = materiales_obtenidos.consulta(i);
 		sumar_cantidad_material(
 		    material.obtener_nombre(),
-		   (int) ((float) material.obtener_cantidad() * proporcion));
+		   (std::size_t) ((float) material.obtener_cantidad() * proporcion));
 	}
 }
 
@@ -105,6 +105,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
 		Material bombas = obtener_material(NOMBRES_MATERIALES[BOMBAS]);
+		andycoins  = obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);
 		std::cout << "Cantidad de bombas: "
 			  << bombas.obtener_cantidad() << std::endl;
 		std::cout << "Andycoins restantes: "

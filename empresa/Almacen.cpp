@@ -17,21 +17,12 @@ Lista<Material>& Almacen::obtener_materiales() {
 	return lista_materiales_;
 }
 
-std::size_t Almacen::buscar_material(const Material& material) const {
-	bool encontrado = false;
-	std::size_t indice;
-	for (indice = 0; indice < lista_materiales_.consulta_largo() && !encontrado; indice++)
-			encontrado = (lista_materiales_.consulta(indice + 1) == material);
-		 
-	return encontrado ? indice : NO_ENCONTRADO;
-}
-
 Material Almacen::obtener_material(std::string material) const {
 	Material material_buscado = Material(material,0);
 	std::size_t indice = buscar_material(material_buscado);
 	if(indice)
 		material_buscado = lista_materiales_.consulta(indice);
-	// Como chequeo que no estar trabajando con una copia y no la ref? 
+	// Como chequeo que no esta trabajando con una copia y no la ref? 
 	return material_buscado;
 }
 
@@ -43,7 +34,6 @@ void Almacen::restar_cantidad_material(const std::string& nombre,
 	if (index) {
 		lista_materiales_.consulta(index).restar_cantidad(
 		    material.obtener_cantidad());
-
 	}
 }
 
@@ -54,7 +44,6 @@ void Almacen::sumar_cantidad_material(const std::string& nombre,
 	if (index) {
 		lista_materiales_.consulta(index).sumar_cantidad(
 		    material.obtener_cantidad());
-
 	}
 }
 
@@ -66,36 +55,6 @@ void Almacen::mostrar_materiales() const{
 	printer.print_row(cabecera, std::cout);
 	for(std::size_t i = 1; i <= lista_materiales_.consulta_largo(); i++)
 		printer.print_row(lista_materiales_.consulta(i), std::cout);
-}
-
-// TODO: Remover ahora esto no es responsabilidad del almacen
-bool Almacen::guardar_materiales(const std::string& ruta) {
-	ofstream archivo(ruta);
-	bool salida = false;
-	if (archivo.is_open()) {
-		salida = true;
-		for (std::size_t i = 1; i <= lista_materiales_.consulta_largo();
-		     i++)
-			archivo
-			    << lista_materiales_.consulta(i).obtener_nombre()
-			    << " "
-			    << lista_materiales_.consulta(i).obtener_cantidad()
-			    << endl;
-	}
-	archivo.close();
-	return salida;
-}
-
-bool Almacen::hay_material_suficiente(const Material& material, std::size_t porcentaje) const{
-	bool suficiente = false;
-	std::size_t proporcion = porcentaje/100;
-	std::size_t indice = buscar_material(material);
-	if (indice) {
-		suficiente =
-		    lista_materiales_.consulta(indice).obtener_cantidad() * proporcion >=
-		    material.obtener_cantidad() ;
-	}
-	return suficiente;
 }
 
 Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material> &materiales_consultados, std::size_t porcentaje) const{
@@ -138,14 +97,13 @@ void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos
 	}
 }
 
-// Se puede mejorar pero es lo mas comodo.
 Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 	Resultado_Chequeos resultado = NO_MATERIALES;
 	Material andycoins  = obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);
 	std::size_t gasto = cantidad_bombas * PRECIO_BOMBA;
 	if (gasto <= andycoins.obtener_cantidad()) {
-		cout << "Compraste " << cantidad_bombas
-		     << " bombas exitosamente." << endl;
+		std::cout << "Compraste " << cantidad_bombas
+		     << " bombas exitosamente." << std::endl;
 		sumar_cantidad_material(NOMBRES_MATERIALES[BOMBAS], cantidad_bombas);
 		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
@@ -160,4 +118,25 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 
 void Almacen::agregar_material(const Material& material) {
 	lista_materiales_.alta_al_final(material);
+}
+
+std::size_t Almacen::buscar_material(const Material& material) const {
+	bool encontrado = false;
+	std::size_t indice;
+	for (indice = 0; indice < lista_materiales_.consulta_largo() && !encontrado; indice++)
+			encontrado = (lista_materiales_.consulta(indice + 1) == material);
+		 
+	return encontrado ? indice : NO_ENCONTRADO;
+}
+
+bool Almacen::hay_material_suficiente(const Material& material, std::size_t porcentaje) const{
+	bool suficiente = false;
+	std::size_t proporcion = porcentaje/100;
+	std::size_t indice = buscar_material(material);
+	if (indice) {
+		suficiente =
+		    lista_materiales_.consulta(indice).obtener_cantidad() * proporcion >=
+		    material.obtener_cantidad() ;
+	}
+	return suficiente;
 }

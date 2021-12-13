@@ -18,12 +18,8 @@ Empresa_Constructora::~Empresa_Constructora() {
 		delete this -> mapa;
 }
 
-void Empresa_Constructora::mostrar_materiales(Jugador* jugador){
-	jugador -> mostrar_inventario();
-}
-
 void Empresa_Constructora::mostrar_edificios(){
-	this -> planos -> mostrar_edificios();
+	planos -> mostrar_edificios();
 }
 
 void Empresa_Constructora::modificar_edificios(){
@@ -33,18 +29,16 @@ void Empresa_Constructora::modificar_edificios(){
 	chequeo = pedir_edificio(nombre);
 	if(nombre == "obelisco") chequeo = OBELISCO;
 	std::size_t piedra, madera, metal;
-	if(chequeo == EXITO){
+	if(chequeo == EXITO)
 		chequeo = pedir_materiales(nombre, piedra, madera, metal);
-	}
-	if(chequeo == EXITO){
-		this -> planos -> modificar_edificio(nombre, piedra, madera, metal);
-	}
+	if(chequeo == EXITO)
+		planos -> modificar_edificio(nombre, piedra, madera, metal);
+	
 	}while(!mostrar_mensaje_chequeo(chequeo));
 }
 
 void Empresa_Constructora::mostrar_mapa(Lista<Jugador*> jugadores){
-	std::size_t filas=0;
-	std::size_t columnas=0;
+	std::size_t filas=0, columnas=0;
 	Coordenada coordenada(filas,columnas);
 
 	cout << std::endl << "   ";
@@ -78,28 +72,27 @@ void Empresa_Constructora::mostrar_mapa(Lista<Jugador*> jugadores){
 			coordenada = Coordenada(filas,columnas);
 		}
 		std::cout << std::endl << FIN_COLOR;
-		filas++;
-		columnas = 0;
+		filas++; columnas = 0;
 		coordenada = Coordenada(filas,columnas);
 	}
 	std::cout << FIN_COLOR;
 }	
 
 void Empresa_Constructora::mostrar_construidos(Jugador* jugador){
-	jugador -> mostrar_construidos(this -> mapa);
+	jugador -> mostrar_construidos(mapa);
 }
 
 void Empresa_Constructora::mover_jugador(Jugador* jugador){
-	jugador -> mover(this -> mapa);
+	jugador -> mover(mapa);
 }
 
 void Empresa_Constructora::consultar_coordenada(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Coordenada coordenada;
-	std::cout << "Elegi las coordenadas a consultar o salir." << std::endl;
 	Resultado_Chequeos resultado;
+	std::cout << "Elegi las coordenadas a consultar o salir." << std::endl;
 	do{
 		resultado = pedir_coordenadas(coordenada);
-		if(resultado == EXITO) this -> mapa -> saludar_coordenada(coordenada);
+		if(resultado == EXITO) mapa -> saludar_coordenada(coordenada);
 	}while(!mostrar_mensaje_chequeo(resultado));
 	if(jugador_activo -> existe_ubicacion(coordenada))
 		Printer::print_str("El edificio te pertenece.", std::cout);
@@ -113,46 +106,16 @@ void Empresa_Constructora::iniciar_coordenadas_jugador(Jugador* jugador){
 	Resultado_Chequeos resultado;
 	bool hay_edificio;
 	do{
-		std::cout << "Jugador "<< jugador -> obtener_jugador() << ": Eliga las coordenadas donde empezar el juego:" << endl;
+		std::cout << "Jugador "<< jugador -> obtener_jugador() << ": Elija las coordenadas donde empezar el juego:" << endl;
 		resultado = pedir_coordenadas(coordenada);
-		if(resultado == SALIR)
-			resultado = NO_EXISTE;
+		if(resultado == SALIR)	resultado = NO_EXISTE;
 		else if(resultado == EXITO){
-			hay_edificio = this -> planos -> existe(this -> mapa -> obtener_contenido_ubicacion(coordenada)) == EXITO;
+			hay_edificio = planos -> existe( mapa -> obtener_contenido_ubicacion(coordenada) ) == EXITO;
 			if(hay_edificio)
 				resultado = CASILLERO_OCUPADO;
 		}
 	}while(!mostrar_mensaje_chequeo(resultado));
 	jugador -> mover_a_coordenada(coordenada, mapa);
-}
-
-void Empresa_Constructora::guardar_ubicaciones(std::string ruta){
-	ofstream archivo(ruta);
-	std::string contenido;
-	if (archivo.is_open()){
-		std::size_t fila = 0, columna = 0;
-		Coordenada coordenada = Coordenada(fila,columna);
-		while(this -> mapa -> es_coordenada_valida(coordenada)){
-			while(this -> mapa -> es_coordenada_valida(coordenada)){
-				contenido = this -> mapa -> obtener_contenido_ubicacion(coordenada);
-				if(contenido != CONTENIDO_VACIO)
-					archivo << contenido << " (" << fila << ", " << columna << ')' << std::endl;
-				coordenada = Coordenada(fila, ++columna);
-			}
-			coordenada = Coordenada(++fila, 0);
-		}
-	}
-	archivo.close();
-}
-
-//TODO: Reemplazable con el ParserUbicacion
-void Empresa_Constructora::sumar_contenido(std::string contenido, Coordenada coordenada, Jugador* jugador){
-	if(Planos::existe(contenido)){
-		this -> mapa -> construir_edificio_ubicacion(contenido, coordenada);
-		jugador -> agregar_ubicacion(coordenada);
-	}else
-		this -> mapa -> poner_material_ubicacion(contenido, coordenada);
-
 }
 
 void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
@@ -162,17 +125,12 @@ void Empresa_Constructora::recolectar_recursos(Jugador * jugador){
 }
 
 void Empresa_Constructora::lluvia_de_recursos(Coordenada jugador1, Coordenada jugador2){
-	if(!this -> mapa -> generar_materiales_aleatorios(jugador1, jugador2))
+	if(!mapa -> generar_materiales_aleatorios(jugador1, jugador2))
 		std::cout << "Materiales generados por el mapa!" << std::endl;
 	else
 		std::cout << "No hay espacio disponible para generar materiales." << std::endl;
 }
-/*
-void Empresa_Constructora::vaciar_materiales(){
-	this -> mapa -> vaciar_materiales();
-	std::cout << "Mapa limpiado de materiales!" << std::endl;
-}
-*/
+
 void Empresa_Constructora::construir_edificio( Jugador* jugador){
 	std::string edificio = pedir_edificio_construir(jugador);
 	if(edificio != EDIFICIO_VACIO && edificio != SALIR_STR){
@@ -191,11 +149,9 @@ void Empresa_Constructora::construir_edificio( Jugador* jugador){
 					this -> edificio_construido_confirmado(edificio, coordenada, jugador);
 			}else
 				ColorPrinter::color_msg("No se realizó ningún cambio.",	 ROJO, std::cout);
-
 	}
 }
-
-//TODO: Embellecer
+ 
 void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	Coordenada coordenada;
 	Resultado_Chequeos resultado = NO_EXISTE;
@@ -217,27 +173,78 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 	} 
 }
 
-void Empresa_Constructora::edificio_demolido_confirmado(const std::string &edificio, const Coordenada &coordenada, Jugador* jugador){
-	Lista<Material> listado_necesario = planos -> materiales_necesarios(edificio);
-	jugador -> recuperar_lista_materiales(listado_necesario);
-	jugador -> eliminar_ubicacion(coordenada);
-	jugador -> usar_energia(ENERGIA_DEMOLER);
-	ColorPrinter::color_msg("Edificio demolido exitosamente!", TEXTO_VERDE, std::cout);
-
+void Empresa_Constructora::reparar_edificio(Jugador* jugador){
+	Coordenada coordenada;
+	Resultado_Chequeos resultado = NO_EXISTE;
+	std::cout << "Elegi las coordenadas del edificio a reparar o salir." << std::endl;
+	do{
+		resultado = this -> pedir_coordenadas(coordenada);
+		if(resultado == EXITO)
+			if(!jugador -> existe_ubicacion(coordenada))
+				resultado = NO_PERTENECE;
+	}while(!mostrar_mensaje_chequeo(resultado));
+	if(resultado == EXITO){
+		std::string nombre_edificio = this -> mapa -> obtener_contenido_ubicacion(coordenada);
+		Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
+		resultado = this -> chequeo_reparar_edificio(jugador, listado_necesario, coordenada);
+		if(resultado == EXITO){
+			//reparar_edificio_confirmado()
+			jugador -> cobrar_reparacion(listado_necesario);
+			jugador -> usar_energia(ENERGIA_REPARAR);
+			ColorPrinter::color_msg("Edificio reparado exitosamente!", TEXTO_VERDE, std::cout);
+		}
+		mostrar_mensaje_chequeo( resultado );
+	}
 }
 
-Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string& edificio_ingresado){
-	Printer::print_str("Elegir el edificio. Escribir \"salir\" si así lo desea." , std::cout);
-	std::cout << "Edificio: ";
-	getline(cin, edificio_ingresado);
-	return chequeo_edificio(edificio_ingresado);
-}
-
-Resultado_Chequeos Empresa_Constructora::chequeo_edificio(const std::string& edificio_ingresado){
+void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
 	Resultado_Chequeos resultado = EXITO;
-	if(edificio_ingresado == SALIR_STR) resultado = SALIR;
-	else resultado = planos -> existe(edificio_ingresado);
-	return resultado;
+	Material bombas = jugador_activo -> obtener_inventario().obtener_material("bombas");
+	if(!(bombas.obtener_cantidad() > 0))
+		resultado = NO_MATERIALES;
+	this -> mostrar_mensaje_chequeo(resultado);
+	Coordenada coordenada(0,0);
+	if(resultado == EXITO){
+		std::cout << "Elegi las coordenadas del edificio a atacar o salir." << std::endl;
+		do{
+			resultado = this -> pedir_coordenadas(coordenada);
+			if(resultado == EXITO)
+				if(!jugador_inactivo -> existe_ubicacion(coordenada))
+					resultado = NO_PERTENECE_OPONENTE;
+		}
+		while(!mostrar_mensaje_chequeo(resultado));
+		if(resultado == EXITO){
+			jugador_activo -> usar_energia(ENERGIA_ATACAR);
+			jugador_activo -> obtener_inventario().restar_cantidad_material(bombas.obtener_nombre(), 1);
+			this -> bombardear_coordenadas(coordenada, jugador_inactivo);
+		}
+	}
+}
+
+void Empresa_Constructora::comprar_bombas(Jugador* jugador){
+	std::size_t cantidad_bombas = 0;
+	mostrar_mensaje_chequeo(pedir_bombas(cantidad_bombas));
+	if(mostrar_mensaje_chequeo(jugador -> obtener_inventario().comprar_bombas(cantidad_bombas))){
+		jugador -> usar_energia(ENERGIA_COMPRAR_BOMBAS);
+	}
+}
+
+std::string Empresa_Constructora::estado_actual_planos(){
+	return planos -> estado_actual_edificios();
+}
+
+std::string Empresa_Constructora::estado_actual_ubicaciones(Lista<Jugador*> jugadores){
+	std::string texto;
+	texto = estado_actual_materiales_mapa();
+	for(std::size_t i = 1; i <= jugadores.consulta_largo(); i++){
+			texto += estado_actual_edificios_mapa(jugadores.consulta(i));
+			if(i != jugadores.consulta_largo()) texto += "\n";
+		}
+	return texto;
+}
+
+void Empresa_Constructora::producir_materiales(Jugador* jugador){
+	jugador -> producir_materiales(this -> mapa);
 }
 
 std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
@@ -253,6 +260,42 @@ std::string Empresa_Constructora::pedir_edificio_construir( Jugador* jugador){
 	return edificio_ingresado;
 }
 
+Resultado_Chequeos Empresa_Constructora::pedir_edificio(std::string& edificio_ingresado){
+	Printer::print_str("Elegir el edificio. Escribir \"salir\" si así lo desea." , std::cout);
+	std::cout << "Edificio: ";
+	getline(cin, edificio_ingresado);
+	return chequeo_edificio(edificio_ingresado);
+}
+
+std::string Empresa_Constructora::pedir_si_no(){
+	std::string respuesta;
+	std::cout << "Respuesta:   ";
+	getline(cin, respuesta);
+	while(respuesta != SI && respuesta != NO){
+		ColorPrinter::color_msg("La respuesta no es valida, solo se acepta si o no.", ROJO, std::cout);
+		std::cout << "Respuesta:   ";
+		getline(cin, respuesta);
+	}
+	return respuesta;
+}
+
+Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
+	std::string fila_ingresada, columna_ingresada;
+	std::cout << "Fila: ";
+	getline(cin, fila_ingresada);
+	std::cout << "Columna: ";
+	getline(cin, columna_ingresada);
+
+	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
+}
+
+Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
+	std::string cantidad_ingresada;
+	std::cout << "¿Cuantas bombas desea comprar? (Precio: " << COSTO_BOMBAS << " andycoins): ";
+	getline(cin, cantidad_ingresada);
+	return chequeo_bombas(cantidad_ingresada, bombas);
+}
+
 Resultado_Chequeos Empresa_Constructora::pedir_materiales(std::string nombre,  std::size_t &piedra, std::size_t &madera, std::size_t &metal){
 	std::string piedra_ingresada, madera_ingresada,  metal_ingresada;
 	std::cout << "Ingrese la cantidad de cada material, salir o para no modificar la cantidad presione enter." << std::endl;
@@ -264,6 +307,13 @@ Resultado_Chequeos Empresa_Constructora::pedir_materiales(std::string nombre,  s
 	getline(std::cin, metal_ingresada);
 
 	return chequeo_materiales(nombre, piedra_ingresada, madera_ingresada, metal_ingresada, piedra, madera, metal);
+}
+
+Resultado_Chequeos Empresa_Constructora::chequeo_edificio(const std::string& edificio_ingresado){
+	Resultado_Chequeos resultado = EXITO;
+	if(edificio_ingresado == SALIR_STR) resultado = SALIR;
+	else resultado = planos -> existe(edificio_ingresado);
+	return resultado;
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string nombre, std::string piedra_ingresada, std::string madera_ingresada, std::string metal_ingresada,
@@ -288,17 +338,6 @@ Resultado_Chequeos Empresa_Constructora::chequeo_materiales(std::string nombre, 
 		metal = std::stoul(metal_ingresada);
 	}
 	return resultado;
-}
-
-Resultado_Chequeos Empresa_Constructora::pedir_coordenadas(Coordenada& coordenada){
-	std::string fila_ingresada, columna_ingresada;
-	
-	std::cout << "Fila: ";
-	getline(cin, fila_ingresada);
-	std::cout << "Columna: ";
-	getline(cin, columna_ingresada);
-
-	return chequeo_coordenadas(fila_ingresada, columna_ingresada, coordenada);
 }
 
 Resultado_Chequeos Empresa_Constructora::chequeo_coordenadas(std::string fila_ingresada, std::string columna_ingresada, Coordenada &coordenada){
@@ -359,17 +398,6 @@ bool Empresa_Constructora::mostrar_mensaje_chequeo(Resultado_Chequeos chequeo){
 	return fin;
 }
 
-std::string Empresa_Constructora::pedir_si_no(){
-	std::string respuesta;
-	std::cout << "Respuesta:   ";
-	getline(cin, respuesta);
-	while(respuesta != SI && respuesta != NO){
-		ColorPrinter::color_msg("La respuesta no es valida, solo se acepta si o no.", ROJO, std::cout);
-		std::cout << "Respuesta:   ";
-		getline(cin, respuesta);
-	}
-	return respuesta;
-}
 
 void Empresa_Constructora::edificio_construido_confirmado(const std::string &nombre_edificio,const Coordenada& coordenada, Jugador* jugador){
 	Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
@@ -377,56 +405,6 @@ void Empresa_Constructora::edificio_construido_confirmado(const std::string &nom
 	jugador -> usar_energia(ENERGIA_CONSTRUIR);
 	jugador -> agregar_ubicacion(coordenada);
 	ColorPrinter::color_msg("Edificio construido exitosamente!", TEXTO_VERDE, std::cout);
-
-}
-
-void Empresa_Constructora::reparar_edificio(Jugador* jugador){
-	Coordenada coordenada;
-	Resultado_Chequeos resultado = NO_EXISTE;
-
-	std::cout << "Elegi las coordenadas del edificio a reparar o salir." << std::endl;
-	do{
-		resultado = this -> pedir_coordenadas(coordenada);
-		if(resultado == EXITO)
-			if(!jugador -> existe_ubicacion(coordenada))
-				resultado = NO_PERTENECE;
-	}while(!mostrar_mensaje_chequeo(resultado));
-	if(resultado == EXITO){
-		std::string nombre_edificio = this -> mapa -> obtener_contenido_ubicacion(coordenada);
-		Lista<Material> listado_necesario = planos -> materiales_necesarios(nombre_edificio);
-		resultado = this -> chequeo_reparar_edificio(jugador, listado_necesario, coordenada);
-		if(resultado == EXITO){
-			//reparar_edificio_confirmado()
-			jugador -> cobrar_reparacion(listado_necesario);
-			jugador -> usar_energia(ENERGIA_REPARAR);
-			ColorPrinter::color_msg("Edificio reparado exitosamente!", TEXTO_VERDE, std::cout);
-		}
-		mostrar_mensaje_chequeo( resultado );
-	}
-}
-
-void Empresa_Constructora::atacar_edificio(Jugador* jugador_activo, Jugador* jugador_inactivo){
-	Resultado_Chequeos resultado = EXITO;
-	Material bombas = jugador_activo -> obtener_inventario().obtener_material("bombas");
-	if(!(bombas.obtener_cantidad() > 0))
-		resultado = NO_MATERIALES;
-	this -> mostrar_mensaje_chequeo(resultado);
-	Coordenada coordenada(0,0);
-	if(resultado == EXITO){
-		std::cout << "Elegi las coordenadas del edificio a atacar o salir." << std::endl;
-		do{
-			resultado = this -> pedir_coordenadas(coordenada);
-			if(resultado == EXITO)
-				if(!jugador_inactivo -> existe_ubicacion(coordenada))
-					resultado = NO_PERTENECE_OPONENTE;
-		}
-		while(!mostrar_mensaje_chequeo(resultado));
-		if(resultado == EXITO){
-			jugador_activo -> usar_energia(ENERGIA_ATACAR);
-			jugador_activo -> obtener_inventario().restar_cantidad_material(bombas.obtener_nombre(), 1);
-			this -> bombardear_coordenadas(coordenada, jugador_inactivo);
-		}
-	}
 }
 
 void Empresa_Constructora::bombardear_coordenadas(Coordenada coordenada, Jugador* jugador){
@@ -448,22 +426,6 @@ Resultado_Chequeos Empresa_Constructora::chequeo_reparar_edificio(Jugador* jugad
 	return resultado;
 }
 
-
-void Empresa_Constructora::comprar_bombas(Jugador* jugador){
-	std::size_t cantidad_bombas = 0;
-	mostrar_mensaje_chequeo(pedir_bombas(cantidad_bombas));
-	if(mostrar_mensaje_chequeo(jugador -> obtener_inventario().comprar_bombas(cantidad_bombas))){
-		jugador -> usar_energia(ENERGIA_COMPRAR_BOMBAS);
-	}
-}
-
-Resultado_Chequeos Empresa_Constructora::pedir_bombas(std::size_t& bombas){
-	std::string cantidad_ingresada;
-	std::cout << "¿Cuantas bombas desea comprar? (Precio: " << COSTO_BOMBAS << " andycoins): ";
-	getline(cin, cantidad_ingresada);
-	return chequeo_bombas(cantidad_ingresada, bombas);
-}
-
 Resultado_Chequeos Empresa_Constructora::chequeo_bombas(std::string bombas_ingresadas, std::size_t &bombas){
 	Resultado_Chequeos resultado = EXITO;
 	if(bombas_ingresadas == SALIR_STR) resultado = SALIR;
@@ -474,10 +436,6 @@ Resultado_Chequeos Empresa_Constructora::chequeo_bombas(std::string bombas_ingre
 
 std::string Empresa_Constructora::estado_actual_materiales_mapa(){
 	return mapa -> estado_actual_materiales();
-}
-
-std::string Empresa_Constructora::estado_actual_planos(){
-	return planos -> estado_actual_edificios();
 }
 
 std::string Empresa_Constructora::estado_actual_edificios_mapa(Jugador* jugador){
@@ -494,16 +452,11 @@ std::string Empresa_Constructora::estado_actual_edificios_mapa(Jugador* jugador)
 	return texto;
 }
 
-std::string Empresa_Constructora::estado_actual_ubicaciones(Lista<Jugador*> jugadores){
-	std::string texto;
-	texto = estado_actual_materiales_mapa();
-	for(std::size_t i = 1; i <= jugadores.consulta_largo(); i++){
-			texto += estado_actual_edificios_mapa(jugadores.consulta(i));
-			if(i != jugadores.consulta_largo()) texto += "\n";
-		}
-	return texto;
-}
+void Empresa_Constructora::edificio_demolido_confirmado(const std::string &edificio, const Coordenada &coordenada, Jugador* jugador){
+	Lista<Material> listado_necesario = planos -> materiales_necesarios(edificio);
+	jugador -> recuperar_lista_materiales(listado_necesario);
+	jugador -> eliminar_ubicacion(coordenada);
+	jugador -> usar_energia(ENERGIA_DEMOLER);
+	ColorPrinter::color_msg("Edificio demolido exitosamente!", TEXTO_VERDE, std::cout);
 
-void Empresa_Constructora::producir_materiales(Jugador* jugador){
-	jugador -> producir_materiales(this -> mapa);
 }

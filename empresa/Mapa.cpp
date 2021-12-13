@@ -18,6 +18,12 @@ const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
 const std::size_t ANDYCOINS_MINIMO = 0, ANDYCOINS_MAXIMO = 1;
 const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 
+const std::size_t CANTIDAD_REFERNCIAS = 18;
+const string REFERENCIAS[] = {"J: jugador 1", "U: jugador 2", "M: mina", "G: mina oro", "A: aserradero", "F: fabrica",
+"E: escuela", "O: obelisco", "P: planta electrica", "W: madera", "P: piedra", "I: metal", "C: andycoins",
+GRIS + "   " + FIN_COLOR +": Camino", GRIS_OSCURO + "   " + FIN_COLOR +": Betun", AZUL + "   " + FIN_COLOR +": Lago",
+MARRON + "   " + FIN_COLOR +": Muelle", VERDE + "   " + FIN_COLOR +": Terreno"};
+
 Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
     : filas(filas), columnas(columnas), terreno(nullptr) {
 	this -> cargar_terreno(mapa);
@@ -222,4 +228,13 @@ std::string Mapa::estado_actual_materiales(){
 		}
 	}
 	return texto;
+}
+
+void Mapa::mostrar_referencias(std::size_t fila_mostrada){
+	std::size_t columnas_referencias = CANTIDAD_REFERNCIAS / this -> filas + 1;
+	for(std::size_t i = 0; i < columnas_referencias && fila_mostrada * columnas_referencias + i < CANTIDAD_REFERNCIAS; i++){
+		cout << REFERENCIAS[fila_mostrada * columnas_referencias + i];
+		if(fila_mostrada * columnas_referencias + i != CANTIDAD_REFERNCIAS - 1)
+			cout << ", ";
+	}
 }

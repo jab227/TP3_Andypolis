@@ -50,7 +50,7 @@ Edificio* traductor_edificios(std::string nombre, std::size_t piedra, std::size_
 }
 
 Casillero* traductor_casillero(char nombre) {
-	Casillero* casillero;
+	Casillero* casillero = nullptr;
 	if (nombre == BETUN)
 		casillero = new Betun();
 	else if (nombre == CAMINO)

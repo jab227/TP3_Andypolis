@@ -36,3 +36,6 @@
 build/*
 CMakeLists.txt
 *.json
+
+Saves Files
+saves/*

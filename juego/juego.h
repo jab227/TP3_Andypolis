@@ -31,18 +31,23 @@ class Juego {
         };
         // Pre: -
         // Pos: Muestra un mensaje de bienvenida.
-        void mensaje_bienvenida() const;
+        void mensaje_inicial_bienvenida() const;
         // Pre: -
         // Pos: Imprime un mensaje al usuario, informandole
         // que no tiene la energia suficiente para realizar
         // la accion.
         void energia_insuficiente() const;
         // Pre: -
-        // Pos: Muestra un mensaje de victoria.
-        void mensaje_victoria() const;
-        // Pre: -
         // Pos: Muestra un mensaje despedida.
         void mensaje_despedida() const;
+
+        //PRE: -
+        //POST: muestra un mensaje de victoria del jugador 1
+        void mensaje_victoria_jugador1() const;
+
+        //PRE: -
+        //POST: muestra un mensaje de victoria del jugador 2
+        void mensaje_victoria_jugador2() const;
     public:
         // Pre: -
         // Pos: Construye una nueva instancia de juego.

@@ -1,4 +1,6 @@
 #include "juego.h"
+#include "../printer/color_printer.h"
+#include "../utils/Titulo.h"
 
 Juego::Juego() : programa_(Programa(RUTA_MATERIALES, RUTA_EDIFICIOS,
                                     RUTA_MAPA, RUTA_UBICACIONES)) {}
@@ -54,7 +56,7 @@ void Juego::finalizar_juego(Salida salida) {
 
 void Juego::mensaje_bienvenida() const {
     programa_.limpiar_pantalla();
-    cout << "Bienvenido!" << endl;
+    titulo();
 }
 
 void Juego::energia_insuficiente() const {
@@ -62,7 +64,7 @@ void Juego::energia_insuficiente() const {
 }
 
 void Juego::mensaje_victoria() const {
-    std::cout << "GANASTE" << endl;
+    ColorPrinter::color_msg("GANASTE!!!!", TEXTO_VERDE, std::cout);
 }
 
 void Juego::mensaje_despedida() const

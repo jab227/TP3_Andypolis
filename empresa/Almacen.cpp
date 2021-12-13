@@ -109,8 +109,7 @@ Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material> &material
 	if(!this -> hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)){
 		for(std::size_t i = 1; i <= lista_materiales_.consulta_largo() && !fin; ++i){
 		// Es necesario? No es mejor que hay_material_suficiente() devuelva un Resultado_Chequeos?
-			if (!hay_material_suficiente(
-				materiales_consultados.consulta(i), porcentaje)) {
+			if (!hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)) {
 				suficiente = NO_MATERIALES;
 				fin = true;
 				}

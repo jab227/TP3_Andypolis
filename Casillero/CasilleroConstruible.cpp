@@ -76,11 +76,7 @@ bool Casillero_Construible::es_casillero_transitable(){return false;}
 
 //Tengo que devolver algun mensaje?
 Resultado_Chequeos Casillero_Construible::recoger_material(Material& material_recogido){
-	if(esta_ocupado()){
-		material_recogido = edificio_ -> producir_material();
-		std::cout << "debug: Ha producido " << material_recogido.obtener_cantidad() 
-		<< " de " << material_recogido.obtener_nombre() << std::endl;
-	}
+	if(esta_ocupado()) material_recogido = edificio_ -> producir_material();
 	return EXITO;
 }
 

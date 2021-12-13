@@ -12,7 +12,7 @@ public:
 	// Pos: Construye el objetivo Energetico.
 	Extremista(Jugador* jugador);
 	// Destructor por defecto.
-	~Extremista();
+	~Extremista() = default;
 	// Pos: se actualiza el objetivo, True si esta
 	// cumplido, false en otro caso.
 	bool actualizar() override;

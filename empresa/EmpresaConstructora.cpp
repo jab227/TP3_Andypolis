@@ -164,7 +164,7 @@ void Empresa_Constructora::demoler_edificio(Jugador* jugador){
 		}
 	}
 	while(!mostrar_mensaje_chequeo(resultado));
-	if(resultado == EXITO){ //Chequeo que le pertenece.
+	if(resultado == EXITO){
 		std::string nombre_edificio = EDIFICIO_VACIO;
 		resultado = this -> mapa -> demoler_edificio_ubicacion(nombre_edificio, coordenada);
 		if(resultado == EXITO){

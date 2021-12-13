@@ -60,36 +60,37 @@ void Almacen::mostrar_materiales() const{
 Resultado_Chequeos Almacen::hay_lista_materiales(const Lista<Material> &materiales_consultados, std::size_t porcentaje) const{
 	bool fin = false;
 	Resultado_Chequeos suficiente = EXITO;
-		for(std::size_t i = 1; i <= materiales_consultados.consulta_largo() && !fin; ++i){
-			if (!hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)) {
-					suficiente = NO_MATERIALES;
-					fin = true;
-				}
+	for(std::size_t i = 1; i <= materiales_consultados.consulta_largo() && !fin; ++i){
+	// Es necesario? No es mejor que hay_material_suficiente() devuelva un Resultado_Chequeos?
+		if (!hay_material_suficiente(materiales_consultados.consulta(i), porcentaje)) {
+			suficiente = NO_MATERIALES;
+			fin = true;
 		}
+	}
+
 	return suficiente;
 }
 
 void Almacen::descontar_lista_materiales(const Lista<Material>& materiales_usados,
 					 std::size_t porcentaje) {
-	std::size_t proporcion = porcentaje / 100;
+	float proporcion = (float) porcentaje / 100;
 	for (std::size_t i = 1; i <= materiales_usados.consulta_largo(); i++) {
 		Material material = materiales_usados.consulta(i);
 		restar_cantidad_material(
 		    material.obtener_nombre(),
-		    material.obtener_cantidad() * proporcion);
+		    (std::size_t) ((float) material.obtener_cantidad() * proporcion) );
 	}
 }
 
 void Almacen::sumar_lista_materiales(const Lista<Material>& materiales_obtenidos,
 				     std::size_t porcentaje) {
 	// TODO: Constantes.
-	std::size_t proporcion = porcentaje / 100;
-	for (std::size_t i = 1; i <= materiales_obtenidos.consulta_largo();
-	     i++) {
+	float proporcion = (float) porcentaje / 100;
+	for (std::size_t i = 1; i <= materiales_obtenidos.consulta_largo(); i++) {
 		Material material = materiales_obtenidos.consulta(i);
 		sumar_cantidad_material(
 		    material.obtener_nombre(),
-		    material.obtener_cantidad() * proporcion);
+		   (std::size_t) ((float) material.obtener_cantidad() * proporcion));
 	}
 }
 
@@ -104,6 +105,7 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 		restar_cantidad_material(NOMBRES_MATERIALES[ANDYCOINS], gasto);
 		resultado = EXITO;
 		Material bombas = obtener_material(NOMBRES_MATERIALES[BOMBAS]);
+		andycoins  = obtener_material(NOMBRES_MATERIALES[ANDYCOINS]);
 		std::cout << "Cantidad de bombas: "
 			  << bombas.obtener_cantidad() << std::endl;
 		std::cout << "Andycoins restantes: "

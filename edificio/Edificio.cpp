@@ -7,8 +7,7 @@ Edificio::Edificio() {
 	this->materiales[1] = 0;
 	this->materiales[2] = 0;
 	this->maximo_permitidos = 0;
-	this->construidos = 0;
-	this->vida = 1; //Solo Mina y Fabrica poseen 2 de vida.
+	this->vida = 1;
 }
 
 Edificio::Edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos){
@@ -17,7 +16,6 @@ Edificio::Edificio(std::string nombre, std::size_t piedra, std::size_t madera, s
 	this->materiales[MADERA] = madera;
 	this->materiales[METAL] = metal;
 	this->maximo_permitidos = maximo_permitidos;
-	this->construidos = 0;
 	this-> vida = 1;
 }
 
@@ -28,7 +26,6 @@ Edificio::Edificio(std::string nombre, std::size_t piedra, std::size_t madera, s
 	this->materiales[MADERA] = madera;
 	this->materiales[METAL] = metal;
 	this->maximo_permitidos = maximo_permitidos;
-	this->construidos = 0;
 	this-> vida = vida;
 }
 
@@ -61,32 +58,13 @@ std::size_t Edificio::obtener_max_permitidos() const{
 bool Edificio::vacio(){
 	return this->nombre == EDIFICIO_VACIO;
 }
-/*
-//Q: Se usa? 
-void Edificio::modificar_construidos(std::size_t n){
-	if(n <= this->maximo_permitidos)
-		this->construidos = n;
-}
-//Q: Se usa?
-void Edificio::aumentar_construidos(){
-	this->modificar_construidos(this -> construidos + 1);
-}
-//Q: Se usa?
-void Edificio::disminuir_construidos(){
-	this->modificar_construidos(this -> construidos - 1);	
-}
-//Q: Se usa?
-std::size_t Edificio::obtener_construidos(){
-	return this->construidos;
-}
-*/
+
 Edificio& Edificio::operator=(const Edificio &rhs){
 	this->nombre = rhs.obtener_nombre();
 	this->materiales[PIEDRA] = rhs.obtener_cant_material("piedra");
 	this->materiales[MADERA] = rhs.obtener_cant_material("madera");
 	this->materiales[METAL] = rhs.obtener_cant_material("metal");
 	this->maximo_permitidos = rhs.maximo_permitidos;
-	this->construidos = rhs.construidos;
 	return *this;
 }
 

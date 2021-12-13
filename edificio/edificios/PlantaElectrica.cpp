@@ -1,10 +1,8 @@
 #include "PlantaElectrica.h"
 #include <iostream>
 
-
-//Energia no es un material...
 const std::string NOMBRE = "planta electrica";
-const std::string NOMBRE_MATERIAL_PRODUCIDO = "energia";
+const std::string NOMBRE_MATERIAL_PRODUCIDO = "energia"; //Aunque no es un material, cuando se recolecta se lo diferencia.
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 15;
 
 Planta_Electrica::Planta_Electrica() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){

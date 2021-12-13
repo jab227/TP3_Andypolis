@@ -11,14 +11,10 @@ const std::size_t PRECIO_BOMBA = 100, BOMBAS_VACIAS = 0;
 
 Almacen::Almacen() : lista_materiales_(Lista<Material>()) {}
 
-Lista<Material>& Almacen::obtener_materiales() {
-	return lista_materiales_;
-}
-
 Almacen::Almacen(const Lista<Material>& lista) : lista_materiales_(lista) {}
 
-void Almacen::agregar_material(const Material& material) {
-	lista_materiales_.alta_al_final(material);
+Lista<Material>& Almacen::obtener_materiales() {
+	return lista_materiales_;
 }
 
 std::size_t Almacen::buscar_material(const Material& material) const {
@@ -160,4 +156,8 @@ Resultado_Chequeos Almacen::comprar_bombas(std::size_t cantidad_bombas) {
 			  << andycoins.obtener_cantidad() << std::endl;
 	}
 	return resultado;
+}
+
+void Almacen::agregar_material(const Material& material) {
+	lista_materiales_.alta_al_final(material);
 }

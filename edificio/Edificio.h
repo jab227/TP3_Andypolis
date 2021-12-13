@@ -17,10 +17,8 @@ class Edificio {
 private:
 	std::string nombre;
 	std::size_t vida;
-	//TODO: Cambiar a lista/vector de materiales
 	std::size_t materiales[CANT_MATERIALES_EDIFICIOS];
 	std::size_t maximo_permitidos;
-	std::size_t construidos; // Q: Es necesario tener la cantidad construida?
 //Metodos:
 public:
 	//PRE: -
@@ -38,7 +36,7 @@ public:
 
 	// PRE: -
 	// POST: ejecuta el destructor
-	virtual ~Edificio() = 0;
+	virtual ~Edificio();
 
 	// PRE: -
 	// POST: devuelve el nombre del edificio.
@@ -76,24 +74,7 @@ public:
 
 	//PRE -
 	//POST: devuelve lo que produce en str.
-	//Q: Se usa?
 	virtual std::string info_producto() const = 0;
-
-	// PRE: -
-	// POST: se modifica el valor de edificios construidos a n
-	//void modificar_construidos(std::size_t n);
-
-	// PRE: -
-	// POST: Aumenta en 1 el valor de edificios construidos.
-	//void aumentar_construidos();
-
-	// PRE: -
-	// POST: Disminuye en 1 el valor de edificios construidos.
-	//void disminuir_construidos();
-
-	// PRE: -
-	// POST: devuelve la cantidad de edificios construidos
-	//std::size_t obtener_construidos();
 
 	//PRE: -
 	//POST: Devuelve true si el nombre es el mimso.

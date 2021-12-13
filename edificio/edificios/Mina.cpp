@@ -16,7 +16,6 @@ void Mina::saludar(){
 	std::cout << "Soy la "+NOMBRE+" y estoy en el casillero consultado, estoy buscando minerales precioso!" << std::endl;
 }
 
-
 Resultado_Chequeos Mina::reparar(bool reparar_edificio){
 	Resultado_Chequeos resultado = NO_REPARABLE;
 	if(this -> obtener_vida() < MAX_VIDA){

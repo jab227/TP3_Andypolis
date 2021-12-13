@@ -20,11 +20,21 @@ public:
 	//PRE: ruta debe ser una ruta a un archivo bien estructurado.
 	//POS: creo un almacen inicializado con el archivo en la ruta espesificada.
 	Almacen(const Lista<Material>& lista);
+
+	//Constructor de copia
 	Almacen(const Almacen& rhs) = default;
-	Lista<Material>& obtener_materiales();
+	
 	//PRE: -
-	//POS: se libera la memoria utilizada
+	//POS: Devuelve lista_materiales_
+	Lista<Material>& obtener_materiales();
+	
+	//Destructor por default
 	~Almacen() = default;
+	
+	//PRE: -
+	//POS: devuelve el indice del material en caso de encontrarse o en caso de
+	//no estar en el arreglo, devuelve NO_ENCONTRADO.
+	std::size_t buscar_material(const Material& a_buscar) const;
 
 	//PRE: -
 	//POS: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
@@ -67,14 +77,9 @@ public:
 	//POS: se compran las bombas pidiendo al usuario la cantidad
 	Resultado_Chequeos comprar_bombas(std::size_t cantidad_bombas);
 
-	//PRE: -
-	//POS: devuelve el indice del material en caso de encontrarse o en caso de
-	//no estar en el arreglo, devuelve NO_ENCONTRADO.
-	std::size_t buscar_material(const Material& a_buscar) const;
-
 private:
-	//PRE: 1 <= posicion <= el largo de la lista.
-	//POS: se agrega el material al final del vector.
+	//PRE: -
+	//POS: se agrega el material al final de la lista_materiales_.
 	void agregar_material(const Material& material);
 	
 

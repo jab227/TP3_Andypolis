@@ -3,7 +3,6 @@
 
 const std::string NOMBRE_MATERIAL_PRODUCIDO = "madera", NOMBRE = "aserradero";
 const std::size_t CANTIDAD_MATERIAL_PRODUCIDO = 25;
-const std::size_t MAX_VIDA = 1; //Si recibe 1 ataques, se destruye.
 
 Aserradero::Aserradero() : Productor(NOMBRE, 0, 0, 0, 0, Material(NOMBRE_MATERIAL_PRODUCIDO, CANTIDAD_MATERIAL_PRODUCIDO)){
 }

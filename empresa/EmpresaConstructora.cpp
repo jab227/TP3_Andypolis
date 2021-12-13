@@ -238,7 +238,7 @@ std::string Empresa_Constructora::estado_actual_ubicaciones(Lista<Jugador*> juga
 	texto = estado_actual_materiales_mapa();
 	for(std::size_t i = 1; i <= jugadores.consulta_largo(); i++){
 			texto += estado_actual_edificios_mapa(jugadores.consulta(i));
-			if(i != jugadores.consulta_largo()) texto += "\n";
+			//if(i != jugadores.consulta_largo()) texto += "\n";
 		}
 	return texto;
 }
@@ -443,9 +443,7 @@ std::string Empresa_Constructora::estado_actual_edificios_mapa(Jugador* jugador)
 	for(std::size_t i = 1; i <= coordenadas.consulta_largo(); i++){
 		coordenada = coordenadas.consulta(i);
 		texto += mapa -> obtener_contenido_ubicacion(coordenada) + " ";
-		texto += coordenada.a_string(); 
-		if(i != coordenadas.consulta_largo()) texto += "\n";
-
+		texto += coordenada.a_string() + "\n";
 	}
 	return texto;
 }

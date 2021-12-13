@@ -47,6 +47,7 @@ Programa::Programa(std::string ruta_materiales, std::string ruta_edificios,
       instancia(INICIO),
 	  partida(NUEVA),
       jugador_activo(0),
+      fin_ronda(false),
       jugadores(Lista<Jugador*>()),
       objetivos_jugadores(Lista<Meta*>()) {
 	Planos* plano =
@@ -201,14 +202,6 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			    ->mostrar_objetivos();
 			break;
 		case RECOLECTAR:
-			// FER: Hice recoger_material() en los casilleros
-			// Este sirve tanto para los edificios como para los
-			// materiales. 	Edificios -> El jugador tiene una lista de
-			//ubicaciones. Con pasarle el inventario le suma el
-			//material producido. 	Materiales -> El jugador al
-			//moverse por las celdas recoge_material() del
-			//transitable con pasarle el inventario le suma el
-			//material del suelo.
 			empresa_constructora->recolectar_recursos(
 			    jugadores.consulta(jugador_activo));
 			break;
@@ -216,12 +209,12 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			this -> empresa_constructora -> mover_jugador(this -> jugadores.consulta(this -> jugador_activo));
 			break;
 		case FIN_TURNO:
-			cout << "Turno del jugador " << jugador_activo
-			     << " finalizado." << endl;
-			this -> jugadores.consulta(this->jugador_activo)
-			    ->recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
-			this -> empresa_constructora -> producir_materiales(jugadores.consulta(jugador_activo));
-			this -> jugador_activo = 3 - this->jugador_activo;  // Cambio de jugador activo
+			std::cout << "Turno del jugador " << jugador_activo << " finalizado." << endl;
+			jugadores.consulta(this->jugador_activo) -> recuperar_energia(ENERGIA_SUMADA_FIN_TURNO);
+			empresa_constructora -> producir_materiales(jugadores.consulta(jugador_activo));
+			jugador_activo = 3 - jugador_activo;  // Cambio de jugador activo
+			if(fin_ronda) empresa_constructora -> lluvia_de_recursos(jugadores.consulta(1) -> obtener_posicion(), jugadores.consulta(2) -> obtener_posicion()); 
+			fin_ronda = !fin_ronda;
 			break;
 		case GUARDAR_SALIR:
 			fin = true;

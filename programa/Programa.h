@@ -17,7 +17,8 @@ private:
 	Empresa_Constructora* empresa_constructora;
 	Instancia instancia;
 	Partida partida;
-	size_t jugador_activo;
+	std::size_t jugador_activo;
+	bool fin_ronda;
 	Lista<Jugador*> jugadores;
 	Lista<Meta*> objetivos_jugadores;
 //Metodos:

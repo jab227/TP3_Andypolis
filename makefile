@@ -2,7 +2,7 @@
 CXX = g++
 
 # -g es debug, -O optimizado, para un build final
-CXXFLAGS = -g -Wall -Werror -Wconversion
+CXXFLAGS = -O2 -Wall -Werror -Wconversion
 
 TARGET = main
 

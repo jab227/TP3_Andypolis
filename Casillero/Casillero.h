@@ -47,7 +47,6 @@ public:
 	// POST: Imprime un saludo por pantalla
 	virtual void saludar() const = 0;
 
-	//Q: PROVISORIO? Ya que rompe el telldontask.
 	// PRE: -
 	// POST: Devuelve si el casillero es transitable o no
 	virtual bool es_casillero_transitable() = 0;
@@ -63,11 +62,6 @@ public:
 	// PRE: -
 	// POST: Devuelve el color del casillero.
 	std::string obtener_color();
-
-	// PRE: -
-	// POST: -
-	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-	//virtual Edificio *agregar_lista_edificio(Coordenada *coordenada, Lista<Edificio> *&lista_construidos) = 0;
 
 	// PRE: -
 	// POST: pide al casillero recoger el material que cotntiene

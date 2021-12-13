@@ -75,6 +75,10 @@ public:
 	// por la accion, False en otro caso.
     bool es_energia_suficiente(std::size_t opcion) const;
 
+    //PRE: -
+    //POST: devuelve cual es el jugador activo.
+    std::size_t jugador_activo_actual();
+
 private:
 
 	//PRE: -

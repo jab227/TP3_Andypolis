@@ -69,8 +69,12 @@ Programa::~Programa() {
 void Programa::mostrar_menu() {
 	if (instancia == INICIO)
 		mostrar_menu_inicio();
-	else
+	else {
+		bool ganador = victoria();
+		if (ganador)
+			cout << "GANASTE REY" << endl;
 		mostrar_menu_juego();
+	}
 }
 
 void Programa::mostrar_menu_juego() {
@@ -129,7 +133,7 @@ bool Programa::procesar_opcion(std::size_t opcion) {
 			resultado = procesar_opcion_juego(opcion);
 		else
 			cout << "Energia insuficiente, te faltan "
-			     << -energia_restante
+			     << energia_restante
 			     << " de energia para realizar esta accion."
 			     << endl;
 	}
@@ -201,14 +205,6 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 			    ->mostrar_objetivos();
 			break;
 		case RECOLECTAR:
-			// FER: Hice recoger_material() en los casilleros
-			// Este sirve tanto para los edificios como para los
-			// materiales. 	Edificios -> El jugador tiene una lista de
-			//ubicaciones. Con pasarle el inventario le suma el
-			//material producido. 	Materiales -> El jugador al
-			//moverse por las celdas recoge_material() del
-			//transitable con pasarle el inventario le suma el
-			//material del suelo.
 			empresa_constructora->recolectar_recursos(
 			    jugadores.consulta(jugador_activo));
 			break;
@@ -230,7 +226,7 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 	objetivos_jugadores.consulta(jugador_activo)
 	    ->actualizar_objetivos();
 	bool ganador = victoria();
-	// Necesitamos un mejor mensaje
+	//Necesitamos un mejor mensaje
 	if (ganador) {
 		cout << "GANASTE REY" << endl;
 	}

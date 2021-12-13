@@ -46,7 +46,7 @@ void Jugador::mostrar_construidos(const Mapa* mapa) const {
 		 printer.print_row(lista, std::cout );
 		 for(std::size_t i = 1; i <= cantidad_ubicaciones(); i++)
 			 printer.print_row( mapa , edificios_.consulta(i), std::cout);
-	}else printer.print_str("El jugador" + std::to_string(id_)+ "No tenes edificios construidos.", std::cout);
+	}else printer.print_str("El jugador " + std::to_string(id_)+ "No tenes edificios construidos.", std::cout);
 }
 
 void Jugador::agregar_ubicacion(const Coordenada& coordenada) {

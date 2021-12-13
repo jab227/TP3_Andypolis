@@ -17,10 +17,6 @@ std::size_t Jugador::obtener_energia() const { return energia_; }
 
 Almacen& Jugador::obtener_inventario() { return inventario_; }
 
-void Jugador::colocar_almacen(const Almacen& inventario) {
-	inventario_ = inventario;
-}
-
 bool Jugador::es_energia_suficiente(const std::size_t& energia_requerida) const {
 	return (energia_ >= energia_requerida);
 }
@@ -35,11 +31,9 @@ bool Jugador::es_energia_maxima(const std::size_t& energia_recuperada) const {
 	return ((energia_ + energia_recuperada) >= ENERGIA_MAXIMA);
 }
 
-bool Jugador::recuperar_energia(const std::size_t& valor) {
-	bool es_maxima = es_energia_maxima(valor);
-	if (es_maxima) energia_ = ENERGIA_MAXIMA;
+void Jugador::recuperar_energia(const std::size_t& valor) {
+	if (es_energia_maxima(valor)) energia_ = ENERGIA_MAXIMA;
 	else energia_ += valor;
-	return es_maxima;
 }
 
 void Jugador::mostrar_construidos(const Mapa* mapa) const {
@@ -50,7 +44,7 @@ void Jugador::mostrar_construidos(const Mapa* mapa) const {
 		 lista.alta_al_final("Coordenada");
 		 lista.alta_al_final("Dañado");
 		 printer.print_row(lista, std::cout );
-		 for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++)
+		 for(std::size_t i = 1; i <= cantidad_ubicaciones(); i++)
 			 printer.print_row( mapa , edificios_.consulta(i), std::cout);
 	}else printer.print_str("El jugador" + std::to_string(id_)+ "No tenes edificios construidos.", std::cout);
 }
@@ -73,13 +67,10 @@ Coordenada Jugador::obtener_ubicacion(const std::size_t indice) const {
 
 void Jugador::eliminar_ubicacion(const Coordenada& coordenada) {
 	std::size_t indice = existe_ubicacion(coordenada);
-	if (indice) {
-		edificios_.baja(indice);
-	}
+	if (indice) edificios_.baja(indice);
 }
 
 Resultado_Chequeos Jugador::tiene_materiales( Lista<Material> materiales) const{
-	//Hacer sobrecarga. Hay_lista_materiales con hay_materiales en almacen
 	return this -> inventario_.hay_lista_materiales(materiales);
 }
 
@@ -89,7 +80,7 @@ Resultado_Chequeos Jugador::tiene_materiales_reparar( Lista<Material> materiales
 
 std::size_t Jugador::cantidad_edificios(const std::string &nombre_edificio,  Mapa* mapa) const{
 	std::size_t construidos = 0;
-	for (std::size_t i = 1; i <= edificios_.consulta_largo(); i++) {
+	for (std::size_t i = 1; i <= cantidad_ubicaciones(); i++) {
 		Coordenada ubicacion = this->obtener_ubicacion(i);
 		std::string edificio = mapa->obtener_contenido_ubicacion(ubicacion);
 		if (edificio == nombre_edificio) construidos++;
@@ -126,7 +117,7 @@ bool Jugador::recolectar_reservas(){
 		if(producto.obtener_nombre() == "energia") energia_ += producto.obtener_cantidad();
 		recolectado = true;
 	}
-	this -> inventario_.sumar_lista_materiales(reservas_);
+	sumar_lista_materiales(reservas_);
 	reservas_ = Lista<Material>();
 	return recolectado;
 }
@@ -138,13 +129,13 @@ void Jugador::producir_materiales( Mapa* mapa){
 	Coordenada coordenada;
 	bool listado;
 	std::size_t j = 0;
-	for(std::size_t i = 1; i <= edificios_.consulta_largo(); i++){
+	for(std::size_t i = 1; i <= cantidad_ubicaciones(); i++){
 		coordenada = edificios_.consulta(i);
 		mapa -> recolectar_material_ubicacion(coordenada, producto);
 		listado = false;
 		while(j < reservas_.consulta_largo() && !listado){
 			if(reservas_.consulta(++j) == producto){
-				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); //Operador + ?
+				reservas_.consulta(j).sumar_cantidad(producto.obtener_cantidad()); 
 				listado = true;
 			} 
 		}
@@ -156,7 +147,7 @@ void Jugador::producir_materiales( Mapa* mapa){
 std::size_t Jugador::existe_ubicacion(Coordenada coordenada) const {
 	std::size_t indice = 0;
 	Coordenada tmp;
-	for(std::size_t i = 1; i <= edificios_.consulta_largo() && !indice; i++) {
+	for(std::size_t i = 1; i <= cantidad_ubicaciones() && !indice; i++) {
 		tmp = obtener_ubicacion(i);
 		if (coordenada == tmp) indice = i;
 	}

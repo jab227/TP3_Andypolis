@@ -56,8 +56,8 @@ public:
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos atacar_edificio() override;
 
-	//PRE: -
-	//POST: devuelve un identificador del casillero.
+	//PRE:
+	//POS: Retorna el identificador de casillero transitable correspondiente.
 	virtual char obtener_identificador() = 0;
 
 };

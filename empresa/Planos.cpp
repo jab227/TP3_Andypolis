@@ -39,11 +39,6 @@ void Planos::mostrar_edificios(){
 	}
 }
 
-//Q: Se usa?
-//std::string Planos::material_producido( Edificio* edificio){
-//	return edificio -> info_producto();
-//}
-
 Resultado_Chequeos Planos::chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa){
 	Resultado_Chequeos resultado = NO_EXISTE;
 	Lista<Material> materiales = materiales_necesarios(nombre_edificio);
@@ -80,52 +75,6 @@ void Planos::modificar_edificio(std::string nombre, std::size_t piedra, std::siz
 	Edificio* aux = lista_edificios[nombre];
 	Planos::lista_edificios[nombre] = edificio_modificado;
 	delete aux;
-}
-
-
-/* WHY: Borrables?
-void Planos::aumentar_construidos_edificio(const Edificio* &edificio){
-	bool encontrado = false;
-	std::size_t i = 1;
-	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		buscado = this -> lista_edificios.consulta(i);
-		if(*(buscado) == *edificio){
-			encontrado = true;
-			buscado -> aumentar_construidos();
-		}
-		i++;
-	}
-}
-
-void Planos::disminuir_construidos_edificio(const std::string &edificio){
-	bool encontrado = false;
-	std::size_t i = 1;
-	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
-			encontrado = true;
-			buscado -> disminuir_construidos();
-		}
-		i++;
-	}
-}
-*/
-
-void Planos::mostrar_materiales_producidos(Lista<Material> listado){
-	//Podria reemplazarse por simple while, pero como aviso cuando no hay edif productor?
-	if(listado.consulta_largo() > 0){
-		TablePrinter printer; //Podria ser estatico?
-		Lista<std::string> cabecera;
-		cabecera.alta_al_final("Material producido");
-		cabecera.alta_al_final("Cantidad");
-		printer.print_row(cabecera, std::cout);
-		for(std::size_t i = 1; i <= listado.consulta_largo(); i++)
-			printer.print_row(listado.consulta(i), std::cout);
-	}else
-		std::cout << "No hay edificios construidos que produzcan materiales.\n"
-				"Construya alguno para empezar a producir!" << std::endl;
 }
 
 Edificio* Planos::buscar(std::string nombre_edificio){

@@ -16,7 +16,6 @@ void Casillero_Inaccesible::saludar() const{
 	std::cout << "No puedo contener nada, pero podes venir a pescar." << std::endl;
 }
 
-
 std::string Casillero_Inaccesible::obtener_contenido() const{ return CONTENIDO_VACIO;}
 
 bool Casillero_Inaccesible::es_casillero_transitable(){	return false; }

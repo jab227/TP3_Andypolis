@@ -56,6 +56,8 @@ public:
 	//POST: dado que no se puede agregar un material, no hace nada.
 	void agregar_material(Material material) override;
 	
+	//PRE: -
+	//POS: Retorna TERRENO
 	char obtener_identificador();
 
 };

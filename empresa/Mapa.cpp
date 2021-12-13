@@ -94,12 +94,8 @@ void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Material 
 	terreno[coordenada.x()][coordenada.y()] -> recoger_material(material);
 }
 
-
-//WHY: Se usa?
-//RTA: sep
 std::string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) const{
 	std::string contenido = CONTENIDO_VACIO;
-	//Depende para que lo usemos. Hay una sobrecarga de obtener_contenido. Una para edificios y otra para materiales.
 	contenido = terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	return contenido;
 }
@@ -107,7 +103,7 @@ std::string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) cons
 //TODO: REVISAR que no haya hecho cagadas con la logica.
 bool Mapa::generar_materiales_aleatorios(Coordenada jugador1, Coordenada jugador2){
 	//Chequea cuando casilleros libres y transitables hay. Hace una lista.
-	Lista<Coordenada>* casilleros_libres = new Lista<Coordenada>;
+	Lista<Coordenada> casilleros_libres = Lista<Coordenada>();
 	casilleros_libres_transitables(casilleros_libres, jugador1, jugador2);
 	//Genera los numeros aleatorios dentro de los rangos [MINIMO,MAXIMO]
 	std::size_t piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
@@ -116,43 +112,38 @@ bool Mapa::generar_materiales_aleatorios(Coordenada jugador1, Coordenada jugador
 	std::size_t andycoins_a_generar = this -> numero_aleatorio(ANDYCOINS_MINIMO, ANDYCOINS_MAXIMO);
 	std::size_t a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar + andycoins_a_generar);
 	std::size_t n_casillero = 0;
-	bool mapa_ocupado = casilleros_libres->vacia();
-	while(a_generar > 0 && !(casilleros_libres->vacia())){
+	bool mapa_ocupado = casilleros_libres.vacia();
+	while(a_generar > 0 && !(casilleros_libres.vacia())){
 		if((piedra_a_generar > 0)){
-			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
-			generar_material(NOMBRES_MATERIALES[PIEDRA], casilleros_libres -> consulta(n_casillero));
+			n_casillero = this -> numero_aleatorio(1, casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[PIEDRA], casilleros_libres.consulta(n_casillero));
 			piedra_a_generar--;
-			casilleros_libres -> baja(n_casillero);
+			casilleros_libres.baja(n_casillero);
 		}
-		if((madera_a_generar > 0) && !(casilleros_libres->vacia())){
-			n_casillero = this -> numero_aleatorio(1, casilleros_libres->consulta_largo());
-			generar_material(NOMBRES_MATERIALES[MADERA], casilleros_libres->consulta(n_casillero));
-
+		if((madera_a_generar > 0) && !(casilleros_libres.vacia())){
+			n_casillero = this -> numero_aleatorio(1, casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[MADERA], casilleros_libres.consulta(n_casillero));
 			madera_a_generar--;
-			casilleros_libres -> baja(n_casillero);
-
+			casilleros_libres. baja(n_casillero);
 		}
-		if((metal_a_generar > 0) && !(casilleros_libres->vacia())){
-			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
-			generar_material(NOMBRES_MATERIALES[METAL], casilleros_libres->consulta(n_casillero));
-
+		if((metal_a_generar > 0) && !(casilleros_libres.vacia())){
+			n_casillero = this->numero_aleatorio(1,casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[METAL], casilleros_libres.consulta(n_casillero));
 			metal_a_generar--;
-			casilleros_libres -> baja(n_casillero);
+			casilleros_libres.baja(n_casillero);
 		}
-		if((andycoins_a_generar > 0) && !(casilleros_libres->vacia())){
-			n_casillero = this->numero_aleatorio(1,casilleros_libres->consulta_largo());
-			generar_material(NOMBRES_MATERIALES[ANDYCOINS], casilleros_libres->consulta(n_casillero));
+		if((andycoins_a_generar > 0) && !(casilleros_libres.vacia())){
+			n_casillero = this->numero_aleatorio(1,casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[ANDYCOINS], casilleros_libres.consulta(n_casillero));
 			andycoins_a_generar--;
-			casilleros_libres -> baja(n_casillero);
+			casilleros_libres.baja(n_casillero);
 		}
 		a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar + andycoins_a_generar);
-		mapa_ocupado = casilleros_libres -> vacia();
+		mapa_ocupado = casilleros_libres.vacia();
 	}
-	delete casilleros_libres;
 	return mapa_ocupado;
 }
 
-// Ver si es necesario.
 void Mapa::generar_material(std::string material, Coordenada coordenada){
 	this -> poner_material_ubicacion(material, coordenada);
 }
@@ -164,29 +155,14 @@ std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {
 	return rango(rng);
 }
 
-//TODO:Quitarme la dependencia. TellDontAsk.
-void Mapa::casilleros_libres_transitables(Lista<Coordenada>* &lista_desocupados, Coordenada jugador1, Coordenada jugador2){
+void Mapa::casilleros_libres_transitables(Lista<Coordenada> &lista_desocupados, Coordenada jugador1, Coordenada jugador2){
 	for(std::size_t fila = 0; fila <  this -> filas; fila++)
 		for(std::size_t columna = 0; columna < this -> columnas; columna++)
 			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado() &&
 					Coordenada(fila, columna) != jugador1 && Coordenada(fila, columna) != jugador2)
-				lista_desocupados -> alta_al_final(Coordenada(fila, columna));
+				lista_desocupados.alta_al_final(Coordenada(fila, columna));
 }
 
-/*
-//OBS: Va a juntar todos los materiales del piso pero tmb los productos. 
-//OBS2: solamente estaba para sacar los materiales si el mapa se llenaba, es inutil en este tp
-void Mapa::vaciar_materiales(){
-	Almacen * materiales_basura = new Almacen();
-	Coordenada coordenada = Coordenada(0,0);
-	for(std::size_t fila = 0; fila < this -> filas; fila++)
-		for(std::size_t columna = 0; columna < this -> columnas; columna++){
-			coordenada =  Coordenada(fila,columna);
-			recolectar_material_ubicacion(coordenada, materiales_basura);
-		}
-	delete materiales_basura;
-}
-*/
 bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
 	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> atacar_edificio();
 	edificio = this -> terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
@@ -199,7 +175,6 @@ char Mapa::obtener_identificador_casillero(Coordenada coordenada){
 	return this -> terreno[coordenada.x()][coordenada.y()] -> obtener_identificador();
 }
 
-//TODO: Modificar la logica para que no sea necesario.
 std::string Mapa::identificador_ocupados(std::string ocupador){
 	std::string identificador = UBICACION_VACIA;
 	if(ocupador == "mina")

@@ -54,7 +54,6 @@ std::string Casillero_Construible::obtener_contenido() const{
 
 bool Casillero_Construible::es_casillero_transitable(){return false;}
 
-
 Resultado_Chequeos Casillero_Construible::recoger_material(Material& material_recogido){
 	if(esta_ocupado()) material_recogido = edificio_ -> producir_material();
 	return EXITO;
@@ -74,7 +73,6 @@ Resultado_Chequeos Casillero_Construible::atacar_edificio() {
 		resultado = this -> edificio_ -> disminuir_vida();
 	return resultado;
 }
-
 
 void Casillero_Construible::agregar_material(Material material){}
 

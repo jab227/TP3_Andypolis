@@ -75,13 +75,11 @@ Edificio* Casillero_Construible::agregar_lista_edificio( Coordenada* coordenada,
 bool Casillero_Construible::es_casillero_transitable(){return false;}
 
 //Tengo que devolver algun mensaje?
-Resultado_Chequeos Casillero_Construible::recoger_material(Almacen* inventario){
+Resultado_Chequeos Casillero_Construible::recoger_material(Material& material_recogido){
 	if(esta_ocupado()){
-		Material producto = this -> edificio_ -> producir_material();
-		inventario -> sumar_cantidad_material(producto.obtener_nombre(), producto.obtener_cantidad());
-		std::cout << "Ha producido " << producto.obtener_cantidad() 
-		<< " de " << producto.obtener_nombre() << std::endl;
-	
+		material_recogido = edificio_ -> producir_material();
+		std::cout << "debug: Ha producido " << material_recogido.obtener_cantidad() 
+		<< " de " << material_recogido.obtener_nombre() << std::endl;
 	}
 	return EXITO;
 }

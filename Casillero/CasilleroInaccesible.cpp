@@ -34,7 +34,7 @@ Resultado_Chequeos Casillero_Inaccesible::demoler_edificio(){return CASILLERO_NO
 
 Resultado_Chequeos Casillero_Inaccesible::construir_edificio(Edificio* edificio){return CASILLERO_NO_CONSTRUIBLE;}
 
-Resultado_Chequeos Casillero_Inaccesible::recoger_material(Almacen* inventario){return NO_MATERIALES;}
+Resultado_Chequeos Casillero_Inaccesible::recoger_material(Material& material_recogido){return NO_MATERIALES;}
 
 Resultado_Chequeos Casillero_Inaccesible::reparar_edificio(bool reparar) {return CASILLERO_NO_CONSTRUIBLE;}
 

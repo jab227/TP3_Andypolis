@@ -73,7 +73,7 @@ public:
 	// PRE: inventario != nullptr;
 	// POST: Lepide al casillero que cargue al inventario el material que posee.
 	//Q: Le pasamos el jugador o el inventario del jugador o devolvemos el material y que el jugador se haga cargo de sumarlo.
-	virtual Resultado_Chequeos recoger_material(Almacen *inventario) = 0;
+	virtual Resultado_Chequeos recoger_material(Material& material_recogido) = 0;
 
 	// PRE: -
 	// POST: Pregunta al casillero si necesita reparar un edficio y devuelve el resultado.

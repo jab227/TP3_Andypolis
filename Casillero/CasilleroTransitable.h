@@ -22,7 +22,7 @@ public:
 
 	//PRE: inventario != nullpointer.
 	//POST: Si esta ocupado, se suma el material al inventario y se deja vacío el casillero, devuelve EXITO. Devuelve NO_MATERIALES si no hay ningun material.
-	Resultado_Chequeos recoger_material(Almacen* inventario) override;
+	Resultado_Chequeos recoger_material(Material& material_recogido) override;
 
 	//PRE: -
 	//POST: Devuelve true si el casillero esta ocupado por un material.

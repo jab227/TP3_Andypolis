@@ -48,7 +48,7 @@ public:
 
 	//PRE: -
 	//POST: Retorna NO_MATERIALES.
-	Resultado_Chequeos recoger_material(Almacen* inventario) override;
+	Resultado_Chequeos recoger_material(Material& material_recogido) override;
 
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
 	Resultado_Chequeos atacar_edificio() override;

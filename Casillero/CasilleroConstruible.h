@@ -47,7 +47,7 @@ public:
 
 	//PRE: -
 	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
-	Resultado_Chequeos recoger_material(Almacen* inventario) override;
+	Resultado_Chequeos recoger_material(Material& material_recogido) override;
 
 	//PRE: -
 	//POST: Si esta ocupado, pide al edificio de repararse. Devuelve NO_REPARABLE o EXITO.

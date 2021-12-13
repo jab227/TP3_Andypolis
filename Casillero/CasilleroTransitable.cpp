@@ -55,15 +55,14 @@ Resultado_Chequeos Casillero_Transitable::demoler_edificio(){
 	return CASILLERO_NO_CONSTRUIBLE;
 }
 
-Resultado_Chequeos Casillero_Transitable::recoger_material(Almacen* inventario){
+Resultado_Chequeos Casillero_Transitable::recoger_material(Material& material_recogido){
 	Resultado_Chequeos resultado = NO_MATERIALES;	// No mostrar con mostrar_mensaje_chequeo(). 
 	//Es por si por fuera necesitamos saber si agarro algo.
 	//Podriamos retornar el material o imprimir por consola lo que recogió acá.
 	if(this->esta_ocupado()){
-	// Q: Adaptar
 		std::cout << "Ha recogido " << material.obtener_cantidad() 
 		<< " de " << material.obtener_nombre() << std::endl;
-		inventario -> sumar_cantidad_material(material.obtener_nombre(), material.obtener_cantidad());
+		material_recogido = material;
 		material = Material();
 		resultado = EXITO;
 	}

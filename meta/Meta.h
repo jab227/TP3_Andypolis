@@ -12,6 +12,7 @@
 #include "objetivos/tipos/Minero.h"
 #include "objetivos/tipos/Monedas.h"
 #include "objetivos/tipos/Piedras.h"
+#include "objetivos/tipos/BatallaObelisco.h"
 
 const int CANTIDAD_OBJETIVOS = 3;
 

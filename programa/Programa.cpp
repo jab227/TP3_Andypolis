@@ -229,6 +229,11 @@ bool Programa::procesar_opcion_juego(std::size_t opcion_elegida) {
 	}
 	objetivos_jugadores.consulta(jugador_activo)
 	    ->actualizar_objetivos();
+	bool ganador = victoria();
+	// Necesitamos un mejor mensaje
+	if (ganador) {
+		cout << "GANASTE REY" << endl;
+	}
 	return fin;
 }
 
@@ -264,12 +269,17 @@ bool Programa::es_opcion_valida(std::string opcion) {
 void Programa::limpiar_pantalla() { Printer::clear_screen(); }
 
 bool Programa::victoria() {
+	// Es muy chico para ser un metodo, es solo para facilitar
+	// lectura.
 	auto chequear = [] (bool a, bool b, bool c) {
 		return ((a && b) || (a && c) || (b && c));
 	};
 	Lista <Objetivo*> objetivos = objetivos_jugadores.consulta(jugador_activo)->obtener_objetivos();
-	bool objetivos_cumplidos = chequear(objetivos.consulta(1), objetivos.consulta(2), objetivos.consulta(3));
-	return objetivos_cumplidos;
+	bool objetivos_cumplidos = chequear(objetivos.consulta(1)->esta_cumplido(), 
+										objetivos.consulta(2)->esta_cumplido(), 
+										objetivos.consulta(3)->esta_cumplido());
+	bool obelisco_construido = objetivos.consulta(4)->esta_cumplido();
+	return (objetivos_cumplidos || obelisco_construido);
 }
 
 std::size_t Programa::generar_numero_aleatorio(std::size_t a, std::size_t b) {

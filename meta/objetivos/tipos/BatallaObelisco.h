@@ -16,7 +16,7 @@ class Batalla_Obelisco : public Objetivo {
      // Pos: Construye el objetivo Batalla_Obelisco.
      Batalla_Obelisco(Jugador* jugador, Mapa* mapa);
      // Destructor por defecto.
-     ~Batalla_Obelisco() = default;
+     //~Batalla_Obelisco() = default;
 	 // Pre:  -
      // Pos: se actualiza el objetivo, True si esta
 	 // cumplido, false en otro caso.

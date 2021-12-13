@@ -24,12 +24,12 @@ public:
 	//Constructor de copia
 	Almacen(const Almacen& rhs) = default;
 	
-	//PRE: -
-	//POS: Devuelve lista_materiales_
-	Lista<Material>& obtener_materiales(); //HMM: Medio feo poder manipularlo de afuera.	
-	
 	//Destructor por default
 	~Almacen() = default;
+	
+	//PRE: -
+	//POS: Devuelve lista_materiales_
+	Lista<Material>& obtener_materiales(); 
 	
 	//PRE: -
 	//POS: Retorna el material de la lista_materiales_.

@@ -28,7 +28,7 @@ public:
 	//POST: Devuelve true si el casillero esta ocupado por un material.
 	bool esta_ocupado() const override ;
 
-	//PRE: - PROVISORIO
+	//PRE: -
 	//POST: Devuelve true.
 	bool es_casillero_transitable() override;
 
@@ -45,11 +45,6 @@ public:
 	Resultado_Chequeos demoler_edificio() override;
 
 	//PRE: -
-	//POST: -
-	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-	//Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
-
-	//PRE: -
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
 
@@ -61,6 +56,8 @@ public:
 	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
 	Resultado_Chequeos atacar_edificio() override;
 
+	//PRE: -
+	//POST: devuelve un identificador del casillero.
 	virtual char obtener_identificador() = 0;
 
 };

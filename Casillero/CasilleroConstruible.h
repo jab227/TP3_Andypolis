@@ -41,11 +41,6 @@ public:
 	std::string obtener_contenido() const override;
 
 	//PRE: -
-	//POST: 
-	//Descomentar en caso de que necesitemos armar una lista de edificios x alguna razon.
-	//Edificio* agregar_lista_edificio( Coordenada* coordenada, Lista<Edificio>* &lista_construidos) override;
-
-	//PRE: -
 	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
 	Resultado_Chequeos recoger_material(Material& material_recogido) override;
 
@@ -57,6 +52,8 @@ public:
 	//POST: Si esta ocupado, disminuye la vida del edificio. 
 	Resultado_Chequeos atacar_edificio() override;
 
+	//PRE: -
+	//POST: dado que no se puede agregar un material, no hace nada.
 	void agregar_material(Material material) override;
 	
 	char obtener_identificador();

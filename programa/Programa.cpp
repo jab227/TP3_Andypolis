@@ -314,3 +314,7 @@ std::string Programa::estado_actual_materiales_jugadores(){
 	}
 	return texto;
 }
+
+std::size_t Programa::jugador_activo_actual(){
+	return this -> jugador_activo;
+}

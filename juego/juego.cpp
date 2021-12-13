@@ -1,12 +1,12 @@
 #include "juego.h"
 #include "../printer/color_printer.h"
-#include "../utils/Titulo.h"
+#include "../utils/Titulos.h"
 
 Juego::Juego() : programa_(Programa(RUTA_MATERIALES, RUTA_EDIFICIOS,
                                     RUTA_MAPA, RUTA_UBICACIONES)) {}
 
 Salida Juego::comenzar_juego() {
-    mensaje_bienvenida();
+    mensaje_inicial_bienvenida();
     std::size_t opcion;
     Salida salida;
     do
@@ -47,24 +47,32 @@ Salida Juego::jugar() {
 
 void Juego::finalizar_juego(Salida salida) {
     programa_.limpiar_pantalla();
-    if (salida == VICTORIA)
-        mensaje_victoria();
+    if (salida == VICTORIA){
+    	if(programa_.jugador_activo_actual() == 1)
+    		mensaje_victoria_jugador1();
+    	else
+    		mensaje_victoria_jugador2();
+    }
     programa_.guardar_archivos(RUTA_UBICACIONES,
                                RUTA_MATERIALES, RUTA_EDIFICIOS);
     mensaje_despedida();
 }
 
-void Juego::mensaje_bienvenida() const {
+void Juego::mensaje_inicial_bienvenida() const {
     programa_.limpiar_pantalla();
-    titulo();
+    mensaje_bienvenida();
 }
 
 void Juego::energia_insuficiente() const {
     cout << "Energia insuficiente para realizar la accion" << endl;
 }
 
-void Juego::mensaje_victoria() const {
-    ColorPrinter::color_msg("GANASTE!!!!", TEXTO_VERDE, std::cout);
+void Juego::mensaje_victoria_jugador1() const {
+    mensaje_jugador_1();
+}
+
+void Juego::mensaje_victoria_jugador2() const {
+    mensaje_jugador_2();
 }
 
 void Juego::mensaje_despedida() const

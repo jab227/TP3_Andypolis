@@ -10,9 +10,10 @@ Meta::Meta(Jugador* jugador, Mapa* mapa) : objetivos(Lista<Objetivo*>()) {
 	Lista<Objetivo*> listado = crear_listado(jugador, mapa);
 	std::size_t n;
 	for (int i = 0; i < CANTIDAD_OBJETIVOS; i++) {
-		n = generar_numero_aleatorio(1,listado.consulta_largo());
+		n = generar_numero_aleatorio(1,listado.consulta_largo()-1);
 		this->objetivos.alta_al_final(listado.baja(n));
 	}
+	this->objetivos.alta_al_final(listado.baja(listado.consulta_largo()));
 	this->eliminar_listado(listado);
 }
 
@@ -56,6 +57,7 @@ Lista<Objetivo*> Meta::crear_listado(Jugador* jugador, Mapa* mapa) {
 	listado.alta_al_final(new Minero(jugador, mapa));
 	listado.alta_al_final(new Monedas(jugador));
 	listado.alta_al_final(new Piedras(jugador));
+	listado.alta_al_final(new Batalla_Obelisco(jugador, mapa));
 
 	return listado;
 }

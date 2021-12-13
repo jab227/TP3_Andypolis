@@ -1,48 +1,13 @@
 #include <iostream>
-
-#include "utils/LecturaArchivos.h"
-#include "programa/Programa.h"
-
-
-const std::string RUTA_MATERIALES = "./saves/materiales.txt", RUTA_EDIFICIOS = "./saves/edificios.txt";
-const std::string RUTA_MAPA = "./saves/mapa.txt", RUTA_UBICACIONES = "./saves/ubicaciones.txt";
-
-//PRE: programa tiene que ser un objeto bien cargado
-//POST: se pide al usuario una opcion valida
-int pedir_opcion_valida(Programa &programa);
-
-//PRE: programa tiene que ser un objeto bien cargado
-//POST: imprime un mensaje de bienvenida
-void mensaje_bienvenida(Programa &programa);
+#include "juego/juego.h"
 
 int main() {
-	Programa programa(RUTA_MATERIALES, RUTA_EDIFICIOS, RUTA_MAPA, RUTA_UBICACIONES);
-	int opcion;
-	mensaje_bienvenida(programa);
-	
-	do{
-		programa.mostrar_menu();
-		opcion = pedir_opcion_valida(programa);
-		programa.limpiar_pantalla();
-	}while(!programa.procesar_opcion(opcion)); //Ojo que si salgo en iniciar partida, no tengo jugadores!!
-	programa.guardar_archivos(RUTA_UBICACIONES, RUTA_MATERIALES, RUTA_EDIFICIOS);
+	Juego andypolis;
+	Salida salida;
+	salida = andypolis.comenzar_juego();
+	if (salida != GUARDAR_Y_SALIR)
+		salida = andypolis.jugar();
+	andypolis.finalizar_juego(salida);
 	return 0;
 }
 
-void mensaje_bienvenida(Programa &programa){
-	//programa.limpiar_pantalla();
-	cout << "Bienvenido!" << endl;
-}
-
-int pedir_opcion_valida(Programa &programa){
-	std::string opcion;
-
-	cout << "Opcion:   " ;
-	getline(cin, opcion);
-	while(!programa.es_opcion_valida(opcion)){
-		cout << "La opcion ingresada no es valida." << endl;
-		cout << "Opcion:   " ;
-		getline(cin, opcion);
-	}
-	return stoi(opcion);
-}

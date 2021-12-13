@@ -21,12 +21,12 @@ void Jugador::colocar_almacen(const Almacen& inventario) {
 	inventario_ = inventario;
 }
 
-std::size_t Jugador::energia_suficiente(const std::size_t& energia_requerida) const {
-	return (energia_ - energia_requerida);
+bool Jugador::es_energia_suficiente(const std::size_t& energia_requerida) const {
+	return (energia_ >= energia_requerida);
 }
 
 bool Jugador::usar_energia(const std::size_t& valor) {
-	std::size_t es_suficiente = (energia_suficiente(valor) <= 100);
+	bool es_suficiente = es_energia_suficiente(valor);
 	if (es_suficiente) energia_ -= valor;
 	return es_suficiente;
 }

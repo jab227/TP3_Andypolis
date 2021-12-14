@@ -10,5 +10,4 @@ metal (7, 0)
 andycoins (7, 4)
 piedra (7, 5)
 1 (0, 0)
-
 2 (1, 0)

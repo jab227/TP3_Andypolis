@@ -1,191 +1,101 @@
 #include "Planos.h"
+#include "../printer/table_printer.h"
 #include "../edificio/Productor.h"
 #include "../utils/LecturaArchivos.h"
+#include "../parser/parser_edificio.h"
 #include <fstream>
 
+Diccionario<std::string, Edificio*> Planos::lista_edificios = Diccionario<std::string, Edificio*>();
 
-const int NO_ENCONTRADO = -1;
-
-Planos::Planos() { }
-
-Planos::Planos(string ruta){
-	this -> cargar_edificios(ruta);
+Planos::Planos() {
+}
+Planos::Planos(Diccionario<std::string, Edificio*> diccionario) {
+	Planos::lista_edificios = diccionario;
 }
 
 Planos::~Planos() {
-	for(int i = 1; i <= lista_edificios.consulta_largo(); i++)
-		delete this -> lista_edificios.consulta(i);
+	Lista<std::string> claves = lista_edificios.claves();
+	while(!claves.vacia())
+		delete lista_edificios[claves.baja(1)];
 }
 
-void Planos::agregar_edificio(Edificio* edificio, int posicion){
-	this -> lista_edificios.alta(edificio, posicion);
-}
 
-void Planos::cargar_edificios(string ruta){
-	ifstream archivo(ruta	);
-	if (archivo.is_open()){
-		string lectura;
-		int cant_agregados = 0;
-		Edificio* nuevo_edificio;
-		while(getline(archivo, lectura, ENTER)){
-			nuevo_edificio = procesar_edificio(lectura);
-			agregar_edificio(nuevo_edificio, cant_agregados+1);
-			cant_agregados++;
-		}
-	}
-	archivo.close();
-}
 
+//EMBELLECER.
 void Planos::mostrar_edificios(){
-	cout << "|Edificio\t\t|Piedra\t|Madera\t|Metal\t|Construidos\t|Construibles\t|Material Producido\t|" << endl;
-	Edificio* consultado;
-	for(int i = 1; i <= this -> lista_edificios.consulta_largo(); i++){
-		consultado = this -> lista_edificios.consulta(i);
-		cout << '|' << consultado -> obtener_nombre() << espaciado(consultado -> obtener_nombre(), 21)
-				    << consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[PIEDRA]) << "\t|"
-					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[MADERA]) << "\t|"
-					<< consultado -> obtener_cant_material(MATERTIALES_EDIFICIOS[METAL])  << "\t|"
-					<< consultado -> obtener_construidos()  << "\t\t|"
-					<< consultado -> obtener_max_permitidos() - consultado -> obtener_construidos() << "\t\t|"
-					<< material_producido(consultado) << "\t\t|" << endl;
+	TablePrinter printer = TablePrinter();
+	Lista<std::string> header;  //feo pero comodo jaja
+	header.alta_al_final("Edificio");
+	header.alta_al_final("Piedra");
+	header.alta_al_final("Madera");
+	header.alta_al_final("Metal");
+	header.alta_al_final("Cantidad permitida");
+	header.alta_al_final("Material producido");
+	printer.print_row(header, std::cout);
+	Lista<std::string> claves = lista_edificios.claves();
+	for(std::size_t i = 1; i <= claves.consulta_largo(); i++){
+		Edificio* consultado = this -> lista_edificios[claves.consulta(i)];
+		printer.print_row(consultado, std::cout);
 	}
 }
 
-string Planos::material_producido(Edificio* edificio){
-	string resultado;
-	if(edificio -> es_productor()){
-		resultado = to_string(edificio -> producir_material().obtener_cantidad());
-		resultado += " de ";
-		resultado += edificio -> producir_material().obtener_nombre();
-	}
-	else{
-		resultado = "ninguno";
-	}
-	return resultado;
-}
-
-bool Planos::es_edificio_valido(string edificio){
-	bool encontrado = false;
-	int i = 1;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		if(this -> lista_edificios.consulta(i) -> obtener_nombre() == edificio){
-			encontrado = true;
-		}
-		i++;
-	}
-	return encontrado;
-}
-
-int Planos::cant_max_edificio(string edificio){
-	bool encontrado = false;
-	int i = 1, resultado = -1;
-	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
-			encontrado = true;
-			resultado = buscado -> obtener_max_permitidos();
-		}
-		i++;
+Resultado_Chequeos Planos::chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa){
+	Resultado_Chequeos resultado = NO_EXISTE;
+	Lista<Material> materiales = materiales_necesarios(nombre_edificio);
+	resultado = jugador -> tiene_materiales(materiales);
+	if(resultado != NO_MATERIALES){
+		Edificio* ptr_edificio = this -> lista_edificios[nombre_edificio];
+		std::size_t construidos = jugador -> cantidad_edificios(nombre_edificio, mapa);
+		resultado = ptr_edificio -> esta_maxima_capacidad(construidos);
 	}
 	return resultado;
 }
 
-Lista<Material>* Planos::materiales_necesarios(string edificio){
-	Lista<Material>* lista_materiales = new Lista<Material>;
-	bool encontrado = false;
-	int i = 1;
-		while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-			Edificio* buscado = this -> lista_edificios.consulta(i);
-			if(buscado -> obtener_nombre() == edificio){
-				encontrado = true;
-				for(int j = 0; j < CANT_MATERIALES_EDIFICIOS; j++)
-					lista_materiales -> alta(Material(MATERTIALES_EDIFICIOS[j], buscado -> obtener_cant_material(MATERTIALES_EDIFICIOS[j])), j+1);
-			}
-			i++;
-		}
-		return lista_materiales;
-}
-
-void Planos::aumentar_construidos_edificio(string edificio){
-	bool encontrado = false;
-	int i = 1;
-	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
-			encontrado = true;
-			buscado -> modificar_construidos(buscado -> obtener_construidos() + 1);
-		}
-		i++;
-	}
-}
-
-void Planos::disminuir_construidos_edificio(string edificio){
-	bool encontrado = false;
-	int i = 1;
-	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
-			encontrado = true;
-			buscado -> modificar_construidos(buscado -> obtener_construidos() - 1);
-		}
-		i++;
-	}
-}
-
-Resultado_Chequeos Planos::check_construir_edificio(string edificio){
-	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_edificio_valido(edificio))
-		resultado = NO_EXISTE;
-	else if(this -> cant_construidos(edificio) >= this -> cant_max_edificio(edificio))
-		resultado = MAXIMA_CANTIDAD;
+Resultado_Chequeos Planos::existe(std::string nombre_edificio){
+	Resultado_Chequeos resultado = NO_EXISTE;
+	if(lista_edificios.existe(nombre_edificio)) resultado = EXITO;
 	return resultado;
 }
 
-int Planos::cant_construidos(string edificio){
-	bool encontrado = false;
-	int cantidad = NO_ENCONTRADO;
-	int i = 1;
-	Edificio* buscado;
-	while(!encontrado && i <= this -> lista_edificios.consulta_largo()){
-		 buscado = this -> lista_edificios.consulta(i);
-		if(buscado -> obtener_nombre() == edificio){
-			encontrado = true;
-			cantidad = buscado -> obtener_construidos();
-		}
-		i++;
-	}
-	return cantidad;
+Lista<Material> Planos::materiales_necesarios(std::string nombre_edificio){
+	Lista<Material> lista_materiales;
+	Edificio* edificio = Planos::buscar(nombre_edificio);
+	//Chequear que no haya roto al cambiar alta() por alta_al_final().
+	for(std::size_t i = 0; i < CANT_MATERIALES_EDIFICIOS; i++)
+		lista_materiales.alta_al_final(Material(MATERIALES_EDIFICIOS[i], edificio -> obtener_cant_material(MATERIALES_EDIFICIOS[i])));
+	return lista_materiales;
 }
 
-Lista<Material>* Planos::obtener_recursos_producidos(){
-	Lista<Material>* listado = new Lista<Material>;
+
+void Planos::modificar_edificio(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal){
+
+	Edificio* edificio_modificado = traductor_edificios(nombre, piedra, madera, metal,
+			 Planos::lista_edificios[nombre]->obtener_max_permitidos());
+	Edificio* aux = lista_edificios[nombre];
+	Planos::lista_edificios[nombre] = edificio_modificado;
+	delete aux;
+}
+
+Edificio* Planos::buscar(std::string nombre_edificio){
+	return lista_edificios[nombre_edificio];
+}
+
+std::size_t Planos::cantidad_permitida(const std::string& edificio){
+	return lista_edificios[edificio]->obtener_max_permitidos();
+}
+
+Lista<std::string> Planos::edificios_disponibles(){
+	return lista_edificios.claves();
+}
+
+std::string Planos::estado_actual_edificios(){
+	Lista<std::string> claves = lista_edificios.claves();
 	Edificio* edificio;
-	Material material_producido;
-	int agregados = 0;
-	for(int i = 1; i <= this -> lista_edificios.consulta_largo(); i++){
-		edificio = this -> lista_edificios.consulta(i);
-		if(edificio -> es_productor() && edificio -> obtener_construidos() > 0){
-			material_producido = ((Productor*) edificio) ->  producir_material();
-			material_producido.cambiar_cantidad(material_producido.obtener_cantidad()*edificio -> obtener_construidos());
-			listado -> alta(material_producido, agregados+1);
-			agregados++;
-		}
+	std::string texto;
+	for(std::size_t i = 1; i <= claves.consulta_largo(); i++){
+		edificio = lista_edificios[claves.consulta(i)];
+		texto += edificio -> a_string();
+		if(i != claves.consulta_largo()) texto += "\n"; //Para evitar el salto de linea en la ult linea.
 	}
-	this -> mostrar_materiales_producidos(listado);
-	return listado;
-}
-
-void Planos::mostrar_materiales_producidos(Lista<Material>* listado){
-	if(listado -> consulta_largo() > 0){
-		cout << "Se produjo: " << endl;
-		for(int i = 1; i <= listado -> consulta_largo(); i++){
-			Material material = listado -> consulta(i);
-			cout << "- " << material.obtener_cantidad() << " de " << material.obtener_nombre() << endl;
-		}
-	}else
-		cout << "No hay edificios construidos que produzcan materiales.\n"
-				"Construyo alguno para empezar a producir!" << endl;
+	return texto;
 }

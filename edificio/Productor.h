@@ -3,24 +3,26 @@
 
 #include "../edificio/Edificio.h"
 
-class Productor : public Edificio{
-protected:
-	Material producir;
+class Productor: public Edificio{
+private:
+	Material producto;
 public:
 	//PRE: -
 	//POST: se construye un edificio productor vacio
 	Productor();
 
 	//PRE: -
-	//POST: se construye un edificio productor con los datos ingresados
-	Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos, Material producir);
+	//POST: se construye un edificio productor con los datos ingresados por parametro
+	Productor(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, Material producto);
+	Productor(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos, std::size_t vida, Material producto);
 
 	//PRE: -
 	//POST: devuelve el material que produce este edificio
-	Material producir_material();
+	Material producir_material() override;
 
 	//PRE: -
-	//POST: devuelve si el edificio es productor o no. en este caso devuelve siempre true.
-	bool es_productor();
+	//POST: Retorna el nombre y la cantidad del producto en un string.
+	std::string info_producto() const override;
 };
+
 #endif /* EDIFICIOS_PRODUCTOR_H_ */

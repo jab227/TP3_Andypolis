@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+#Cosas de vscode.
+.vscode/*
+build/*
+CMakeLists.txt
+*.json
+
+Saves Files
+saves/*
+*.txt

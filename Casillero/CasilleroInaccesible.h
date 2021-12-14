@@ -3,35 +3,59 @@
 
 #include "Casillero.h"
 
-class Casillero_Inaccesible : public Casillero{
+class Casillero_Inaccesible: public Casillero{
 public:
 	//PRE: -
-	//POST: se crea un casillero vacio
+	//POST: Se crea un casillero vacio
 	Casillero_Inaccesible();
 
 	//PRE: -
-	//POST: se destruye el casillero
+	//POST: Se destruye el casillero
 	~Casillero_Inaccesible();
 
 	//PRE: -
-	//POST: devuelve si el casillero esta ocupado, para este caso, devuelve siempre true
-	bool esta_ocupado();
+	//POST: Devuelve true, ya que no puede ser ocupado por nada.
+	bool esta_ocupado() const;
 
 	//PRE: -
-	//POST: imprime un saludo por terminal.
-	void saludar();
+	//POST: Imprime un saludo por terminal.
+	void saludar() const;
 
-	//PRE: -
-	//POST: devuelve si el casillero es transitable o no.
+	//PRE: No se deberia llamar a esta funcion, este casillero nunca contiene algo.
+	//POST: Devuelve CONTENIDO_VACIO.
+	std::string obtener_contenido() const override;
+	
+	//PRE: - 
+	//POST: Devuelve false.
 	bool es_casillero_transitable();
+	
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
+	Resultado_Chequeos construir_edificio(Edificio* edificio);
 
 	//PRE: -
-	//POST: devuelve si el casillero es construible o no.
-	bool es_casillero_construible();
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
+	Resultado_Chequeos demoler_edificio();
 
-	//PRE: no se deberia llamar a esta funcion, este casillero nunca contiene algo.
-	//POST: devuelve CONTENIDO_VACIO.
-	std::string obtener_contenido();
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
+	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
+
+	//PRE: -
+	//POST: Retorna NO_MATERIALES.
+	Resultado_Chequeos recoger_material(Material& material_recogido) override;
+
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE.
+	Resultado_Chequeos atacar_edificio() override;
+
+	//PRE: -
+	//POS: dado que no puede contener un material no hace nada.
+	void agregar_material(Material material) override;
+	
+	//PRE: -
+	//POS: Retorna LAGO
+	char obtener_identificador();
+
 };
 
 #endif /* CASILLERO_CASILLEROINACCESIBLE_H_ */

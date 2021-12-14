@@ -2,172 +2,280 @@
 ' Pueden utilizar https://plantuml-editor.kkeisuke.com/ para copiar y pegar el codigo. 
 ' La pagina tiene cheatsheet para ver la sintaxis. 
 skinparam SequenceMessageAlignment center
-class Almacen{
-    + Almacen(ruta: string): Almacen
-    + cargar_materiales(ruta: string): void
- 	+ buscar_material(string a_buscar): int
-    + modificar_cantidad_material(string a_cambiar, int cantidad): void
-	+ mostrar_materiales(): void 
-    + guardar_materiales(string ruta): bool
-    + hay_material_suficiente(Material material): bool
-    + hay_lista_materiales(Lista<Material>* materiales_consutlados): Resultado_Chequeos
-    + restar_lista_materiales(Lista<Material>* materiales_usados): void
- 	+ sumar_lista_materiales(Lista<Material>* materiales_obtenidos, bool recuperados = false): void
-    - agregar_material(Material material, int posicion): void
 
-}
-
+'Voy a poner unicamente los metodos abstractos y atributos.
 abstract class Casillero{
-	 # color: string
- 	+ {abstract} saludar(): void
- 	+ {abstract} es_casillero_transitable() : bool
- 	+ {abstract} es_casillero_construible() : bool
-	+ {abstract} esta_ocupado(): bool
-	+ {abstract} obtener_contenido(): string
- 	+ obtener_color():string
+	- color: string
+	+{abstract}  saludar(): void
+	+{abstract}  es_casillero_transitable(): bool
+	+{abstract}  esta_ocupado(): bool
+	+{abstract} obtener_contenido(): string 
+	+{abstract}  recoger_material(material_recogido: Material): Resultado_Chequeos 
+	+{abstract}  reparar_edificio( reparar: bool ) Resultado_Chequeos
+	+{abstract}  atacar_edificio(): Resultado_Chequeos
+	+{abstract}  construir_edificio(edificio: Edificio*): Resultado_Chequeos
+	+{abstract}  demoler_edificio(): Resultado_Chequeos
+	+{abstract}	 agregar_material(material: Material): void
+	+{abstract}  obtener_identificador(): char
+	+(...)
 }
 
 class Edificio{
-	# nombre: string
-    # materiales[CANT_MATERIALES_EDIFICIOS]: int
-	# maximo_permitidos: int
-	# construidos: int
+	- nombre: string
+	- vida: size_t
+	- materiales[ CANT_MATERIALES_EDIFICIOS ]: size_t
+	- maximo_permitidos: size_t
 
- 	+ Edificio(nombre: string, piedra: int, madera: int, metal: int, maximo_permitidos: int): Edificio
-    + obtener_nombre(): string
-	+ obtener_cant_material(string material):int
-    + obtener_max_permitidos():int
-	+ {abstract} es_productor():bool
-    + {abstract} saludar():void
-    + vacio():bool
-	+ {abstract} producir_material():Material
-	+ modificar_construidos(int n):void
-    + obtener_construidos():int
-
+	+ {abstract} saludar(): void
+	+ {abstract} producir_material(): Material
+	+ {abstract} info_producto(): string
+	+ {abstract}  reparar( reparar_edificio: bool ): Resultado_Chequeos
+	+ (...)
 }
-class EmpresaConstructora{
-    - almacen: Almacen*
-    - planos: Planos*
-	- mapa: Mapa*
-	+Empresa_Constructora(ruta_materiales: string, ruta_edificios: string, ruta_mapa: string, ruta_ubicaiones: string);
-	+ construir_edificio(): void
-    + demoler_edificio(): void
+
+class Almacen{
+	+ obtener_material(std::string material): Material
+	+ restar_cantidad_material( nombre: string, cantidad: size_t): void	
+	+ sumar_cantidad_material( a_cambiar: string, cantidad: size_t): void
+	+ mostrar_materiales() : void
+	+ (...)
+}
+class Empresa_Constructora{
 	+ mostrar_edificios(): void
-	+ mostrar_materiales(): void
-	+ mostrar_mapa(): void
-	+ mostrar_coordenada(): void
-	+ mostrar_construidos(): void
-	+ guardar_archivos(ruta_materiales: string, ruta_ubicaciones: string): void
-    + producir_recursos(): void
-    + lluvia_de_recursos(): void
-    + vaciar_materiales(): void
-    -cargar_ubicaciones(ruta: string): void
-	-guardar_ubicaciones(ruta: string): void
-    -sumar_contenido(linea: string, fila: int, columna: int): void
-	-pedir_edificio(): string
-	-Resultado_Chequeos chequeo_construir(edificio_ingresado: string, edificio: &string): Resultado_Chequeos 
-	-chequeo_demoler(fila_ingresada: string, columna_ingresada: string, fila: int &, columna: int &, edificio: string &): Resultado_Chequeos
-	-chequeo_posicion_libre(fila_ingresada: string, columna_ingresada: string, fila: int &, columna: int &): Resultado_Chequeos
-	-chequeo_posicion( fila_ingresada: string,  columna_ingresada: string,  fila: &int, columna: &int): bool
-	-mostrar_mensaje_chequeo(Resultado_Chequeos chequeo): string
-	-pedir_si_no();
-	-pedir_posicion_libre( &fila: int,  &columna: int): bool
-	-pedir_posicion_ocupada( &fila: int,  &columna: int): string
-	-pedir_posicion( &fila: int,  &columna: int): void
-    -edificio_construido_confirmado( edificio: string,  fila: int,  columna: int): void
+	+ modificar_edificios(): void
+	+ mostrar_mapa( jugadores: Lista<Jugador*>): void
+	+ mostrar_construidos( jugador: Jugador*): void
+	+(...)
+}
+class Mapa{
+	- filas: std::size_t
+    - columnas: std::size_t
+	- terreno: Casillero***
+
+ 	+ es_coordenada_valida(coordenada: Coordenada): bool
+ 	+ mostrar_casillero(coordenada: coordenada, contenido: string): void
+ 	+ saludar_coordenada(coordenada: Coordenada): void
+ 	+ construir_edificio_ubicacion(edificio: string, coordenada: Coordenada): Resultado_Chequeos
+	+ (...)
 }
 class Planos{
-    + Planos(string ruta);
-	+  cargar_edificios(string ruta): void
- 	+  mostrar_edificios(): void
-	+  es_edificio_valido(string edificio): bool
-	+  cant_max_edificio(string edificio): int
-    +  cant_construidos(string edificio): int
-    +  materiales_necesarios(string edificio): lista_material
-	+ aumentar_construidos_edificio(string edificio): void
-	+ disminuir_construidos_edificio(string edificio): void
-	+ check_construir_edificio(string edificio): Resultado_Chequeos
-	+ obtener_recursos_producidos(): lista_material
-	- agregar_edificio(Edificio* edificio, int posicion): void
-	- material_producido(Edificio* edificio): string
-	- mostrar_materiales_producidos(Lista<Material>* listado): void
+	- {static} lista_edificios: Diccionario <string, Edificio*>
+	+ {static} buscar( nombre_edificio: string): Edificio*
+	+ {static} existe( nombre_edificio: string): Resultado_Chequeos
+	+ mostrar_edificios(): void
+	+ modificar_edificio( nombre: string,  madera: size_t,  piedra: size_t,  metal: size_t): void
+	+ (...)
 }
 
-class Mapa{
-	- filas: int
-    - columnas: int
-
-	+Mapa(string ruta);
-    +es_cordenada_valida(int fila, int columna): bool
-    + chequeo_ubicar_edificio(int fila, int columna): Resultado_Chequeos
-	+ chequeo_demoler_edificio(int fila, int columna, string &edificio): Resultado_Chequeos
-    + mostrar_mapa(): void
-    + mostrar_construidos(): void
-	+ mostrar_posicion(int fila, int columna): void
-	+ construir_edificio_ubicacion(string edificio, int fila, int columna): void
-    + demoler_edificio_ubicacion(int fila, int columna): string
-    + poner_material_ubicacion(string material, int fila, int columna): void
-    + sacar_material_ubicacion(int fila, int columna): string
-	+ chequeo_poner_material(int fila, int columna): Resultado_Chequeos
-	+ chequeo_sacar_material(int fila, int columna): Resultado_Chequeos
-	+ obtener_contenido_ubicacion(int fila, int columna): string
-	+ generar_materiales_aleatorios(): bool
-	+ vaciar_materiales(): void
-    - agregar_edificio_a_listas(Casillero* casillero, int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas): void
-	- mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas): void
-	- cargar_terreno(string ruta): void
-	- iniciar_filas_casilleros(int filas, string lectura): void
-	- identificador_ocupados(string ocupador): string
-	- casilleros_libres_transitables(): int
-	- numero_aleatorio(int minimo, int maximo): int
-	- generar_material(string material, int numero_casillero): void
+class CaminoMinimo{
+	- matrizAdyacencia: int**
+    - cantidadVertices: int
+	+{abstract} caminoMinimo( origen: int,  destino: int): Lista<Coordenada>* 
+	+{abstract} energiaCaminoMinimo( origen: int,  destino: int): int
 }
+
+class Floyd{
+	- matrizCostos: int **
+	- matrizCaminos: int **
+  	- liberarMatrices(): void
+  	- mostrarMatrices(): void
+ 	- calcularMatrices(): void
+	+ energiaCaminoMinimo( origen: int,  destino: int): int
+	+ (...)
+}
+
+class Grafo{
+	- matrizDeAdyacencia: int **
+
+	- mostrarVertices(): void
+	- mostrarMatrizAdyacencia(): void
+	+ agregarVertice( nuevoVertice: Coordenada): void
+	+ caminoMinimo( origen: Coordenada,  destino: Coordenada): Lista<Coordenada>*
+	+ (...)
+}
+
+class Vertice{
+	+ Vertice(nombre: Coordenada ): Vertice
+    + obtenerNombre(): Coordenada
+}
+
+class Juego{
+	+ comenzar_juego(): Salida
+	+ jugar(): Salida
+	+ finalizar_juego(salida: Salida): void
+	- mensaje_victoria(): void
+	- mensaje_despedida(): void
+	- (...)
+}
+
+abstract class Jugador{
+	id_: size_t
+	energia_: size_t
+	# {abstract} obtener_costo_terreno(coordenada: Coordenada, mapa: Mapa*): size_t
+
++ mover_a_coordenada( coordenada: Coordenada,  mapa: Mapa*): void
++ a_string(): string
+- obtener_ubicacion(indice: size_t): Coordenada
+- cantidad_ubicaciones(): size_t
++(...)
+}
+
 
 class Material{
-	+ Material(string nombre, int cantidad): Material
+	- nombre: string
+	- cantidad: size_t
 	+ obtener_nombre(): string
-	+ obtener_cantidad(): int
-	+ cambiar_nombre(string nombre): void
-	+ cambiar_cantidad(int cantidad): void
-	+ saludar(): void
+	+ obtener_cantidad(): size_t
+	+ cambiar_nombre(std::string nombre): void
+	+ (...)
 }
+
+class Meta{
++ obtener_objetivos(): Lista<Objetivo*>&
++ mostrar_objetivos(): void
+- crear_listado(jugador: Jugador*, mapa: Mapa*): Lista<Objetivo*>;
+- eliminar_listado( listado: Lista<Objetivo*>&): void
++(...)
+
+}
+
+class Objetivo{
+	- titulo: string
+	- cumplido: bool
+	+ {abstract} actualizar(): bool
+	+ esta_cumplido(): bool
+	+ obtener_titulo(): string
+}
+
+class Armado{}
+class BatallaObelisco{
+	- mapa: Mapa*
+}
+class Bombardero{
+	- bombas_actuales: size_t
+	- bombas_usadas: size_t
+}
+class Cansado{}
+class Constructor{
+	- mapa: Mapa*
+	- claves: Lista<string>
+}
+class Energetico{}
+class Extremista{
+	- bombas_actuales: size_t
+	- bombas_compradas: size_t
+}
+class Letrado{
+	- mapa: Mapa*
+}
+class Minero{
+	- mapa: Mapa*
+	- mina:  bool
+	- mina_oro:  bool
+}
+class Monedas{
+	- monedas_juntadas: size_t
+	- monedas_actuales: size_t
+}
+class Piedras{}
+
+
+class Parser{
+	+ {abstract} parse(input: string, element: T&): void
+}
+class ParserEdificio{}
+class ParserInventario{}
+class ParserMapa{}
+class ParserUbicacion{}
 
 class Programa{
-	+ mostrar_menu(): void
-	+ procesar_opcion(int opcion_elegida): bool
-	+ es_opcion_valida(string opcion): bool
+	- partida: Partida;
+	- jugador_activo: size_t
+	- fin_ronda: bool;
+	+ procesar_opcion(std::size_t opcion_elegida): bool
+	+ es_opcion_valida_inicio(std::string opcion): bool
+	+ es_opcion_valida_juego(std::string opcion): bool
 	+ limpiar_pantalla(): void
-	+ guardar_archivos(string ruta_materiales, string ruta_ubicaciones): void
+	+(...)
 }
 
-class Productor{
-    + es_productor(): bool
-    + producir_material(): Material
+class Coordenada{
+	- x: std::size_t
+	- y: std::size_t
+	
+	+ x(): size_t 
+	+ y(): size_t 
+	+ a_string(): string
+	+ (...)
 }
-class NoProductor{
-    + es_productor(): bool
-    + producir_material(): Material
-}
-
 ' RELACIONES '
-EmpresaConstructora *-- Planos: - planos
-EmpresaConstructora *-- Almacen: - almacen
-EmpresaConstructora *-- Mapa: - mapa
+Programa *-- Empresa_Constructora: - empresa_constructora
+Programa *--"*" Jugador: -jugadores
+Programa *--"*" Meta: - objetivos_jugadores
+Empresa_Constructora *-- Mapa: - mapa
+Empresa_Constructora *-- Planos: - planos
 Almacen *--"*" Material: - lista_material
-Planos *--"*" Edificio: + lista_edificios
-Mapa *--"*" Casillero: - terreno
-Programa *-- EmpresaConstructora: - empresa_constructora
 
 Casillero <|-- CasilleroConstruible
 Casillero <|-- CasilleroTransitable
 Casillero <|-- CasilleroInaccesible
 
+CasilleroTransitable <|-- Camino
+CasilleroTransitable <|-- Betun
+CasilleroTransitable <|-- Muelle
+
+CasilleroTransitable o-- Material: - material
+CasilleroConstruible o-- Edificio: - edificio
+
+Edificio <|-- Productor
+Edificio <|-- NoProductor
+
+NoProductor <|-- Obelisco
+
+Productor *-- Material: - producto
+
 Productor <|-- Aserradero
-NoProductor <|-- Escuela
+Productor <|-- Escuela
 Productor <|-- Fabrica
 Productor <|-- Mina
-Edificio <|-- NoProductor
-NoProductor <|-- Obelisco
-NoProductor <|-- PlantaElectrica
-Edificio <|-- Productor
+Productor <|-- MinaOro
+Productor <|-- PlantaElectrica
+
+Parser <|-- ParserEdificio
+Parser <|-- ParserUbicacion
+Parser <|-- ParserMapa
+Parser <|-- ParserInventario
+
+Jugador <|-- JugadorUno
+Jugador <|-- JugadorDos 
+
+Jugador *-- Almacen: - inventario_
+Jugador *--"*" Material: - reservas_
+Jugador *--"*" Coordenada: - edificios_
+Jugador *-- Coordenada: - posicion_
+
+CaminoMinimo *--"*" Vertice: - vertices
+CaminoMinimo <|-- Floyd
+
+Grafo *--"*" Vertice: -vertices
+Grafo *-- CaminoMinimo: -algoritmoCaminoMinimo
+
+Vertice *-- Coordenada: -nombre
+
+Juego *-- Programa
+
+Meta *--"*" Objetivo: -objetivos
+Objetivo o-- Jugador: - jugador
+
+Objetivo <|-- Armado
+Objetivo <|-- BatallaObelisco
+Objetivo <|-- Bombardero
+Objetivo <|-- Cansado
+Objetivo <|-- Constructor
+Objetivo <|-- Energetico
+Objetivo <|-- Extremista
+Objetivo <|-- Letrado
+Objetivo <|-- Minero
+Objetivo <|-- Monedas
+Objetivo <|-- Piedras
 @enduml

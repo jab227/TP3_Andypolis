@@ -2,50 +2,63 @@
 #define CASILLERO_CASILLEROCONSTRUIBLE_H_
 
 #include "Casillero.h"
-#include "../edificio/Edificio.h"
 
-class Casillero_Construible : public Casillero{
+class Casillero_Construible: public Casillero{
 private:
-	Edificio* edificio;
-	bool ocupado;
+	Edificio* edificio_;
 public:
 	//PRE: -
-	//POST: se crea un casillero vacio
+	//POST: Se crea un casillero vacio
 	Casillero_Construible();
 
 	//PRE: -
-	//POST: se destruye el casillero, se libera el edificio en caso de estar ocupado
+	//POST: Se destruye el casillero, se libera el edificio en caso de estar ocupado
 	~Casillero_Construible();
 
-	//PRE: el edificio debe estar ubicado en memoria dinamica
+	//PRE: El edificio debe estar ubicado en memoria dinamica
 	//POST: se construye el edificio en este casillero, ahor esta ocupado
-	void construir_edificio(Edificio* edificio);
+	Resultado_Chequeos construir_edificio(Edificio* edificio) override;
 
 	//PRE: -
-	//POST: se quita al edificio del casillero y lo devuelve, ahora esta vacio. si el
-	//casillero ya estaba vacio, devuelve nullptr.
-	Edificio* demoler_edificio();
+	//POST: En caso de estar ocupado, liberal el edificio y lo deja en nullptr;
+	Resultado_Chequeos demoler_edificio() override;
 
 	//PRE: -
-	//POST: devuelve si el casillero esta ocupado
-	bool esta_ocupado();
+	//POST: True si edificio != nullptr, es decir, edificio_ esa inicializado.
+	//Q: Creo que podría ser privado si logramos cambiar el telldontask.
+	bool esta_ocupado() const override;
 
 	//PRE: -
-	//POST: imprime un saludo por terminal. en caso de tener un edificio, este tambien
-	//saluda. de lo contrario, se informa que no hay edificio.
-	void saludar();
+	//POST: Imprime un saludo del casillero por terminal. Si estaá ocupado, también saludará el edificio; en caso contrario indica que no tiene.
+	void saludar() const override;
+	
+	//PRE: - PROVISORIO
+	//POST: Devuelve false.
+	bool es_casillero_transitable() override;
 
 	//PRE: -
-	//POST: devuelve si el casillero es transitable o no.
-	bool es_casillero_transitable();
+	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
+	std::string obtener_contenido() const override;
 
 	//PRE: -
-	//POST: devuelve si el casillero es construible o no.
-	bool es_casillero_construible();
+	//POST: Si esta ocupado, devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
+	Resultado_Chequeos recoger_material(Material& material_recogido) override;
 
 	//PRE: -
-	//POST: devuelve el nombre del edificio contenido o EDIFICIO_VACIO.
-	string obtener_contenido();
+	//POST: Si esta ocupado, pide al edificio de repararse. Devuelve NO_REPARABLE o EXITO.
+	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
+	
+	//PRE: -
+	//POST: Si esta ocupado, disminuye la vida del edificio. 
+	Resultado_Chequeos atacar_edificio() override;
+
+	//PRE: -
+	//POST: dado que no se puede agregar un material, no hace nada.
+	void agregar_material(Material material) override;
+	
+	//PRE: -
+	//POS: Retorna TERRENO
+	char obtener_identificador();
 
 };
 

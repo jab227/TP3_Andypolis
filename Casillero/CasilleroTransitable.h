@@ -4,48 +4,62 @@
 #include "Casillero.h"
 #include "../material/Material.h"
 
-class Casillero_Transitable : public Casillero{
+class Casillero_Transitable: public Casillero{
 private:
-	Material* material;
-	bool ocupado;
+	Material material;
 public:
 	//PRE: -
-	//POST: se crea un casillero vacio
-	Casillero_Transitable();
+	//POST: Se crea un casillero transitable vacio con color
+	Casillero_Transitable(std::string color);
 
 	//PRE: -
-	//POST: se destruye el casillero, se libera el material en caso de estar ocupado
-	~Casillero_Transitable();
+	//POST: Se destruye el casillero, se libera el material en caso de estar ocupado
+	~Casillero_Transitable() = default;
 
-	//PRE: el material debe estar ubicado en memoria dinamica
-	//POST: se ocupa el casillero con el material
-	void agregar_material(Material* material);
+	//PRE: El material debe estar ubicado en memoria dinamica
+	//POST: Se ocupa el casillero con el material
+	void agregar_material(Material material) override;
 
-	//PRE: -
-	//POST: se quita al material del casillero y lo devuelve, ahora esta vacio. si el
-	//casillero ya estaba vacio, devuelve nullptr.
-	Material* eliminar_material();
-
-	//PRE: -
-	//POST: devuelve si el casillero esta ocupado
-	bool esta_ocupado();
+	//PRE: inventario != nullpointer.
+	//POST: Si esta ocupado, se suma el material al inventario y se deja vacío el casillero, devuelve EXITO. Devuelve NO_MATERIALES si no hay ningun material.
+	Resultado_Chequeos recoger_material(Material& material_recogido) override;
 
 	//PRE: -
-	//POST: imprime un saludo por terminal. en caso de tener un material, este tambien
-	//saluda. de lo contrario, se informa que no hay material.
-	void saludar();
+	//POST: Devuelve true si el casillero esta ocupado por un material.
+	bool esta_ocupado() const override ;
 
 	//PRE: -
-	//POST: devuelve si el casillero es transitable o no.
-	bool es_casillero_transitable();
+	//POST: Devuelve true.
+	bool es_casillero_transitable() override;
 
 	//PRE: -
-	//POST: devuelve si el casillero es construible o no.
-	bool es_casillero_construible();
+	//POST: Devuelve el nombre del material contenido o MATERIAL_VACIO.
+	std::string obtener_contenido() const override;
+	
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
+	Resultado_Chequeos construir_edificio(Edificio* edificio) override;
 
 	//PRE: -
-	//POST: devuelve el nombre del material contenido o MATERIAL_VACIO.
-	string obtener_contenido();
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
+	Resultado_Chequeos demoler_edificio() override;
+
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
+	Resultado_Chequeos reparar_edificio(bool reparar = true) override;
+
+	//PRE: -
+	//POST: Imprime por pantalla el saludo del material que posee.
+	void saludo_material() const;
+	
+	//PRE: -
+	//POST: Devuelve CASILLERO_NO_CONSTRUIBLE
+	Resultado_Chequeos atacar_edificio() override;
+
+	//PRE:
+	//POS: Retorna el identificador de casillero transitable correspondiente.
+	virtual char obtener_identificador() = 0;
+
 };
 
 #endif /* CASILLERO_CASILLEROTRANSITABLE_H_ */

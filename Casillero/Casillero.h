@@ -1,48 +1,97 @@
 #ifndef EDIFICIOS_CASILLERO_H_
 #define EDIFICIOS_CASILLERO_H_
 
-#include <string>
 #include "../utils/colors.h"
+#include "../utils/Lista.h"
+#include "../utils/coordenada.h"
+#include "../edificio/Edificio.h"
+#include "../empresa/Almacen.h"
+#include <string>
 
-const std::string VERDE = BGND_LIGHT_GREEN_46, AZUL = BGND_BLUE_12, GRIS = BGND_GRAY_245, FIN_COLOR = END_COLOR, NEGRO = TXT_DARK_GRAY_233;
+const std::string VERDE = BGND_LIGHT_GREEN_46;
+const std::string AZUL = BGND_BLUE_12;
+const std::string GRIS = BGND_GRAY_245;
+const std::string GRIS_OSCURO = BGND_DARK_GRAY_239;
+const std::string TEXTO_VERDE = TXT_GREEN_118;
+const std::string FIN_COLOR = END_COLOR;
+const std::string NEGRO = TXT_DARK_GRAY_233;
+const std::string BLANCO = TXT_WHITE_255;
+const std::string ROJO = TXT_RED_196;
+const std::string MARRON = BGND_BROWN_137;
 const std::string CONTENIDO_VACIO = "";
-const char TRANSITABLE = 'C', INACCESIBLE = 'L' , CONSTRUIBLE = 'T';
+const char BETUN = 'B';
+const char CAMINO = 'C';
+const char LAGO = 'L';
+const char MUELLE = 'M';
+const char TERRENO = 'T';
 
-class Casillero {
-protected:
+class Casillero
+{
+private:
 	std::string color;
+
 public:
-	//PRE: -
-	//POST: se construye un casillero vacio
+	// PRE: -
+	// POST: Se construye un casillero vacio
 	Casillero();
 
-	//PRE: -
-	//POST: se destruye el casillero
-	virtual ~Casillero() = 0;
+	// PRE: -
+	// POST: Se construye un casillero con color
+	Casillero(std::string color);
 
-	//PRE: -
-	//POST: imprime un saludo por pantalla
-	virtual void saludar() = 0;
+	// PRE: -
+	// POST: Se destruye el casillero
+	virtual ~Casillero();
 
-	//PRE: -
-	//POST: devuelve si el casillero es transitable o no
+	// PRE: -
+	// POST: Imprime un saludo por pantalla
+	virtual void saludar() const = 0;
+
+	// PRE: -
+	// POST: Devuelve si el casillero es transitable o no
 	virtual bool es_casillero_transitable() = 0;
 
-	//PRE: -
-	//POST: devuelve si el casillero es construible o no
-	virtual bool es_casillero_construible() = 0;
+	// PRE: -
+	// POST: Devuelve si el casillero esta ocupado o no
+	virtual bool esta_ocupado() const = 0;
 
-	//PRE: -
-	//POST: devuelve si el casillero esta ocupado o no
-	virtual bool esta_ocupado() = 0;
+	// PRE: -
+	// POST: Devuelve el nombre del material o edificio contenido;
+	virtual std::string obtener_contenido() const = 0;
 
-	//PRE: -
-	//POST: devuelve el contenido del casillero en caso de estar ocupado o CASILLERO_VACIO en caso contrario.
-	virtual std::string obtener_contenido() = 0;
-
-	//PRE: -
-	//POST: devuelve el color del casillero.
+	// PRE: -
+	// POST: Devuelve el color del casillero.
 	std::string obtener_color();
+
+	// PRE: -
+	// POST: pide al casillero recoger el material que cotntiene
+	virtual Resultado_Chequeos recoger_material(Material& material_recogido) = 0;
+
+	// PRE: -
+	// POST: Pregunta al casillero si necesita reparar un edficio y devuelve el resultado.
+	// repara por defecto el edificio, si reparar vale false, no lo repara.
+	virtual Resultado_Chequeos reparar_edificio(bool reparar = true) = 0;
+
+	// PRE: -
+	// POST: Pide al casillero atacar un edficio.
+	virtual Resultado_Chequeos atacar_edificio() = 0;
+	
+	// PRE: -
+	// POST: Pide al casillero construir un edficio.
+	virtual Resultado_Chequeos construir_edificio(Edificio *edificio) = 0;
+
+	// PRE: -
+	// POST: Le pide al casillero destruir un edificio.
+	virtual Resultado_Chequeos demoler_edificio() = 0;
+
+	// PRE: -
+	// POST: De ser posible, agrega un material al casillero.
+	virtual	void agregar_material(Material material) = 0;
+
+
+	// PRE: -
+	// POST: Retorna un char del identificador del casillero.
+	virtual char obtener_identificador() = 0;
 };
 
 #endif /* EDIFICIOS_CASILLERO_H_ */

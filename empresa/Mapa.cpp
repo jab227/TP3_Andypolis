@@ -1,298 +1,240 @@
 #include "Mapa.h"
+
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <random>
-#include <ctime>
-#include "../casillero/CasilleroConstruible.h"
-#include "../casillero/CasilleroInaccesible.h"
-#include "../casillero/CasilleroTransitable.h"
-#include "../casillero/Casillero.h"
+
+#include "../Casillero/Casillero.h"
+#include "../Casillero/CasilleroConstruible.h"
+#include "../Casillero/CasilleroInaccesible.h"
+#include "../Casillero/CasilleroTransitable.h"
 #include "../utils/LecturaArchivos.h"
 
-const string UBICACION_VACIA = "X", TIPO_TERRENO_VACIO = "";
-const int PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
-const int MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
-const int METAL_MINIMO = 2, METAL_MAXIMO = 4;
+const std::string UBICACION_VACIA = " ", TIPO_TERRENO_VACIO = "";
+const std::size_t PIEDRA_MINIMO = 1, PIEDRA_MAXIMO = 2;
+const std::size_t MADERA_MINIMO = 0, MADERA_MAXIMO = 1;
+const std::size_t METAL_MINIMO = 2, METAL_MAXIMO = 4;
+const std::size_t ANDYCOINS_MINIMO = 0, ANDYCOINS_MAXIMO = 1;
+const std::size_t CONJUNTO[] = {100, 50, 50, 250}, CANTIDAD_CONJUNTOS = 4;
 
-Mapa::Mapa(string ruta) {
-	this -> columnas = 0;
-	this -> filas = 0;
-	this -> terreno = nullptr;
-	this -> cargar_terreno(ruta);
-	srand((unsigned int) time(0)); 						//Genero una semilla aleatoria
+const std::size_t CANTIDAD_REFERNCIAS = 18;
+const string REFERENCIAS[] = {"J: jugador 1", "U: jugador 2", "M: mina", "G: mina oro", "A: aserradero", "F: fabrica",
+"E: escuela", "O: obelisco", "P: planta electrica", "W: madera", "P: piedra", "I: metal", "C: andycoins",
+GRIS + "   " + FIN_COLOR +": Camino", GRIS_OSCURO + "   " + FIN_COLOR +": Betun", AZUL + "   " + FIN_COLOR +": Lago",
+MARRON + "   " + FIN_COLOR +": Muelle", VERDE + "   " + FIN_COLOR +": Terreno"};
+
+Mapa::Mapa(const std::string& mapa, std::size_t filas, std::size_t columnas)
+    : filas(filas), columnas(columnas), terreno(nullptr) {
+	this -> cargar_terreno(mapa);
 }
 
 Mapa::~Mapa() {
-	for(int i = 0; i < this -> filas; i++){
-		for(int j = 0; j < this -> columnas; j++){
+	for (std::size_t i = 0; i < this -> filas; i++) {
+		for (std::size_t j = 0; j < this -> columnas; j++) {
 			delete this -> terreno[i][j];
 		}
-		delete [] this -> terreno[i];
+		delete[] this -> terreno[i];
 	}
-	delete [] this -> terreno;
+	delete[] this -> terreno;
 }
 
-void Mapa::cargar_terreno(string ruta){
-	ifstream archivo(ruta);
-	if (archivo.is_open()){
-		string lectura;
-		getline(archivo, lectura, ENTER);
-		cargar_fila_columna(lectura, this -> filas, this -> columnas);
-		this -> terreno = new Casillero** [this -> filas];
-        for(int i = 0; i < this -> filas; i++){
-            getline(archivo, lectura, ENTER);
-            this -> iniciar_filas_casilleros(i,  lectura);
-        }
-        archivo.close();
-    }
-    
-}
-
-void Mapa::iniciar_filas_casilleros(int filas, string lectura){
-	this -> terreno[filas] = new Casillero* [this -> columnas];
-	for(int columnas = 0; columnas < this -> columnas; columnas++){
-        this -> terreno[filas][columnas] = traductor_casillero(lectura[2*columnas]);
+void Mapa::cargar_terreno(const std::string& mapa) {
+	this -> terreno = new Casillero**[this -> filas];
+	for (std::size_t fila = 0; fila < this -> filas; fila++) {
+		this -> iniciar_filas_casilleros(fila, mapa);
 	}
 }
 
-
-bool Mapa::es_cordenada_valida(int fila, int columna){
-	return fila < this -> filas && columna < this -> columnas;
+void Mapa::iniciar_filas_casilleros(std::size_t fila, const std::string& mapa) {
+	this -> terreno[fila] = new Casillero*[this -> columnas];
+	for (std::size_t columna = 0; columna < this -> columnas; columna++) {
+		this -> terreno[fila][columna] =
+		    traductor_casillero(mapa[columna + fila * this -> columnas + fila]);
+	}
 }
 
-Resultado_Chequeos Mapa::chequeo_ubicar_edificio(int fila, int columna){
-	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_cordenada_valida(fila, columna))
-		resultado = FUERA_RANGO;
-	else if(!(this -> terreno[fila][columna] -> es_casillero_construible()))
-		resultado = CASILLERO_NO_CONSTRUIBLE;
-	else if(this -> terreno[fila][columna] -> esta_ocupado())
-		resultado = CASILLERO_OCUPADO;
-	return resultado;
-
+bool Mapa::es_coordenada_valida(const Coordenada& coordenada) {
+	return (coordenada.x() < this->filas && coordenada.y() < this->columnas);
 }
 
-Resultado_Chequeos Mapa::chequeo_demoler_edificio(int fila, int columna, string &edificio){
-	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_cordenada_valida(fila, columna))
-		resultado = FUERA_RANGO;
-	else if(!(this -> terreno[fila][columna] -> es_casillero_construible()))
-		resultado = CASILLERO_NO_CONSTRUIBLE;
-	else if(!this -> terreno[fila][columna] -> esta_ocupado())
-		resultado = CASILLERO_LIBRE;
-	else
-		edificio = this -> terreno[fila][columna] -> obtener_contenido();
+void Mapa::mostrar_casillero(Coordenada coordenada, std::string contenido){
+	std::cout << this->terreno[coordenada.x()][coordenada.y()]->obtener_color();
+	std::cout << ' ' << this->identificador_ocupados( contenido )<< ' ';
+	std::cout << FIN_COLOR;	
+}
+
+void Mapa::saludar_coordenada(const Coordenada& coordenada){
+	this -> terreno[coordenada.x()][coordenada.y()] -> saludar();
+}
+
+Resultado_Chequeos Mapa::construir_edificio_ubicacion(const std::string &edificio, const Coordenada& coordenada){
+	Edificio* edificio_mapa = traductor_edificios(edificio);
+	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> construir_edificio(edificio_mapa);
+	if(resultado != EXITO)
+		delete edificio_mapa;
 	return resultado;
 }
 
-void Mapa::mostrar_mapa(){
-	cout << "El mapa del terreno es el siguiente:" << endl;
-	cout << "   ";
-	for(int columnas = 0; columnas < this -> columnas; columnas++)
-		cout << ' ' << columnas/10 << ' ';
-	cout << endl << "   ";
-	for(int columnas = 0; columnas < this -> columnas; columnas++)
-		cout << ' ' << columnas%10 << ' ';
-	cout << endl;
-	for(int filas = 0; filas < this -> filas; filas++){
-		cout << filas/10 << filas%10 << ' ';
-		for(int columnas = 0; columnas < this -> columnas; columnas++){
-			cout << this -> terreno[filas][columnas] -> obtener_color() << ' '
-					<< this -> identificador_ocupados(this -> terreno[filas][columnas] -> obtener_contenido()) << ' ';
-		}
-		cout << endl << FIN_COLOR;
+Resultado_Chequeos Mapa::demoler_edificio_ubicacion(std::string& edificio, const Coordenada& coordenada){
+	edificio = (this -> terreno[coordenada.x()][coordenada.y()]) -> obtener_contenido();
+	return (this -> terreno[coordenada.x()][coordenada.y()]) -> demoler_edificio();
+}
+
+Resultado_Chequeos Mapa::reparar_edificio_ubicacion(const Coordenada& coordenada, bool reparar) const{
+	return (this -> terreno[coordenada.x()][coordenada.y()]) -> reparar_edificio(reparar);
+}
+
+void Mapa::poner_material_ubicacion(std::string material,const Coordenada& coordenada) {
+	(this -> terreno[coordenada.x()][coordenada.y()]) -> agregar_material(this -> generar_conjunto_material(material));
+}
+
+Material Mapa::generar_conjunto_material(std::string material){
+	Material material_generado;
+	for(std::size_t i = 0; i < CANTIDAD_CONJUNTOS; i++){
+		if(NOMBRES_MATERIALES[i] == material)
+			material_generado = Material(material, CONJUNTO[i]);
 	}
-	cout << FIN_COLOR;
+	return material_generado;
 }
 
-void Mapa::mostrar_construidos(){
-	Lista<string> lista_nombres;
-	Lista<Lista<int*>*> lista_coordenadas;
-	int* coordenadas;
-	for(int fila = 0; fila < this -> filas; fila++){
-		for(int columna = 0; columna < this -> columnas; columna++){
-			if(this -> terreno[fila][columna] -> es_casillero_construible() && this -> terreno[fila][columna] -> esta_ocupado()){
-				coordenadas = new int[2];
-				coordenadas[0] = fila;
-				coordenadas[1] = columna;
-				agregar_edificio_a_listas(this -> terreno[fila][columna], coordenadas, lista_nombres, lista_coordenadas);
-			}
-		}
-	}
-	this -> mostrar_edificios(lista_nombres, lista_coordenadas);
+//OBS: Si es casillero Construible, solo recoge el producto. Si es Transitable recoge y libera memoria.
+void Mapa::recolectar_material_ubicacion(const Coordenada& coordenada, Material & material){
+	terreno[coordenada.x()][coordenada.y()] -> recoger_material(material);
 }
 
-void Mapa::agregar_edificio_a_listas(Casillero* casillero, int* coordenadas, Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas){
-	Lista<int*>* auxiliar;
-	string edificio = casillero -> obtener_contenido();
-	int indice = lista_nombres.buscar_indice(edificio);
-	if(indice == NO_ESTA){
-		lista_nombres.alta_al_final(edificio);
-		auxiliar = new Lista<int*>;
-		lista_coordenadas.alta_al_final(auxiliar);
-		indice = lista_nombres.consulta_largo();
-	}
-	lista_coordenadas.consulta(indice) -> alta_al_final(coordenadas);
-}
-
-void Mapa::mostrar_edificios(Lista<string> &lista_nombres, Lista<Lista<int*>*> &lista_coordenadas){
-	if(lista_nombres.consulta_largo() > 0){
-		int* coordenadas;
-		cout << "|Edificio\t\t|Cantidad\t|Ubicaciones\t" << endl;
-		for(int i = 1; ! lista_coordenadas.vacia(); i++){
-			cout << '|' << lista_nombres.consulta(i) << espaciado(lista_nombres.consulta(i), 21)
-					<< lista_coordenadas.consulta(1) -> consulta_largo() << "\t\t|";
-			for(int j = 1; ! lista_coordenadas.consulta(1) -> vacia(); j++){
-				coordenadas = lista_coordenadas.consulta(1) -> baja(1);
-				cout << '(' << coordenadas[0] << ", " << coordenadas[1] << ") ";
-				delete [] coordenadas;
-			}
-			cout << endl;
-			delete lista_coordenadas.baja(1);
-		}
-	}else
-		cout << "No hay ningun edificio construido en el mapa." << endl;
-}
-
-void Mapa::mostrar_posicion(int fila, int columna){
-	this -> terreno[fila][columna] -> saludar();
-}
-
-void Mapa::construir_edificio_ubicacion(string edificio, int fila, int columna){
-	( (Casillero_Construible*) this -> terreno[fila][columna] ) ->
-			construir_edificio(traductor_edificios(edificio, 0, 0, 0, 0));
-}
-
-string Mapa::demoler_edificio_ubicacion(int fila, int columna){
-	string edificio_demolido = this -> terreno[fila][columna] -> obtener_contenido();
-	delete ( (Casillero_Construible*) this -> terreno[fila][columna] ) -> demoler_edificio();
-	return edificio_demolido;
-}
-
-void Mapa::poner_material_ubicacion(string material, int fila, int columna){
-	( (Casillero_Transitable*) this -> terreno[fila][columna] ) ->
-			agregar_material(traductor_materiales(material, 0));
-}
-string Mapa::sacar_material_ubicacion(int fila, int columna){
-	string material_quitado = this -> terreno[fila][columna] -> obtener_contenido();
-	delete ( (Casillero_Transitable*) this -> terreno[fila][columna] ) -> eliminar_material();
-	return material_quitado;
-}
-Resultado_Chequeos Mapa::chequeo_poner_material(int fila, int columna){
-	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_cordenada_valida(fila, columna))
-		resultado = FUERA_RANGO;
-	else if(!(this -> terreno[fila][columna] -> es_casillero_transitable()))
-		resultado = CASILLERO_NO_TRANSITABLE;
-	else if(this -> terreno[fila][columna] -> esta_ocupado())
-		resultado = CASILLERO_OCUPADO;
-	return resultado;
-}
-Resultado_Chequeos Mapa::chequeo_sacar_material(int fila, int columna){
-	Resultado_Chequeos resultado = EXITO;
-	if(!this -> es_cordenada_valida(fila, columna))
-		resultado = FUERA_RANGO;
-	else if(!(this -> terreno[fila][columna] -> es_casillero_transitable()))
-		resultado = CASILLERO_NO_TRANSITABLE;
-	else if(!this -> terreno[fila][columna] -> esta_ocupado())
-		resultado = CASILLERO_LIBRE;
-	return resultado;
-}
-
-string Mapa::obtener_contenido_ubicacion(int fila, int columna){
-	string contenido = CONTENIDO_VACIO;
-	if(this -> terreno[fila][columna] -> esta_ocupado())
-		contenido = terreno[fila][columna] -> obtener_contenido();
+std::string Mapa::obtener_contenido_ubicacion(const Coordenada& coordenada) const{
+	std::string contenido = CONTENIDO_VACIO;
+	contenido = terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
 	return contenido;
 }
 
-bool Mapa::generar_materiales_aleatorios(){
-	int casilleros_libres = this -> casilleros_libres_transitables();
-	int piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
-	int madera_a_generar = this -> numero_aleatorio(MADERA_MINIMO, MADERA_MAXIMO);
-	int metal_a_generar = this -> numero_aleatorio(METAL_MINIMO, METAL_MAXIMO);
-	bool todo_ocupado = casilleros_libres == 0;
-	while((piedra_a_generar + madera_a_generar + metal_a_generar) > 0 && casilleros_libres > 0){
-		if(piedra_a_generar > 0 && casilleros_libres > 0){
-			generar_material(MATERTIALES_EDIFICIOS[PIEDRA], numero_aleatorio(1, casilleros_libres));
-			casilleros_libres--;
+//TODO: REVISAR que no haya hecho cagadas con la logica.
+bool Mapa::generar_materiales_aleatorios(Coordenada jugador1, Coordenada jugador2){
+	//Chequea cuando casilleros libres y transitables hay. Hace una lista.
+	Lista<Coordenada> casilleros_libres = Lista<Coordenada>();
+	casilleros_libres_transitables(casilleros_libres, jugador1, jugador2);
+	//Genera los numeros aleatorios dentro de los rangos [MINIMO,MAXIMO]
+	std::size_t piedra_a_generar = this -> numero_aleatorio(PIEDRA_MINIMO, PIEDRA_MAXIMO);
+	std::size_t madera_a_generar = this -> numero_aleatorio(MADERA_MINIMO, MADERA_MAXIMO);
+	std::size_t metal_a_generar = this -> numero_aleatorio(METAL_MINIMO, METAL_MAXIMO);
+	std::size_t andycoins_a_generar = this -> numero_aleatorio(ANDYCOINS_MINIMO, ANDYCOINS_MAXIMO);
+	std::size_t a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar + andycoins_a_generar);
+	std::size_t n_casillero = 0;
+	bool mapa_ocupado = casilleros_libres.vacia();
+	while(a_generar > 0 && !(casilleros_libres.vacia())){
+		if((piedra_a_generar > 0)){
+			n_casillero = this -> numero_aleatorio(1, casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[PIEDRA], casilleros_libres.consulta(n_casillero));
 			piedra_a_generar--;
+			casilleros_libres.baja(n_casillero);
 		}
-		if(madera_a_generar > 0 && casilleros_libres > 0){
-			generar_material(MATERTIALES_EDIFICIOS[MADERA], numero_aleatorio(1, casilleros_libres));
-			casilleros_libres--;
+		if((madera_a_generar > 0) && !(casilleros_libres.vacia())){
+			n_casillero = this -> numero_aleatorio(1, casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[MADERA], casilleros_libres.consulta(n_casillero));
 			madera_a_generar--;
+			casilleros_libres. baja(n_casillero);
 		}
-		if(metal_a_generar > 0 && casilleros_libres > 0){
-			generar_material(MATERTIALES_EDIFICIOS[METAL], numero_aleatorio(1, casilleros_libres));
-			casilleros_libres--;
+		if((metal_a_generar > 0) && !(casilleros_libres.vacia())){
+			n_casillero = this->numero_aleatorio(1,casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[METAL], casilleros_libres.consulta(n_casillero));
 			metal_a_generar--;
+			casilleros_libres.baja(n_casillero);
 		}
+		if((andycoins_a_generar > 0) && !(casilleros_libres.vacia())){
+			n_casillero = this->numero_aleatorio(1,casilleros_libres.consulta_largo());
+			generar_material(NOMBRES_MATERIALES[ANDYCOINS], casilleros_libres.consulta(n_casillero));
+			andycoins_a_generar--;
+			casilleros_libres.baja(n_casillero);
+		}
+		a_generar = (piedra_a_generar + madera_a_generar + metal_a_generar + andycoins_a_generar);
+		mapa_ocupado = casilleros_libres.vacia();
 	}
-	return todo_ocupado;
+	return mapa_ocupado;
 }
 
-void Mapa::generar_material(string material, int numero_casillero){
-	bool generado = false;
-	int fila = 0, columna = 0;
-	while(fila < this -> filas && !generado){
-		while(columna < this -> columnas && !generado){
-			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
-				numero_casillero--;
-			if(numero_casillero == 0){
-				this -> poner_material_ubicacion(material, fila, columna);
-				generado = true;
-			}
-			columna++;
-		}
-		columna = 0;
-		fila++;
-	}
+void Mapa::generar_material(std::string material, Coordenada coordenada){
+	this -> poner_material_ubicacion(material, coordenada);
 }
 
-int Mapa::numero_aleatorio(int minimo, int maximo){
-	int numero = rand() % (maximo - minimo + 1) + minimo;
-	return numero;
+std::size_t Mapa::numero_aleatorio(std::size_t minimo, std::size_t maximo) {
+	std::random_device device;
+	std::mt19937 rng(device());
+	std::uniform_int_distribution<std::mt19937::result_type> rango(minimo, maximo);
+	return rango(rng);
 }
 
-int Mapa::casilleros_libres_transitables(){
-	int casilleros_libres = 0;
-	for(int fila = 0; fila <  this -> filas; fila++)
-		for(int columna = 0; columna < this -> columnas; columna++)
-			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado())
-				casilleros_libres++;
-
-	return casilleros_libres;
+void Mapa::casilleros_libres_transitables(Lista<Coordenada> &lista_desocupados, Coordenada jugador1, Coordenada jugador2){
+	for(std::size_t fila = 0; fila <  this -> filas; fila++)
+		for(std::size_t columna = 0; columna < this -> columnas; columna++)
+			if(this -> terreno[fila][columna] -> es_casillero_transitable() && !this -> terreno[fila][columna] -> esta_ocupado() &&
+					Coordenada(fila, columna) != jugador1 && Coordenada(fila, columna) != jugador2)
+				lista_desocupados.alta_al_final(Coordenada(fila, columna));
 }
 
-void Mapa::vaciar_materiales(){
-	for(int fila = 0; fila < this -> filas; fila++)
-		for(int columna = 0; columna < this -> columnas; columna++){
-			if(this -> terreno[fila][columna] -> es_casillero_transitable()
-					&& this -> terreno[fila][columna] -> esta_ocupado())
-				delete ( (Casillero_Transitable*) this -> terreno[fila][columna] ) -> eliminar_material();
-		}
+bool Mapa::explota_bomba(std::string &edificio, Coordenada coordenada){
+	Resultado_Chequeos resultado = this -> terreno[coordenada.x()][coordenada.y()] -> atacar_edificio();
+	edificio = this -> terreno[coordenada.x()][coordenada.y()] -> obtener_contenido();
+	if(resultado == DESTRUIDO)
+		this -> demoler_edificio_ubicacion(edificio, coordenada);
+	return (resultado == DESTRUIDO);
 }
 
-string Mapa::identificador_ocupados(string ocupador){
-	string identificador = UBICACION_VACIA;
+char Mapa::obtener_identificador_casillero(Coordenada coordenada){
+	return this -> terreno[coordenada.x()][coordenada.y()] -> obtener_identificador();
+}
+
+std::string Mapa::identificador_ocupados(std::string ocupador){
+	std::string identificador = UBICACION_VACIA;
 	if(ocupador == "mina")
 		identificador = "M";
-	else if(ocupador == "aserradero")
+	else if (ocupador == "aserradero")
 		identificador = "A";
-	else if(ocupador == "fabrica")
+	else if (ocupador == "fabrica")
 		identificador = "F";
-	else if(ocupador == "escuela")
+	else if (ocupador == "escuela")
 		identificador = "E";
-	else if(ocupador == "obelisco")
+	else if (ocupador == "obelisco")
 		identificador = "O";
-	else if(ocupador == "planta electrica")
+	else if (ocupador == "planta electrica")
 		identificador = "P";
-	else if(ocupador == "madera")
+	else if (ocupador == "madera")
 		identificador = "W";
-	else if(ocupador == "piedra")
+	else if (ocupador == "piedra")
 		identificador = "S";
-	else if(ocupador == "metal")
+	else if (ocupador == "metal")
 		identificador = "I";
+	else if (ocupador == "mina oro")
+		identificador = "G";
+	else if(ocupador == "andycoins")
+		identificador = "C";
+	else if(ocupador == "jugador1")
+		identificador = "J";
+	else if(ocupador == "jugador2")
+		identificador = "U";
 	return identificador;
+}
+
+
+std::string Mapa::estado_actual_materiales(){
+	std::string texto, linea; 
+	for (std::size_t filas = 0; filas < this->filas; filas++){
+		for (std::size_t columnas = 0; columnas < this->columnas; columnas++){
+	     	if(this->terreno[filas][columnas] -> es_casillero_transitable() 
+	     				&& this->terreno[filas][columnas]->obtener_contenido() != ""){
+	     		linea = this->terreno[filas][columnas]->obtener_contenido() + " " + Coordenada(filas, columnas).a_string() + "\n";
+				texto += linea;
+			}
+		}
+	}
+	return texto;
+}
+
+void Mapa::mostrar_referencias(std::size_t fila_mostrada){
+	std::size_t columnas_referencias = CANTIDAD_REFERNCIAS / this -> filas + 1;
+	for(std::size_t i = 0; i < columnas_referencias && fila_mostrada * columnas_referencias + i < CANTIDAD_REFERNCIAS; i++){
+		cout << REFERENCIAS[fila_mostrada * columnas_referencias + i];
+		if(fila_mostrada * columnas_referencias + i != CANTIDAD_REFERNCIAS - 1)
+			cout << ", ";
+	}
 }

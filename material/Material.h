@@ -3,43 +3,59 @@
 
 #include <string>
 
-using namespace std;
-
-const string MATERIAL_VACIO = "";
+const std::string MATERIAL_VACIO = "";
 
 class Material{
 private:
-	string nombre;
-	int cantidad;
+	std::string nombre;
+	std::size_t cantidad;
 
 public:
 	//PRE: -
-	//POST: se crea un material vacio
+	//POS: se crea un material vacio
 	Material();
 
 	//PRE: -
-	//POST: se crea un material con los datos ingresados
-	Material(string nombre, int cantidad);
+	//POS: se crea un material con los datos ingresados
+	Material(std::string nombre, std::size_t cantidad);
+
+	Material(const Material& rhs) = default;
 
 	//PRE: -
-	//POST: devuelve el nombre del material
-	string obtener_nombre();
+	//POS: devuelve el nombre del material
+	std::string obtener_nombre() const;
 
 	//PRE: -
-	//POST: devuelve la cantidad del material
-	int obtener_cantidad();
+	//POS: devuelve la cantidad del material
+	std::size_t obtener_cantidad() const;
 
 	//PRE: -
-	//POST: se cambia el nombre del material
-	void cambiar_nombre(string nombre);
+	//POS: se cambia el nombre del material
+	void cambiar_nombre(std::string nombre);
 
 	//PRE: -
-	//POST: se cmbia la cantidad del material
-	void cambiar_cantidad(int cantidad);
+	//POS: se cmbia la cantidad del material
+	void cambiar_cantidad(std::size_t cantidad);
 
 	//PRE: -
-	//POST: imprime un saludo
-	void saludar();
+	//POS: se suma cantidad a la cantidad del material
+	void sumar_cantidad(std::size_t cantidad);
+
+	//PRE: -
+	//POS: se resta cantidad a la cantidad del material
+	void restar_cantidad(std::size_t cantidad);
+	
+	//PRE: -
+	//POS: imprime un saludo
+	void saludar() const;
+
+	// PRE: -
+	// POS: True si los materiales son iguales, False
+	// en otro caso.
+	bool operator==(const Material& rhs) const;
+
+	// Operador de asignacion del material
+	void operator=(const Material& rhs);
 };
 
 #endif /* MATERIAL_H_ */

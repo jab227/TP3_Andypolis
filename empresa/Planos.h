@@ -2,77 +2,63 @@
 #define PLANOS_H_
 
 #include "../edificio/Edificio.h"
+#include "../jugador/Jugador.h"
 #include "../utils/Lista.h"
 
 class Planos {
+private:
+	static Diccionario<std::string, Edificio*> lista_edificios;
 public:
-	Lista<Edificio*> lista_edificios;
-public:
-
 	//PRE: -
-	//POST: creo unos planos inicializado en 0;
+	//POS: creo unos planos inicializado en 0;
 	Planos();
 
-	//PRE: ruta debe ser una ruta a un archivo bien estructurado
-	//POST: creo unos planos inicializado con el archivo en la ruta espesificada.
-	Planos(string ruta);
+	//PRE: -
+	//POS: Instancia planos con el diccionario.
+	Planos(Diccionario<std::string, Edificio*> diccionario);
 
 	//PRE: -
-	//POST: se libera la memoria utilizada y el puntero se apunta  nullptr.
+	//POS: se libera la memoria utilizada y el puntero se apunta  nullptr.
 	~Planos();
 
-	//PRE: se le debe pasar la ruta del archivo a abrir el cual debe estar bien estructurado
-	//POST: en caso de poder abrir el archivo, carga la lista con los elementos del archivo
-	void cargar_edificios(string ruta);
+	//PRE: -
+	//POS: Deevuelve el puntero Edificio* del edificio con nombre nombre_edificio.
+	static Edificio* buscar(std::string nombre_edificio);
+	
+	//PRE: -
+	//POS: Deevuelve Resultado_Chequeos de si existe el edificio con nombre_edificio.
+	static Resultado_Chequeos existe(std::string nombre_edificio);
+
+	// PRE: El edificio tiene que existir
+	// POS: Devuelve la cantidad permitida de edificios que se puede 
+	// construir.
+	static std::size_t cantidad_permitida(const std::string& edificio);
+
+	// PRE: -
+	// POS: Devuelve una lista con los edificios en el diccionario.
+	static Lista<std::string> edificios_disponibles();
 
 	//PRE: -
-	//POST: muestra por terminal la cantidad de edificios construidos de cada tipo,
+	//POS: muestra por terminal la cantidad de edificios construidos de cada tipo,
 	//los que se pueden construir y los materiales necesarios para construirlos.
 	void mostrar_edificios();
 
 	//PRE: -
-	//POST: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
-	bool es_edificio_valido(string edificio);
-
-	//PRE: el edificio debe ser valido.
-	//POST: devuelve la cantidad maxima permitida para construir del edificio.
-	int cant_max_edificio(string edificio);
-
-	//PRE: el edificio debe ser valido.
-	//POST: devuelve cuantos edificios hay construidos de este tipo.
-	int cant_construidos(string edificio);
+	//POS: Permite modificar los valores de construcción del edificio.
+	void modificar_edificio(std::string nombre, std::size_t madera, std::size_t piedra, std::size_t metal);
 
 	//PRE: el edificio debe ser valido
-	//POST: devuelve un vector en memoria dinamica con un listado de los materiales necesarios para
-	//construir el edificio solicitado.
-	Lista<Material>* materiales_necesarios(string edificio);
-
-	//PRE: edificio es valido
-	//POST: aumenta 1 la cantidad del edificio construido
-	void aumentar_construidos_edificio(string edificio);
-
-	//PRE: edificio es valido
-	//POST: disminuye 1 la cantidad del edificio construido
-	void disminuir_construidos_edificio(string edificio);
-
-	//PRE: edificio es valido
-	//POST: devuele si se puede construir, si no existe o se tiene la cantidad maxima construida.
-	Resultado_Chequeos check_construir_edificio(string edificio);
+	//POS: devuelve una lista  los materiales necesarios para construir el edificio solicitado.
+	Lista<Material> materiales_necesarios( std::string edificio);
 
 	//PRE: -
-	//POST: devuelve un listado con los materiales producidos por los edificios construidos e imprime
-	//por la consola los materiales producidos.
-	Lista<Material>* obtener_recursos_producidos();
-private:
-	//PRE: 1 <= posicion <= el largo de la lista.
-	//POST: se agrega el material al final del vector.
-	void agregar_edificio(Edificio* edificio, int posicion);
+	//POS: devuelve true si el nombre corresponde a un edificio o false en caso contrario.
+	//por interfaz carga un puntero a Edificio con el edificio de la lista.
+	Resultado_Chequeos chequeo_construir(const std::string &nombre_edificio,  Jugador* jugador,  Mapa* mapa);
 
-	//PRE: edificio tiene que ser distinto de nullptr
-	//POST: devuelve en un string que cantidad y de que material produce el edificio o "ninguno".
-	string material_producido(Edificio* edificio);
-
-	void mostrar_materiales_producidos(Lista<Material>* listado);
+	//PRE: El diccionario de edificios debe estar cargado.
+	//POS: Devuelve en un string la informacion de los edificios para guardar en un archivo.
+	std::string estado_actual_edificios();
 };
 
 

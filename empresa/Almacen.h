@@ -5,72 +5,84 @@
 #include "../utils/Lista.h"
 #include "../edificio/Edificio.h"
 
-const int NO_ENCONTRADO = -1;
+const int NO_ENCONTRADO = 0;
+std::string const SALIR_STR = "salir";
+const std::string NOMBRES_MATERIALES[] = {"piedra", "madera", "metal", "andycoins", "bombas"};
 
 class Almacen {
 private:
-	Lista<Material> lista_materiales;
-
+	Lista<Material> lista_materiales_;
 public:
 	//PRE: -
-	//POST: creo un almacen inicializado en 0;
+	//POS: creo un almacen inicializado en 0;
 	Almacen();
 
 	//PRE: ruta debe ser una ruta a un archivo bien estructurado.
-	//POST: creo un almacen inicializado con el archivo en la ruta espesificada.
-	Almacen(string ruta);
+	//POS: creo un almacen inicializado con el archivo en la ruta espesificada.
+	Almacen(const Lista<Material>& lista);
+
+	//Constructor de copia
+	Almacen(const Almacen& rhs) = default;
+	
+	//Destructor por default
+	~Almacen() = default;
+	
+	//PRE: -
+	//POS: Devuelve lista_materiales_
+	Lista<Material>& obtener_materiales(); 
+	
+	//PRE: -
+	//POS: Retorna el material de la lista_materiales_.
+	//En caso de no encontrarse, devuelve el Material con el material
+	//de nombre y la cantidad vacia.
+	Material obtener_material(std::string material) const;
 
 	//PRE: -
-	//POST: se libera la memoria utilizada
-	~Almacen();
-
-	//PRE: se le debe pasar la ruta del archivo a abrir el cual debe estar bien estructurado
-	//POST: en caso de poder abrir el archivo, se agregan los materiales del archivo a la
-	//lista
-	void cargar_materiales(string ruta);
+	//POS: se resta cantidad del material de nombre a_cambiar. Si no existe el material
+	//con ese nombre, no se realiza ningun cambio.
+	void restar_cantidad_material(const std::string& nombre, std::size_t cantidad);	
+	
+	//PRE: -
+	//POS: se suma cantidad del material de nombre a_cambiar. Si no existe el material
+	//con ese nombre, no se realiza ningun cambio.
+	void sumar_cantidad_material(const std::string& a_cambiar, std::size_t cantidad);
 
 	//PRE: -
-	//POST: devuelve la cantidad del material en caso de encontrarse o en caso de
-	//no estar en el arreglo, devuelve NO_ENCONTRADO.
-	int buscar_material(string a_buscar);
+	//POS: muestra todos los materiales en lista_materiales_ por terminal
+	void mostrar_materiales() const;
 
-	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
-	//POST: se modifica la cantidad del material de nombre a_cambiar. Si no existe, no
-	//se realiza ningun cambio. La cantidad puede ser negativa, en tal caso se restara.
-	void modificar_cantidad_material(string a_cambiar, int cantidad);
-
-	//PRE: almacen debe ser un puntero a estructura existente, es decir, != nullptr.
-	//post: muestra todos los materiales por terminal
-	void mostrar_materiales();
-
-	//PRE: almacen debe ser puntero a estructura existente, es decir, != nullptr.
-	//POST: se guardan los datos de los edificios en el archivo de salida en caso
-	//de que exista y devuelve true. De lo contrario devuelve false.
-	bool guardar_materiales(string ruta);
-
-	//PRE: -
-	//POST: devuelve true si hay la cantidad del material ingresado en stock y false si
-	//no la hay o si no se encuentra ese material.
-	bool hay_material_suficiente(Material material);
-
-	//PRE: la lista no debe ser un puntero nulo
-	//POST: devuelve true si se cuentan con toda la lista de los materiales
+	//PRE:  -
+	//POS: devuelve true si se cuentan con toda la lista de los materiales
 	//en stock
-	Resultado_Chequeos hay_lista_materiales(Lista<Material>* materiales_consutlados);
+	Resultado_Chequeos hay_lista_materiales(const Lista<Material>& materiales_consultados, std::size_t porcentaje = 100) const;
 
-	//PRE: la lista no debe ser un puntero nulo
-	//POST: se restan del almacen los materiales de la lista
-	void restar_lista_materiales(Lista<Material>* materiales_usados);
+	//PRE:  -
+	//POS: Descuenta de lista_materiales_ los materiales que esten en materiales_usados. Porcentaje para definir si queres descontar menos.	
+	void descontar_lista_materiales(const Lista<Material>& materiales_usados, std::size_t porcentaje = 100);
 
-	//PRE: la lista no debe ser un puntero nulo
-	//POST: se suman al almacen los materiales de la lista. si recuperados vale true, la
-	//mitad de los materiales seran sumados.
-	void sumar_lista_materiales(Lista<Material>* materiales_obtenidos, bool recuperados = false);
+	//PRE:  -
+	//POS: Incrementa de lista_materiales_ los materiales que esten en materiales_usados. Porcentaje para definir si queres descontar menos.
+	void sumar_lista_materiales(const Lista<Material>& materiales_usados, std::size_t porcentaje = 100);
+
+	//PRE: -
+	//POS: se compran las bombas pidiendo al usuario la cantidad
+	Resultado_Chequeos comprar_bombas(std::size_t cantidad_bombas);
 
 private:
-	//PRE: 1 <= posicion <= el largo de la lista.
-	//POST: se agrega el material al final del vector.
-	void agregar_material(Material material, int posicion);
+	//PRE: -
+	//POS: se agrega el material al final de la lista_materiales_.
+	void agregar_material(const Material& material);
+
+	//PRE: -
+	//POS: devuelve el indice del material en caso de encontrarse o en caso de
+	//no estar en el arreglo, devuelve NO_ENCONTRADO.
+	std::size_t buscar_material(const Material& a_buscar) const;
+	
+	//PRE: -
+	//POS: devuelve true si hay la cantidad del material ingresado en stock y false si
+	//no la hay o si no se encuentra ese material.
+	bool hay_material_suficiente(const Material& material, std::size_t porcentaje = 100) const;
+	
 
 };
 

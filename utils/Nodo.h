@@ -1,12 +1,11 @@
 #ifndef NODO_H_INCLUDED
 #define NODO_H_INCLUDED
 
-template <typename Dato>
-
+template <typename T>
 class Nodo {
 //Atributos
 private:
-    Dato dato;
+    T dato;
     Nodo* siguiente;
 
 //Metodos
@@ -14,49 +13,49 @@ public:
     //constructor
     //PRE: -
     //POS: se construye un nodo y se guarda el dato
-    Nodo(Dato d);
+    Nodo(const T &d);
 
     //PRE: -
     //POS: se cambia el dato del nodo
-    void cambiar_dato(Dato d);
+    void cambiar_dato(T d);
 
     //PRE: -
-    //POS: se cambia el nodo siguiente
+    //POST: se cambia el nodo siguiente
     void cambiar_siguiente(Nodo* pn);
 
     //PRE: -
-    //POS: devuelve el dato contenido
-    Dato obtener_dato();
+    //POS: devuelve la referencia al dato contenido
+    T& obtener_dato();
 
     //PRE: -
-    //POS: devuelve el siguiente nodo
-    Nodo* obtener_siguiente();
+    //POST: devuelve el siguiente nodo
+    Nodo* obtener_siguiente() const;
 };
 
 //Constructor
-template <typename Dato>
-Nodo<Dato>::Nodo(Dato d) {
+template <typename T>
+Nodo<T>::Nodo(const T &d) {
     dato =  d;
     siguiente = 0;
 }
 
-template <typename Dato>
-void Nodo<Dato>::cambiar_dato(Dato d) {
+template <typename T>
+void Nodo<T>::cambiar_dato(T d) {
     dato = d;
 }
 
-template <typename Dato>
-void Nodo<Dato>::cambiar_siguiente(Nodo* pn) {
+template <typename T>
+void Nodo<T>::cambiar_siguiente(Nodo* pn) {
     siguiente = pn;
 }
 
-template <typename Dato>
-Dato Nodo<Dato>::obtener_dato() {
+template <typename T>
+T& Nodo<T>::obtener_dato() {
     return dato;
 }
 
-template <typename Dato>
-Nodo<Dato>* Nodo<Dato>::obtener_siguiente() {
+template <typename T>
+Nodo<T>* Nodo<T>::obtener_siguiente() const {
     return siguiente;
 }
 

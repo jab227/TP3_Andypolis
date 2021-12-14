@@ -1,16 +1,18 @@
 #include "Obelisco.h"
 #include <iostream>
 
-const string NOMBRE = "obelisco";
+const std::string NOMBRE = "obelisco";
 
 Obelisco::Obelisco() : No_Productor(NOMBRE, 0, 0, 0, 0){
 }
 
-Obelisco::Obelisco(int piedra, int madera, int metal, int maximo_permitidos):
+Obelisco::Obelisco(std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos):
 	No_Productor(NOMBRE, piedra, madera, metal, maximo_permitidos){
-
 }
 
 void Obelisco::saludar(){
-	cout << "Soy el obelisco y estoy en el casillero consultado, estoy luciendome a lo alto!" << endl;
+	std::cout << "Soy el "+NOMBRE+" y estoy en el casillero consultado, estoy luciendome a lo alto!" << std::endl;
 }
+
+Resultado_Chequeos Obelisco::reparar(bool reparr_edificio){ return NO_REPARABLE;}
+

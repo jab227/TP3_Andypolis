@@ -3,7 +3,7 @@
 
 #include "Edificio.h"
 
-class No_Productor : public Edificio{
+class No_Productor: public Edificio{
 public:
 	//PRE: -
 	//POST: se construye un edificio que no produce nada
@@ -11,15 +11,15 @@ public:
 
 	//PRE: -
 	//POST: se construye un edificio con los datos ingresados que no produce nada
-	No_Productor(string nombre, int piedra, int madera, int metal, int maximo_permitidos);
-
-	//PRE: -
-	//POST: devuelve si el edificio es productor o no. en este caso devuelve siempre false.
-	bool es_productor();
+	No_Productor(std::string nombre, std::size_t piedra, std::size_t madera, std::size_t metal, std::size_t maximo_permitidos);
 
 	//PRE: -
 	//POST: dado que no es un productor devuelve un material vacio
 	Material producir_material();
+
+	//PRE: -
+	//POST: retorna "ninguno".
+	std::string info_producto() const override;
 };
 
 #endif /* EDIFICIOS_NOPRODUCTOR_H_ */
